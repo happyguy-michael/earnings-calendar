@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getEarning, getAnalysis, earnings } from '@/lib/data';
+import { EPSChart, EPSBarChart } from '@/components/EPSChart';
 
 export default function ReportPage() {
   const params = useParams();
@@ -435,20 +436,23 @@ export default function ReportPage() {
               </div>
             </div>
 
-            {/* Chart Visual */}
+            {/* Line Chart */}
             <div className="mt-6 bg-zinc-900/30 rounded-2xl border border-zinc-800/50 p-6">
-              <h3 className="text-sm font-semibold text-white mb-6">EPS Trend</h3>
-              <div className="flex items-end justify-around h-40 px-4">
-                {historicalData.slice().reverse().map((row, i) => (
-                  <div key={i} className="flex flex-col items-center gap-2">
-                    <div 
-                      className={`w-12 rounded-t-lg transition-all ${row.beat ? 'bg-emerald-500' : 'bg-red-500'}`}
-                      style={{ height: `${Math.max(20, (row.eps / (earning?.estimate || 1)) * 60)}px` }}
-                    />
-                    <span className="text-[10px] text-zinc-500">{row.quarter.split(' ')[0]}</span>
-                  </div>
-                ))}
+              <h3 className="text-sm font-semibold text-white mb-4">EPS Trend</h3>
+              <EPSChart data={historicalData} />
+            </div>
+
+            {/* Bar Chart Comparison */}
+            <div className="mt-6 bg-zinc-900/30 rounded-2xl border border-zinc-800/50 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Quarter by Quarter</h3>
+                <div className="flex items-center gap-4 text-[10px] text-zinc-500">
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-zinc-600 rounded-sm"></span> Estimate</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-sm"></span> Beat</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-sm"></span> Miss</span>
+                </div>
               </div>
+              <EPSBarChart data={historicalData} />
             </div>
           </div>
         )}
