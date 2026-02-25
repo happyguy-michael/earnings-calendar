@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { earnings } from '@/lib/data';
 import { Earning } from '@/lib/types';
+import { CountUp } from '@/components/CountUp';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -169,24 +170,32 @@ export default function Home() {
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="stat-card">
-            <div className="text-4xl font-bold text-white mb-1">{totalEarnings}</div>
+            <div className="text-4xl font-bold text-white mb-1">
+              <CountUp end={totalEarnings} duration={800} />
+            </div>
             <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
           </div>
           <div className="stat-card stat-card-success">
             <div className="flex items-center gap-4">
               <CircularProgress value={beatRate} size={56} color="#22c55e" />
               <div>
-                <div className="text-3xl font-bold text-gradient-green">{beatRate}%</div>
+                <div className="text-3xl font-bold text-gradient-green">
+                  <CountUp end={beatRate} duration={1200} suffix="%" />
+                </div>
                 <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
               </div>
             </div>
           </div>
           <div className="stat-card">
-            <div className="text-4xl font-bold text-white mb-1">{reportedCount}</div>
+            <div className="text-4xl font-bold text-white mb-1">
+              <CountUp end={reportedCount} duration={900} />
+            </div>
             <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
           </div>
           <div className="stat-card stat-card-warning">
-            <div className="text-4xl font-bold text-amber-400 mb-1">{pendingCount}</div>
+            <div className="text-4xl font-bold text-amber-400 mb-1">
+              <CountUp end={pendingCount} duration={1000} />
+            </div>
             <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getEarning, getAnalysis, earnings } from '@/lib/data';
 import { EPSChart, EPSBarChart } from '@/components/EPSChart';
+import { CountUp } from '@/components/CountUp';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -206,7 +207,11 @@ export default function ReportPage() {
                       {hasResult ? 'Actual' : 'Estimate'}
                     </div>
                     <div className="text-5xl font-bold text-white">
-                      ${hasResult ? earning.eps?.toFixed(2) : earning.estimate.toFixed(2)}
+                      $<CountUp 
+                        end={hasResult ? earning.eps! : earning.estimate} 
+                        duration={1000} 
+                        decimals={2} 
+                      />
                     </div>
                   </div>
                   
@@ -214,12 +219,20 @@ export default function ReportPage() {
                     <>
                       <div className="text-center">
                         <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Estimate</div>
-                        <div className="text-5xl font-bold text-zinc-600">${earning.estimate.toFixed(2)}</div>
+                        <div className="text-5xl font-bold text-zinc-600">
+                          $<CountUp end={earning.estimate} duration={1000} decimals={2} />
+                        </div>
                       </div>
                       <div className="text-center">
                         <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Surprise</div>
                         <div className={`text-5xl font-bold ${surprise >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                          {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+                          <CountUp 
+                            end={surprise} 
+                            duration={1200} 
+                            decimals={1}
+                            prefix={surprise >= 0 ? '+' : ''}
+                            suffix="%" 
+                          />
                         </div>
                       </div>
                     </>
@@ -238,7 +251,7 @@ export default function ReportPage() {
                         <div className={`text-5xl font-bold ${
                           earning.beatOdds >= 70 ? 'text-emerald-400' : earning.beatOdds >= 50 ? 'text-amber-400' : 'text-red-400'
                         }`}>
-                          {earning.beatOdds}%
+                          <CountUp end={earning.beatOdds} duration={1000} suffix="%" />
                         </div>
                       </div>
                     </>
