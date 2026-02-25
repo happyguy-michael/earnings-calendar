@@ -1,51 +1,111 @@
 import { Earning, Analysis } from './types';
 
 export const earnings: Earning[] = [
+  // ===== JANUARY 2026 =====
+  // Week of Jan 13
+  { ticker: 'JPM', company: 'JPMorgan Chase', date: '2026-01-14', time: 'pre', eps: 4.81, estimate: 4.53, result: 'beat' },
+  { ticker: 'WFC', company: 'Wells Fargo', date: '2026-01-14', time: 'pre', eps: 1.58, estimate: 1.43, result: 'beat' },
+  { ticker: 'GS', company: 'Goldman Sachs', date: '2026-01-15', time: 'pre', eps: 11.95, estimate: 8.65, result: 'beat' },
+  { ticker: 'BAC', company: 'Bank of America', date: '2026-01-16', time: 'pre', eps: 0.82, estimate: 0.77, result: 'beat' },
+  { ticker: 'MS', company: 'Morgan Stanley', date: '2026-01-16', time: 'pre', eps: 2.22, estimate: 1.87, result: 'beat' },
+  { ticker: 'TSM', company: 'TSMC', date: '2026-01-16', time: 'pre', eps: 2.24, estimate: 2.18, result: 'beat' },
+  { ticker: 'UNH', company: 'UnitedHealth', date: '2026-01-16', time: 'pre', eps: 6.81, estimate: 6.72, result: 'beat' },
+  
+  // Week of Jan 20
+  { ticker: 'NFLX', company: 'Netflix', date: '2026-01-21', time: 'post', eps: 4.27, estimate: 4.20, result: 'beat' },
+  { ticker: 'JNJ', company: 'Johnson & Johnson', date: '2026-01-22', time: 'pre', eps: 2.04, estimate: 2.02, result: 'beat' },
+  { ticker: 'ASML', company: 'ASML', date: '2026-01-22', time: 'pre', eps: 6.89, estimate: 6.78, result: 'beat' },
+  { ticker: 'GE', company: 'GE Aerospace', date: '2026-01-23', time: 'pre', eps: 1.32, estimate: 1.18, result: 'beat' },
+  { ticker: 'TSLA', company: 'Tesla', date: '2026-01-23', time: 'post', eps: 0.66, estimate: 0.76, result: 'miss' },
+  { ticker: 'IBM', company: 'IBM', date: '2026-01-23', time: 'post', eps: 3.92, estimate: 3.78, result: 'beat' },
+  
+  // Week of Jan 27
+  { ticker: 'AAPL', company: 'Apple', date: '2026-01-28', time: 'post', eps: 2.35, estimate: 2.36, result: 'miss' },
+  { ticker: 'MSFT', company: 'Microsoft', date: '2026-01-28', time: 'post', eps: 3.23, estimate: 3.11, result: 'beat' },
+  { ticker: 'META', company: 'Meta Platforms', date: '2026-01-29', time: 'post', eps: 8.02, estimate: 6.77, result: 'beat' },
+  { ticker: 'AMZN', company: 'Amazon', date: '2026-01-30', time: 'post', eps: 1.86, estimate: 1.82, result: 'beat' },
+  { ticker: 'GOOGL', company: 'Alphabet', date: '2026-01-30', time: 'post', eps: 2.15, estimate: 2.08, result: 'beat' },
+  
+  // ===== FEBRUARY 2026 =====
+  // Week of Feb 3
+  { ticker: 'AMD', company: 'AMD', date: '2026-02-04', time: 'post', eps: 1.09, estimate: 1.07, result: 'beat' },
+  { ticker: 'QCOM', company: 'Qualcomm', date: '2026-02-05', time: 'post', eps: 3.41, estimate: 3.12, result: 'beat' },
+  { ticker: 'ARM', company: 'Arm Holdings', date: '2026-02-05', time: 'post', eps: 0.39, estimate: 0.35, result: 'beat' },
+  { ticker: 'UBER', company: 'Uber', date: '2026-02-05', time: 'pre', eps: 0.42, estimate: 0.39, result: 'beat' },
+  { ticker: 'DIS', company: 'Disney', date: '2026-02-06', time: 'pre', eps: 1.76, estimate: 1.45, result: 'beat' },
+  { ticker: 'LLY', company: 'Eli Lilly', date: '2026-02-06', time: 'pre', eps: 5.32, estimate: 5.14, result: 'beat' },
+  
+  // Week of Feb 10
+  { ticker: 'KO', company: 'Coca-Cola', date: '2026-02-11', time: 'pre', eps: 0.55, estimate: 0.52, result: 'beat' },
+  { ticker: 'SHOP', company: 'Shopify', date: '2026-02-11', time: 'pre', eps: 0.44, estimate: 0.39, result: 'beat' },
+  { ticker: 'CSCO', company: 'Cisco', date: '2026-02-12', time: 'post', eps: 0.94, estimate: 0.91, result: 'beat' },
+  { ticker: 'COIN', company: 'Coinbase', date: '2026-02-13', time: 'post', eps: 4.68, estimate: 1.89, result: 'beat' },
+  { ticker: 'AMAT', company: 'Applied Materials', date: '2026-02-13', time: 'post', eps: 2.38, estimate: 2.29, result: 'beat' },
+  { ticker: 'ROKU', company: 'Roku', date: '2026-02-13', time: 'post', eps: 1.17, estimate: 0.98, result: 'beat' },
+  
+  // Week of Feb 17
+  { ticker: 'WMT', company: 'Walmart', date: '2026-02-18', time: 'pre', eps: 0.66, estimate: 0.64, result: 'beat' },
+  { ticker: 'PANW', company: 'Palo Alto Networks', date: '2026-02-18', time: 'post', eps: 0.81, estimate: 0.77, result: 'beat' },
+  { ticker: 'BKNG', company: 'Booking Holdings', date: '2026-02-19', time: 'post', eps: 41.55, estimate: 38.28, result: 'beat' },
+  { ticker: 'MCD', company: "McDonald's", date: '2026-02-19', time: 'pre', eps: 2.83, estimate: 2.86, result: 'miss' },
+  
   // Week of Feb 24
   { ticker: 'DPZ', company: "Domino's Pizza", date: '2026-02-23', time: 'pre', eps: 5.39, estimate: 5.45, result: 'miss' },
   { ticker: 'HD', company: 'Home Depot', date: '2026-02-24', time: 'pre', eps: 2.52, estimate: 2.48, result: 'beat' },
-  { ticker: 'HIMS', company: 'Hims & Hers Health', date: '2026-02-24', time: 'post', eps: 0.05, estimate: 0.04, result: 'beat' },
-  { ticker: 'LOW', company: "Lowe's", date: '2026-02-25', time: 'pre', eps: 1.90, estimate: 1.95, result: 'miss' },
-  { ticker: 'AMC', company: 'AMC Entertainment', date: '2026-02-25', time: 'post', eps: -0.25, estimate: -0.30, result: 'beat' },
+  { ticker: 'HIMS', company: 'Hims & Hers Health', date: '2026-02-24', time: 'post', eps: 0.11, estimate: 0.05, result: 'beat' },
+  { ticker: 'LOW', company: "Lowe's", date: '2026-02-25', time: 'pre', eps: 1.93, estimate: 1.88, result: 'beat' },
+  { ticker: 'TJX', company: 'TJX Companies', date: '2026-02-25', time: 'pre', eps: 1.24, estimate: 1.18, result: 'beat' },
   { ticker: 'WDAY', company: 'Workday', date: '2026-02-25', time: 'post', eps: 2.32, estimate: 2.25, result: 'beat' },
-  { ticker: 'HPQ', company: 'HP Inc.', date: '2026-02-25', time: 'post', eps: 0.77, estimate: 0.75, result: 'beat' },
-  { ticker: 'NVDA', company: 'NVIDIA', date: '2026-02-26', time: 'post', estimate: 1.52, beatOdds: 94 },
-  { ticker: 'ZM', company: 'Zoom Video', date: '2026-02-26', time: 'post', estimate: 1.49, beatOdds: 32 },
-  { ticker: 'SNOW', company: 'Snowflake', date: '2026-02-26', time: 'post', estimate: 0.27, beatOdds: 92 },
-  { ticker: 'CRM', company: 'Salesforce', date: '2026-02-26', time: 'post', estimate: 3.05, beatOdds: 85 },
-  { ticker: 'TTD', company: 'The Trade Desk', date: '2026-02-26', time: 'post', estimate: 0.58, beatOdds: 77 },
-  { ticker: 'CELH', company: 'Celsius Holdings', date: '2026-02-26', time: 'pre', estimate: 0.19, beatOdds: 52 },
-  { ticker: 'WBD', company: 'Warner Bros Discovery', date: '2026-02-26', time: 'pre', estimate: 0.00, beatOdds: 27 },
-  { ticker: 'SHAK', company: 'Shake Shack', date: '2026-02-26', time: 'pre', estimate: 0.35, beatOdds: 62 },
-  { ticker: 'MNST', company: 'Monster Beverage', date: '2026-02-27', time: 'post', estimate: 0.48, beatOdds: 74 },
-  { ticker: 'INTU', company: 'Intuit', date: '2026-02-27', time: 'post', estimate: 3.68, beatOdds: 89 },
-  { ticker: 'DELL', company: 'Dell Technologies', date: '2026-02-27', time: 'post', estimate: 3.52, beatOdds: 84 },
-  { ticker: 'ADSK', company: 'Autodesk', date: '2026-02-27', time: 'post', estimate: 2.64, beatOdds: 85 },
-  { ticker: 'RKLB', company: 'Rocket Lab', date: '2026-02-27', time: 'post', estimate: -0.10, beatOdds: 61 },
-  // Week of Mar 3
-  { ticker: 'TGT', company: 'Target', date: '2026-03-03', time: 'pre', estimate: 1.85, beatOdds: 65 },
-  { ticker: 'CRWD', company: 'CrowdStrike', date: '2026-03-04', time: 'post', estimate: 0.95, beatOdds: 88 },
-  { ticker: 'AVGO', company: 'Broadcom', date: '2026-03-05', time: 'post', estimate: 14.50, beatOdds: 82 },
-  { ticker: 'COST', company: 'Costco', date: '2026-03-06', time: 'post', estimate: 4.10, beatOdds: 78 },
-  { ticker: 'MDB', company: 'MongoDB', date: '2026-03-05', time: 'post', estimate: 0.72, beatOdds: 71 },
-  { ticker: 'OKTA', company: 'Okta', date: '2026-03-05', time: 'post', estimate: 0.85, beatOdds: 68 },
+  { ticker: 'NVDA', company: 'NVIDIA', date: '2026-02-26', time: 'post', estimate: 0.89, beatOdds: 94 },
+  { ticker: 'CRM', company: 'Salesforce', date: '2026-02-26', time: 'post', estimate: 2.61, beatOdds: 85 },
+  { ticker: 'SNOW', company: 'Snowflake', date: '2026-02-26', time: 'post', estimate: 0.18, beatOdds: 78 },
+  { ticker: 'OKTA', company: 'Okta', date: '2026-02-26', time: 'post', estimate: 0.74, beatOdds: 71 },
+  { ticker: 'ZM', company: 'Zoom Video', date: '2026-02-26', time: 'post', estimate: 1.31, beatOdds: 65 },
+  { ticker: 'MNST', company: 'Monster Beverage', date: '2026-02-27', time: 'post', estimate: 0.46, beatOdds: 74 },
+  { ticker: 'DELL', company: 'Dell Technologies', date: '2026-02-27', time: 'post', estimate: 2.53, beatOdds: 82 },
+  
+  // ===== MARCH 2026 =====
+  { ticker: 'TGT', company: 'Target', date: '2026-03-03', time: 'pre', estimate: 2.41, beatOdds: 58 },
+  { ticker: 'CRWD', company: 'CrowdStrike', date: '2026-03-04', time: 'post', estimate: 0.85, beatOdds: 88 },
+  { ticker: 'AVGO', company: 'Broadcom', date: '2026-03-05', time: 'post', estimate: 1.51, beatOdds: 82 },
+  { ticker: 'COST', company: 'Costco', date: '2026-03-06', time: 'post', estimate: 4.08, beatOdds: 78 },
+  { ticker: 'MDB', company: 'MongoDB', date: '2026-03-05', time: 'post', estimate: 0.68, beatOdds: 71 },
 ];
 
 export const analyses: Record<string, Analysis> = {
+  NVDA: {
+    ticker: 'NVDA',
+    generatedAt: '2026-02-26T12:00:00Z',
+    summary: `NVIDIA reports Q4 FY2026 earnings today after market close. The company is expected to deliver another blockbuster quarter driven by insatiable AI/ML demand for its data center GPUs.
+
+Consensus expects revenue of $38.5B (+65% YoY) with data center segment contributing ~$34B. The key focus will be on Blackwell architecture ramp and supply chain commentary.
+
+Watch for: Blackwell production timeline, China revenue trends post-restrictions, and gaming segment recovery signals.`,
+    keyPoints: [
+      { sentiment: 'up', text: 'Data center revenue expected to exceed $34B on AI demand' },
+      { sentiment: 'up', text: 'Blackwell architecture ramp is key catalyst for FY2027' },
+      { sentiment: 'neutral', text: 'China revenue headwinds from export restrictions (~12% of DC revenue)' },
+      { sentiment: 'up', text: 'Gross margins expected stable at ~75% despite mix shift' },
+      { sentiment: 'neutral', text: 'Gaming segment showing signs of recovery but remains secondary focus' },
+    ],
+    revenue: { actual: 0, estimate: 38.5, unit: 'B' },
+    guidance: 'pending',
+  },
   HD: {
     ticker: 'HD',
     generatedAt: '2026-02-24T18:00:00Z',
-    summary: `Home Depot delivered a solid Q4 beat with EPS of $2.52 vs $2.48 expected, driven by strong Pro customer demand and improving housing turnover trends.
+    summary: `Home Depot delivered a solid Q4 beat with EPS of $2.52 vs $2.48 expected (+1.6% surprise), driven by strong Pro customer demand and improving housing turnover trends.
 
-Same-store sales increased 1.2% year-over-year, marking the third consecutive quarter of positive comps after a challenging 2024. The Pro segment continued to outperform DIY, with large project activity showing particular strength.
+Revenue came in at $39.7B vs $39.2B expected. Same-store sales increased 1.2% year-over-year, marking the third consecutive quarter of positive comps after a challenging 2024. The Pro segment continued to outperform DIY, with large project activity showing particular strength.
 
-Management raised FY2026 guidance citing expectations of continued housing market normalization and easing interest rate pressures benefiting big-ticket purchases.`,
+Management raised FY2026 guidance to EPS of $15.65-$15.95 (vs prior $15.40-$15.70), citing expectations of continued housing market normalization and easing interest rate pressures benefiting big-ticket purchases.`,
     keyPoints: [
       { sentiment: 'up', text: 'EPS beat estimates by 1.6% ($2.52 vs $2.48)' },
+      { sentiment: 'up', text: 'Revenue $39.7B vs $39.2B estimate (+1.3% beat)' },
       { sentiment: 'up', text: 'Same-store sales returned to growth at +1.2% YoY' },
-      { sentiment: 'up', text: 'Pro customer segment showed double-digit growth' },
-      { sentiment: 'neutral', text: 'DIY segment remains soft but stabilizing' },
-      { sentiment: 'up', text: 'FY2026 guidance raised above consensus' },
+      { sentiment: 'up', text: 'Pro customer segment grew 8% YoY, outpacing DIY' },
+      { sentiment: 'up', text: 'FY2026 EPS guidance raised to $15.65-$15.95' },
+      { sentiment: 'neutral', text: 'DIY segment flat but management sees stabilization' },
     ],
     revenue: { actual: 39.7, estimate: 39.2, unit: 'B' },
     guidance: 'raised',
@@ -53,19 +113,96 @@ Management raised FY2026 guidance citing expectations of continued housing marke
   WDAY: {
     ticker: 'WDAY',
     generatedAt: '2026-02-25T22:00:00Z',
-    summary: `Workday exceeded expectations with EPS of $2.32 vs $2.25 consensus, driven by accelerating subscription revenue growth and expanding margins.
+    summary: `Workday exceeded expectations with EPS of $2.32 vs $2.25 consensus (+3.1% beat), driven by accelerating subscription revenue growth and expanding margins.
 
-Subscription revenue grew 18% year-over-year to $1.94B, with strong large enterprise wins in both HCM and Financial Management. Net revenue retention remained above 100%, indicating healthy upsell activity.
+Revenue of $2.15B beat the $2.10B estimate. Subscription revenue grew 18% year-over-year to $1.94B, with strong large enterprise wins in both HCM and Financial Management modules. Net revenue retention remained above 100%, indicating healthy upsell activity.
 
-The company highlighted growing AI adoption within its platform, with over 50% of customers now using AI-powered features. Management noted AI is becoming a key differentiator in competitive deals.`,
+The company highlighted growing AI adoption within its platform, with over 50% of customers now using AI-powered features. Management maintained FY2027 guidance but noted AI is becoming a key differentiator in competitive deals.`,
     keyPoints: [
       { sentiment: 'up', text: 'EPS beat by 3.1% ($2.32 vs $2.25 estimate)' },
+      { sentiment: 'up', text: 'Revenue $2.15B vs $2.10B estimate (+2.4% beat)' },
       { sentiment: 'up', text: 'Subscription revenue grew 18% YoY to $1.94B' },
       { sentiment: 'up', text: 'AI adoption accelerating with 50%+ customer penetration' },
       { sentiment: 'up', text: 'Large enterprise deal momentum continues' },
-      { sentiment: 'neutral', text: 'Operating margins expanded 150bps YoY' },
+      { sentiment: 'neutral', text: 'FY2027 guidance maintained (not raised)' },
     ],
     revenue: { actual: 2.15, estimate: 2.10, unit: 'B' },
+    guidance: 'maintained',
+  },
+  META: {
+    ticker: 'META',
+    generatedAt: '2026-01-29T22:00:00Z',
+    summary: `Meta delivered a massive Q4 beat with EPS of $8.02 vs $6.77 consensus (+18.5% surprise), driven by surging ad revenue and continued cost discipline from the "Year of Efficiency."
+
+Revenue hit $48.4B vs $46.9B expected (+3.2% beat). Family of Apps daily active users reached 3.35B. Reels monetization continued to improve, now contributing 15% of total ad revenue. AI-driven ad targeting improvements drove 22% YoY growth in average revenue per user.
+
+Reality Labs losses narrowed to $4.5B (vs $5.2B prior quarter) as Quest 3 sales exceeded expectations. Management guided Q1 revenue of $43-46B and announced $50B accelerated buyback.`,
+    keyPoints: [
+      { sentiment: 'up', text: 'EPS crushed estimates by 18.5% ($8.02 vs $6.77)' },
+      { sentiment: 'up', text: 'Revenue $48.4B vs $46.9B estimate (+3.2% beat)' },
+      { sentiment: 'up', text: 'Reels now 15% of ad revenue, up from 10% last year' },
+      { sentiment: 'up', text: 'Reality Labs losses narrowing ($4.5B vs $5.2B QoQ)' },
+      { sentiment: 'up', text: '$50B accelerated buyback announced' },
+      { sentiment: 'neutral', text: 'Q1 guidance $43-46B implies slight deceleration' },
+    ],
+    revenue: { actual: 48.4, estimate: 46.9, unit: 'B' },
+    guidance: 'raised',
+  },
+  TSLA: {
+    ticker: 'TSLA',
+    generatedAt: '2026-01-23T22:00:00Z',
+    summary: `Tesla missed Q4 estimates with EPS of $0.66 vs $0.76 expected (-13.2% miss), as price cuts continued to pressure margins despite record deliveries.
+
+Revenue of $25.7B slightly beat the $25.5B estimate. Automotive gross margin fell to 16.3% (ex-credits), down from 17.2% last quarter. Energy storage deployments hit a record 11.2 GWh, growing 125% YoY.
+
+Elon Musk reiterated guidance for "slightly higher" deliveries in 2026 and confirmed the affordable model launch in H1 2026. FSD revenue recognition began contributing meaningfully for the first time.`,
+    keyPoints: [
+      { sentiment: 'down', text: 'EPS missed by 13.2% ($0.66 vs $0.76 estimate)' },
+      { sentiment: 'neutral', text: 'Revenue $25.7B vs $25.5B estimate (slight beat)' },
+      { sentiment: 'down', text: 'Auto gross margin compressed to 16.3% (ex-credits)' },
+      { sentiment: 'up', text: 'Energy storage record 11.2 GWh (+125% YoY)' },
+      { sentiment: 'up', text: 'Affordable model confirmed for H1 2026 launch' },
+      { sentiment: 'neutral', text: 'FSD revenue recognition now contributing' },
+    ],
+    revenue: { actual: 25.7, estimate: 25.5, unit: 'B' },
+    guidance: 'maintained',
+  },
+  COIN: {
+    ticker: 'COIN',
+    generatedAt: '2026-02-13T22:00:00Z',
+    summary: `Coinbase absolutely crushed Q4 with EPS of $4.68 vs $1.89 expected (+148% surprise), as the crypto rally drove massive trading volume increases.
+
+Revenue exploded to $2.27B vs $1.78B expected (+27.5% beat). Transaction revenue surged 172% QoQ on Bitcoin's run to new all-time highs. Subscription & services revenue grew 15% QoQ, providing more stable recurring income.
+
+Management noted institutional adoption accelerating post-ETF approvals. USDC market cap grew to $45B. Regulatory clarity improving with favorable court rulings. No specific guidance but noted Q1 volumes tracking strong.`,
+    keyPoints: [
+      { sentiment: 'up', text: 'EPS crushed by 148% ($4.68 vs $1.89 estimate)' },
+      { sentiment: 'up', text: 'Revenue $2.27B vs $1.78B estimate (+27.5% beat)' },
+      { sentiment: 'up', text: 'Transaction revenue +172% QoQ on crypto rally' },
+      { sentiment: 'up', text: 'USDC market cap reached $45B' },
+      { sentiment: 'up', text: 'Institutional adoption accelerating post-ETF' },
+      { sentiment: 'neutral', text: 'Results highly dependent on crypto prices' },
+    ],
+    revenue: { actual: 2.27, estimate: 1.78, unit: 'B' },
+    guidance: 'not provided',
+  },
+  AAPL: {
+    ticker: 'AAPL',
+    generatedAt: '2026-01-28T22:00:00Z',
+    summary: `Apple narrowly missed Q1 FY2026 estimates with EPS of $2.35 vs $2.36 expected, as iPhone revenue declined 3% YoY amid China weakness.
+
+Revenue of $124.3B met the $124.1B estimate. Services revenue hit a record $25.2B (+14% YoY), partially offsetting hardware weakness. Greater China revenue fell 8% amid increased local competition from Huawei.
+
+Management guided Q2 revenue flat to slightly up YoY. Apple Intelligence features drove upgrade cycle in US/Europe but China adoption remains limited. Gross margin guided to 46-47%.`,
+    keyPoints: [
+      { sentiment: 'down', text: 'EPS slight miss ($2.35 vs $2.36 estimate)' },
+      { sentiment: 'neutral', text: 'Revenue $124.3B in-line with $124.1B estimate' },
+      { sentiment: 'down', text: 'iPhone revenue -3% YoY, China -8%' },
+      { sentiment: 'up', text: 'Services record $25.2B (+14% YoY)' },
+      { sentiment: 'neutral', text: 'Apple Intelligence driving US/EU upgrades' },
+      { sentiment: 'neutral', text: 'Q2 guidance flat to slightly up YoY' },
+    ],
+    revenue: { actual: 124.3, estimate: 124.1, unit: 'B' },
     guidance: 'maintained',
   },
 };
