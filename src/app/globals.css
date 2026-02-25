@@ -1,12 +1,154 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0d0d0d;
-  --foreground: #e0e0e0;
+  --background: #0c0c0c;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --success: #10b981;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(16, 185, 129, 0.08), transparent);
+  color: #e4e4e7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glass card effect */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+}
+
+.glass-card-sm {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Success gradient */
+.success-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+}
+
+/* Danger gradient */
+.danger-gradient {
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+}
+
+/* Glow effects */
+.glow-success {
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+}
+
+.glow-danger {
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+}
+
+.glow-accent {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(52, 211, 153, 0.1) 100%);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(248, 113, 113, 0.1) 100%);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-warning {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-neutral {
+  background: rgba(255, 255, 255, 0.05);
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Stat card */
+.stat-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+}
+
+/* Progress ring */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring circle {
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.2);
 }
