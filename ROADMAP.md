@@ -26,7 +26,7 @@ Premium earnings calendar with AI-powered analysis, targeting retail traders who
 - [x] Skeleton loading states ✓
 - [x] Keyboard navigation ✓
 - [x] Search/filter by ticker ✓
-- [ ] Smooth page transitions
+- [x] Smooth page transitions ✓
 - [ ] Dark/light mode toggle
 - [ ] Watchlist functionality
 - [ ] Calendar export (Google/Apple)
@@ -59,6 +59,7 @@ Track autonomous improvements here:
 
 ### 2026-02-27
 - **Search/filter by ticker** - Glassmorphic search bar with animated focus states, keyboard shortcuts (/ to focus, Escape to clear), live filtering, result count indicator, and no-results empty state. Stats update dynamically based on filtered results. Mobile responsive.
+- **Smooth page transitions** - Added template.tsx with fade/slide animations on navigation. Exit animation fades out with subtle upward movement, enter animation slides up with scale effect. Uses cubic-bezier easing for premium feel. CSS classes: `.page-transition`, `.page-exit`, `.page-enter`.
 
 ---
 *This file is updated by the autonomous product iteration cron job.*
