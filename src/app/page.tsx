@@ -253,8 +253,11 @@ export default function Home() {
                   const hasEarnings = preMarket.length > 0 || postMarket.length > 0;
                   const isToday = date.getTime() === today.getTime();
 
+                  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+                  const mobileDate = `${dayNames[dayIndex]}, ${date.getDate()} ${months[date.getMonth()].slice(0, 3)}`;
+                  
                   return (
-                    <div key={dayIndex} className={`day-content ${isToday ? 'today' : ''}`}>
+                    <div key={dayIndex} className={`day-content ${isToday ? 'today' : ''}`} data-mobile-date={mobileDate}>
                       {!hasEarnings ? (
                         <div className="flex flex-col items-center justify-center h-full text-zinc-700 py-8">
                           <svg className="w-10 h-10 mb-3 opacity-30" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
