@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { earnings } from '@/lib/data';
 import { Earning } from '@/lib/types';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonCalendar } from '@/components/Skeleton';
+import { SearchBar } from '@/components/SearchBar';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -105,6 +106,18 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
 export default function Home() {
   const [currentWeekStart, setCurrentWeekStart] = useState(() => getWeekStart(new Date()));
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter earnings based on search
+  const filteredEarnings = useMemo(() => {
+    if (!searchQuery.trim()) return earnings;
+    const query = searchQuery.toLowerCase().trim();
+    return earnings.filter(
+      (e) =>
+        e.ticker.toLowerCase().includes(query) ||
+        e.company.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
 
   const navigateWeek = useCallback((delta: number) => {
     setCurrentWeekStart((prev) => {
@@ -161,20 +174,21 @@ export default function Home() {
     return weekStart;
   });
 
-  // Stats
-  const totalEarnings = earnings.length;
-  const beatsCount = earnings.filter(e => e.result === 'beat').length;
-  const reportedCount = earnings.filter(e => e.eps !== undefined).length;
+  // Stats (based on filtered results)
+  const totalEarnings = filteredEarnings.length;
+  const beatsCount = filteredEarnings.filter(e => e.result === 'beat').length;
+  const reportedCount = filteredEarnings.filter(e => e.eps !== undefined).length;
   const beatRate = reportedCount > 0 ? Math.round((beatsCount / reportedCount) * 100) : 0;
   const pendingCount = totalEarnings - reportedCount;
+  const isFiltering = searchQuery.trim().length > 0;
 
   return (
     <div className="min-h-screen">
       {/* Header */}
       <header className="sticky top-0 z-20 backdrop-blur-xl bg-[#0a0a0f]/80 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-5">
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold">
                 Earnings <span className="text-gradient">Calendar</span>
               </h1>
@@ -182,7 +196,18 @@ export default function Home() {
                 {months[currentWeekStart.getMonth()]} {currentWeekStart.getFullYear()}
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            
+            {/* Search Bar - centered */}
+            <div className="hidden md:flex flex-1 justify-center max-w-md mx-4">
+              <SearchBar 
+                value={searchQuery} 
+                onChange={setSearchQuery}
+                resultCount={filteredEarnings.length}
+                totalCount={earnings.length}
+              />
+            </div>
+            
+            <div className="flex items-center gap-3 flex-shrink-0">
               <div className="keyboard-hint mr-2">
                 <span className="kbd">←</span>
                 <span className="kbd">→</span>
@@ -214,6 +239,16 @@ export default function Home() {
                 </button>
               </div>
             </div>
+          </div>
+          
+          {/* Mobile search bar */}
+          <div className="md:hidden mt-4">
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery}
+              resultCount={filteredEarnings.length}
+              totalCount={earnings.length}
+            />
           </div>
         </div>
       </header>
@@ -252,7 +287,21 @@ export default function Home() {
           </div>
         </div>
 
+        {/* No Results State */}
+        {isFiltering && filteredEarnings.length === 0 && (
+          <div className="card">
+            <div className="search-no-results">
+              <svg className="search-no-results-icon" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+              <div className="search-no-results-text">No earnings found for "{searchQuery}"</div>
+              <div className="search-no-results-hint">Try searching by ticker symbol (AAPL) or company name</div>
+            </div>
+          </div>
+        )}
+
         {/* Calendar Weeks */}
+        {(!isFiltering || filteredEarnings.length > 0) && (
         <div className="space-y-6">
           {weeks.map((weekStart, weekIndex) => (
             <div key={weekIndex} className="card overflow-hidden animate-fade-in" style={{ animationDelay: `${weekIndex * 100}ms` }}>
@@ -264,7 +313,7 @@ export default function Home() {
                   const isToday = date.getTime() === today.getTime();
                   const isPast = date < today;
                   const dateStr = formatDate(date);
-                  const dayEarnings = earnings.filter(e => e.date === dateStr);
+                  const dayEarnings = filteredEarnings.filter(e => e.date === dateStr);
                   
                   return (
                     <div key={dayIndex} className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}`}>
@@ -286,8 +335,8 @@ export default function Home() {
                   const date = new Date(weekStart);
                   date.setDate(date.getDate() + dayIndex);
                   const dateStr = formatDate(date);
-                  const preMarket = earnings.filter((e) => e.date === dateStr && e.time === 'pre');
-                  const postMarket = earnings.filter((e) => e.date === dateStr && e.time === 'post');
+                  const preMarket = filteredEarnings.filter((e) => e.date === dateStr && e.time === 'pre');
+                  const postMarket = filteredEarnings.filter((e) => e.date === dateStr && e.time === 'post');
                   const hasEarnings = preMarket.length > 0 || postMarket.length > 0;
                   const isToday = date.getTime() === today.getTime();
 
@@ -336,6 +385,7 @@ export default function Home() {
             </div>
           ))}
         </div>
+        )}
 
         {/* Legend */}
         <div className="mt-10 flex items-center justify-center gap-8 text-xs text-zinc-500">
