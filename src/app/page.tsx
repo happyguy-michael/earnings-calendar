@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { earnings } from '@/lib/data';
 import { Earning } from '@/lib/types';
@@ -45,7 +45,7 @@ function CircularProgress({ value, size = 40, color = '#22c55e' }: { value: numb
   );
 }
 
-function EarningsCard({ earning, isToday }: { earning: Earning; isToday?: boolean }) {
+function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earning; isToday?: boolean; animationIndex?: number }) {
   const hasResult = earning.eps !== undefined && earning.eps !== null;
   const logoUrl = `https://logo.clearbit.com/${earning.company.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
   const isPending = !hasResult;
@@ -63,7 +63,11 @@ function EarningsCard({ earning, isToday }: { earning: Earning; isToday?: boolea
     : '#71717a';
 
   return (
-    <Link href={`/report/${earning.ticker}`} className={`earnings-row ${isTodayPending ? 'today-pending' : ''}`}>
+    <Link 
+      href={`/report/${earning.ticker}`} 
+      className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
+      style={{ animationDelay: `${animationIndex * 50}ms` }}
+    >
       <div className="logo-container">
         <img
           src={logoUrl}
@@ -102,25 +106,49 @@ export default function Home() {
   const [currentWeekStart, setCurrentWeekStart] = useState(() => getWeekStart(new Date()));
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigateWeek = useCallback((delta: number) => {
+    setCurrentWeekStart((prev) => {
+      const next = new Date(prev);
+      next.setDate(next.getDate() + delta * 7);
+      return next;
+    });
+  }, []);
+
+  const goToToday = useCallback(() => setCurrentWeekStart(getWeekStart(new Date())), []);
+
   // Simulate data loading - will be replaced with real API call
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
+  // Keyboard navigation for weeks
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateWeek(-1);
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        navigateWeek(1);
+      } else if (e.key === 't' || e.key === 'T') {
+        e.preventDefault();
+        goToToday();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigateWeek, goToToday]);
+
   if (isLoading) {
     return <SkeletonCalendar />;
   }
-
-  const navigateWeek = (delta: number) => {
-    setCurrentWeekStart((prev) => {
-      const next = new Date(prev);
-      next.setDate(next.getDate() + delta * 7);
-      return next;
-    });
-  };
-
-  const goToToday = () => setCurrentWeekStart(getWeekStart(new Date()));
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -155,10 +183,19 @@ export default function Home() {
               </p>
             </div>
             <div className="flex items-center gap-3">
+              <div className="keyboard-hint mr-2">
+                <span className="kbd">←</span>
+                <span className="kbd">→</span>
+                <span>navigate</span>
+                <span className="mx-1">·</span>
+                <span className="kbd">T</span>
+                <span>today</span>
+              </div>
               <button onClick={goToToday} className="btn btn-ghost">Today</button>
               <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-hidden">
                 <button
                   onClick={() => navigateWeek(-1)}
+                  aria-label="Previous week"
                   className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -168,6 +205,7 @@ export default function Home() {
                 <div className="w-px bg-white/10" />
                 <button
                   onClick={() => navigateWeek(1)}
+                  aria-label="Next week"
                   className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -274,7 +312,7 @@ export default function Home() {
                                 Pre-Market
                               </div>
                               <div className="space-y-2">
-                                {preMarket.map((e) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} />)}
+                                {preMarket.map((e, i) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} animationIndex={i} />)}
                               </div>
                             </div>
                           )}
@@ -285,7 +323,7 @@ export default function Home() {
                                 After Hours
                               </div>
                               <div className="space-y-2">
-                                {postMarket.map((e) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} />)}
+                                {postMarket.map((e, i) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
                               </div>
                             </div>
                           )}

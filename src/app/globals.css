@@ -407,6 +407,50 @@ body {
   color: white;
 }
 
+/* Enhanced focus states for accessibility */
+.btn:focus-visible,
+.earnings-row:focus-visible,
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.earnings-row:focus-visible {
+  outline-offset: 1px;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* Keyboard hint styling */
+.keyboard-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #52525b;
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #71717a;
+}
+
+@media (max-width: 768px) {
+  .keyboard-hint {
+    display: none;
+  }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -437,12 +481,43 @@ body {
   50% { opacity: 0.5; }
 }
 
+@keyframes slideInRight {
+  from { 
+    opacity: 0; 
+    transform: translateX(-12px) scale(0.97); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0) scale(1); 
+  }
+}
+
+@keyframes popIn {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  60% {
+    transform: scale(1.02);
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.4s ease forwards;
 }
 
 .animate-pulse {
   animation: pulse 2s ease-in-out infinite;
+}
+
+/* Staggered earnings card animation */
+.earnings-card-animate {
+  opacity: 0;
+  animation: slideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* ============================================
