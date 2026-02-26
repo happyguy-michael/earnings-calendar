@@ -121,75 +121,111 @@ export function EPSChart({ data }: { data: DataPoint[] }) {
 export function EPSBarChart({ data }: { data: DataPoint[] }) {
   const reversed = [...data].reverse();
   const maxValue = Math.max(...reversed.map(d => Math.max(d.eps, d.estimate))) * 1.15;
+  const minValue = 0;
+  
+  // Generate nice Y-axis ticks
+  const tickCount = 5;
+  const ticks = Array.from({ length: tickCount }, (_, i) => {
+    const value = minValue + ((maxValue - minValue) * i) / (tickCount - 1);
+    return value;
+  });
+  
+  const chartHeight = 180; // pixels for bar area
   
   return (
     <div className="bg-gradient-to-br from-zinc-900/50 to-zinc-900/30 rounded-2xl p-6 border border-zinc-800/50">
-      <div className="flex items-end justify-around gap-6 h-56">
-        {reversed.map((d, i) => {
-          const epsHeight = (d.eps / maxValue) * 100;
-          const estHeight = (d.estimate / maxValue) * 100;
-          const surprise = ((d.eps - d.estimate) / Math.abs(d.estimate) * 100);
-          const isPositive = surprise >= 0;
-          
-          return (
-            <div key={i} className="flex flex-col items-center gap-3 flex-1 group">
-              {/* Surprise badge */}
-              <div className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all group-hover:scale-110 ${
-                isPositive 
-                  ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_12px_rgba(34,197,94,0.3)]' 
-                  : 'bg-red-500/20 text-red-400 border-red-500/30 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
-              }`}>
-                {isPositive ? '+' : ''}{surprise.toFixed(1)}%
-              </div>
-              
-              {/* Bars */}
-              <div className="flex items-end gap-2 h-36">
-                {/* Estimate */}
-                <div className="relative group/bar">
-                  <div 
-                    className="w-8 rounded-t-lg bg-gradient-to-t from-zinc-700 to-zinc-600 transition-all duration-300 hover:from-zinc-600 hover:to-zinc-500"
-                    style={{ height: `${estHeight}%` }}
-                  />
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-zinc-800 px-2 py-1 rounded text-[10px] text-zinc-300 whitespace-nowrap border border-zinc-700">
-                    Est: ${d.estimate.toFixed(2)}
-                  </div>
-                </div>
-                
-                {/* Actual */}
-                <div className="relative group/bar">
-                  <div 
-                    className={`w-8 rounded-t-lg transition-all duration-300 ${
-                      isPositive 
-                        ? 'bg-gradient-to-t from-emerald-600 to-emerald-400 shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)]' 
-                        : 'bg-gradient-to-t from-red-600 to-red-400 shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)]'
-                    }`}
-                    style={{ height: `${epsHeight}%` }}
-                  />
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-zinc-800 px-2 py-1 rounded text-[10px] text-white whitespace-nowrap font-semibold border border-zinc-700">
-                    ${d.eps.toFixed(2)}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Quarter label */}
-              <div className="text-sm text-zinc-400 font-medium">{d.quarter}</div>
+      <div className="flex">
+        {/* Y-Axis */}
+        <div className="flex flex-col justify-between pr-4 py-2" style={{ height: `${chartHeight + 60}px` }}>
+          {[...ticks].reverse().map((tick, i) => (
+            <div key={i} className="text-xs text-zinc-500 font-medium text-right w-12">
+              ${tick.toFixed(2)}
             </div>
-          );
-        })}
+          ))}
+        </div>
+        
+        {/* Chart Area */}
+        <div className="flex-1 relative">
+          {/* Grid lines */}
+          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none" style={{ height: `${chartHeight}px`, top: '30px' }}>
+            {ticks.map((_, i) => (
+              <div key={i} className="border-t border-zinc-800/50 w-full" />
+            ))}
+          </div>
+          
+          {/* Bars container */}
+          <div className="flex items-end justify-around gap-4" style={{ height: `${chartHeight + 60}px`, paddingTop: '30px' }}>
+            {reversed.map((d, i) => {
+              const epsHeight = (d.eps / maxValue) * chartHeight;
+              const estHeight = (d.estimate / maxValue) * chartHeight;
+              const surprise = ((d.eps - d.estimate) / Math.abs(d.estimate) * 100);
+              const isPositive = surprise >= 0;
+              
+              return (
+                <div key={i} className="flex flex-col items-center gap-2 flex-1 group">
+                  {/* Surprise badge */}
+                  <div className={`px-2 py-1 rounded-full text-[10px] font-semibold border transition-all group-hover:scale-110 ${
+                    isPositive 
+                      ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' 
+                      : 'bg-red-500/20 text-red-400 border-red-500/30'
+                  }`}>
+                    {isPositive ? '+' : ''}{surprise.toFixed(1)}%
+                  </div>
+                  
+                  {/* Bars */}
+                  <div className="flex items-end gap-1.5" style={{ height: `${chartHeight}px` }}>
+                    {/* Estimate bar */}
+                    <div className="relative">
+                      <div 
+                        className="w-6 rounded-t-md bg-gradient-to-t from-zinc-700 to-zinc-500 transition-all duration-300"
+                        style={{ height: `${estHeight}px` }}
+                      />
+                      {/* Value label on bar */}
+                      <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] text-zinc-500 font-medium whitespace-nowrap">
+                        ${d.estimate.toFixed(2)}
+                      </div>
+                    </div>
+                    
+                    {/* Actual bar */}
+                    <div className="relative">
+                      <div 
+                        className={`w-6 rounded-t-md transition-all duration-300 ${
+                          isPositive 
+                            ? 'bg-gradient-to-t from-emerald-600 to-emerald-400 shadow-[0_0_15px_rgba(34,197,94,0.4)]' 
+                            : 'bg-gradient-to-t from-red-600 to-red-400 shadow-[0_0_15px_rgba(239,68,68,0.4)]'
+                        }`}
+                        style={{ height: `${epsHeight}px` }}
+                      />
+                      {/* Value label on bar */}
+                      <div className={`absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-bold whitespace-nowrap ${
+                        isPositive ? 'text-emerald-400' : 'text-red-400'
+                      }`}>
+                        ${d.eps.toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Quarter label */}
+                  <div className="text-xs text-zinc-400 font-medium mt-1">{d.quarter}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
       
       {/* Legend */}
-      <div className="flex items-center justify-center gap-8 mt-6 pt-4 border-t border-zinc-800/50">
+      <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-zinc-800/50">
         <div className="flex items-center gap-2 text-xs text-zinc-500">
-          <div className="w-4 h-4 rounded bg-gradient-to-t from-zinc-700 to-zinc-600"></div>
+          <div className="w-3 h-3 rounded bg-gradient-to-t from-zinc-700 to-zinc-500"></div>
           Estimate
         </div>
         <div className="flex items-center gap-2 text-xs text-zinc-500">
-          <div className="w-4 h-4 rounded bg-gradient-to-t from-emerald-600 to-emerald-400 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+          <div className="w-3 h-3 rounded bg-gradient-to-t from-emerald-600 to-emerald-400"></div>
           Beat
         </div>
         <div className="flex items-center gap-2 text-xs text-zinc-500">
-          <div className="w-4 h-4 rounded bg-gradient-to-t from-red-600 to-red-400 shadow-[0_0_8px_rgba(239,68,68,0.4)]"></div>
+          <div className="w-3 h-3 rounded bg-gradient-to-t from-red-600 to-red-400"></div>
           Miss
         </div>
       </div>
