@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { getEarning, getAnalysis, earnings } from '@/lib/data';
 import { EPSChart, EPSBarChart } from '@/components/EPSChart';
 import { CountUp } from '@/components/CountUp';
+import { SkeletonDetailPage } from '@/components/Skeleton';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -48,6 +49,13 @@ export default function ReportPage() {
   const analysis = getAnalysis(ticker);
   const [activeTab, setActiveTab] = useState('overview');
   const [countdown, setCountdown] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate data loading
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, [ticker]);
 
   const historicalData = [
     { quarter: 'Q4 2025', eps: earning?.eps || earning?.estimate || 0, estimate: earning?.estimate || 0, beat: earning?.result === 'beat' },
@@ -73,6 +81,10 @@ export default function ReportPage() {
     const i = setInterval(updateCountdown, 60000);
     return () => clearInterval(i);
   }, [earning]);
+
+  if (isLoading) {
+    return <SkeletonDetailPage />;
+  }
 
   if (!earning) {
     return (

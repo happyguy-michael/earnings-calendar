@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { earnings } from '@/lib/data';
 import { Earning } from '@/lib/types';
 import { CountUp } from '@/components/CountUp';
+import { SkeletonCalendar } from '@/components/Skeleton';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -99,6 +100,17 @@ function EarningsCard({ earning, isToday }: { earning: Earning; isToday?: boolea
 
 export default function Home() {
   const [currentWeekStart, setCurrentWeekStart] = useState(() => getWeekStart(new Date()));
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate data loading - will be replaced with real API call
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <SkeletonCalendar />;
+  }
 
   const navigateWeek = (delta: number) => {
     setCurrentWeekStart((prev) => {
