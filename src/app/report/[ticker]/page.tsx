@@ -258,29 +258,79 @@ export default function ReportPage() {
                   )}
                 </div>
 
-                {/* Visual bar comparison */}
+                {/* Visual bar comparison - polished */}
                 {hasResult && (
                   <div className="mt-10 pt-8 border-t border-white/5">
-                    <div className="flex items-end justify-center gap-16 h-32">
-                      <div className="flex flex-col items-center">
-                        <div 
-                          className="w-24 bg-zinc-700 rounded-t-xl transition-all"
-                          style={{ height: `${Math.min(100, (earning.estimate / (earning.eps || 1)) * 80)}px` }}
-                        />
-                        <div className="mt-3 text-center">
-                          <div className="text-xs text-zinc-500">Estimate</div>
-                          <div className="text-sm font-semibold text-zinc-400">${earning.estimate.toFixed(2)}</div>
+                    <div className="flex items-end justify-center gap-12 h-44">
+                      {/* Estimate bar */}
+                      <div className="flex flex-col items-center group">
+                        <div className="relative">
+                          <div 
+                            className="w-20 rounded-xl bg-gradient-to-t from-zinc-700 to-zinc-500 transition-all duration-500 group-hover:from-zinc-600 group-hover:to-zinc-400"
+                            style={{ 
+                              height: `${Math.min(120, Math.max(40, (earning.estimate / (earning.eps || 1)) * 100))}px`,
+                              boxShadow: '0 0 20px rgba(113, 113, 122, 0.2)'
+                            }}
+                          />
+                          <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-zinc-800 px-3 py-1.5 rounded-lg text-sm text-zinc-300 whitespace-nowrap border border-zinc-700 shadow-xl">
+                            ${earning.estimate.toFixed(2)}
+                          </div>
+                        </div>
+                        <div className="mt-4 text-center">
+                          <div className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Estimate</div>
+                          <div className="text-lg font-bold text-zinc-400">${earning.estimate.toFixed(2)}</div>
                         </div>
                       </div>
-                      <div className="flex flex-col items-center">
-                        <div 
-                          className={`w-24 rounded-t-xl transition-all ${earning.result === 'beat' ? 'success-gradient glow-success' : 'danger-gradient glow-danger'}`}
-                          style={{ height: '80px' }}
-                        />
-                        <div className="mt-3 text-center">
-                          <div className="text-xs text-zinc-500">Actual</div>
-                          <div className="text-sm font-semibold text-white">${earning.eps?.toFixed(2)}</div>
+                      
+                      {/* Actual bar */}
+                      <div className="flex flex-col items-center group">
+                        <div className="relative">
+                          <div 
+                            className={`w-20 rounded-xl transition-all duration-500 ${
+                              earning.result === 'beat' 
+                                ? 'bg-gradient-to-t from-emerald-600 to-emerald-400' 
+                                : 'bg-gradient-to-t from-red-600 to-red-400'
+                            }`}
+                            style={{ 
+                              height: '100px',
+                              boxShadow: earning.result === 'beat' 
+                                ? '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2)' 
+                                : '0 0 30px rgba(239, 68, 68, 0.4), 0 0 60px rgba(239, 68, 68, 0.2)'
+                            }}
+                          />
+                          {/* Glow effect on hover */}
+                          <div 
+                            className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                              earning.result === 'beat' ? 'bg-emerald-400/20' : 'bg-red-400/20'
+                            }`}
+                            style={{ filter: 'blur(8px)' }}
+                          />
+                          <div className={`absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 px-3 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap border shadow-xl ${
+                            earning.result === 'beat' 
+                              ? 'bg-emerald-900/90 text-emerald-300 border-emerald-700' 
+                              : 'bg-red-900/90 text-red-300 border-red-700'
+                          }`}>
+                            ${earning.eps?.toFixed(2)}
+                          </div>
                         </div>
+                        <div className="mt-4 text-center">
+                          <div className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Actual</div>
+                          <div className={`text-lg font-bold ${earning.result === 'beat' ? 'text-emerald-400' : 'text-red-400'}`}>
+                            ${earning.eps?.toFixed(2)}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Surprise indicator */}
+                      <div className="flex flex-col items-center justify-end h-full pb-12">
+                        <div className={`px-4 py-2 rounded-full text-sm font-bold border ${
+                          surprise >= 0 
+                            ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
+                            : 'bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_20px_rgba(239,68,68,0.3)]'
+                        }`}>
+                          {surprise >= 0 ? '↑' : '↓'} {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+                        </div>
+                        <div className="text-xs text-zinc-500 mt-2">Surprise</div>
                       </div>
                     </div>
                   </div>
