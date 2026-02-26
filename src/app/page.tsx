@@ -44,9 +44,11 @@ function CircularProgress({ value, size = 40, color = '#22c55e' }: { value: numb
   );
 }
 
-function EarningsCard({ earning }: { earning: Earning }) {
+function EarningsCard({ earning, isToday }: { earning: Earning; isToday?: boolean }) {
   const hasResult = earning.eps !== undefined && earning.eps !== null;
   const logoUrl = `https://logo.clearbit.com/${earning.company.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
+  const isPending = !hasResult;
+  const isTodayPending = isToday && isPending;
   
   let surprise = 0;
   if (hasResult && earning.estimate) {
@@ -60,7 +62,7 @@ function EarningsCard({ earning }: { earning: Earning }) {
     : '#71717a';
 
   return (
-    <Link href={`/report/${earning.ticker}`} className="earnings-row">
+    <Link href={`/report/${earning.ticker}`} className={`earnings-row ${isTodayPending ? 'today-pending' : ''}`}>
       <div className="logo-container">
         <img
           src={logoUrl}
@@ -257,7 +259,7 @@ export default function Home() {
                                 Pre-Market
                               </div>
                               <div className="space-y-2">
-                                {preMarket.map((e) => <EarningsCard key={e.ticker} earning={e} />)}
+                                {preMarket.map((e) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} />)}
                               </div>
                             </div>
                           )}
@@ -268,7 +270,7 @@ export default function Home() {
                                 After Hours
                               </div>
                               <div className="space-y-2">
-                                {postMarket.map((e) => <EarningsCard key={e.ticker} earning={e} />)}
+                                {postMarket.map((e) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} />)}
                               </div>
                             </div>
                           )}
