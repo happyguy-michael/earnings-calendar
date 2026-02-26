@@ -1,5 +1,3 @@
-'use client';
-
 interface DataPoint {
   quarter: string;
   eps: number;
@@ -9,111 +7,125 @@ interface DataPoint {
 
 export function EPSChart({ data }: { data: DataPoint[] }) {
   const reversed = [...data].reverse();
-  const maxValue = Math.max(...reversed.map(d => Math.max(d.eps, d.estimate))) * 1.2;
-  const minValue = Math.min(...reversed.map(d => Math.min(d.eps, d.estimate)), 0) * 0.9;
-  const range = maxValue - minValue;
+  const maxValue = Math.max(...reversed.map(d => Math.max(d.eps, d.estimate))) * 1.15;
+  const minValue = 0;
   
-  const width = 640;
-  const height = 320;
-  const padding = { top: 50, right: 50, bottom: 70, left: 70 };
-  const chartWidth = width - padding.left - padding.right;
-  const chartHeight = height - padding.top - padding.bottom;
+  // Generate Y-axis ticks
+  const tickCount = 5;
+  const ticks = Array.from({ length: tickCount }, (_, i) => 
+    minValue + ((maxValue - minValue) * i) / (tickCount - 1)
+  );
   
-  const xStep = chartWidth / (reversed.length - 1 || 1);
+  const chartHeight = 200;
   
-  const getY = (value: number) => padding.top + chartHeight - ((value - minValue) / range) * chartHeight;
-  const getX = (index: number) => padding.left + index * xStep;
-  
-  const epsPath = reversed.map((d, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(d.eps)}`).join(' ');
-  const estPath = reversed.map((d, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(d.estimate)}`).join(' ');
-  const areaPath = `${epsPath} L ${getX(reversed.length - 1)} ${height - padding.bottom} L ${getX(0)} ${height - padding.bottom} Z`;
+  const getHeight = (value: number) => ((value - minValue) / (maxValue - minValue)) * chartHeight;
 
   return (
     <div className="w-full bg-gradient-to-br from-zinc-900/50 to-zinc-900/30 rounded-2xl p-6 border border-zinc-800/50">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
-        <defs>
-          <linearGradient id="epsGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
-            <stop offset="50%" stopColor="#22c55e" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#22c55e" />
-            <stop offset="100%" stopColor="#4ade80" />
-          </linearGradient>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
-          <filter id="shadow">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.3"/>
-          </filter>
-        </defs>
+      {/* Legend at top */}
+      <div className="flex items-center justify-end gap-6 mb-4 text-xs text-zinc-500">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-zinc-500"></div>
+          <span>Estimate</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+          <span>Actual (Beat)</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-red-500"></div>
+          <span>Actual (Miss)</span>
+        </div>
+      </div>
+      
+      <div className="flex">
+        {/* Y-Axis */}
+        <div className="flex flex-col justify-between pr-3 text-right" style={{ height: `${chartHeight}px` }}>
+          {[...ticks].reverse().map((tick, i) => (
+            <div key={i} className="text-xs text-zinc-500 font-mono leading-none">
+              ${tick.toFixed(2)}
+            </div>
+          ))}
+        </div>
         
-        {/* Grid */}
-        {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
-          const y = padding.top + chartHeight * (1 - ratio);
-          const value = minValue + range * ratio;
-          return (
-            <g key={i}>
-              <line x1={padding.left} y1={y} x2={width - padding.right} y2={y} stroke="#27272a" strokeWidth="1" strokeDasharray="4,6"/>
-              <text x={padding.left - 12} y={y + 4} textAnchor="end" fill="#71717a" fontSize="12" fontWeight="500">
-                ${value.toFixed(2)}
-              </text>
-            </g>
-          );
-        })}
-        
-        {/* Area fill */}
-        <path d={areaPath} fill="url(#epsGradient)" />
-        
-        {/* Estimate line */}
-        <path d={estPath} fill="none" stroke="#525252" strokeWidth="2" strokeDasharray="8,6" opacity="0.7"/>
-        
-        {/* EPS line with glow */}
-        <path d={epsPath} fill="none" stroke="url(#lineGradient)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" filter="url(#glow)"/>
-        
-        {/* Data points */}
-        {reversed.map((d, i) => {
-          const surprise = ((d.eps - d.estimate) / Math.abs(d.estimate) * 100);
-          const isPositive = surprise >= 0;
+        {/* Chart Area */}
+        <div className="flex-1 relative border-l border-b border-zinc-700/50">
+          {/* Horizontal grid lines */}
+          {ticks.map((_, i) => (
+            <div 
+              key={i} 
+              className="absolute left-0 right-0 border-t border-zinc-800/50"
+              style={{ top: `${(i / (tickCount - 1)) * 100}%` }}
+            />
+          ))}
           
-          return (
-            <g key={i}>
-              {/* X labels */}
-              <text x={getX(i)} y={height - padding.bottom + 28} textAnchor="middle" fill="#a1a1aa" fontSize="13" fontWeight="500">
-                {d.quarter}
-              </text>
+          {/* Bars */}
+          <div className="absolute inset-0 flex items-end justify-around px-4">
+            {reversed.map((d, i) => {
+              const epsHeight = getHeight(d.eps);
+              const estHeight = getHeight(d.estimate);
+              const surprise = ((d.eps - d.estimate) / Math.abs(d.estimate) * 100);
+              const isPositive = surprise >= 0;
               
-              {/* Vertical guide on hover area */}
-              <line x1={getX(i)} y1={padding.top} x2={getX(i)} y2={height - padding.bottom} stroke="#3f3f46" strokeWidth="1" strokeDasharray="2,4" opacity="0.3"/>
-              
-              {/* Estimate point */}
-              <circle cx={getX(i)} cy={getY(d.estimate)} r="5" fill="#18181b" stroke="#525252" strokeWidth="2"/>
-              
-              {/* EPS point with glow */}
-              <circle cx={getX(i)} cy={getY(d.eps)} r="8" fill={isPositive ? '#22c55e' : '#ef4444'} filter="url(#shadow)"/>
-              <circle cx={getX(i)} cy={getY(d.eps)} r="4" fill="#fff"/>
-              
-              {/* Surprise label */}
-              <g transform={`translate(${getX(i)}, ${getY(d.eps) - 24})`}>
-                <rect x="-28" y="-14" width="56" height="24" rx="12" fill={isPositive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'} stroke={isPositive ? 'rgba(34, 197, 94, 0.4)' : 'rgba(239, 68, 68, 0.4)'} strokeWidth="1"/>
-                <text textAnchor="middle" y="4" fill={isPositive ? '#4ade80' : '#f87171'} fontSize="11" fontWeight="600">
-                  {isPositive ? '+' : ''}{surprise.toFixed(1)}%
-                </text>
-              </g>
-            </g>
-          );
-        })}
-        
-        {/* Legend */}
-        <g transform={`translate(${width - padding.right - 140}, ${padding.top - 30})`}>
-          <line x1="0" y1="8" x2="24" y2="8" stroke="url(#lineGradient)" strokeWidth="3" strokeLinecap="round"/>
-          <text x="32" y="12" fill="#a1a1aa" fontSize="12" fontWeight="500">Actual EPS</text>
-          <line x1="100" y1="8" x2="124" y2="8" stroke="#525252" strokeWidth="2" strokeDasharray="8,6"/>
-          <text x="132" y="12" fill="#71717a" fontSize="12" fontWeight="500">Estimate</text>
-        </g>
-      </svg>
+              return (
+                <div key={i} className="flex flex-col items-center" style={{ height: '100%' }}>
+                  {/* Value labels above bars */}
+                  <div className="flex-1 flex items-end justify-center gap-1 pb-1">
+                    <div className="flex flex-col items-center gap-1">
+                      {/* Surprise badge */}
+                      <div className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        isPositive 
+                          ? 'bg-emerald-500/20 text-emerald-400' 
+                          : 'bg-red-500/20 text-red-400'
+                      }`}>
+                        {isPositive ? '+' : ''}{surprise.toFixed(1)}%
+                      </div>
+                      
+                      {/* Bars side by side */}
+                      <div className="flex items-end gap-1">
+                        {/* Estimate bar */}
+                        <div className="flex flex-col items-center">
+                          <span className="text-[9px] text-zinc-500 mb-1">${d.estimate.toFixed(2)}</span>
+                          <div 
+                            className="w-6 rounded-t bg-zinc-600"
+                            style={{ height: `${estHeight}px` }}
+                          />
+                        </div>
+                        
+                        {/* Actual bar */}
+                        <div className="flex flex-col items-center">
+                          <span className={`text-[9px] font-bold mb-1 ${isPositive ? 'text-emerald-400' : 'text-red-400'}`}>
+                            ${d.eps.toFixed(2)}
+                          </span>
+                          <div 
+                            className={`w-6 rounded-t ${
+                              isPositive 
+                                ? 'bg-emerald-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' 
+                                : 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]'
+                            }`}
+                            style={{ height: `${epsHeight}px` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      
+      {/* X-Axis labels */}
+      <div className="flex pl-12">
+        <div className="flex-1 flex justify-around pt-2">
+          {reversed.map((d, i) => (
+            <div key={i} className="text-xs text-zinc-400 font-medium">
+              {d.quarter}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
