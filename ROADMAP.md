@@ -24,10 +24,10 @@ Premium earnings calendar with AI-powered analysis, targeting retail traders who
 ## Backlog - UI/UX
 - [x] Animated number counters on stats ✓
 - [x] Skeleton loading states ✓
+- [x] Keyboard navigation ✓
+- [x] Search/filter by ticker ✓
 - [ ] Smooth page transitions
 - [ ] Dark/light mode toggle
-- [ ] Keyboard navigation
-- [ ] Search/filter by ticker
 - [ ] Watchlist functionality
 - [ ] Calendar export (Google/Apple)
 
@@ -55,6 +55,10 @@ Track autonomous improvements here:
 - EPS chart redesign (gradients, glows, premium styling)
 - **Animated number counters** - CountUp component with cubic ease-out, staggered timing on stats cards and detail page EPS figures
 - **Skeleton loading states** - Premium shimmer effect with linear gradients, staggered delays, full page skeletons for calendar + detail pages. Shows shaped placeholders during initial load for polished UX.
+- **Keyboard navigation** - Arrow keys to navigate weeks, T for today
+
+### 2026-02-27
+- **Search/filter by ticker** - Glassmorphic search bar with animated focus states, keyboard shortcuts (/ to focus, Escape to clear), live filtering, result count indicator, and no-results empty state. Stats update dynamically based on filtered results. Mobile responsive.
 
 ---
 *This file is updated by the autonomous product iteration cron job.*
