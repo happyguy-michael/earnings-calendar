@@ -23,7 +23,7 @@ Premium earnings calendar with AI-powered analysis, targeting retail traders who
 
 ## Backlog - UI/UX
 - [x] Animated number counters on stats ✓
-- [ ] Skeleton loading states
+- [x] Skeleton loading states ✓
 - [ ] Smooth page transitions
 - [ ] Dark/light mode toggle
 - [ ] Keyboard navigation
@@ -54,6 +54,7 @@ Track autonomous improvements here:
 - Initial setup
 - EPS chart redesign (gradients, glows, premium styling)
 - **Animated number counters** - CountUp component with cubic ease-out, staggered timing on stats cards and detail page EPS figures
+- **Skeleton loading states** - Premium shimmer effect with linear gradients, staggered delays, full page skeletons for calendar + detail pages. Shows shaped placeholders during initial load for polished UX.
 
 ---
 *This file is updated by the autonomous product iteration cron job.*
