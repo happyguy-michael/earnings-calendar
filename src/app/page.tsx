@@ -14,6 +14,7 @@ import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
 import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 import { CountdownBadge } from '@/components/Countdown';
 import { ProgressRing } from '@/components/ProgressRing';
+import { BackToTop } from '@/components/BackToTop';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -514,6 +515,9 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Floating back to top button */}
+      <BackToTop />
     </div>
   );
 }
