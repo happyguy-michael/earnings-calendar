@@ -28,7 +28,7 @@ Premium earnings calendar with AI-powered analysis, targeting retail traders who
 - [x] Search/filter by ticker ✓
 - [x] Smooth page transitions ✓
 - [x] Quick filter chips (Beat/Miss/Pending) ✓
-- [ ] Dark/light mode toggle
+- [x] Dark/light mode toggle ✓
 - [ ] Watchlist functionality
 - [ ] Calendar export (Google/Apple)
 
@@ -64,6 +64,7 @@ Track autonomous improvements here:
 - **Hover tooltips** - Premium glassmorphic tooltips on earnings cards showing detailed EPS/revenue data. Displays actual vs estimate with surprise %, revenue figures, and beat probability explanations for pending earnings. Smooth fade-in animation, hidden on mobile for better UX.
 - **Stat card hover micro-interactions** - Premium hover effects on stats cards: subtle lift (translateY + scale), animated gradient glow behind cards that pulses when hovered, color-matched glow variants for success/warning cards, cubic-bezier easing for smooth premium feel. Touch-friendly active state on mobile.
 - **Quick filter chips** - Status filter toggles for All/Beat/Miss/Pending. Pill-shaped buttons with color-coded active states (green for Beat, red for Miss, amber for Pending). Shows count badges, applies to calendar view alongside search. Mobile-friendly with horizontal scroll. Stats and calendar update dynamically.
+- **Dark/light mode toggle** - Animated sun/moon toggle switch with smooth theme transitions. Features include: bouncy thumb animation with spring easing, twinkling stars and moon craters on dark mode, rotating sun rays on light mode, full theme-aware CSS variables for all UI components (cards, tooltips, search bar, filters, stats, etc.), localStorage persistence, respects system preference on first visit. Light mode uses soft blue/white gradients with appropriate contrast adjustments.
 
 ---
 *This file is updated by the autonomous product iteration cron job.*
