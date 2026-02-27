@@ -7,7 +7,7 @@ import { Earning } from '@/lib/types';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonCalendar } from '@/components/Skeleton';
 import { SearchBar } from '@/components/SearchBar';
-import { Tooltip, EarningsTooltipContent } from '@/components/Tooltip';
+import { EarningsTooltipContent } from '@/components/Tooltip';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -69,21 +69,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   const revenueEst = earning.revenueEstimate ? earning.revenueEstimate * 1e9 : null;
 
   return (
-    <Tooltip
-      content={
-        <EarningsTooltipContent
-          ticker={earning.ticker}
-          company={earning.company}
-          eps={earning.eps}
-          estimate={earning.estimate}
-          revenue={revenueActual}
-          revenueEstimate={revenueEst}
-          beatOdds={earning.beatOdds}
-          time={earning.time}
-          result={earning.result}
-        />
-      }
-    >
+    <div className="earnings-card-wrapper">
       <Link 
         href={`/report/${earning.ticker}`} 
         className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
@@ -120,7 +106,21 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           </div>
         ) : null}
       </Link>
-    </Tooltip>
+      <div className="earnings-tooltip">
+        <EarningsTooltipContent
+          ticker={earning.ticker}
+          company={earning.company}
+          eps={earning.eps}
+          estimate={earning.estimate}
+          revenue={revenueActual}
+          revenueEstimate={revenueEst}
+          beatOdds={earning.beatOdds}
+          time={earning.time}
+          result={earning.result}
+        />
+        <div className="tooltip-arrow" />
+      </div>
+    </div>
   );
 }
 

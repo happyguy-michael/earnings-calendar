@@ -159,6 +159,11 @@ body {
   filter: drop-shadow(0 0 6px currentColor);
 }
 
+/* Earnings card wrapper for tooltip positioning */
+.earnings-card-wrapper {
+  position: relative;
+}
+
 /* Earnings row */
 .earnings-row {
   display: flex;
@@ -175,6 +180,26 @@ body {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.12);
   transform: translateX(4px);
+}
+
+/* Earnings tooltip */
+.earnings-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.earnings-card-wrapper:hover .earnings-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 0.25s;
 }
 
 /* Today's pending earnings - animated pulse glow */
@@ -1127,27 +1152,32 @@ a {
 
 /* ============================================
    TOOLTIP COMPONENT
-   Premium glassmorphic tooltip with arrow
+   Premium glassmorphic tooltip with CSS hover
    ============================================ */
 
-.tooltip-trigger {
+.tooltip-wrapper {
+  position: relative;
   display: contents;
 }
 
-.tooltip {
+.tooltip-popup {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
   pointer-events: none;
-  animation: tooltipFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  transform: translateX(-50%) translateY(4px);
 }
 
-@keyframes tooltipFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(4px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.tooltip-wrapper:hover .tooltip-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 0.2s;
 }
 
 .tooltip-content {
@@ -1162,16 +1192,16 @@ a {
     0 8px 32px rgba(0, 0, 0, 0.4),
     0 2px 8px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
 }
 
 .tooltip-arrow {
   position: absolute;
   bottom: -6px;
   left: 50%;
-  transform: translateX(-50%);
   width: 12px;
   height: 12px;
-  background: linear-gradient(135deg, rgba(35, 35, 50, 0.98) 0%, rgba(25, 25, 35, 0.99) 100%);
+  background: rgba(30, 30, 40, 0.98);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-top: none;
   border-left: none;
@@ -1184,6 +1214,7 @@ a {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2px;
+  gap: 12px;
 }
 
 .tooltip-ticker {
@@ -1198,6 +1229,7 @@ a {
   font-weight: 500;
   padding: 3px 8px;
   border-radius: 100px;
+  white-space: nowrap;
 }
 
 .tooltip-time.pre {
@@ -1214,6 +1246,10 @@ a {
   font-size: 12px;
   color: #71717a;
   margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .tooltip-divider {
@@ -1232,6 +1268,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 
 .tooltip-label {
@@ -1256,11 +1293,14 @@ a {
   color: #52525b;
   font-style: italic;
   margin-top: 4px;
+  white-space: normal;
+  max-width: 200px;
 }
 
 /* Hide tooltips on mobile (touch devices) */
 @media (max-width: 768px), (hover: none) {
-  .tooltip {
+  .tooltip-popup,
+  .earnings-tooltip {
     display: none !important;
   }
 }

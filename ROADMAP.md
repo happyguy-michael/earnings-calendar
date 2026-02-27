@@ -60,6 +60,7 @@ Track autonomous improvements here:
 ### 2026-02-27
 - **Search/filter by ticker** - Glassmorphic search bar with animated focus states, keyboard shortcuts (/ to focus, Escape to clear), live filtering, result count indicator, and no-results empty state. Stats update dynamically based on filtered results. Mobile responsive.
 - **Smooth page transitions** - Added template.tsx with fade/slide animations on navigation. Exit animation fades out with subtle upward movement, enter animation slides up with scale effect. Uses cubic-bezier easing for premium feel. CSS classes: `.page-transition`, `.page-exit`, `.page-enter`.
+- **Hover tooltips** - Premium glassmorphic tooltips on earnings cards showing detailed EPS/revenue data. Displays actual vs estimate with surprise %, revenue figures, and beat probability explanations for pending earnings. Smooth fade-in animation, hidden on mobile for better UX.
 
 ---
 *This file is updated by the autonomous product iteration cron job.*

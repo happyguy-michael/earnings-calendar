@@ -1,94 +1,21 @@
 'use client';
 
-import { useState, useRef, useEffect, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface TooltipProps {
   children: ReactNode;
   content: ReactNode;
-  delay?: number;
 }
 
-export function Tooltip({ children, content, delay = 300 }: TooltipProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const showTooltip = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsVisible(true);
-    }, delay);
-  };
-
-  const hideTooltip = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setIsVisible(false);
-  };
-
-  useEffect(() => {
-    if (isVisible && triggerRef.current && tooltipRef.current) {
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const tooltipRect = tooltipRef.current.getBoundingClientRect();
-      
-      // Position above the trigger, centered
-      let x = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
-      let y = triggerRect.top - tooltipRect.height - 8;
-      
-      // Keep within viewport bounds
-      const padding = 12;
-      if (x < padding) x = padding;
-      if (x + tooltipRect.width > window.innerWidth - padding) {
-        x = window.innerWidth - tooltipRect.width - padding;
-      }
-      
-      // If not enough space above, show below
-      if (y < padding) {
-        y = triggerRect.bottom + 8;
-      }
-      
-      setPosition({ x, y });
-    }
-  }, [isVisible]);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
+export function Tooltip({ children, content }: TooltipProps) {
   return (
-    <>
-      <div
-        ref={triggerRef}
-        onMouseEnter={showTooltip}
-        onMouseLeave={hideTooltip}
-        onFocus={showTooltip}
-        onBlur={hideTooltip}
-        className="tooltip-trigger"
-      >
-        {children}
+    <div className="tooltip-wrapper">
+      {children}
+      <div className="tooltip-popup">
+        {content}
+        <div className="tooltip-arrow" />
       </div>
-      {isVisible && (
-        <div
-          ref={tooltipRef}
-          className="tooltip"
-          style={{
-            position: 'fixed',
-            left: position.x,
-            top: position.y,
-            zIndex: 9999,
-          }}
-        >
-          {content}
-          <div className="tooltip-arrow" />
-        </div>
-      )}
-    </>
+    </div>
   );
 }
 
@@ -113,7 +40,6 @@ export function EarningsTooltipContent({
   revenueEstimate,
   beatOdds,
   time,
-  result,
 }: EarningsTooltipProps) {
   const hasResult = eps !== undefined && eps !== null;
   
