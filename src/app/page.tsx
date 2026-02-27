@@ -9,6 +9,7 @@ import { SkeletonCalendar } from '@/components/Skeleton';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterChips, FilterType } from '@/components/FilterChips';
 import { EarningsTooltipContent } from '@/components/Tooltip';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -232,7 +233,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="sticky top-0 z-20 backdrop-blur-xl bg-[#0a0a0f]/80 border-b border-white/5">
+      <header className="sticky top-0 z-20 backdrop-blur-xl border-b" style={{ background: 'var(--header-bg)', borderColor: 'var(--border-secondary)' }}>
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-shrink-0">
@@ -263,6 +264,7 @@ export default function Home() {
                 <span className="kbd">T</span>
                 <span>today</span>
               </div>
+              <ThemeToggle />
               <button onClick={goToToday} className="btn btn-ghost">Today</button>
               <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-hidden">
                 <button

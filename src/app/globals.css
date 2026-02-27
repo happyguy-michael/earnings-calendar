@@ -10,6 +10,42 @@
   --success: #22c55e;
   --danger: #ef4444;
   --warning: #f59e0b;
+  
+  /* Theme-aware colors (dark mode defaults) */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: rgba(20, 20, 30, 0.8);
+  --bg-tertiary: rgba(30, 30, 45, 0.9);
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-faint: #52525b;
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.06);
+  --glass-bg: linear-gradient(135deg, rgba(30, 30, 45, 0.9) 0%, rgba(20, 20, 30, 0.95) 100%);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --header-bg: rgba(10, 10, 15, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --glow-opacity: 1;
+}
+
+/* Light mode overrides */
+html.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: rgba(255, 255, 255, 0.9);
+  --bg-tertiary: rgba(255, 255, 255, 0.95);
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --text-primary: #18181b;
+  --text-secondary: #3f3f46;
+  --text-muted: #71717a;
+  --text-faint: #a1a1aa;
+  --border-primary: rgba(0, 0, 0, 0.1);
+  --border-secondary: rgba(0, 0, 0, 0.06);
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --header-bg: rgba(248, 250, 252, 0.85);
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --glow-opacity: 0.6;
 }
 
 * {
@@ -22,28 +58,44 @@ html, body {
 }
 
 body {
-  background: var(--bg-dark);
+  background: var(--bg-primary);
   background-image: 
-    radial-gradient(ellipse 100% 100% at 0% 0%, rgba(59, 130, 246, 0.15), transparent 50%),
-    radial-gradient(ellipse 80% 80% at 100% 0%, rgba(139, 92, 246, 0.15), transparent 50%),
-    radial-gradient(ellipse 60% 60% at 50% 100%, rgba(236, 72, 153, 0.1), transparent 50%);
-  color: #e4e4e7;
+    radial-gradient(ellipse 100% 100% at 0% 0%, rgba(59, 130, 246, calc(0.15 * var(--glow-opacity))), transparent 50%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, rgba(139, 92, 246, calc(0.15 * var(--glow-opacity))), transparent 50%),
+    radial-gradient(ellipse 60% 60% at 50% 100%, rgba(236, 72, 153, calc(0.1 * var(--glow-opacity))), transparent 50%);
+  color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.light body {
+  background-image: 
+    radial-gradient(ellipse 100% 100% at 0% 0%, rgba(59, 130, 246, 0.08), transparent 50%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, rgba(139, 92, 246, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 60% at 50% 100%, rgba(236, 72, 153, 0.05), transparent 50%);
 }
 
 /* Premium glass card */
 .card {
-  background: linear-gradient(135deg, rgba(30, 30, 45, 0.9) 0%, rgba(20, 20, 30, 0.95) 100%);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.3),
-    0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -1px var(--shadow-color),
+    0 10px 15px -3px var(--shadow-color),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   overflow: visible; /* Allow tooltips to overflow */
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.light .card {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .card-sm {
@@ -1550,4 +1602,346 @@ a {
   .earnings-tooltip {
     display: none !important;
   }
+}
+
+/* ============================================
+   THEME TOGGLE
+   Animated sun/moon toggle switch
+   ============================================ */
+
+.theme-toggle {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.theme-toggle.light .theme-toggle-track {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow: 
+    inset 0 2px 4px rgba(59, 130, 246, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+  box-shadow: 
+    0 2px 6px rgba(251, 191, 36, 0.4),
+    inset 0 -2px 4px rgba(245, 158, 11, 0.3);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 2;
+}
+
+.theme-toggle.dark .theme-toggle-thumb {
+  transform: translateX(28px);
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  box-shadow: 
+    0 2px 6px rgba(148, 163, 184, 0.3),
+    inset 0 -2px 4px rgba(100, 116, 139, 0.2);
+}
+
+/* Sun icon - visible in light mode */
+.theme-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.theme-icon-sun {
+  left: 7px;
+  color: #fbbf24;
+  opacity: 1;
+}
+
+.theme-toggle.dark .theme-icon-sun {
+  opacity: 0;
+  transform: translateY(-50%) rotate(-90deg) scale(0.5);
+}
+
+/* Moon icon - visible in dark mode */
+.theme-icon-moon {
+  right: 7px;
+  color: #94a3b8;
+  opacity: 0;
+  transform: translateY(-50%) rotate(90deg) scale(0.5);
+}
+
+.theme-toggle.dark .theme-icon-moon {
+  opacity: 1;
+  transform: translateY(-50%) rotate(0deg) scale(1);
+}
+
+/* Stars on the moon */
+.theme-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+}
+
+.theme-toggle.dark .theme-stars {
+  opacity: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 2px #fff;
+}
+
+.star-1 {
+  top: 4px;
+  right: 4px;
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.star-2 {
+  top: 8px;
+  right: 2px;
+  width: 1.5px;
+  height: 1.5px;
+  animation: twinkle 2s ease-in-out infinite 0.5s;
+}
+
+.star-3 {
+  top: 3px;
+  right: 8px;
+  width: 1px;
+  height: 1px;
+  animation: twinkle 2s ease-in-out infinite 1s;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Moon craters */
+.theme-crater {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(100, 116, 139, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease 0.15s;
+}
+
+.theme-toggle.dark .theme-crater {
+  opacity: 1;
+}
+
+.crater-1 {
+  width: 5px;
+  height: 5px;
+  top: 5px;
+  left: 6px;
+}
+
+.crater-2 {
+  width: 3px;
+  height: 3px;
+  top: 12px;
+  left: 10px;
+}
+
+/* Focus state */
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+  border-radius: 100px;
+}
+
+/* Hover effect */
+.theme-toggle:hover .theme-toggle-track {
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(59, 130, 246, 0.2);
+}
+
+.theme-toggle.light:hover .theme-toggle-track {
+  box-shadow: 
+    inset 0 2px 4px rgba(59, 130, 246, 0.1),
+    0 0 12px rgba(251, 191, 36, 0.3);
+}
+
+/* ============================================
+   LIGHT MODE SPECIFIC OVERRIDES
+   ============================================ */
+
+html.light .stat-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+html.light .stat-card::before {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.15));
+}
+
+html.light .stat-card:hover {
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.08),
+    0 4px 8px rgba(59, 130, 246, 0.08);
+}
+
+html.light .earnings-row {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+html.light .earnings-row:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+html.light .logo-container {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+html.light .search-bar {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html.light .search-bar:focus-within {
+  background: white;
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 0 16px rgba(59, 130, 246, 0.08);
+}
+
+html.light .search-input {
+  color: #18181b;
+}
+
+html.light .filter-chip {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text-muted);
+}
+
+html.light .filter-chip:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+html.light .filter-chip.active {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: var(--text-primary);
+}
+
+html.light .kbd {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text-muted);
+}
+
+html.light .btn-ghost {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text-secondary);
+}
+
+html.light .btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+}
+
+html.light .tooltip-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.99) 100%);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+html.light .tooltip-arrow {
+  background: rgba(252, 252, 253, 0.98);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+html.light .day-header.today {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.03) 100%);
+}
+
+html.light .day-content.today {
+  background: rgba(59, 130, 246, 0.02);
+}
+
+html.light .section-label {
+  color: var(--text-muted);
+}
+
+html.light .badge-neutral {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text-muted);
+}
+
+/* Light mode header */
+html.light header {
+  background: var(--header-bg);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Light mode skeleton */
+html.light .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(0, 0, 0, 0.06) 20%,
+    rgba(0, 0, 0, 0.08) 40%,
+    rgba(0, 0, 0, 0.06) 60%,
+    rgba(0, 0, 0, 0.03) 80%,
+    rgba(0, 0, 0, 0.03) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Text color transitions for smooth theme switch */
+html.light .text-white {
+  color: #18181b;
+}
+
+html.light .text-zinc-500 {
+  color: #71717a;
+}
+
+html.light .text-zinc-400 {
+  color: #a1a1aa;
 }
