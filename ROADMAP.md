@@ -76,3 +76,5 @@ Track autonomous improvements here:
 
 ---
 *This file is updated by the autonomous product iteration cron job.*
+
+- **Chart refactor** - Completely redesigned EPS charts for readability. Replaced fancy vertical bars with clean horizontal bars showing actual vs estimate. Values are now large and inline (no squinting). Added table-style bar chart with clear columns. New sparkline trend component. New summary card showing beat rate, avg surprise, and EPS growth. Removed visual noise - focus on data, not decoration.
