@@ -22,19 +22,38 @@ export function CountUp({
   const [count, setCount] = useState(0);
   const startTime = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
+  const startValue = useRef(0);
+  const isFirstMount = useRef(true);
 
   useEffect(() => {
-    // Reset on end change
-    setCount(0);
+    // Cancel any existing animation
+    if (frameRef.current) {
+      cancelAnimationFrame(frameRef.current);
+    }
+
+    // Store the starting value (current count for transitions, 0 for initial mount)
+    startValue.current = isFirstMount.current ? 0 : count;
+    isFirstMount.current = false;
     startTime.current = null;
+
+    // Calculate animation duration based on value change magnitude
+    // Faster for small changes, full duration for large changes
+    const valueDelta = Math.abs(end - startValue.current);
+    const maxDelta = Math.max(end, startValue.current, 100); // normalize
+    const dynamicDuration = Math.max(
+      200, // minimum 200ms
+      Math.min(duration, (valueDelta / maxDelta) * duration + 200)
+    );
 
     const animate = (timestamp: number) => {
       if (!startTime.current) startTime.current = timestamp;
-      const progress = Math.min((timestamp - startTime.current) / duration, 1);
+      const progress = Math.min((timestamp - startTime.current) / dynamicDuration, 1);
       
       // Ease out cubic for smooth deceleration
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = eased * end;
+      
+      // Interpolate from start to end value
+      const current = startValue.current + (end - startValue.current) * eased;
       
       setCount(current);
       
@@ -43,10 +62,11 @@ export function CountUp({
       }
     };
 
-    // Small delay before starting animation
+    // Start animation (small delay only on first mount)
+    const delay = startValue.current === 0 ? 100 : 0;
     const timeout = setTimeout(() => {
       frameRef.current = requestAnimationFrame(animate);
-    }, 100);
+    }, delay);
 
     return () => {
       clearTimeout(timeout);
@@ -61,7 +81,7 @@ export function CountUp({
     : Math.round(count).toString();
 
   return (
-    <span className={className}>
+    <span className={`countup-value ${className}`}>
       {prefix}{displayValue}{suffix}
     </span>
   );
