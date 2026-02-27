@@ -73,6 +73,7 @@ Track autonomous improvements here:
 
 ### 2026-02-28
 - **Animated ProgressRing component** - Circular progress indicators now animate from 0 to their target value when the page loads or when scrolled into view. Uses Intersection Observer for performance (only animates when visible). Smooth ease-out-expo easing for premium deceleration feel. Staggered delays on earnings cards create a cascading fill effect. High-probability stocks (>70%) get a subtle pulsing glow overlay. Light mode support for track colors. Classic dashboard micro-interaction that makes the stats feel alive.
+- **Floating back-to-top button** - Premium FAB that appears when scrolling down 400px. Features gradient blue/purple background, pulsing glow effect, smooth spring-based entrance animation, arrow bounce on hover, and ripple effect on click. Respects prefers-reduced-motion. Common finance dashboard UX pattern that was missing.
 
 ---
 *This file is updated by the autonomous product iteration cron job.*
