@@ -331,8 +331,9 @@ html.light .progress-ring-bg {
   position: relative;
 }
 
-/* Earnings row */
+/* Earnings row with animated gradient border */
 .earnings-row {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -340,13 +341,85 @@ html.light .progress-ring-bg {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+/* Animated gradient border container */
+.earnings-row::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 15px;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    rgba(59, 130, 246, 0) 0%,
+    rgba(59, 130, 246, 0.8) 10%,
+    rgba(139, 92, 246, 0.8) 20%,
+    rgba(236, 72, 153, 0.6) 30%,
+    rgba(59, 130, 246, 0) 40%,
+    rgba(59, 130, 246, 0) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+/* Gradient glow effect */
+.earnings-row::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    transparent 0%,
+    rgba(59, 130, 246, 0.15) 10%,
+    rgba(139, 92, 246, 0.15) 20%,
+    rgba(236, 72, 153, 0.1) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -2;
 }
 
 .earnings-row:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: transparent;
   transform: translateX(4px);
+}
+
+.earnings-row:hover::before {
+  opacity: 1;
+  animation: gradientRotate 3s linear infinite;
+}
+
+.earnings-row:hover::after {
+  opacity: 1;
+  animation: gradientRotate 3s linear infinite;
+}
+
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradientRotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
 }
 
 /* Earnings tooltip */
@@ -371,24 +444,38 @@ html.light .progress-ring-bg {
 
 /* Today's pending earnings - animated pulse glow */
 .earnings-row.today-pending {
-  position: relative;
   border-color: rgba(245, 158, 11, 0.4);
   background: rgba(245, 158, 11, 0.08);
   animation: todayPendingPulse 2s ease-in-out infinite;
 }
 
+/* Override the gradient border for today-pending with amber theme */
 .earnings-row.today-pending::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 14px;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.6), rgba(251, 191, 36, 0.3));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: borderGlow 2s ease-in-out infinite;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    rgba(245, 158, 11, 0) 0%,
+    rgba(245, 158, 11, 0.9) 10%,
+    rgba(251, 191, 36, 0.8) 20%,
+    rgba(217, 119, 6, 0.6) 30%,
+    rgba(245, 158, 11, 0) 40%,
+    rgba(245, 158, 11, 0) 100%
+  );
+  opacity: 0.6;
+  animation: gradientRotate 4s linear infinite;
+}
+
+.earnings-row.today-pending::after {
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    transparent 0%,
+    rgba(245, 158, 11, 0.2) 10%,
+    rgba(251, 191, 36, 0.15) 20%,
+    rgba(217, 119, 6, 0.1) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0.5;
+  animation: gradientRotate 4s linear infinite;
 }
 
 .earnings-row.today-pending:hover {
@@ -397,8 +484,13 @@ html.light .progress-ring-bg {
 }
 
 .earnings-row.today-pending:hover::before {
-  animation: none;
   opacity: 1;
+  animation: gradientRotate 2s linear infinite;
+}
+
+.earnings-row.today-pending:hover::after {
+  opacity: 0.8;
+  animation: gradientRotate 2s linear infinite;
 }
 
 @keyframes todayPendingPulse {
@@ -1855,7 +1947,32 @@ html.light .earnings-row {
 
 html.light .earnings-row:hover {
   background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.1);
+  border-color: transparent;
+}
+
+/* Light mode animated gradient - softer colors */
+html.light .earnings-row::before {
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    rgba(59, 130, 246, 0) 0%,
+    rgba(59, 130, 246, 0.6) 10%,
+    rgba(139, 92, 246, 0.5) 20%,
+    rgba(236, 72, 153, 0.4) 30%,
+    rgba(59, 130, 246, 0) 40%,
+    rgba(59, 130, 246, 0) 100%
+  );
+}
+
+html.light .earnings-row::after {
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    transparent 0%,
+    rgba(59, 130, 246, 0.08) 10%,
+    rgba(139, 92, 246, 0.08) 20%,
+    rgba(236, 72, 153, 0.05) 30%,
+    transparent 40%,
+    transparent 100%
+  );
 }
 
 html.light .logo-container {
