@@ -7,6 +7,7 @@ import { Earning } from '@/lib/types';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonCalendar } from '@/components/Skeleton';
 import { SearchBar } from '@/components/SearchBar';
+import { FilterChips, FilterType } from '@/components/FilterChips';
 import { EarningsTooltipContent } from '@/components/Tooltip';
 
 function getWeekStart(date: Date): Date {
@@ -128,17 +129,42 @@ export default function Home() {
   const [currentWeekStart, setCurrentWeekStart] = useState(() => getWeekStart(new Date()));
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<FilterType>('all');
 
-  // Filter earnings based on search
+  // Calculate counts for filter chips (before any filtering)
+  const filterCounts = useMemo(() => ({
+    all: earnings.length,
+    beat: earnings.filter(e => e.result === 'beat').length,
+    miss: earnings.filter(e => e.result === 'miss').length,
+    pending: earnings.filter(e => e.eps === undefined || e.eps === null).length,
+  }), []);
+
+  // Filter earnings based on search and status filter
   const filteredEarnings = useMemo(() => {
-    if (!searchQuery.trim()) return earnings;
-    const query = searchQuery.toLowerCase().trim();
-    return earnings.filter(
-      (e) =>
-        e.ticker.toLowerCase().includes(query) ||
-        e.company.toLowerCase().includes(query)
-    );
-  }, [searchQuery]);
+    let result = earnings;
+    
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      result = result.filter(
+        (e) =>
+          e.ticker.toLowerCase().includes(query) ||
+          e.company.toLowerCase().includes(query)
+      );
+    }
+    
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      result = result.filter((e) => {
+        if (statusFilter === 'beat') return e.result === 'beat';
+        if (statusFilter === 'miss') return e.result === 'miss';
+        if (statusFilter === 'pending') return e.eps === undefined || e.eps === null;
+        return true;
+      });
+    }
+    
+    return result;
+  }, [searchQuery, statusFilter]);
 
   const navigateWeek = useCallback((delta: number) => {
     setCurrentWeekStart((prev) => {
@@ -201,7 +227,7 @@ export default function Home() {
   const reportedCount = filteredEarnings.filter(e => e.eps !== undefined).length;
   const beatRate = reportedCount > 0 ? Math.round((beatsCount / reportedCount) * 100) : 0;
   const pendingCount = totalEarnings - reportedCount;
-  const isFiltering = searchQuery.trim().length > 0;
+  const isFiltering = searchQuery.trim().length > 0 || statusFilter !== 'all';
 
   return (
     <div className="min-h-screen">
@@ -269,6 +295,15 @@ export default function Home() {
               onChange={setSearchQuery}
               resultCount={filteredEarnings.length}
               totalCount={earnings.length}
+            />
+          </div>
+          
+          {/* Filter chips */}
+          <div className="mt-4">
+            <FilterChips 
+              value={statusFilter}
+              onChange={setStatusFilter}
+              counts={filterCounts}
             />
           </div>
         </div>
