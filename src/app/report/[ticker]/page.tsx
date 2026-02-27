@@ -7,6 +7,7 @@ import { getEarning, getAnalysis, earnings } from '@/lib/data';
 import { EPSChart, EPSBarChart } from '@/components/EPSChart';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonDetailPage } from '@/components/Skeleton';
+import { LiveBadge } from '@/components/LiveBadge';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -170,7 +171,14 @@ export default function ReportPage() {
             <div className="glass-card p-5 min-w-[200px]">
               <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Report Date</div>
               <div className="text-xl font-semibold text-white">{earning.date}</div>
-              <div className="text-sm text-zinc-400">{earning.time === 'pre' ? '☀️ Pre-Market' : '🌙 After Hours'}</div>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-sm text-zinc-400">{earning.time === 'pre' ? '☀️ Pre-Market' : '🌙 After Hours'}</span>
+                <LiveBadge 
+                  time={earning.time} 
+                  isToday={earning.date === new Date().toISOString().split('T')[0]} 
+                  isPending={!hasResult} 
+                />
+              </div>
               {!hasResult && countdown && (
                 <div className="mt-3 pt-3 border-t border-white/10">
                   <div className="text-2xl font-bold text-amber-400">{countdown}</div>

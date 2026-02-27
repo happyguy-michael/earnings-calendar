@@ -11,6 +11,7 @@ import { FilterChips, FilterType } from '@/components/FilterChips';
 import { EarningsTooltipContent } from '@/components/Tooltip';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
+import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -92,9 +93,17 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         </div>
         
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-white">{earning.ticker}</div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-white">{earning.ticker}</span>
+            <LiveDot isToday={!!isToday} isPending={isPending} />
+          </div>
           <div className="text-xs text-zinc-500 truncate">{earning.company}</div>
         </div>
+
+        {/* Live badge for today's pending earnings */}
+        {isTodayPending && (
+          <LiveBadge time={earning.time} isToday={!!isToday} isPending={isPending} />
+        )}
 
         {hasResult ? (
           <span className={`badge ${earning.result === 'beat' ? 'badge-beat' : 'badge-miss'}`}>
