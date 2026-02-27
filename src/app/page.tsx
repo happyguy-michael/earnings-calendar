@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { earnings } from '@/lib/data';
 import { Earning } from '@/lib/types';
@@ -10,6 +10,7 @@ import { SearchBar } from '@/components/SearchBar';
 import { FilterChips, FilterType } from '@/components/FilterChips';
 import { EarningsTooltipContent } from '@/components/Tooltip';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -131,6 +132,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<FilterType>('all');
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const slideKey = useRef(0);
 
   // Calculate counts for filter chips (before any filtering)
   const filterCounts = useMemo(() => ({
@@ -167,13 +171,29 @@ export default function Home() {
     return result;
   }, [searchQuery, statusFilter]);
 
-  const navigateWeek = useCallback((delta: number) => {
+  const navigateWeek = useCallback((delta: number, fromSwipe = false) => {
+    // Set slide direction for animation
+    setSlideDirection(delta > 0 ? 'left' : 'right');
+    slideKey.current += 1;
+    
+    // Hide swipe hint after first swipe
+    if (fromSwipe && showSwipeHint) {
+      setShowSwipeHint(false);
+      // Store in localStorage so we don't show again
+      try {
+        localStorage.setItem('earnings-swipe-hint-dismissed', 'true');
+      } catch {}
+    }
+    
     setCurrentWeekStart((prev) => {
       const next = new Date(prev);
       next.setDate(next.getDate() + delta * 7);
       return next;
     });
-  }, []);
+    
+    // Clear slide direction after animation
+    setTimeout(() => setSlideDirection(null), 350);
+  }, [showSwipeHint]);
 
   const goToToday = useCallback(() => setCurrentWeekStart(getWeekStart(new Date())), []);
 
@@ -181,6 +201,16 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Check if swipe hint was previously dismissed
+  useEffect(() => {
+    try {
+      const dismissed = localStorage.getItem('earnings-swipe-hint-dismissed');
+      if (dismissed === 'true') {
+        setShowSwipeHint(false);
+      }
+    } catch {}
   }, []);
 
   // Keyboard navigation for weeks
@@ -358,9 +388,20 @@ export default function Home() {
           </div>
         )}
 
-        {/* Calendar Weeks */}
+        {/* Swipe hint for mobile */}
+        <SwipeHint visible={showSwipeHint && !isFiltering} />
+
+        {/* Calendar Weeks with Swipe Navigation */}
         {(!isFiltering || filteredEarnings.length > 0) && (
-        <div className="space-y-6">
+        <SwipeNavigator
+          onSwipeLeft={() => navigateWeek(1, true)}
+          onSwipeRight={() => navigateWeek(-1, true)}
+          className="swipe-container"
+        >
+        <div 
+          key={slideKey.current}
+          className={`space-y-6 ${slideDirection === 'left' ? 'week-slide-enter-right' : ''} ${slideDirection === 'right' ? 'week-slide-enter-left' : ''}`}
+        >
           {weeks.map((weekStart, weekIndex) => (
             <div key={weekIndex} className="card animate-fade-in" style={{ animationDelay: `${weekIndex * 100}ms` }}>
               {/* Week Header */}
@@ -443,6 +484,7 @@ export default function Home() {
             </div>
           ))}
         </div>
+        </SwipeNavigator>
         )}
 
         {/* Legend */}
