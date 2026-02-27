@@ -7,6 +7,8 @@ export interface Earning {
   estimate: number;
   result?: 'beat' | 'miss' | 'met';
   beatOdds?: number;
+  revenue?: number | null;        // Actual revenue in billions
+  revenueEstimate?: number | null; // Revenue estimate in billions
 }
 
 export interface Analysis {

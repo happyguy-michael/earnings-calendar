@@ -7,6 +7,7 @@ import { Earning } from '@/lib/types';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonCalendar } from '@/components/Skeleton';
 import { SearchBar } from '@/components/SearchBar';
+import { Tooltip, EarningsTooltipContent } from '@/components/Tooltip';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -63,43 +64,63 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
     : '#ef4444'
     : '#71717a';
 
-  return (
-    <Link 
-      href={`/report/${earning.ticker}`} 
-      className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
-      style={{ animationDelay: `${animationIndex * 50}ms` }}
-    >
-      <div className="logo-container">
-        <img
-          src={logoUrl}
-          alt={earning.ticker}
-          className="w-full h-full object-contain p-2"
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            e.currentTarget.nextElementSibling?.classList.remove('hidden');
-          }}
-        />
-        <span className="hidden text-xs font-bold text-zinc-500">{earning.ticker.slice(0, 2)}</span>
-      </div>
-      
-      <div className="flex-1 min-w-0">
-        <div className="text-sm font-semibold text-white">{earning.ticker}</div>
-        <div className="text-xs text-zinc-500 truncate">{earning.company}</div>
-      </div>
+  // Convert revenue to full number (data is in billions)
+  const revenueActual = earning.revenue ? earning.revenue * 1e9 : null;
+  const revenueEst = earning.revenueEstimate ? earning.revenueEstimate * 1e9 : null;
 
-      {hasResult ? (
-        <span className={`badge ${earning.result === 'beat' ? 'badge-beat' : 'badge-miss'}`}>
-          {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
-        </span>
-      ) : earning.beatOdds ? (
-        <div className="odds-indicator">
-          <CircularProgress value={earning.beatOdds} size={32} color={oddsColor} />
-          <span className="text-xs font-semibold" style={{ color: oddsColor }}>
-            {earning.beatOdds}%
-          </span>
+  return (
+    <Tooltip
+      content={
+        <EarningsTooltipContent
+          ticker={earning.ticker}
+          company={earning.company}
+          eps={earning.eps}
+          estimate={earning.estimate}
+          revenue={revenueActual}
+          revenueEstimate={revenueEst}
+          beatOdds={earning.beatOdds}
+          time={earning.time}
+          result={earning.result}
+        />
+      }
+    >
+      <Link 
+        href={`/report/${earning.ticker}`} 
+        className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
+        style={{ animationDelay: `${animationIndex * 50}ms` }}
+      >
+        <div className="logo-container">
+          <img
+            src={logoUrl}
+            alt={earning.ticker}
+            className="w-full h-full object-contain p-2"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+          <span className="hidden text-xs font-bold text-zinc-500">{earning.ticker.slice(0, 2)}</span>
         </div>
-      ) : null}
-    </Link>
+        
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-white">{earning.ticker}</div>
+          <div className="text-xs text-zinc-500 truncate">{earning.company}</div>
+        </div>
+
+        {hasResult ? (
+          <span className={`badge ${earning.result === 'beat' ? 'badge-beat' : 'badge-miss'}`}>
+            {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+          </span>
+        ) : earning.beatOdds ? (
+          <div className="odds-indicator">
+            <CircularProgress value={earning.beatOdds} size={32} color={oddsColor} />
+            <span className="text-xs font-semibold" style={{ color: oddsColor }}>
+              {earning.beatOdds}%
+            </span>
+          </div>
+        ) : null}
+      </Link>
+    </Tooltip>
   );
 }
 
