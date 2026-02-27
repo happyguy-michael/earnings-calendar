@@ -12,6 +12,7 @@ import { EarningsTooltipContent } from '@/components/Tooltip';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
 import { LiveBadge, LiveDot } from '@/components/LiveBadge';
+import { CountdownBadge } from '@/components/Countdown';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -100,9 +101,9 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           <div className="text-xs text-zinc-500 truncate">{earning.company}</div>
         </div>
 
-        {/* Live badge for today's pending earnings */}
+        {/* Countdown timer for today's pending earnings */}
         {isTodayPending && (
-          <LiveBadge time={earning.time} isToday={!!isToday} isPending={isPending} />
+          <CountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
         )}
 
         {hasResult ? (
