@@ -13,6 +13,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
 import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 import { CountdownBadge } from '@/components/Countdown';
+import { ProgressRing } from '@/components/ProgressRing';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -112,7 +113,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           </span>
         ) : earning.beatOdds ? (
           <div className="odds-indicator">
-            <CircularProgress value={earning.beatOdds} size={32} color={oddsColor} />
+            <ProgressRing value={earning.beatOdds} size={32} color={oddsColor} delay={animationIndex * 80} duration={800} />
             <span className="text-xs font-semibold" style={{ color: oddsColor }}>
               {earning.beatOdds}%
             </span>
@@ -362,7 +363,7 @@ export default function Home() {
           </div>
           <div className="stat-card stat-card-success">
             <div className="flex items-center gap-4">
-              <CircularProgress value={beatRate} size={56} color="#22c55e" />
+              <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
               <div>
                 <div className="text-3xl font-bold text-gradient-green">
                   <CountUp end={beatRate} duration={1200} suffix="%" />
@@ -508,7 +509,7 @@ export default function Home() {
             Missed Estimates
           </div>
           <div className="flex items-center gap-2">
-            <CircularProgress value={75} size={14} color="#f59e0b" />
+            <ProgressRing value={75} size={14} strokeWidth={2} color="#f59e0b" duration={600} />
             <span className="ml-1">Beat Probability</span>
           </div>
         </div>

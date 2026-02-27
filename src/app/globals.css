@@ -284,14 +284,39 @@ html.light .card {
   transform: rotate(-90deg);
 }
 
-.progress-ring .bg {
+.progress-ring .bg,
+.progress-ring-bg {
   stroke: rgba(255, 255, 255, 0.1);
+  transition: stroke 0.3s ease;
+}
+
+html.light .progress-ring .bg,
+html.light .progress-ring-bg {
+  stroke: rgba(0, 0, 0, 0.1);
 }
 
 .progress-ring .fg {
   stroke-linecap: round;
   transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   filter: drop-shadow(0 0 6px currentColor);
+}
+
+.progress-ring-fg {
+  stroke-linecap: round;
+}
+
+.progress-ring-glow {
+  pointer-events: none;
+  animation: ringPulse 2s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 /* CountUp value animation */
