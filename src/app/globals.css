@@ -2578,3 +2578,134 @@ html.light .back-to-top-glow {
     transform: translateY(-2px);
   }
 }
+
+/* ============================================
+   TILT CARD - 3D Hover Effect
+   Premium micro-interaction with depth
+   ============================================ */
+
+.tilt-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+}
+
+.tilt-card-spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+/* Tilt card stat variants */
+.tilt-stat-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(30, 30, 45, 0.9) 0%, rgba(20, 20, 30, 0.95) 100%);
+  border-radius: 20px;
+  padding: 24px;
+  overflow: hidden;
+  cursor: default;
+  --spotlight-color: rgba(59, 130, 246, 0.2);
+}
+
+.tilt-stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.tilt-card:hover .tilt-stat-card::before {
+  opacity: 1;
+}
+
+/* Success variant (green glow) */
+.tilt-stat-card-success {
+  --spotlight-color: rgba(34, 197, 94, 0.25);
+}
+
+.tilt-stat-card-success::before {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.6), rgba(16, 185, 129, 0.3));
+}
+
+/* Warning variant (amber glow) */
+.tilt-stat-card-warning {
+  --spotlight-color: rgba(245, 158, 11, 0.25);
+}
+
+.tilt-stat-card-warning::before {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.6), rgba(217, 119, 6, 0.3));
+}
+
+/* Light mode tilt cards */
+html.light .tilt-stat-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+html.light .tilt-stat-card::before {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.15));
+  opacity: 0.4;
+}
+
+html.light .tilt-card:hover .tilt-stat-card::before {
+  opacity: 0.7;
+}
+
+html.light .tilt-stat-card-success::before {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(16, 185, 129, 0.2));
+}
+
+html.light .tilt-stat-card-warning::before {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.4), rgba(217, 119, 6, 0.2));
+}
+
+html.light .tilt-card-glare {
+  mix-blend-mode: soft-light;
+}
+
+/* Disable tilt on mobile/touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .tilt-card {
+    transform: none !important;
+  }
+  
+  .tilt-card-glare,
+  .tilt-card-spotlight {
+    display: none;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card {
+    transition: none !important;
+  }
+  
+  .tilt-card-glare,
+  .tilt-card-spotlight {
+    transition: none;
+  }
+}

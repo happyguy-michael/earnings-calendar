@@ -15,6 +15,7 @@ import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 import { CountdownBadge } from '@/components/Countdown';
 import { ProgressRing } from '@/components/ProgressRing';
 import { BackToTop } from '@/components/BackToTop';
+import { TiltCard } from '@/components/TiltCard';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -354,37 +355,45 @@ export default function Home() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Row */}
+        {/* Stats Row with 3D Tilt Effect */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="stat-card">
-            <div className="text-4xl font-bold text-white mb-1">
-              <CountUp end={totalEarnings} duration={800} />
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+            <div className="tilt-stat-card">
+              <div className="text-4xl font-bold text-white mb-1">
+                <CountUp end={totalEarnings} duration={800} />
+              </div>
+              <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
             </div>
-            <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
-          </div>
-          <div className="stat-card stat-card-success">
-            <div className="flex items-center gap-4">
-              <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
-              <div>
-                <div className="text-3xl font-bold text-gradient-green">
-                  <CountUp end={beatRate} duration={1200} suffix="%" />
+          </TiltCard>
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+            <div className="tilt-stat-card tilt-stat-card-success">
+              <div className="flex items-center gap-4">
+                <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
+                <div>
+                  <div className="text-3xl font-bold text-gradient-green">
+                    <CountUp end={beatRate} duration={1200} suffix="%" />
+                  </div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
                 </div>
-                <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
               </div>
             </div>
-          </div>
-          <div className="stat-card">
-            <div className="text-4xl font-bold text-white mb-1">
-              <CountUp end={reportedCount} duration={900} />
+          </TiltCard>
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+            <div className="tilt-stat-card">
+              <div className="text-4xl font-bold text-white mb-1">
+                <CountUp end={reportedCount} duration={900} />
+              </div>
+              <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
             </div>
-            <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
-          </div>
-          <div className="stat-card stat-card-warning">
-            <div className="text-4xl font-bold text-amber-400 mb-1">
-              <CountUp end={pendingCount} duration={1000} />
+          </TiltCard>
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+            <div className="tilt-stat-card tilt-stat-card-warning">
+              <div className="text-4xl font-bold text-amber-400 mb-1">
+                <CountUp end={pendingCount} duration={1000} />
+              </div>
+              <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
             </div>
-            <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
-          </div>
+          </TiltCard>
         </div>
 
         {/* No Results State */}
