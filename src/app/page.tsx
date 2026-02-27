@@ -325,7 +325,7 @@ export default function Home() {
         {(!isFiltering || filteredEarnings.length > 0) && (
         <div className="space-y-6">
           {weeks.map((weekStart, weekIndex) => (
-            <div key={weekIndex} className="card overflow-hidden animate-fade-in" style={{ animationDelay: `${weekIndex * 100}ms` }}>
+            <div key={weekIndex} className="card animate-fade-in" style={{ animationDelay: `${weekIndex * 100}ms` }}>
               {/* Week Header */}
               <div className="week-header">
                 {days.map((day, dayIndex) => {
