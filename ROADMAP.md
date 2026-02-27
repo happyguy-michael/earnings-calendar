@@ -71,5 +71,8 @@ Track autonomous improvements here:
 - **Live countdown timer** - Real-time ticking countdown on calendar cards for today's pending earnings. CountdownBadge component shows "Reports in Xh Xm" that updates every second. Pulsing red animation when under 1 hour remaining, with urgent styling as release time approaches. Uses tabular-nums for stable width during countdown. Creates excitement and urgency for traders watching upcoming releases. Replaced static LiveBadge with dynamic countdown on main calendar view.
 - **Smooth value transitions on CountUp** - Numbers now animate smoothly between values instead of resetting to 0. When filtering or navigating, stats cards show fluid transitions from current to new values. Dynamic duration based on value delta (faster for small changes). Tabular-nums for stable number widths during animation. Makes filter interactions feel premium and polished.
 
+### 2026-02-28
+- **Animated ProgressRing component** - Circular progress indicators now animate from 0 to their target value when the page loads or when scrolled into view. Uses Intersection Observer for performance (only animates when visible). Smooth ease-out-expo easing for premium deceleration feel. Staggered delays on earnings cards create a cascading fill effect. High-probability stocks (>70%) get a subtle pulsing glow overlay. Light mode support for track colors. Classic dashboard micro-interaction that makes the stats feel alive.
+
 ---
 *This file is updated by the autonomous product iteration cron job.*
