@@ -9,6 +9,7 @@ import { CountUp } from '@/components/CountUp';
 import { SkeletonDetailPage } from '@/components/Skeleton';
 import { LiveBadge } from '@/components/LiveBadge';
 import { Confetti, Sparkles } from '@/components/Confetti';
+import { TypewriterParagraphs, TypingIndicator, SkipButton } from '@/components/Typewriter';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -53,6 +54,9 @@ export default function ReportPage() {
   const [countdown, setCountdown] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [isTypingAnalysis, setIsTypingAnalysis] = useState(true);
+  const [hasViewedAnalysis, setHasViewedAnalysis] = useState(false);
+  const [skippedTypewriter, setSkippedTypewriter] = useState(false);
 
   // Simulate data loading
   useEffect(() => {
@@ -68,6 +72,20 @@ export default function ReportPage() {
       return () => clearTimeout(timer);
     }
   }, [isLoading, earning?.result]);
+
+  // Track first view of analysis tab for typewriter effect
+  useEffect(() => {
+    if (activeTab === 'analysis' && !hasViewedAnalysis && analysis) {
+      setHasViewedAnalysis(true);
+      setIsTypingAnalysis(true);
+    }
+  }, [activeTab, hasViewedAnalysis, analysis]);
+
+  // Skip typewriter and show full text
+  const handleSkipTypewriter = () => {
+    setSkippedTypewriter(true);
+    setIsTypingAnalysis(false);
+  };
 
   const historicalData = [
     { quarter: 'Q4 2025', eps: earning?.eps || earning?.estimate || 0, estimate: earning?.estimate || 0, beat: earning?.result === 'beat' },
@@ -449,16 +467,39 @@ export default function ReportPage() {
             {analysis ? (
               <div className="space-y-6">
                 <div className="glass-card overflow-hidden">
-                  <div className="px-8 py-5 border-b border-white/5">
-                    <h2 className="text-lg font-semibold text-white">🤖 AI Analysis</h2>
-                    <p className="text-xs text-zinc-500 mt-1">Generated {new Date(analysis.generatedAt).toLocaleDateString()}</p>
+                  <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <h2 className="text-lg font-semibold text-white">🤖 AI Analysis</h2>
+                        {isTypingAnalysis && !skippedTypewriter && (
+                          <TypingIndicator />
+                        )}
+                      </div>
+                      <p className="text-xs text-zinc-500 mt-1">Generated {new Date(analysis.generatedAt).toLocaleDateString()}</p>
+                    </div>
+                    <SkipButton 
+                      onSkip={handleSkipTypewriter}
+                      visible={isTypingAnalysis && !skippedTypewriter}
+                    />
                   </div>
                   <div className="p-8">
-                    <div className="space-y-4">
-                      {analysis.summary.split('\n\n').map((p, i) => (
-                        <p key={i} className="text-zinc-300 leading-relaxed">{p}</p>
-                      ))}
-                    </div>
+                    {skippedTypewriter || !isTypingAnalysis ? (
+                      /* Show full text immediately */
+                      <div className="space-y-4">
+                        {analysis.summary.split('\n\n').map((p, i) => (
+                          <p key={i} className="text-zinc-300 leading-relaxed">{p}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      /* Typewriter effect */
+                      <TypewriterParagraphs
+                        paragraphs={analysis.summary.split('\n\n')}
+                        speed={12}
+                        paragraphDelay={300}
+                        className="space-y-4"
+                        paragraphClassName="text-zinc-300 leading-relaxed"
+                      />
+                    )}
                   </div>
                 </div>
 
