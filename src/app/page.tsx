@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { earnings } from '@/lib/data';
 import { Earning } from '@/lib/types';
 import { CountUp } from '@/components/CountUp';
+import { RollingNumber } from '@/components/NumberTicker';
 import { SkeletonCalendar } from '@/components/Skeleton';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterChips, FilterType } from '@/components/FilterChips';
@@ -355,12 +356,12 @@ export default function Home() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Row with 3D Tilt Effect */}
+        {/* Stats Row with 3D Tilt Effect and Rolling Numbers */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
             <div className="tilt-stat-card">
               <div className="text-4xl font-bold text-white mb-1">
-                <CountUp end={totalEarnings} duration={800} />
+                <RollingNumber value={totalEarnings} staggerDelay={40} />
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
             </div>
@@ -371,7 +372,7 @@ export default function Home() {
                 <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
                 <div>
                   <div className="text-3xl font-bold text-gradient-green">
-                    <CountUp end={beatRate} duration={1200} suffix="%" />
+                    <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
                   </div>
                   <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
                 </div>
@@ -381,7 +382,7 @@ export default function Home() {
           <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
             <div className="tilt-stat-card">
               <div className="text-4xl font-bold text-white mb-1">
-                <CountUp end={reportedCount} duration={900} />
+                <RollingNumber value={reportedCount} staggerDelay={45} />
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
             </div>
@@ -389,7 +390,7 @@ export default function Home() {
           <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
             <div className="tilt-stat-card tilt-stat-card-warning">
               <div className="text-4xl font-bold text-amber-400 mb-1">
-                <CountUp end={pendingCount} duration={1000} />
+                <RollingNumber value={pendingCount} staggerDelay={35} />
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
             </div>
