@@ -13,6 +13,7 @@ import {
   Line,
   Cell,
   ReferenceLine,
+  LabelList,
 } from 'recharts';
 
 interface DataPoint {
@@ -86,7 +87,15 @@ export function EPSChart({ data }: { data: DataPoint[] }) {
             name="Estimate" 
             fill="#52525b" 
             radius={[4, 4, 0, 0]}
-          />
+          >
+            <LabelList 
+              dataKey="estimate" 
+              position="top" 
+              fill="#a1a1aa"
+              fontSize={11}
+              formatter={(v) => `$${Number(v).toFixed(2)}`}
+            />
+          </Bar>
           <Bar 
             dataKey="eps" 
             name="Actual EPS" 
@@ -98,6 +107,13 @@ export function EPSChart({ data }: { data: DataPoint[] }) {
                 fill={entry.beat ? '#10b981' : '#ef4444'} 
               />
             ))}
+            <LabelList 
+              dataKey="eps" 
+              position="top" 
+              fontSize={11}
+              formatter={(v) => `$${Number(v).toFixed(2)}`}
+              fill="#fff"
+            />
           </Bar>
         </BarChart>
       </ResponsiveContainer>
@@ -156,6 +172,13 @@ export function EPSBarChart({ data }: { data: DataPoint[] }) {
                 fill={entry.beat ? '#10b981' : '#ef4444'} 
               />
             ))}
+            <LabelList 
+              dataKey="eps" 
+              position="top" 
+              fontSize={11}
+              formatter={(v) => `$${Number(v).toFixed(2)}`}
+              fill="#fff"
+            />
           </Bar>
           <Line 
             yAxisId="left"
