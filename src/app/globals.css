@@ -3047,3 +3047,82 @@ html.light .navigation-progress-container::after {
     animation: none;
   }
 }
+
+/* ============================================
+   Animated Tab Indicator
+   ============================================ */
+
+.tab-button {
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  outline: none;
+}
+
+.tab-button:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Subtle hover background */
+.tab-button::before {
+  content: '';
+  position: absolute;
+  inset: 4px 0;
+  background: var(--bg-hover);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: -1;
+}
+
+.tab-button:hover::before {
+  opacity: 1;
+}
+
+/* The sliding indicator */
+.animated-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 2px 2px 0 0;
+  box-shadow: 
+    0 0 10px rgba(99, 102, 241, 0.5),
+    0 0 20px rgba(139, 92, 246, 0.3);
+  will-change: transform, width;
+}
+
+/* Glow effect on the indicator */
+.animated-tab-indicator::after {
+  content: '';
+  position: absolute;
+  inset: -2px 0 0 0;
+  background: inherit;
+  filter: blur(6px);
+  opacity: 0.6;
+  border-radius: inherit;
+}
+
+/* Light mode adjustments */
+html.light .animated-tab-indicator {
+  box-shadow: 
+    0 0 8px rgba(99, 102, 241, 0.4),
+    0 0 16px rgba(139, 92, 246, 0.2);
+}
+
+html.light .animated-tab-indicator::after {
+  opacity: 0.4;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-tab-indicator {
+    transition: none !important;
+  }
+}

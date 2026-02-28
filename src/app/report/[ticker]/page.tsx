@@ -10,6 +10,7 @@ import { SkeletonDetailPage } from '@/components/Skeleton';
 import { LiveBadge } from '@/components/LiveBadge';
 import { Confetti, Sparkles } from '@/components/Confetti';
 import { TypewriterParagraphs, TypingIndicator, SkipButton } from '@/components/Typewriter';
+import { AnimatedTabs, Tab } from '@/components/AnimatedTabs';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -134,7 +135,7 @@ export default function ReportPage() {
   const mockPrice = (earning.estimate * 45 + Math.random() * 20).toFixed(2);
   const mockChange = (Math.random() * 6 - 2).toFixed(2);
 
-  const tabs = [
+  const tabs: Tab[] = [
     { id: 'overview', label: 'Overview', icon: '📊' },
     { id: 'analysis', label: 'AI Analysis', icon: '🤖' },
     { id: 'history', label: 'History', icon: '📈' },
@@ -222,24 +223,14 @@ export default function ReportPage() {
         </div>
       </div>
 
-      {/* Tabs */}
+      {/* Tabs with animated sliding indicator */}
       <div className="border-b border-white/5 sticky top-[57px] z-10 backdrop-blur-xl bg-black/50">
         <div className="max-w-6xl mx-auto px-6">
-          <nav className="flex gap-1">
-            {tabs.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-4 text-sm font-medium border-b-2 transition-smooth ${
-                  activeTab === tab.id 
-                    ? 'border-indigo-500 text-white' 
-                    : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                }`}
-              >
-                <span className="mr-2">{tab.icon}</span>{tab.label}
-              </button>
-            ))}
-          </nav>
+          <AnimatedTabs 
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
       </div>
 
