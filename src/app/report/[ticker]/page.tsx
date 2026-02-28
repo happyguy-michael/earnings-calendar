@@ -8,6 +8,7 @@ import { EPSChart, EPSBarChart } from '@/components/EPSChart';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonDetailPage } from '@/components/Skeleton';
 import { LiveBadge } from '@/components/LiveBadge';
+import { Confetti, Sparkles } from '@/components/Confetti';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -51,12 +52,22 @@ export default function ReportPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [countdown, setCountdown] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Simulate data loading
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
     return () => clearTimeout(timer);
   }, [ticker]);
+  
+  // Trigger celebration for beat results after loading
+  useEffect(() => {
+    if (!isLoading && earning?.result === 'beat') {
+      // Small delay for dramatic effect
+      const timer = setTimeout(() => setShowCelebration(true), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, earning?.result]);
 
   const historicalData = [
     { quarter: 'Q4 2025', eps: earning?.eps || earning?.estimate || 0, estimate: earning?.estimate || 0, beat: earning?.result === 'beat' },
@@ -113,6 +124,10 @@ export default function ReportPage() {
 
   return (
     <div className="min-h-screen">
+      {/* Celebration effects for beat results */}
+      <Confetti trigger={showCelebration} particleCount={60} duration={2500} />
+      <Sparkles trigger={showCelebration} count={8} />
+      
       {/* Header */}
       <header className="sticky top-0 z-20 backdrop-blur-xl bg-black/50 border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">

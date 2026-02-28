@@ -2708,4 +2708,37 @@ html.light .tilt-card-glare {
   .tilt-card-spotlight {
     transition: none;
   }
+  
+  .confetti-container,
+  .sparkles-container {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   CONFETTI & CELEBRATION EFFECTS
+   Micro-interactions for positive feedback
+   ============================================ */
+
+.confetti-particle {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.sparkles-container .sparkle {
+  will-change: transform, opacity;
+}
+
+/* Subtle glow pulse for beat badge on detail page */
+.badge-success {
+  animation: beatPulse 2s ease-in-out infinite;
+}
+
+@keyframes beatPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2);
+  }
 }
