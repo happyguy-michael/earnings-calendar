@@ -115,10 +115,45 @@ html.light .card {
 
 /* Gradient text effects */
 .text-gradient {
+  background: linear-gradient(
+    90deg, 
+    #3b82f6 0%, 
+    #8b5cf6 25%, 
+    #ec4899 50%, 
+    #8b5cf6 75%, 
+    #3b82f6 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientFlow 4s ease-in-out infinite;
+}
+
+/* Static variant for elements that shouldn't animate */
+.text-gradient-static {
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient {
+    animation: none;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+    background-size: 100% 100%;
+  }
 }
 
 .text-gradient-green {
