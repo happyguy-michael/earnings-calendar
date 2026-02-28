@@ -378,7 +378,68 @@ html.light .progress-ring-bg {
   border-radius: 14px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
-  overflow: hidden; /* Required for ripple effect */
+  overflow: hidden; /* Required for ripple and shimmer effects */
+}
+
+/* Premium shimmer sweep effect */
+.shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.shimmer-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.earnings-row:hover .shimmer-sweep::before {
+  animation: shimmerSweep 0.8s ease-out forwards;
+}
+
+@keyframes shimmerSweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* Light mode shimmer */
+html.light .shimmer-sweep::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    transparent 100%
+  );
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .earnings-row:hover .shimmer-sweep::before {
+    animation: none;
+  }
 }
 
 /* Animated gradient border container */

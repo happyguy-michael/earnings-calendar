@@ -86,6 +86,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         style={{ animationDelay: `${animationIndex * 50}ms` }}
       >
         <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
+        <span className="shimmer-sweep" aria-hidden="true" />
         <div className="logo-container">
           <img
             src={logoUrl}
