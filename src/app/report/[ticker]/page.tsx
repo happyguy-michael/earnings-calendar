@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getEarning, getAnalysis, earnings } from '@/lib/data';
@@ -11,6 +11,7 @@ import { LiveBadge } from '@/components/LiveBadge';
 import { Confetti, Sparkles } from '@/components/Confetti';
 import { TypewriterParagraphs, TypingIndicator, SkipButton } from '@/components/Typewriter';
 import { AnimatedTabs, Tab } from '@/components/AnimatedTabs';
+import { ReadingProgress } from '@/components/ReadingProgress';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -58,6 +59,7 @@ export default function ReportPage() {
   const [isTypingAnalysis, setIsTypingAnalysis] = useState(true);
   const [hasViewedAnalysis, setHasViewedAnalysis] = useState(false);
   const [skippedTypewriter, setSkippedTypewriter] = useState(false);
+  const analysisContentRef = useRef<HTMLDivElement>(null);
 
   // Simulate data loading
   useEffect(() => {
@@ -455,8 +457,15 @@ export default function ReportPage() {
         {/* Analysis Tab */}
         {activeTab === 'analysis' && (
           <div className="max-w-3xl">
+            {/* Reading progress indicator for AI analysis */}
+            <ReadingProgress 
+              targetRef={analysisContentRef} 
+              color="gradient"
+              height={3}
+              position="top"
+            />
             {analysis ? (
-              <div className="space-y-6">
+              <div ref={analysisContentRef} className="space-y-6">
                 <div className="glass-card overflow-hidden">
                   <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between">
                     <div>
