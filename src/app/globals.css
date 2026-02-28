@@ -378,6 +378,7 @@ html.light .progress-ring-bg {
   border-radius: 14px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  overflow: hidden; /* Required for ripple effect */
 }
 
 /* Animated gradient border container */
@@ -1332,6 +1333,74 @@ button:focus-visible {
 .skeleton-delay-3 { animation-delay: 0.3s; }
 .skeleton-delay-4 { animation-delay: 0.4s; }
 .skeleton-delay-5 { animation-delay: 0.5s; }
+
+/* ============================================
+   RIPPLE EFFECT
+   Material design-inspired click feedback
+   ============================================ */
+
+.ripple-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Allow the span to receive mouse events for positioning */
+.earnings-row .ripple-container {
+  pointer-events: auto;
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-expand ease-out forwards;
+  pointer-events: none;
+  opacity: 1;
+}
+
+@keyframes ripple-expand {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Light mode ripple adjustment */
+html.light .ripple-effect {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Subtle press effect for cards */
+.earnings-row:active {
+  transform: scale(0.985);
+}
+
+.earnings-row {
+  transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ripple-effect {
+    animation: none;
+    opacity: 0;
+  }
+  
+  .earnings-row:active {
+    transform: none;
+  }
+}
 
 /* ============================================
    MOBILE RESPONSIVE STYLES

@@ -17,6 +17,7 @@ import { CountdownBadge } from '@/components/Countdown';
 import { ProgressRing } from '@/components/ProgressRing';
 import { BackToTop } from '@/components/BackToTop';
 import { TiltCard } from '@/components/TiltCard';
+import { Ripple } from '@/components/Ripple';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -84,6 +85,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
         style={{ animationDelay: `${animationIndex * 50}ms` }}
       >
+        <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
         <div className="logo-container">
           <img
             src={logoUrl}
