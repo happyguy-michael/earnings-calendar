@@ -2742,3 +2742,163 @@ html.light .tilt-card-glare {
     box-shadow: 0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2);
   }
 }
+
+/* ============================================
+   NAVIGATION PROGRESS BAR
+   Premium loading indicator for page navigation
+   ============================================ */
+
+.navigation-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.navigation-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.4) 10%,
+    #3b82f6 30%,
+    #8b5cf6 60%,
+    #ec4899 90%,
+    transparent 100%
+  );
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.navigation-progress-bar.complete {
+  transition: transform 0.15s ease-out, opacity 0.3s ease-out 0.1s;
+  opacity: 0;
+}
+
+/* Animated glow at the leading edge */
+.navigation-progress-glow {
+  position: absolute;
+  top: -8px;
+  width: 80px;
+  height: 20px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(139, 92, 246, 0.8) 0%,
+    rgba(59, 130, 246, 0.4) 40%,
+    transparent 70%
+  );
+  filter: blur(6px);
+  animation: progressGlowPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes progressGlowPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+
+/* Shimmer overlay for extra premium feel */
+.navigation-progress-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerMove 1.2s ease-in-out infinite;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes shimmerMove {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Shadow beneath the bar for depth */
+.navigation-progress-container::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 130, 246, 0.15) 0%,
+    transparent 100%
+  );
+  opacity: 0.8;
+}
+
+/* Light mode adjustments */
+html.light .navigation-progress-bar {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.3) 10%,
+    #3b82f6 30%,
+    #6366f1 60%,
+    #8b5cf6 90%,
+    transparent 100%
+  );
+}
+
+html.light .navigation-progress-glow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.7) 0%,
+    rgba(59, 130, 246, 0.3) 40%,
+    transparent 70%
+  );
+}
+
+html.light .navigation-progress-container::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 130, 246, 0.1) 0%,
+    transparent 100%
+  );
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .navigation-progress-bar {
+    transition: transform 0.1s linear;
+  }
+  
+  .navigation-progress-glow {
+    animation: none;
+    opacity: 0.8;
+  }
+  
+  .navigation-progress-shimmer {
+    animation: none;
+    display: none;
+  }
+}

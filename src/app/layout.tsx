@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
+import { NavigationProgress } from "@/components/NavigationProgress";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -20,6 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className="antialiased min-h-screen">
+        <Suspense fallback={null}>
+          <NavigationProgress />
+        </Suspense>
         {children}
       </body>
     </html>
