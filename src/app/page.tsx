@@ -151,6 +151,7 @@ export default function Home() {
   const [statusFilter, setStatusFilter] = useState<FilterType>('all');
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const slideKey = useRef(0);
 
   // Calculate counts for filter chips (before any filtering)
@@ -230,6 +231,19 @@ export default function Home() {
     } catch {}
   }, []);
 
+  // Shrinking header on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 60);
+    };
+    
+    // Check initial scroll position
+    handleScroll();
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Keyboard navigation for weeks
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -279,15 +293,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="sticky top-0 z-20 backdrop-blur-xl border-b" style={{ background: 'var(--header-bg)', borderColor: 'var(--border-secondary)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-5">
+      {/* Header - shrinks on scroll */}
+      <header className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="sticky-header-inner">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold">
+              <h1 className="sticky-header-title">
                 Earnings <span className="text-gradient">Calendar</span>
               </h1>
-              <p className="text-sm text-zinc-500 mt-1">
+              <p className="sticky-header-subtitle">
                 {months[currentWeekStart.getMonth()]} {currentWeekStart.getFullYear()}
               </p>
             </div>
@@ -303,7 +317,7 @@ export default function Home() {
             </div>
             
             <div className="flex items-center gap-3 flex-shrink-0">
-              <div className="keyboard-hint mr-2">
+              <div className="sticky-header-hints">
                 <span className="kbd">←</span>
                 <span className="kbd">→</span>
                 <span>navigate</span>
@@ -347,8 +361,8 @@ export default function Home() {
             />
           </div>
           
-          {/* Filter chips */}
-          <div className="mt-4">
+          {/* Filter chips - collapse on scroll */}
+          <div className="sticky-header-filters">
             <FilterChips 
               value={statusFilter}
               onChange={setStatusFilter}
