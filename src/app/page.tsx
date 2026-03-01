@@ -21,6 +21,7 @@ import { Ripple } from '@/components/Ripple';
 import { FloatingParticles } from '@/components/FloatingParticles';
 import { MagneticButton } from '@/components/MagneticButton';
 import { MarketSessionIcon } from '@/components/MarketSessionIcon';
+import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -299,6 +300,9 @@ export default function Home() {
       {/* Floating background particles */}
       <FloatingParticles count={35} speed={0.25} maxSize={3} minSize={1} />
       
+      {/* Keyboard shortcuts overlay */}
+      <KeyboardShortcutsOverlay />
+      
       {/* Header - shrinks on scroll */}
       <header className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="sticky-header-inner">
@@ -330,7 +334,11 @@ export default function Home() {
                 <span className="mx-1">·</span>
                 <span className="kbd">T</span>
                 <span>today</span>
+                <span className="mx-1">·</span>
+                <span className="kbd">?</span>
+                <span>help</span>
               </div>
+              <KeyboardShortcutsHint />
               <ThemeToggle />
               <MagneticButton 
                 onClick={goToToday} 
