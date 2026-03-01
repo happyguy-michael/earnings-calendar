@@ -23,6 +23,7 @@ import { MagneticButton } from '@/components/MagneticButton';
 import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
+import { BadgeSparkle } from '@/components/BadgeSparkle';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -119,9 +120,17 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         )}
 
         {hasResult ? (
-          <span className={`badge ${earning.result === 'beat' ? 'badge-beat' : 'badge-miss'}`}>
-            {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
-          </span>
+          earning.result === 'beat' ? (
+            <BadgeSparkle active={true} particleCount={6}>
+              <span className="badge badge-beat">
+                {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+              </span>
+            </BadgeSparkle>
+          ) : (
+            <span className="badge badge-miss">
+              {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+            </span>
+          )
         ) : earning.beatOdds ? (
           <div className="odds-indicator">
             <ProgressRing value={earning.beatOdds} size={32} color={oddsColor} delay={animationIndex * 80} duration={800} />

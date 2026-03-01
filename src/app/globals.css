@@ -4851,3 +4851,119 @@ html.light .shortcut-key {
     transform: none;
   }
 }
+
+/* =========================================
+   Badge Sparkle Effect
+   ========================================= */
+.badge-sparkle-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-sparkle-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.badge-sparkle-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--particle-size, 3px);
+  height: var(--particle-size, 3px);
+  background: var(--particle-color, #22c55e);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 4px var(--particle-color, #22c55e);
+  animation: badge-sparkle-burst var(--particle-duration, 1500ms) ease-out infinite;
+  animation-delay: var(--particle-delay, 0ms);
+  transform: translate(-50%, -50%);
+}
+
+@keyframes badge-sparkle-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--particle-angle, 0deg)) translateY(0) scale(0);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--particle-angle, 0deg)) translateY(calc(var(--particle-distance, 20px) * -0.3)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--particle-angle, 0deg)) translateY(calc(var(--particle-distance, 20px) * -1)) scale(0.3);
+  }
+}
+
+/* Star burst variant */
+.badge-starburst-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-starburst-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.badge-star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  color: #fbbf24;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px #fbbf24);
+  animation: badge-star-pop 2s ease-out infinite;
+  animation-delay: var(--star-delay, 0ms);
+  transform: translate(-50%, -50%);
+}
+
+@keyframes badge-star-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--star-angle, 0deg)) translateY(0) scale(0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--star-angle, 0deg)) translateY(-8px) scale(1.2) rotate(45deg);
+  }
+  30% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) rotate(var(--star-angle, 0deg)) translateY(-16px) scale(0.8) rotate(90deg);
+  }
+  50% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--star-angle, 0deg)) translateY(-22px) scale(0.4) rotate(135deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--star-angle, 0deg)) translateY(-22px) scale(0) rotate(180deg);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .badge-sparkle-particle,
+  .badge-star {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Light mode adjustments */
+html.light .badge-sparkle-particle {
+  box-shadow: 0 0 6px var(--particle-color, #22c55e);
+}
+
+html.light .badge-star {
+  filter: drop-shadow(0 0 4px #f59e0b);
+  color: #f59e0b;
+}
