@@ -4178,3 +4178,159 @@ button:not(.no-elastic):focus-visible:not(:active),
     animation: none;
   }
 }
+
+/* ============================================
+   ANIMATED MARKET SESSION ICONS
+   Sun rays for pre-market, twinkling stars for after-hours
+   ============================================ */
+
+.market-session-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.market-session-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Sun icon animations */
+.sun-rays-rotating {
+  animation: sunRaysRotate 20s linear infinite;
+}
+
+@keyframes sunRaysRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sun-ray {
+  animation: sunRayPulse 2s ease-in-out infinite;
+}
+
+@keyframes sunRayPulse {
+  0%, 100% {
+    opacity: 0.7;
+    stroke-width: 1.5;
+  }
+  50% {
+    opacity: 1;
+    stroke-width: 2;
+  }
+}
+
+.sun-core {
+  animation: sunCorePulse 3s ease-in-out infinite;
+}
+
+@keyframes sunCorePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8));
+  }
+}
+
+/* Moon icon animations */
+.moon-star {
+  animation: starTwinkle 2s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.moon-star-sparkle {
+  animation: sparkleRotate 3s linear infinite;
+}
+
+@keyframes sparkleRotate {
+  0% {
+    opacity: 0.3;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.3;
+    transform: rotate(180deg);
+  }
+}
+
+.moon-body {
+  animation: moonGlow 4s ease-in-out infinite;
+}
+
+@keyframes moonGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+  }
+}
+
+/* Session label styling */
+.session-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 4px 0;
+}
+
+.session-header-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.session-header.pre-market .session-header-label {
+  color: #fbbf24;
+}
+
+.session-header.after-hours .session-header-label {
+  color: #a78bfa;
+}
+
+/* Hover effects on session headers */
+.session-header:hover .sun-rays-rotating {
+  animation-duration: 8s;
+}
+
+.session-header:hover .moon-star {
+  animation-duration: 1s;
+}
+
+/* Light mode adjustments */
+html.light .sun-core {
+  fill: #f59e0b;
+}
+
+html.light .sun-ray {
+  stroke: #f59e0b;
+}
+
+html.light .moon-body {
+  fill: #8b5cf6;
+}
+
+html.light .moon-star {
+  fill: #a78bfa;
+}

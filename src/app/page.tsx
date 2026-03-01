@@ -20,6 +20,7 @@ import { TiltCard } from '@/components/TiltCard';
 import { Ripple } from '@/components/Ripple';
 import { FloatingParticles } from '@/components/FloatingParticles';
 import { MagneticButton } from '@/components/MagneticButton';
+import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -510,9 +511,9 @@ export default function Home() {
                         <div className="space-y-5">
                           {preMarket.length > 0 && (
                             <div>
-                              <div className="section-label">
-                                <span className="text-amber-400">☀️</span>
-                                Pre-Market
+                              <div className="session-header pre-market">
+                                <MarketSessionIcon session="pre" size={18} />
+                                <span className="session-header-label">Pre-Market</span>
                               </div>
                               <div className="space-y-2">
                                 {preMarket.map((e, i) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} animationIndex={i} />)}
@@ -521,9 +522,9 @@ export default function Home() {
                           )}
                           {postMarket.length > 0 && (
                             <div>
-                              <div className="section-label">
-                                <span className="text-indigo-400">🌙</span>
-                                After Hours
+                              <div className="session-header after-hours">
+                                <MarketSessionIcon session="post" size={18} />
+                                <span className="session-header-label">After Hours</span>
                               </div>
                               <div className="space-y-2">
                                 {postMarket.map((e, i) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
