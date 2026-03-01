@@ -22,6 +22,7 @@ import { FloatingParticles } from '@/components/FloatingParticles';
 import { MagneticButton } from '@/components/MagneticButton';
 import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
+import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -509,12 +510,9 @@ export default function Home() {
                   return (
                     <div key={dayIndex} className={`day-content ${isToday ? 'today' : ''}`} data-mobile-date={mobileDate}>
                       {!hasEarnings ? (
-                        <div className="flex flex-col items-center justify-center h-full text-zinc-700 py-8">
-                          <svg className="w-10 h-10 mb-3 opacity-30" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                          </svg>
-                          <span className="text-xs font-medium">No reports</span>
-                        </div>
+                        <AnimatedEmptyState 
+                          variant={isToday ? 'today' : date < today ? 'past' : 'future'} 
+                        />
                       ) : (
                         <div className="space-y-5">
                           {preMarket.length > 0 && (
