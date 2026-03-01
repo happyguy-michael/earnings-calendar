@@ -12,6 +12,7 @@ import { Confetti, Sparkles } from '@/components/Confetti';
 import { TypewriterParagraphs, TypingIndicator, SkipButton } from '@/components/Typewriter';
 import { AnimatedTabs, Tab } from '@/components/AnimatedTabs';
 import { ReadingProgress } from '@/components/ReadingProgress';
+import { ScrollReveal, StaggeredReveal, RevealTableBody } from '@/components/ScrollReveal';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -466,72 +467,85 @@ export default function ReportPage() {
             />
             {analysis ? (
               <div ref={analysisContentRef} className="space-y-6">
-                <div className="glass-card overflow-hidden">
-                  <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <h2 className="text-lg font-semibold text-white">🤖 AI Analysis</h2>
-                        {isTypingAnalysis && !skippedTypewriter && (
-                          <TypingIndicator />
-                        )}
+                <ScrollReveal animation="fade-up" duration={500} distance={20}>
+                  <div className="glass-card overflow-hidden">
+                    <div className="px-8 py-5 border-b border-white/5 flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <h2 className="text-lg font-semibold text-white">🤖 AI Analysis</h2>
+                          {isTypingAnalysis && !skippedTypewriter && (
+                            <TypingIndicator />
+                          )}
+                        </div>
+                        <p className="text-xs text-zinc-500 mt-1">Generated {new Date(analysis.generatedAt).toLocaleDateString()}</p>
                       </div>
-                      <p className="text-xs text-zinc-500 mt-1">Generated {new Date(analysis.generatedAt).toLocaleDateString()}</p>
-                    </div>
-                    <SkipButton 
-                      onSkip={handleSkipTypewriter}
-                      visible={isTypingAnalysis && !skippedTypewriter}
-                    />
-                  </div>
-                  <div className="p-8">
-                    {skippedTypewriter || !isTypingAnalysis ? (
-                      /* Show full text immediately */
-                      <div className="space-y-4">
-                        {analysis.summary.split('\n\n').map((p, i) => (
-                          <p key={i} className="text-zinc-300 leading-relaxed">{p}</p>
-                        ))}
-                      </div>
-                    ) : (
-                      /* Typewriter effect */
-                      <TypewriterParagraphs
-                        paragraphs={analysis.summary.split('\n\n')}
-                        speed={12}
-                        paragraphDelay={300}
-                        className="space-y-4"
-                        paragraphClassName="text-zinc-300 leading-relaxed"
+                      <SkipButton 
+                        onSkip={handleSkipTypewriter}
+                        visible={isTypingAnalysis && !skippedTypewriter}
                       />
-                    )}
+                    </div>
+                    <div className="p-8">
+                      {skippedTypewriter || !isTypingAnalysis ? (
+                        /* Show full text immediately */
+                        <div className="space-y-4">
+                          {analysis.summary.split('\n\n').map((p, i) => (
+                            <p key={i} className="text-zinc-300 leading-relaxed">{p}</p>
+                          ))}
+                        </div>
+                      ) : (
+                        /* Typewriter effect */
+                        <TypewriterParagraphs
+                          paragraphs={analysis.summary.split('\n\n')}
+                          speed={12}
+                          paragraphDelay={300}
+                          className="space-y-4"
+                          paragraphClassName="text-zinc-300 leading-relaxed"
+                        />
+                      )}
+                    </div>
                   </div>
-                </div>
+                </ScrollReveal>
 
                 {analysis.keyPoints && (
-                  <div className="glass-card overflow-hidden">
-                    <div className="px-8 py-5 border-b border-white/5">
-                      <h2 className="text-lg font-semibold text-white">🎯 Key Takeaways</h2>
+                  <ScrollReveal animation="fade-up" duration={500} delay={150} distance={20}>
+                    <div className="glass-card overflow-hidden">
+                      <div className="px-8 py-5 border-b border-white/5">
+                        <h2 className="text-lg font-semibold text-white">🎯 Key Takeaways</h2>
+                      </div>
+                      <StaggeredReveal 
+                        animation="fade-left" 
+                        stagger={100} 
+                        baseDelay={200} 
+                        duration={400}
+                        distance={15}
+                        className="divide-y divide-white/5"
+                      >
+                        {analysis.keyPoints.map((point, i) => (
+                          <div key={i} className="flex items-start gap-4 p-6">
+                            <span className={`badge ${
+                              point.sentiment === 'up' ? 'badge-success' :
+                              point.sentiment === 'down' ? 'badge-danger' : 'badge-neutral'
+                            }`}>
+                              {point.sentiment === 'up' ? '↑' : point.sentiment === 'down' ? '↓' : '→'}
+                            </span>
+                            <span className="text-zinc-300 leading-relaxed">{point.text}</span>
+                          </div>
+                        ))}
+                      </StaggeredReveal>
                     </div>
-                    <div className="divide-y divide-white/5">
-                      {analysis.keyPoints.map((point, i) => (
-                        <div key={i} className="flex items-start gap-4 p-6">
-                          <span className={`badge ${
-                            point.sentiment === 'up' ? 'badge-success' :
-                            point.sentiment === 'down' ? 'badge-danger' : 'badge-neutral'
-                          }`}>
-                            {point.sentiment === 'up' ? '↑' : point.sentiment === 'down' ? '↓' : '→'}
-                          </span>
-                          <span className="text-zinc-300 leading-relaxed">{point.text}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  </ScrollReveal>
                 )}
               </div>
             ) : (
-              <div className="glass-card p-16 text-center">
-                <div className="text-6xl mb-4">🤖</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Analysis Coming Soon</h3>
-                <p className="text-zinc-500">
-                  {hasResult ? 'Generating detailed analysis...' : 'Available after earnings release.'}
-                </p>
-              </div>
+              <ScrollReveal animation="scale" duration={600}>
+                <div className="glass-card p-16 text-center">
+                  <div className="text-6xl mb-4">🤖</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Analysis Coming Soon</h3>
+                  <p className="text-zinc-500">
+                    {hasResult ? 'Generating detailed analysis...' : 'Available after earnings release.'}
+                  </p>
+                </div>
+              </ScrollReveal>
             )}
           </div>
         )}
@@ -539,59 +553,65 @@ export default function ReportPage() {
         {/* History Tab */}
         {activeTab === 'history' && (
           <div className="max-w-4xl space-y-6">
-            <div className="glass-card p-8">
-              <h3 className="text-lg font-semibold text-white mb-6">EPS Trend</h3>
-              <EPSChart data={historicalData} />
-            </div>
+            <ScrollReveal animation="fade-up" duration={500} distance={25}>
+              <div className="glass-card p-8">
+                <h3 className="text-lg font-semibold text-white mb-6">EPS Trend</h3>
+                <EPSChart data={historicalData} />
+              </div>
+            </ScrollReveal>
 
-            <div className="glass-card p-8">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-white">Quarter by Quarter</h3>
-                <div className="flex items-center gap-6 text-xs text-zinc-500">
-                  <span className="flex items-center gap-2"><span className="w-3 h-3 bg-zinc-600 rounded"></span> Estimate</span>
-                  <span className="flex items-center gap-2"><span className="w-3 h-3 bg-emerald-500 rounded"></span> Beat</span>
-                  <span className="flex items-center gap-2"><span className="w-3 h-3 bg-red-500 rounded"></span> Miss</span>
+            <ScrollReveal animation="fade-up" duration={500} delay={100} distance={25}>
+              <div className="glass-card p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold text-white">Quarter by Quarter</h3>
+                  <div className="flex items-center gap-6 text-xs text-zinc-500">
+                    <span className="flex items-center gap-2"><span className="w-3 h-3 bg-zinc-600 rounded"></span> Estimate</span>
+                    <span className="flex items-center gap-2"><span className="w-3 h-3 bg-emerald-500 rounded"></span> Beat</span>
+                    <span className="flex items-center gap-2"><span className="w-3 h-3 bg-red-500 rounded"></span> Miss</span>
+                  </div>
                 </div>
+                <EPSBarChart data={historicalData} />
               </div>
-              <EPSBarChart data={historicalData} />
-            </div>
+            </ScrollReveal>
 
-            <div className="glass-card overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/5">
-                <h3 className="text-lg font-semibold text-white">Historical Data</h3>
+            <ScrollReveal animation="fade-up" duration={500} delay={200} distance={25}>
+              <div className="glass-card overflow-hidden">
+                <div className="px-6 py-4 border-b border-white/5">
+                  <h3 className="text-lg font-semibold text-white">Historical Data</h3>
+                </div>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/5">
+                      <th className="text-left text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Quarter</th>
+                      <th className="text-right text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">EPS</th>
+                      <th className="text-right text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Estimate</th>
+                      <th className="text-right text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Surprise</th>
+                      <th className="text-center text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Result</th>
+                    </tr>
+                  </thead>
+                  <RevealTableBody stagger={80} duration={450} baseDelay={150}>
+                    {historicalData.map((row, i) => {
+                      const surp = ((row.eps - row.estimate) / Math.abs(row.estimate) * 100);
+                      return (
+                        <tr key={i} className="hover:bg-white/5 transition-smooth">
+                          <td className="px-6 py-4 text-white font-medium">{row.quarter}</td>
+                          <td className="px-6 py-4 text-right text-white">${row.eps.toFixed(2)}</td>
+                          <td className="px-6 py-4 text-right text-zinc-500">${row.estimate.toFixed(2)}</td>
+                          <td className={`px-6 py-4 text-right font-medium ${surp >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {surp >= 0 ? '+' : ''}{surp.toFixed(1)}%
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            <span className={`badge ${row.beat ? 'badge-success' : 'badge-danger'}`}>
+                              {row.beat ? 'Beat' : 'Miss'}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </RevealTableBody>
+                </table>
               </div>
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/5">
-                    <th className="text-left text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Quarter</th>
-                    <th className="text-right text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">EPS</th>
-                    <th className="text-right text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Estimate</th>
-                    <th className="text-right text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Surprise</th>
-                    <th className="text-center text-xs text-zinc-500 uppercase tracking-wider px-6 py-4">Result</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {historicalData.map((row, i) => {
-                    const surp = ((row.eps - row.estimate) / Math.abs(row.estimate) * 100);
-                    return (
-                      <tr key={i} className="hover:bg-white/5 transition-smooth">
-                        <td className="px-6 py-4 text-white font-medium">{row.quarter}</td>
-                        <td className="px-6 py-4 text-right text-white">${row.eps.toFixed(2)}</td>
-                        <td className="px-6 py-4 text-right text-zinc-500">${row.estimate.toFixed(2)}</td>
-                        <td className={`px-6 py-4 text-right font-medium ${surp >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                          {surp >= 0 ? '+' : ''}{surp.toFixed(1)}%
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          <span className={`badge ${row.beat ? 'badge-success' : 'badge-danger'}`}>
-                            {row.beat ? 'Beat' : 'Miss'}
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            </ScrollReveal>
           </div>
         )}
       </div>
