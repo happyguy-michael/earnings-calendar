@@ -18,6 +18,7 @@ import { ProgressRing } from '@/components/ProgressRing';
 import { BackToTop } from '@/components/BackToTop';
 import { TiltCard } from '@/components/TiltCard';
 import { Ripple } from '@/components/Ripple';
+import { FloatingParticles } from '@/components/FloatingParticles';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -292,7 +293,10 @@ export default function Home() {
   const isFiltering = searchQuery.trim().length > 0 || statusFilter !== 'all';
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Floating background particles */}
+      <FloatingParticles count={35} speed={0.25} maxSize={3} minSize={1} />
+      
       {/* Header - shrinks on scroll */}
       <header className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="sticky-header-inner">
