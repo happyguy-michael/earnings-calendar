@@ -3920,3 +3920,165 @@ html.light .magnetic-today-btn.magnetic-hovering {
     display: none;
   }
 }
+
+/* ============================================
+   ELASTIC BUTTON PRESS ANIMATION
+   Satisfying spring bounce on button press
+   Using CSS linear() for realistic spring physics
+   ============================================ */
+
+/* Spring timing function - simulates a bouncy spring with slight overshoot */
+/* Generated values approximate: stiffness 400, damping 15, mass 1 */
+:root {
+  --spring-bounce: linear(
+    0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%,
+    0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50%, 1.015 55%, 1.017 63.9%,
+    1.001 76%, 0.999 86%, 1
+  );
+  --spring-bounce-time: 500ms;
+  
+  /* Snappier spring for subtle interactions */
+  --spring-snappy: linear(
+    0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 15.5%, 0.938 23.2%,
+    1.017 28.3%, 1.041 32%, 1.037 38.4%, 1.014 47.6%, 1.001 59%, 1
+  );
+  --spring-snappy-time: 350ms;
+}
+
+/* Base elastic button class */
+.elastic-press {
+  --elastic-scale-pressed: 0.92;
+  --elastic-scale-default: 1;
+  transform: scale(var(--elastic-scale-default));
+  transition: transform var(--spring-snappy-time) var(--spring-snappy);
+  will-change: transform;
+  cursor: pointer;
+}
+
+.elastic-press:active {
+  --elastic-scale-default: var(--elastic-scale-pressed);
+  transition: transform 0.08s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* When mouse is released, spring back with bounce */
+.elastic-press:not(:active) {
+  transition: transform var(--spring-snappy-time) var(--spring-snappy);
+}
+
+/* Apply to all buttons by default */
+.btn,
+button:not(.no-elastic),
+.filter-chip,
+.theme-toggle,
+.back-to-top,
+.magnetic-nav-btn,
+.magnetic-today-btn {
+  --elastic-scale-pressed: 0.92;
+  --elastic-scale-default: 1;
+  transform-origin: center;
+}
+
+/* Active state - squish down */
+.btn:active,
+button:not(.no-elastic):active,
+.filter-chip:active,
+.theme-toggle:active,
+.back-to-top:active,
+.magnetic-nav-btn:active,
+.magnetic-today-btn:active {
+  transform: scale(0.92) !important;
+  transition: transform 0.06s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Release state - spring back with overshoot bounce */
+.btn:not(:active),
+button:not(.no-elastic):not(:active),
+.filter-chip:not(:active),
+.theme-toggle:not(:active),
+.back-to-top:not(:active),
+.magnetic-nav-btn:not(:active),
+.magnetic-today-btn:not(:active) {
+  transition: 
+    transform var(--spring-snappy-time) var(--spring-snappy),
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+/* Softer bounce for nav buttons (they're smaller) */
+.magnetic-nav-btn:active {
+  transform: scale(0.88) !important;
+}
+
+/* Theme toggle has special rotation - preserve it */
+.theme-toggle:active {
+  transform: scale(0.85) rotate(0deg) !important;
+}
+
+/* Back to top has its own styling */
+.back-to-top:active {
+  transform: scale(0.9) !important;
+}
+
+/* Filter chips - softer bounce */
+.filter-chip:active {
+  transform: scale(0.94) !important;
+}
+
+/* Keyboard focus also triggers subtle pulse */
+.btn:focus-visible:not(:active),
+button:not(.no-elastic):focus-visible:not(:active),
+.filter-chip:focus-visible:not(:active) {
+  animation: elasticFocusPulse 0.4s var(--spring-snappy) forwards;
+}
+
+@keyframes elasticFocusPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Larger bounce for significant actions */
+.elastic-press-lg {
+  --elastic-scale-pressed: 0.88;
+}
+
+/* Subtle bounce for inline elements */
+.elastic-press-sm {
+  --elastic-scale-pressed: 0.95;
+}
+
+/* Respect reduced motion - disable elastic effects */
+@media (prefers-reduced-motion: reduce) {
+  .btn:active,
+  button:not(.no-elastic):active,
+  .filter-chip:active,
+  .theme-toggle:active,
+  .back-to-top:active,
+  .magnetic-nav-btn:active,
+  .magnetic-today-btn:active,
+  .elastic-press:active {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .btn:not(:active),
+  button:not(.no-elastic):not(:active),
+  .filter-chip:not(:active),
+  .elastic-press:not(:active) {
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+  }
+  
+  .btn:focus-visible:not(:active),
+  button:not(.no-elastic):focus-visible:not(:active),
+  .filter-chip:focus-visible:not(:active) {
+    animation: none;
+  }
+}
