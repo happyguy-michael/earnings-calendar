@@ -3804,3 +3804,111 @@ html.light .floating-particle:nth-child(5n) {
     display: none;
   }
 }
+
+/* ============================================
+   MAGNETIC BUTTON EFFECT
+   Buttons that attract toward the cursor
+   Premium micro-interaction (Linear.app style)
+   ============================================ */
+
+.magnetic-button,
+.magnetic-wrapper {
+  transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform;
+  position: relative;
+}
+
+/* Hovering state - cursor is in magnetic field */
+.magnetic-button.magnetic-hovering,
+.magnetic-wrapper.magnetic-hovering {
+  transition: transform 0.08s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Inner content can have inverse movement for extra depth */
+.magnetic-button .magnetic-inner {
+  transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.magnetic-button.magnetic-hovering .magnetic-inner {
+  transform: scale(1.02);
+}
+
+/* Subtle glow when hovering */
+.magnetic-button.magnetic-hovering::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at center,
+    rgba(99, 102, 241, 0.15) 0%,
+    transparent 70%
+  );
+  opacity: 1;
+  pointer-events: none;
+  z-index: -1;
+  animation: magneticGlow 0.3s ease forwards;
+}
+
+@keyframes magneticGlow {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Light mode adjustments */
+html.light .magnetic-button.magnetic-hovering::after {
+  background: radial-gradient(
+    circle at center,
+    rgba(99, 102, 241, 0.1) 0%,
+    transparent 70%
+  );
+}
+
+/* Navigation arrows - specific styling */
+.magnetic-nav-btn {
+  position: relative;
+  overflow: visible;
+}
+
+.magnetic-nav-btn svg {
+  transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.magnetic-nav-btn.magnetic-hovering svg {
+  transform: scale(1.15);
+}
+
+/* Today button magnetic styling */
+.magnetic-today-btn {
+  overflow: visible;
+}
+
+.magnetic-today-btn.magnetic-hovering {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+html.light .magnetic-today-btn.magnetic-hovering {
+  background: rgba(99, 102, 241, 0.1);
+  color: #4f46e5;
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Respect reduced motion - disable magnetic effect */
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-button,
+  .magnetic-wrapper {
+    transform: none !important;
+  }
+  
+  .magnetic-button.magnetic-hovering::after {
+    display: none;
+  }
+}

@@ -19,6 +19,7 @@ import { BackToTop } from '@/components/BackToTop';
 import { TiltCard } from '@/components/TiltCard';
 import { Ripple } from '@/components/Ripple';
 import { FloatingParticles } from '@/components/FloatingParticles';
+import { MagneticButton } from '@/components/MagneticButton';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -330,27 +331,38 @@ export default function Home() {
                 <span>today</span>
               </div>
               <ThemeToggle />
-              <button onClick={goToToday} className="btn btn-ghost">Today</button>
-              <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-hidden">
-                <button
+              <MagneticButton 
+                onClick={goToToday} 
+                className="btn btn-ghost magnetic-today-btn"
+                intensity={0.35}
+                radius={1.4}
+              >
+                Today
+              </MagneticButton>
+              <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-visible">
+                <MagneticButton
                   onClick={() => navigateWeek(-1)}
                   aria-label="Previous week"
-                  className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
+                  className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-l-xl"
+                  intensity={0.5}
+                  radius={1.6}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M15 18l-6-6 6-6" />
                   </svg>
-                </button>
+                </MagneticButton>
                 <div className="w-px bg-white/10" />
-                <button
+                <MagneticButton
                   onClick={() => navigateWeek(1)}
                   aria-label="Next week"
-                  className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
+                  className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-r-xl"
+                  intensity={0.5}
+                  radius={1.6}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M9 18l6-6-6-6" />
                   </svg>
-                </button>
+                </MagneticButton>
               </div>
             </div>
           </div>
