@@ -23,11 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className="antialiased min-h-screen">
+        {/* Skip to main content - accessibility */}
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
         <CursorSpotlight />
         <Suspense fallback={null}>
           <NavigationProgress />
         </Suspense>
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   );
