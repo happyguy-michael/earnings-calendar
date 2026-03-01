@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import { useEarningsSearchPlaceholder } from './AnimatedPlaceholder';
 
 interface SearchBarProps {
   value: string;
@@ -11,6 +12,7 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const animatedPlaceholder = useEarningsSearchPlaceholder();
 
   // Keyboard shortcut: / to focus, Escape to clear
   useEffect(() => {
@@ -59,7 +61,7 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Search ticker or company..."
+          placeholder={animatedPlaceholder}
           className="search-input"
           aria-label="Search earnings by ticker or company name"
         />

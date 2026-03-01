@@ -1315,10 +1315,18 @@ html.light .card:focus-within:has(:focus-visible) {
 .search-input::placeholder {
   color: #52525b;
   font-weight: 400;
+  /* Smooth placeholder text changes */
+  transition: color 0.2s ease;
 }
 
 .search-input:focus::placeholder {
   color: #71717a;
+}
+
+/* Animated placeholder cursor blink effect via CSS */
+@keyframes placeholderBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .search-clear {
