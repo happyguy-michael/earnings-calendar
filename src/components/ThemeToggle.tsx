@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useToast } from './Toast';
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const { showToast } = useToast();
 
   // Only run on client to avoid hydration mismatch
   useEffect(() => {
@@ -16,6 +18,9 @@ export function ThemeToggle() {
     if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
       setIsDark(false);
       document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
     }
   }, []);
 
@@ -25,10 +30,14 @@ export function ThemeToggle() {
     
     if (newIsDark) {
       document.documentElement.classList.remove('light');
+      document.documentElement.removeAttribute('data-theme');
       localStorage.setItem('theme', 'dark');
+      showToast('Dark mode enabled', { type: 'info', icon: '🌙', duration: 2000 });
     } else {
       document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-theme', 'light');
       localStorage.setItem('theme', 'light');
+      showToast('Light mode enabled', { type: 'info', icon: '☀️', duration: 2000 });
     }
   };
 

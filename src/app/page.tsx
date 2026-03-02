@@ -25,6 +25,7 @@ import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/Ke
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 import { BadgeSparkle } from '@/components/BadgeSparkle';
 import { GrainOverlay } from '@/components/GrainOverlay';
+import { useToast } from '@/components/Toast';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -168,6 +169,7 @@ export default function Home() {
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const slideKey = useRef(0);
+  const { showToast } = useToast();
 
   // Calculate counts for filter chips (before any filtering)
   const filterCounts = useMemo(() => ({
@@ -228,7 +230,10 @@ export default function Home() {
     setTimeout(() => setSlideDirection(null), 350);
   }, [showSwipeHint]);
 
-  const goToToday = useCallback(() => setCurrentWeekStart(getWeekStart(new Date())), []);
+  const goToToday = useCallback(() => {
+    setCurrentWeekStart(getWeekStart(new Date()));
+    showToast('Jumped to current week', { type: 'success', icon: '📅', duration: 2000 });
+  }, [showToast]);
 
   // Simulate data loading - will be replaced with real API call
   useEffect(() => {

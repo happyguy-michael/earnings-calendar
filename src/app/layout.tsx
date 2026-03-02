@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { NavigationProgress } from "@/components/NavigationProgress";
 import { CursorSpotlight } from "@/components/CursorSpotlight";
 import { MeshGradient } from "@/components/MeshGradient";
+import { ClientProviders } from "@/components/ClientProviders";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -33,9 +34,11 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <NavigationProgress />
         </Suspense>
-        <main id="main-content">
-          {children}
-        </main>
+        <ClientProviders>
+          <main id="main-content">
+            {children}
+          </main>
+        </ClientProviders>
       </body>
     </html>
   );
