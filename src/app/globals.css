@@ -5775,3 +5775,107 @@ html.light .beat-streak-badge {
     transform: none;
   }
 }
+
+/* ==========================================
+   Value Change Highlight
+   ========================================== */
+
+.value-highlight-wrapper {
+  display: inline-block;
+  position: relative;
+  border-radius: 4px;
+  transition: transform var(--highlight-duration, 600ms) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Highlight pulse animation */
+.value-highlight-wrapper.highlighted {
+  animation: value-highlight-pulse var(--highlight-duration, 600ms) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Default variant (blue) */
+.value-highlight-default.highlighted {
+  --highlight-color: rgba(59, 130, 246, 0.5);
+  --highlight-glow: rgba(59, 130, 246, 0.3);
+}
+
+/* Success variant (green) - for increases when positive */
+.value-highlight-success.highlighted {
+  --highlight-color: rgba(34, 197, 94, 0.5);
+  --highlight-glow: rgba(34, 197, 94, 0.3);
+}
+
+/* Warning variant (amber) */
+.value-highlight-warning.highlighted {
+  --highlight-color: rgba(245, 158, 11, 0.5);
+  --highlight-glow: rgba(245, 158, 11, 0.3);
+}
+
+/* Danger variant (red) - for decreases */
+.value-highlight-danger.highlighted {
+  --highlight-color: rgba(239, 68, 68, 0.5);
+  --highlight-glow: rgba(239, 68, 68, 0.3);
+}
+
+@keyframes value-highlight-pulse {
+  0% {
+    transform: scale(1);
+    background-color: transparent;
+    box-shadow: none;
+  }
+  15% {
+    transform: scale(1.05);
+    background-color: var(--highlight-color, rgba(59, 130, 246, 0.3));
+    box-shadow: 
+      0 0 0 4px var(--highlight-glow, rgba(59, 130, 246, 0.2)),
+      0 0 20px var(--highlight-glow, rgba(59, 130, 246, 0.3));
+  }
+  30% {
+    transform: scale(1.02);
+    background-color: var(--highlight-color, rgba(59, 130, 246, 0.2));
+    box-shadow: 
+      0 0 0 2px var(--highlight-glow, rgba(59, 130, 246, 0.1)),
+      0 0 10px var(--highlight-glow, rgba(59, 130, 246, 0.2));
+  }
+  100% {
+    transform: scale(1);
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+/* Light mode adjustments */
+html.light .value-highlight-default.highlighted {
+  --highlight-color: rgba(59, 130, 246, 0.25);
+  --highlight-glow: rgba(59, 130, 246, 0.15);
+}
+
+html.light .value-highlight-success.highlighted {
+  --highlight-color: rgba(34, 197, 94, 0.25);
+  --highlight-glow: rgba(34, 197, 94, 0.15);
+}
+
+html.light .value-highlight-warning.highlighted {
+  --highlight-color: rgba(245, 158, 11, 0.25);
+  --highlight-glow: rgba(245, 158, 11, 0.15);
+}
+
+html.light .value-highlight-danger.highlighted {
+  --highlight-color: rgba(239, 68, 68, 0.25);
+  --highlight-glow: rgba(239, 68, 68, 0.15);
+}
+
+/* Reduced motion - just fade instead of scale + glow */
+@media (prefers-reduced-motion: reduce) {
+  .value-highlight-wrapper.highlighted {
+    animation: value-highlight-fade var(--highlight-duration, 600ms) ease;
+  }
+  
+  @keyframes value-highlight-fade {
+    0%, 100% {
+      background-color: transparent;
+    }
+    25% {
+      background-color: var(--highlight-color, rgba(59, 130, 246, 0.2));
+    }
+  }
+}

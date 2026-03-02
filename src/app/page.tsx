@@ -27,6 +27,7 @@ import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 import { BadgeSparkle } from '@/components/BadgeSparkle';
 import { GrainOverlay } from '@/components/GrainOverlay';
 import { useToast } from '@/components/Toast';
+import { ValueChangeHighlight } from '@/components/ValueChangeHighlight';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -420,12 +421,14 @@ export default function Home() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Row with 3D Tilt Effect and Rolling Numbers */}
+        {/* Stats Row with 3D Tilt Effect, Rolling Numbers, and Change Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
             <div className="tilt-stat-card">
               <div className="text-4xl font-bold text-white mb-1">
-                <RollingNumber value={totalEarnings} staggerDelay={40} />
+                <ValueChangeHighlight value={totalEarnings} variant="default">
+                  <RollingNumber value={totalEarnings} staggerDelay={40} />
+                </ValueChangeHighlight>
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
             </div>
@@ -436,7 +439,9 @@ export default function Home() {
                 <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
                 <div>
                   <div className="text-3xl font-bold text-gradient-green">
-                    <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
+                    <ValueChangeHighlight value={beatRate} variant="success">
+                      <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
+                    </ValueChangeHighlight>
                   </div>
                   <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
                 </div>
@@ -446,7 +451,9 @@ export default function Home() {
           <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
             <div className="tilt-stat-card">
               <div className="text-4xl font-bold text-white mb-1">
-                <RollingNumber value={reportedCount} staggerDelay={45} />
+                <ValueChangeHighlight value={reportedCount} variant="default">
+                  <RollingNumber value={reportedCount} staggerDelay={45} />
+                </ValueChangeHighlight>
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
             </div>
@@ -454,7 +461,9 @@ export default function Home() {
           <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
             <div className="tilt-stat-card tilt-stat-card-warning">
               <div className="text-4xl font-bold text-amber-400 mb-1">
-                <RollingNumber value={pendingCount} staggerDelay={35} />
+                <ValueChangeHighlight value={pendingCount} variant="warning">
+                  <RollingNumber value={pendingCount} staggerDelay={35} />
+                </ValueChangeHighlight>
               </div>
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
             </div>
