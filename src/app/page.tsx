@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { earnings } from '@/lib/data';
+import { earnings, getBeatStreak } from '@/lib/data';
 import { Earning } from '@/lib/types';
+import { BeatStreakBadge } from '@/components/BeatStreak';
 import { CountUp } from '@/components/CountUp';
 import { RollingNumber } from '@/components/NumberTicker';
 import { SkeletonCalendar } from '@/components/Skeleton';
@@ -70,6 +71,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   const logoUrl = `https://logo.clearbit.com/${earning.company.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
   const isPending = !hasResult;
   const isTodayPending = isToday && isPending;
+  const beatStreak = getBeatStreak(earning.ticker);
   
   let surprise = 0;
   if (hasResult && earning.estimate) {
@@ -111,6 +113,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-white">{earning.ticker}</span>
+            <BeatStreakBadge streak={beatStreak} />
             <LiveDot isToday={!!isToday} isPending={isPending} />
           </div>
           <div className="text-xs text-zinc-500 truncate">{earning.company}</div>

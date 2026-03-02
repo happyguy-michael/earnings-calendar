@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { getEarning, getAnalysis, earnings } from '@/lib/data';
+import { getEarning, getAnalysis, getBeatStreak, earnings } from '@/lib/data';
 import { EPSChart, EPSBarChart } from '@/components/EPSChart';
 import { EPSTrendSparkline } from '@/components/AnimatedSparkline';
 import { CountUp } from '@/components/CountUp';
@@ -15,6 +15,7 @@ import { AnimatedTabs, Tab } from '@/components/AnimatedTabs';
 import { ReadingProgress } from '@/components/ReadingProgress';
 import { ScrollReveal, StaggeredReveal, RevealTableBody } from '@/components/ScrollReveal';
 import { ShareMenu } from '@/components/ShareMenu';
+import { BeatStreak } from '@/components/BeatStreak';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -192,6 +193,7 @@ export default function ReportPage() {
                   <span className={`badge ${hasResult ? (earning.result === 'beat' ? 'badge-success' : 'badge-danger') : 'badge-warning'}`}>
                     {hasResult ? (earning.result === 'beat' ? '✓ Beat' : '✗ Miss') : '⏳ Pending'}
                   </span>
+                  <BeatStreak streak={getBeatStreak(ticker)} size="md" showLabel={true} />
                 </div>
                 <p className="text-zinc-400 text-lg">{earning.company}</p>
               </div>

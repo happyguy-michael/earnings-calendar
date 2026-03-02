@@ -5350,3 +5350,366 @@ html.light .grain-overlay-gradient {
     animation-duration: 200ms;
   }
 }
+
+/* ============================================
+   BEAT STREAK INDICATOR
+   Animated flame showing consecutive earnings beats
+   ============================================ */
+
+.beat-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px 4px 6px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(239, 68, 68, 0.15));
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  position: relative;
+  overflow: visible;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.beat-streak.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Size variants */
+.beat-streak-sm {
+  padding: 2px 8px 2px 4px;
+  font-size: 11px;
+}
+
+.beat-streak-md {
+  padding: 4px 10px 4px 6px;
+  font-size: 12px;
+}
+
+.beat-streak-lg {
+  padding: 6px 14px 6px 8px;
+  font-size: 14px;
+}
+
+/* Streak level styling */
+.beat-streak-warm {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(251, 146, 60, 0.12));
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+.beat-streak-hot {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.18), rgba(239, 68, 68, 0.15));
+  border-color: rgba(251, 146, 60, 0.4);
+}
+
+.beat-streak-legendary {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(168, 85, 247, 0.15));
+  border-color: rgba(239, 68, 68, 0.5);
+  animation: legendary-pulse 2s ease-in-out infinite;
+}
+
+@keyframes legendary-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(239, 68, 68, 0.2);
+  }
+}
+
+/* Glow background */
+.beat-streak-glow {
+  position: absolute;
+  inset: -4px;
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.3), transparent 70%);
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.beat-streak:hover .beat-streak-glow,
+.beat-streak-legendary .beat-streak-glow {
+  opacity: 1;
+}
+
+/* Flame icon container */
+.beat-streak-flame {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.beat-streak-sm .beat-streak-flame {
+  width: 14px;
+  height: 14px;
+}
+
+.beat-streak-lg .beat-streak-flame {
+  width: 22px;
+  height: 22px;
+}
+
+.flame-svg {
+  width: 100%;
+  height: 100%;
+  animation: flame-flicker 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes flame-flicker {
+  0% {
+    transform: scaleY(1) scaleX(1);
+  }
+  25% {
+    transform: scaleY(1.05) scaleX(0.98);
+  }
+  50% {
+    transform: scaleY(0.97) scaleX(1.02);
+  }
+  75% {
+    transform: scaleY(1.03) scaleX(0.99);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+}
+
+/* Flame colors */
+.flame-main {
+  fill: url(#flameGradientMain);
+  fill: #f97316;
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.6));
+}
+
+.flame-inner {
+  fill: #fbbf24;
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.5));
+}
+
+.flame-core {
+  fill: #fef3c7;
+  filter: drop-shadow(0 0 2px rgba(254, 243, 199, 0.8));
+  animation: core-glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes core-glow {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+    fill: #fff;
+  }
+}
+
+/* Hot streak - faster flicker */
+.beat-streak-hot .flame-svg {
+  animation-duration: 0.5s;
+}
+
+/* Legendary - rainbow flame */
+.beat-streak-legendary .flame-main {
+  animation: rainbow-flame 2s linear infinite;
+}
+
+@keyframes rainbow-flame {
+  0% { fill: #f97316; }
+  25% { fill: #ef4444; }
+  50% { fill: #a855f7; }
+  75% { fill: #ec4899; }
+  100% { fill: #f97316; }
+}
+
+/* Ember particles */
+.ember-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fbbf24;
+  border-radius: 50%;
+  opacity: 0;
+  animation: ember-rise 2s ease-out infinite;
+  animation-delay: var(--delay);
+  transform-origin: center;
+}
+
+@keyframes ember-rise {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--angle)) translateX(8px) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) rotate(var(--angle)) translateX(16px) scale(0.3);
+  }
+}
+
+.beat-streak-legendary .ember-particle {
+  animation-duration: 1.5s;
+}
+
+/* Streak count */
+.beat-streak-count {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fbbf24;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+.beat-streak-hot .beat-streak-count {
+  color: #f97316;
+}
+
+.beat-streak-legendary .beat-streak-count {
+  color: #fff;
+  animation: legendary-text 2s linear infinite;
+}
+
+@keyframes legendary-text {
+  0%, 100% { color: #fbbf24; }
+  33% { color: #f97316; }
+  66% { color: #ef4444; }
+}
+
+/* Streak label */
+.beat-streak-label {
+  font-size: 0.7em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 2px;
+}
+
+.beat-streak-legendary .beat-streak-label {
+  color: rgba(255, 255, 255, 0.9);
+  animation: label-shimmer 2s linear infinite;
+  background: linear-gradient(90deg, #fbbf24, #f97316, #ef4444, #a855f7, #fbbf24);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes label-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ============================================
+   BEAT STREAK BADGE (Inline variant)
+   ============================================ */
+
+.beat-streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 146, 60, 0.15));
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  animation: badge-entrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes badge-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.beat-streak-badge-warm {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(251, 146, 60, 0.1));
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+.beat-streak-badge-hot {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.18), rgba(239, 68, 68, 0.12));
+  border-color: rgba(251, 146, 60, 0.35);
+}
+
+.beat-streak-badge-legendary {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(168, 85, 247, 0.15));
+  border-color: rgba(239, 68, 68, 0.4);
+  animation: badge-entrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, 
+             legendary-pulse 2s ease-in-out 0.4s infinite;
+}
+
+.badge-flame {
+  font-size: 10px;
+  animation: mini-flame 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes mini-flame {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.badge-count {
+  font-variant-numeric: tabular-nums;
+  color: #fbbf24;
+}
+
+.beat-streak-badge-hot .badge-count {
+  color: #f97316;
+}
+
+.beat-streak-badge-legendary .badge-count {
+  color: #fff;
+}
+
+/* Light mode adjustments */
+html.light .beat-streak {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(239, 68, 68, 0.08));
+  border-color: rgba(251, 146, 60, 0.4);
+}
+
+html.light .beat-streak-warm {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(251, 146, 60, 0.06));
+}
+
+html.light .beat-streak-count,
+html.light .badge-count {
+  color: #ea580c;
+  text-shadow: none;
+}
+
+html.light .beat-streak-label {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+html.light .beat-streak-badge {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 146, 60, 0.08));
+  border-color: rgba(251, 146, 60, 0.35);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .flame-svg,
+  .ember-particle,
+  .flame-core,
+  .beat-streak-legendary,
+  .beat-streak-legendary .flame-main,
+  .beat-streak-legendary .beat-streak-count,
+  .beat-streak-legendary .beat-streak-label,
+  .badge-flame {
+    animation: none !important;
+  }
+  
+  .beat-streak.visible {
+    transform: none;
+  }
+}

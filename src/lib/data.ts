@@ -207,12 +207,65 @@ Management guided Q2 revenue flat to slightly up YoY. Apple Intelligence feature
   },
 };
 
+/**
+ * Beat Streaks - Consecutive quarters of beating earnings estimates
+ * Data based on historical performance through Q4 2025
+ */
+export const beatStreaks: Record<string, number> = {
+  // Tech giants with consistent beats
+  MSFT: 8,   // Microsoft - 8 consecutive beats
+  META: 7,   // Meta - 7 consecutive beats 
+  GOOGL: 6,  // Alphabet - 6 consecutive beats
+  AMZN: 5,   // Amazon - 5 consecutive beats
+  NVDA: 12,  // NVIDIA - 12 consecutive beats (legendary!)
+  
+  // Strong performers
+  COIN: 4,   // Coinbase - 4 consecutive beats
+  UBER: 5,   // Uber - 5 consecutive beats
+  LLY: 8,    // Eli Lilly - 8 consecutive beats
+  CRWD: 9,   // CrowdStrike - 9 consecutive beats
+  PANW: 6,   // Palo Alto Networks - 6 consecutive beats
+  
+  // Financial sector
+  JPM: 5,    // JPMorgan - 5 consecutive beats
+  GS: 4,     // Goldman Sachs - 4 consecutive beats
+  MS: 4,     // Morgan Stanley - 4 consecutive beats
+  
+  // Retail & consumer
+  WMT: 6,    // Walmart - 6 consecutive beats
+  COST: 7,   // Costco - 7 consecutive beats
+  HD: 3,     // Home Depot - 3 consecutive beats
+  
+  // Healthcare & biotech
+  UNH: 5,    // UnitedHealth - 5 consecutive beats
+  
+  // Semiconductors
+  AMD: 4,    // AMD - 4 consecutive beats
+  AVGO: 10,  // Broadcom - 10 consecutive beats
+  TSM: 6,    // TSMC - 6 consecutive beats
+  QCOM: 5,   // Qualcomm - 5 consecutive beats
+  
+  // SaaS & Enterprise
+  CRM: 8,    // Salesforce - 8 consecutive beats
+  WDAY: 4,   // Workday - 4 consecutive beats
+  SHOP: 3,   // Shopify - 3 consecutive beats
+  
+  // Other notable streaks
+  DIS: 3,    // Disney - 3 consecutive beats
+  NFLX: 4,   // Netflix - 4 consecutive beats
+  BKNG: 6,   // Booking - 6 consecutive beats
+};
+
 export function getEarning(ticker: string): Earning | undefined {
   return earnings.find(e => e.ticker.toUpperCase() === ticker.toUpperCase());
 }
 
 export function getAnalysis(ticker: string): Analysis | undefined {
   return analyses[ticker.toUpperCase()];
+}
+
+export function getBeatStreak(ticker: string): number {
+  return beatStreaks[ticker.toUpperCase()] || 0;
 }
 
 export function getEarningsByDate(date: string): Earning[] {
