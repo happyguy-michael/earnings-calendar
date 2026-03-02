@@ -24,6 +24,7 @@ import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 import { BadgeSparkle } from '@/components/BadgeSparkle';
+import { GrainOverlay } from '@/components/GrainOverlay';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -309,6 +310,9 @@ export default function Home() {
     <div className="min-h-screen relative">
       {/* Floating background particles */}
       <FloatingParticles count={35} speed={0.25} maxSize={3} minSize={1} />
+      
+      {/* Premium grain texture overlay */}
+      <GrainOverlay opacity={0.025} animate={true} blendMode="overlay" />
       
       {/* Keyboard shortcuts overlay */}
       <KeyboardShortcutsOverlay />

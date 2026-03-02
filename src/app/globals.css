@@ -5282,3 +5282,71 @@ html.light .mesh-blob-5 {
     height: 300px;
   }
 }
+
+/* ============================================
+   GRAIN OVERLAY
+   Premium animated noise texture for depth
+   ============================================ */
+
+@keyframes grain-shift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(7%, -25%);
+  }
+  40% {
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 15%);
+  }
+  80% {
+    transform: translate(3%, 35%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+/* Grain overlay base styles */
+.grain-overlay,
+.grain-overlay-gradient {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Light mode - slightly stronger grain for contrast */
+html.light .grain-overlay,
+html.light .grain-overlay-gradient {
+  opacity: 0.04;
+}
+
+/* Reduced motion - disable grain animation */
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay,
+  .grain-overlay-gradient {
+    animation: none !important;
+  }
+}
+
+/* Mobile optimization - reduce grain intensity for performance */
+@media (max-width: 768px) {
+  .grain-overlay,
+  .grain-overlay-gradient {
+    opacity: 0.02;
+    animation-duration: 200ms;
+  }
+}
