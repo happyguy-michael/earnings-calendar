@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getEarning, getAnalysis, earnings } from '@/lib/data';
 import { EPSChart, EPSBarChart } from '@/components/EPSChart';
+import { EPSTrendSparkline } from '@/components/AnimatedSparkline';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonDetailPage } from '@/components/Skeleton';
 import { LiveBadge } from '@/components/LiveBadge';
@@ -424,6 +425,12 @@ export default function ReportPage() {
 
             {/* Sidebar */}
             <div className="space-y-6">
+              {/* EPS Trend Sparkline */}
+              <div className="glass-card p-5">
+                <h3 className="text-sm font-semibold text-white mb-4">EPS Trend</h3>
+                <EPSTrendSparkline data={historicalData} />
+              </div>
+
               <div className="glass-card p-5">
                 <h3 className="text-sm font-semibold text-white mb-4">Quick Stats</h3>
                 <div className="space-y-4">
