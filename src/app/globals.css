@@ -5063,3 +5063,222 @@ html.light .badge-star {
   filter: drop-shadow(0 0 4px #f59e0b);
   color: #f59e0b;
 }
+
+/* ============================================
+   Animated Mesh Gradient Background
+   Premium ambient effect with drifting blobs
+   ============================================ */
+
+.mesh-gradient-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Primary blue blob - top left area */
+.mesh-blob-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+  top: -200px;
+  left: -150px;
+  animation: meshDrift1 20s ease-in-out infinite alternate;
+}
+
+/* Purple blob - top right area */
+.mesh-blob-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation: meshDrift2 25s ease-in-out infinite alternate;
+}
+
+/* Pink blob - bottom center area */
+.mesh-blob-3 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+  bottom: -200px;
+  left: 30%;
+  animation: meshDrift3 22s ease-in-out infinite alternate;
+}
+
+/* Teal accent blob - center left */
+.mesh-blob-4 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
+  top: 40%;
+  left: -100px;
+  animation: meshDrift4 28s ease-in-out infinite alternate;
+}
+
+/* Deep purple blob - center right */
+.mesh-blob-5 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+  top: 30%;
+  right: 10%;
+  animation: meshDrift5 24s ease-in-out infinite alternate;
+}
+
+/* Organic drifting animations - different paths for each blob */
+@keyframes meshDrift1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(80px, 60px) scale(1.1);
+  }
+  66% {
+    transform: translate(40px, 100px) scale(0.95);
+  }
+  100% {
+    transform: translate(100px, 40px) scale(1.05);
+  }
+}
+
+@keyframes meshDrift2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-60px, 80px) scale(1.08);
+  }
+  66% {
+    transform: translate(-100px, 40px) scale(0.92);
+  }
+  100% {
+    transform: translate(-40px, 100px) scale(1.03);
+  }
+}
+
+@keyframes meshDrift3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(100px, -60px) scale(1.05);
+  }
+  66% {
+    transform: translate(-60px, -40px) scale(1.1);
+  }
+  100% {
+    transform: translate(40px, -80px) scale(0.95);
+  }
+}
+
+@keyframes meshDrift4 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(60px, -40px) scale(0.9);
+  }
+  66% {
+    transform: translate(100px, 60px) scale(1.1);
+  }
+  100% {
+    transform: translate(40px, 20px) scale(1);
+  }
+}
+
+@keyframes meshDrift5 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-80px, 40px) scale(1.05);
+  }
+  66% {
+    transform: translate(-40px, -60px) scale(0.95);
+  }
+  100% {
+    transform: translate(-100px, 20px) scale(1.08);
+  }
+}
+
+/* Light mode - softer, cooler tones */
+html.light .mesh-gradient-container {
+  opacity: 0.4;
+}
+
+html.light .mesh-blob-1 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+}
+
+html.light .mesh-blob-2 {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+}
+
+html.light .mesh-blob-3 {
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, transparent 70%);
+}
+
+html.light .mesh-blob-4 {
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+}
+
+html.light .mesh-blob-5 {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
+}
+
+/* Reduced motion - static blobs, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .mesh-blob {
+    animation: none;
+  }
+  
+  .mesh-gradient-container {
+    opacity: 0.4;
+  }
+}
+
+/* Mobile optimization - smaller blobs, less blur for performance */
+@media (max-width: 768px) {
+  .mesh-blob {
+    filter: blur(60px);
+  }
+  
+  .mesh-blob-1 {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .mesh-blob-2 {
+    width: 350px;
+    height: 350px;
+  }
+  
+  .mesh-blob-3 {
+    width: 380px;
+    height: 380px;
+  }
+  
+  .mesh-blob-4 {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .mesh-blob-5 {
+    width: 300px;
+    height: 300px;
+  }
+}

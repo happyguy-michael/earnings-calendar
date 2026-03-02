@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import { NavigationProgress } from "@/components/NavigationProgress";
 import { CursorSpotlight } from "@/components/CursorSpotlight";
+import { MeshGradient } from "@/components/MeshGradient";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-main">
           Skip to main content
         </a>
+        <MeshGradient />
         <CursorSpotlight />
         <Suspense fallback={null}>
           <NavigationProgress />
