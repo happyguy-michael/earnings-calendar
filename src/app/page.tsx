@@ -422,8 +422,8 @@ export default function Home() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Row with 3D Tilt Effect, Rolling Numbers, and Change Highlights */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 stats-grid">
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
             <div className="tilt-stat-card">
               <div className="text-4xl font-bold text-white mb-1">
                 <ValueChangeHighlight value={totalEarnings} variant="default">
@@ -433,7 +433,7 @@ export default function Home() {
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
             </div>
           </TiltCard>
-          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
             <div className="tilt-stat-card tilt-stat-card-success">
               <div className="flex items-center gap-4">
                 <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
@@ -448,7 +448,7 @@ export default function Home() {
               </div>
             </div>
           </TiltCard>
-          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
             <div className="tilt-stat-card">
               <div className="text-4xl font-bold text-white mb-1">
                 <ValueChangeHighlight value={reportedCount} variant="default">
@@ -458,7 +458,7 @@ export default function Home() {
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
             </div>
           </TiltCard>
-          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02}>
+          <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
             <div className="tilt-stat-card tilt-stat-card-warning">
               <div className="text-4xl font-bold text-amber-400 mb-1">
                 <ValueChangeHighlight value={pendingCount} variant="warning">
