@@ -28,6 +28,7 @@ import { BadgeSparkle } from '@/components/BadgeSparkle';
 import { GrainOverlay } from '@/components/GrainOverlay';
 import { useToast } from '@/components/Toast';
 import { ValueChangeHighlight } from '@/components/ValueChangeHighlight';
+import { LegendIndicator, LegendProgressRing } from '@/components/LegendIndicator';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -579,18 +580,18 @@ export default function Home() {
         </SwipeNavigator>
         )}
 
-        {/* Legend */}
+        {/* Legend with animated indicators */}
         <div className="mt-10 flex items-center justify-center gap-8 text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+            <LegendIndicator type="beat" size={12} />
             Beat Estimates
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
+            <LegendIndicator type="miss" size={12} />
             Missed Estimates
           </div>
           <div className="flex items-center gap-2">
-            <ProgressRing value={75} size={14} strokeWidth={2} color="#f59e0b" duration={600} />
+            <LegendProgressRing value={75} size={14} color="#f59e0b" />
             <span className="ml-1">Beat Probability</span>
           </div>
         </div>
