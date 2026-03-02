@@ -13,6 +13,7 @@ import { TypewriterParagraphs, TypingIndicator, SkipButton } from '@/components/
 import { AnimatedTabs, Tab } from '@/components/AnimatedTabs';
 import { ReadingProgress } from '@/components/ReadingProgress';
 import { ScrollReveal, StaggeredReveal, RevealTableBody } from '@/components/ScrollReveal';
+import { ShareMenu } from '@/components/ShareMenu';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -163,9 +164,12 @@ export default function ReportPage() {
             <button className="badge badge-neutral hover:bg-white/10 transition-smooth cursor-pointer">
               ♡ Watchlist
             </button>
-            <button className="badge badge-neutral hover:bg-white/10 transition-smooth cursor-pointer">
-              ↗ Share
-            </button>
+            <ShareMenu 
+              ticker={ticker}
+              company={earning.company}
+              result={earning.result}
+              surprise={surprise}
+            />
           </div>
         </div>
       </header>
