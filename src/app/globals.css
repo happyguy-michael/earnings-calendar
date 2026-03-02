@@ -298,10 +298,72 @@ html.light .sticky-header.scrolled {
 }
 
 .badge-beat {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(16, 185, 129, 0.15) 100%);
   color: #4ade80;
   border: 1px solid rgba(34, 197, 94, 0.4);
   box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+/* Premium periodic shine sweep effect on beat badges */
+.badge-beat::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  animation: badgeShineSweep 5s ease-in-out infinite;
+  animation-delay: 1s;
+  pointer-events: none;
+}
+
+/* Light mode: slightly stronger shine */
+html.light .badge-beat::after {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+}
+
+@keyframes badgeShineSweep {
+  0%, 85% {
+    left: -100%;
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 200%;
+    opacity: 0;
+  }
+}
+
+/* Respect reduced motion - disable periodic animation */
+@media (prefers-reduced-motion: reduce) {
+  .badge-beat::after {
+    animation: none;
+    display: none;
+  }
 }
 
 .badge-miss {
