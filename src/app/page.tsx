@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo, useRef, createRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { earnings, getBeatStreak } from '@/lib/data';
 import { Earning } from '@/lib/types';
@@ -324,10 +324,10 @@ export default function Home() {
   );
 
   // Refs for each week card (for smooth scroll-to on indicator click)
-  const weekRefs = useMemo(() => 
-    Array.from({ length: 3 }, () => createRef<HTMLDivElement>()),
-    []
-  );
+  const week0Ref = useRef<HTMLDivElement>(null);
+  const week1Ref = useRef<HTMLDivElement>(null);
+  const week2Ref = useRef<HTMLDivElement>(null);
+  const weekRefs = useMemo(() => [week0Ref, week1Ref, week2Ref], []);
 
   return (
     <div className="min-h-screen relative">
