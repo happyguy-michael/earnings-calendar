@@ -3216,16 +3216,44 @@ html.light .live-badge.upcoming {
   border-color: rgba(245, 158, 11, 0.2);
 }
 
-/* Countdown Timer Styles */
+/* Countdown Timer Styles with Progress Ring */
 .countdown-badge {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  min-width: 70px;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.countdown-badge-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.countdown-badge-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdown-badge-icon {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.countdown-badge-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .countdown-badge-label {
@@ -3234,6 +3262,7 @@ html.light .live-badge.upcoming {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-muted);
+  line-height: 1;
   margin-bottom: 2px;
 }
 
@@ -3243,12 +3272,40 @@ html.light .live-badge.upcoming {
   color: #60a5fa;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Progress Ring Styles */
+.countdown-progress-ring {
+  display: block;
+}
+
+.countdown-ring-track {
+  stroke: var(--text-muted);
+}
+
+.countdown-ring-progress {
+  transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+}
+
+/* Urgent pulsing glow animation */
+.countdown-ring-urgent {
+  animation: ringPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+  }
 }
 
 .countdown-badge-urgent {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(245, 158, 11, 0.15) 100%);
-  border-color: rgba(239, 68, 68, 0.4);
-  animation: countdownPulse 1s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border-color: rgba(239, 68, 68, 0.35);
+  animation: countdownPulse 2s ease-in-out infinite;
 }
 
 .countdown-badge-urgent .countdown-badge-value {
@@ -3262,26 +3319,42 @@ html.light .live-badge.upcoming {
   }
   50% {
     transform: scale(1.02);
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
   }
 }
 
 /* Light mode countdown */
 html.light .countdown-badge {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.06) 100%);
-  border-color: rgba(59, 130, 246, 0.2);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 
 html.light .countdown-badge-urgent {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(245, 158, 11, 0.08) 100%);
-  border-color: rgba(239, 68, 68, 0.25);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+html.light .countdown-ring-track {
+  stroke: var(--text-faint);
+}
+
+/* Reduced motion: disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .countdown-ring-urgent,
+  .countdown-badge-urgent {
+    animation: none;
+  }
+  
+  .countdown-ring-progress {
+    transition: none;
+  }
 }
 
 /* Mobile responsiveness for countdown */
 @media (max-width: 640px) {
   .countdown-badge {
-    padding: 4px 8px;
-    min-width: 60px;
+    padding: 4px 10px 4px 4px;
+    gap: 6px;
   }
   
   .countdown-badge-label {
@@ -3290,6 +3363,10 @@ html.light .countdown-badge-urgent {
   
   .countdown-badge-value {
     font-size: 11px;
+  }
+  
+  .countdown-badge-icon {
+    font-size: 10px;
   }
 }
 
