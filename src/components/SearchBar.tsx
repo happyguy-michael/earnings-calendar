@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useEarningsSearchPlaceholder } from './AnimatedPlaceholder';
+import { SearchSuggestions } from './SearchSuggestions';
 
 interface SearchBarProps {
   value: string;
@@ -12,7 +13,20 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const animatedPlaceholder = useEarningsSearchPlaceholder();
+
+  // Show suggestions when focused and has query
+  useEffect(() => {
+    if (isFocused && value.length >= 1) {
+      setShowSuggestions(true);
+    } else if (!isFocused) {
+      // Delay hiding to allow click on suggestion
+      const timer = setTimeout(() => setShowSuggestions(false), 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isFocused, value]);
 
   // Keyboard shortcut: / to focus, Escape to clear
   useEffect(() => {
@@ -20,12 +34,13 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         if (e.key === 'Escape') {
           onChange('');
+          setShowSuggestions(false);
           inputRef.current?.blur();
         }
         return;
       }
       
-      if (e.key === '/' || e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) {
         e.preventDefault();
         inputRef.current?.focus();
       }
@@ -35,12 +50,22 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onChange]);
 
+  const handleSelect = useCallback((ticker: string) => {
+    onChange(ticker);
+    setShowSuggestions(false);
+    inputRef.current?.blur();
+  }, [onChange]);
+
+  const handleClose = useCallback(() => {
+    setShowSuggestions(false);
+  }, []);
+
   const hasValue = value.length > 0;
   const isFiltered = hasValue && resultCount !== undefined && resultCount !== totalCount;
 
   return (
     <div className="search-container">
-      <div className={`search-bar ${hasValue ? 'has-value' : ''}`}>
+      <div className={`search-bar ${hasValue ? 'has-value' : ''} ${isFocused ? 'focused' : ''}`}>
         {/* Search Icon */}
         <svg 
           className="search-icon" 
@@ -61,15 +86,22 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           placeholder={animatedPlaceholder}
           className="search-input"
           aria-label="Search earnings by ticker or company name"
+          aria-expanded={showSuggestions}
+          aria-haspopup="listbox"
+          role="combobox"
+          autoComplete="off"
         />
 
         {/* Clear button */}
         <button
           onClick={() => {
             onChange('');
+            setShowSuggestions(false);
             inputRef.current?.focus();
           }}
           className={`search-clear ${hasValue ? 'visible' : ''}`}
@@ -85,6 +117,15 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
         <div className={`search-kbd ${hasValue ? 'hidden' : ''}`}>
           <span className="kbd">/</span>
         </div>
+
+        {/* Suggestions dropdown */}
+        <SearchSuggestions
+          query={value}
+          isOpen={showSuggestions}
+          onSelect={handleSelect}
+          onClose={handleClose}
+          inputRef={inputRef}
+        />
       </div>
 
       {/* Result count indicator */}
