@@ -9,6 +9,7 @@ import { EPSTrendSparkline } from '@/components/AnimatedSparkline';
 import { CountUp } from '@/components/CountUp';
 import { SkeletonDetailPage } from '@/components/Skeleton';
 import { LiveBadge } from '@/components/LiveBadge';
+import { TimeSinceBadge } from '@/components/TimeSince';
 import { Confetti, Sparkles } from '@/components/Confetti';
 import { TypewriterParagraphs, TypingIndicator, SkipButton } from '@/components/Typewriter';
 import { AnimatedTabs, Tab } from '@/components/AnimatedTabs';
@@ -232,6 +233,12 @@ export default function ReportPage() {
               {!hasResult && countdown && (
                 <div className="mt-3 pt-3 border-t border-white/10">
                   <div className="text-2xl font-bold text-amber-400">{countdown}</div>
+                </div>
+              )}
+              {/* Show time since for reported earnings */}
+              {hasResult && (
+                <div className="mt-3 pt-3 border-t border-white/10">
+                  <TimeSinceBadge reportedAt={new Date(earning.date)} time={earning.time} />
                 </div>
               )}
             </div>

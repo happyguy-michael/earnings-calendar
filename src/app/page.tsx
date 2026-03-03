@@ -15,6 +15,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
 import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 import { CountdownBadge } from '@/components/Countdown';
+import { TimeSinceInline } from '@/components/TimeSince';
 import { ProgressRing } from '@/components/ProgressRing';
 import { BackToTop } from '@/components/BackToTop';
 import { TiltCard } from '@/components/TiltCard';
@@ -119,7 +120,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             <BeatStreakBadge streak={beatStreak} />
             <LiveDot isToday={!!isToday} isPending={isPending} />
           </div>
-          <div className="text-xs text-zinc-500 truncate">{earning.company}</div>
+          <div className="text-xs text-zinc-500 truncate flex items-center gap-2">
+            {earning.company}
+            {/* Show time since for recently reported earnings */}
+            {hasResult && isToday && (
+              <TimeSinceInline reportedAt={new Date(earning.date)} time={earning.time} />
+            )}
+          </div>
         </div>
 
         {/* Countdown timer for today's pending earnings */}
