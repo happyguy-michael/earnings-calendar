@@ -6734,3 +6734,356 @@ html.light .animated-result-icon--beat {
 html.light .animated-result-icon--miss {
   color: #dc2626;
 }
+
+/* =============================================================================
+   404 NOT FOUND PAGE
+   Premium animated 404 with glitch effects, floating tickers, and broken chart
+   ============================================================================= */
+
+.not-found-page {
+  background: var(--bg-primary);
+  padding: 2rem;
+}
+
+/* Ambient glow behind content */
+.not-found-ambient-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.15) 0%,
+    rgba(249, 115, 22, 0.1) 30%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  animation: not-found-glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes not-found-glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* Main content container */
+.not-found-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 500px;
+}
+
+/* Broken chart illustration */
+.not-found-chart-wrapper {
+  width: 200px;
+  height: 100px;
+  margin-bottom: 1.5rem;
+  animation: not-found-float 6s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.broken-chart-svg {
+  width: 100%;
+  height: 100%;
+  color: var(--text-muted);
+}
+
+.chart-line-broken {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: draw-broken-line 2s ease-out forwards 0.5s;
+}
+
+@keyframes draw-broken-line {
+  to { stroke-dashoffset: 0; }
+}
+
+.chart-break-point {
+  opacity: 0;
+  animation: break-point-appear 0.3s ease-out forwards 2.5s;
+}
+
+@keyframes break-point-appear {
+  0% { opacity: 0; transform: scale(0); }
+  70% { transform: scale(1.3); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.chart-grid {
+  opacity: 0;
+  animation: fade-in 0.5s ease-out forwards 0.2s;
+}
+
+@keyframes not-found-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glitch 404 Text */
+.glitch-container {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.glitch-404 {
+  position: relative;
+  font-size: clamp(5rem, 15vw, 10rem);
+  font-weight: 900;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  line-height: 1;
+  color: transparent;
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #fbbf24 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  letter-spacing: -0.05em;
+  text-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+}
+
+.glitch-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitch-layer-1 {
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.glitch-layer-2 {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.glitch-layer-3 {
+  background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Glitch animation when triggered */
+.glitch-container.glitching .glitch-layer-1 {
+  animation: glitch-1 0.2s steps(2) forwards;
+}
+
+.glitch-container.glitching .glitch-layer-2 {
+  animation: glitch-2 0.2s steps(2) forwards;
+}
+
+.glitch-container.glitching .glitch-layer-3 {
+  animation: glitch-3 0.2s steps(2) forwards;
+}
+
+@keyframes glitch-1 {
+  0% { opacity: 0.8; transform: translate(-5px, -2px); clip-path: inset(20% 0 30% 0); }
+  25% { opacity: 0.6; transform: translate(3px, 1px); clip-path: inset(50% 0 10% 0); }
+  50% { opacity: 0.8; transform: translate(-2px, 3px); clip-path: inset(10% 0 60% 0); }
+  75% { opacity: 0.5; transform: translate(4px, -1px); clip-path: inset(40% 0 20% 0); }
+  100% { opacity: 0; transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0% { opacity: 0.7; transform: translate(4px, 2px); clip-path: inset(60% 0 10% 0); }
+  25% { opacity: 0.5; transform: translate(-3px, -2px); clip-path: inset(10% 0 50% 0); }
+  50% { opacity: 0.7; transform: translate(2px, -3px); clip-path: inset(30% 0 30% 0); }
+  75% { opacity: 0.4; transform: translate(-4px, 1px); clip-path: inset(80% 0 5% 0); }
+  100% { opacity: 0; transform: translate(0); }
+}
+
+@keyframes glitch-3 {
+  0% { opacity: 0.6; transform: translate(2px, -3px); clip-path: inset(40% 0 40% 0); }
+  25% { opacity: 0.4; transform: translate(-4px, 2px); clip-path: inset(70% 0 15% 0); }
+  50% { opacity: 0.6; transform: translate(3px, 1px); clip-path: inset(5% 0 70% 0); }
+  75% { opacity: 0.3; transform: translate(-2px, -2px); clip-path: inset(25% 0 55% 0); }
+  100% { opacity: 0; transform: translate(0); }
+}
+
+/* Scan lines overlay */
+.glitch-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Message text */
+.not-found-message {
+  margin-bottom: 2rem;
+}
+
+.not-found-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem 0;
+}
+
+.not-found-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* CTA Button */
+.not-found-actions {
+  margin-bottom: 2rem;
+}
+
+.not-found-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s var(--spring-snappy);
+  box-shadow: 
+    0 4px 15px rgba(59, 130, 246, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.not-found-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+
+.not-found-btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Hint text */
+.not-found-hint {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin: 0;
+}
+
+/* Floating tickers background */
+.floating-tickers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-ticker {
+  position: absolute;
+  top: -2rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  opacity: 0.3;
+  animation: ticker-fall 12s linear infinite;
+}
+
+@keyframes ticker-fall {
+  0% {
+    transform: translateY(0) rotate(-5deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(calc(100vh + 4rem)) rotate(5deg);
+    opacity: 0;
+  }
+}
+
+/* Light mode adjustments */
+html.light .not-found-ambient-glow {
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.08) 0%,
+    rgba(249, 115, 22, 0.05) 30%,
+    transparent 70%
+  );
+}
+
+html.light .glitch-404 {
+  text-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+}
+
+html.light .glitch-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  opacity: 0.3;
+}
+
+html.light .not-found-btn-primary {
+  box-shadow: 
+    0 4px 15px rgba(59, 130, 246, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+}
+
+html.light .floating-ticker {
+  opacity: 0.2;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .not-found-ambient-glow,
+  .not-found-chart-wrapper,
+  .glitch-container.glitching .glitch-layer-1,
+  .glitch-container.glitching .glitch-layer-2,
+  .glitch-container.glitching .glitch-layer-3,
+  .floating-ticker {
+    animation: none !important;
+  }
+  
+  .chart-line-broken {
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+  
+  .chart-break-point {
+    opacity: 1;
+    animation: none !important;
+  }
+}
