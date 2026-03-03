@@ -11,6 +11,40 @@
   --danger: #ef4444;
   --warning: #f59e0b;
   
+  /* Spring physics timing functions using linear() */
+  /* Snappy spring - subtle bounce for buttons and quick interactions */
+  --spring-snappy: linear(
+    0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%, 0.938 16.7%, 1.017, 
+    1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%,
+    1.051 39.6%, 1.017 43.1%, 0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%,
+    0.997 69.8%, 1.003 76.9%, 1
+  );
+  
+  /* Bouncy spring - noticeable bounce for card entrances and emphasis */
+  --spring-bouncy: linear(
+    0, 0.004, 0.016 2.5%, 0.063, 0.141, 0.25, 0.391, 0.563 15.6%, 0.766 18.9%,
+    1 22.2%, 1.158 25%, 1.261 27.6%, 1.324 30.1%, 1.35 32.5%, 1.347 34.4%,
+    1.319 36.9%, 1.224 41.4%, 1.112 46.4%, 1.016 52.1%, 0.966 56.2%,
+    0.94 59.9%, 0.931 63.1%, 0.937, 0.961 72.5%, 0.994 80.2%, 1.014 88.4%, 1
+  );
+  
+  /* Elastic spring - high energy bounce for special emphasis */
+  --spring-elastic: linear(
+    0, 0.002, 0.01 3.7%, 0.039, 0.088, 0.158 11.1%, 0.352 16.7%, 0.617 22.2%,
+    0.922 27.3%, 1.142 31.3%, 1.293 34.7%, 1.385 37.6%, 1.425 40.1%,
+    1.421 42.2%, 1.377 44.9%, 1.254 49.6%, 1.088 55.3%, 0.962 60.6%,
+    0.888 65%, 0.861 68.4%, 0.869 71.5%, 0.913 76.3%, 0.976 82.6%,
+    1.024 89.4%, 1.035 93.5%, 1.02 97.2%, 1
+  );
+  
+  /* Smooth spring - gentle settle without overshoot for subtle moves */
+  --spring-smooth: linear(
+    0, 0.008 1.4%, 0.033 2.9%, 0.13 5.9%, 0.292 9%, 0.506 12.2%, 0.695 15%,
+    0.842 17.6%, 0.948 20.1%, 1.015 22.4%, 1.055 24.6%, 1.076 26.7%,
+    1.083 28.8%, 1.079 30.9%, 1.058 34.3%, 1.016 40.1%, 0.994 45.6%,
+    0.987 50.6%, 0.992 56.3%, 1.003 66.4%, 1.002 76.6%, 1
+  );
+  
   /* Theme-aware colors (dark mode defaults) */
   --bg-primary: #0a0a0f;
   --bg-secondary: rgba(20, 20, 30, 0.8);
@@ -394,8 +428,8 @@ html.light .badge-beat::after {
   padding: 24px;
   overflow: hidden;
   cursor: default;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s var(--spring-bouncy), 
+              box-shadow 0.4s ease;
 }
 
 .stat-card::before {
@@ -560,7 +594,10 @@ html.light .progress-ring-bg {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.45s var(--spring-bouncy), 
+              background 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.3s ease;
   z-index: 1;
   overflow: hidden; /* Required for ripple and shimmer effects */
 }
@@ -1478,7 +1515,10 @@ html.light .card:focus-within:has(:focus-visible) {
   cursor: pointer;
   opacity: 0;
   transform: scale(0.8);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s var(--spring-snappy), 
+              opacity 0.2s ease,
+              background 0.15s ease,
+              color 0.15s ease;
   pointer-events: none;
 }
 
@@ -1701,7 +1741,7 @@ html.light .sliding-pill-pending {
   border: 1px solid transparent;
   border-radius: 100px;
   cursor: pointer;
-  transition: color 0.2s ease, transform 0.15s ease;
+  transition: color 0.2s ease, transform 0.35s var(--spring-snappy);
   white-space: nowrap;
   font-family: inherit;
 }
@@ -1902,7 +1942,7 @@ html.light .sliding-pill-pending {
 /* Staggered earnings card animation with blur-to-focus effect */
 .earnings-card-animate {
   opacity: 0;
-  animation: blurFocusIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: blurFocusIn 0.55s var(--spring-smooth) forwards;
   will-change: transform, opacity, filter;
 }
 
@@ -3157,24 +3197,24 @@ html.light .text-zinc-400 {
 /* Week transition animation for smooth swipe feel */
 .week-slide-container {
   position: relative;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.45s var(--spring-smooth);
 }
 
 .week-slide-enter-left {
-  animation: slideFromLeft 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideFromLeft 0.5s var(--spring-bouncy);
 }
 
 .week-slide-enter-right {
-  animation: slideFromRight 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideFromRight 0.5s var(--spring-bouncy);
 }
 
 @keyframes slideFromLeft {
-  0% { opacity: 0; transform: translateX(-30px); filter: blur(3px); }
+  0% { opacity: 0; transform: translateX(-40px); filter: blur(4px); }
   100% { opacity: 1; transform: translateX(0); filter: blur(0px); }
 }
 
 @keyframes slideFromRight {
-  0% { opacity: 0; transform: translateX(30px); filter: blur(3px); }
+  0% { opacity: 0; transform: translateX(40px); filter: blur(4px); }
   100% { opacity: 1; transform: translateX(0); filter: blur(0px); }
 }
 
@@ -3472,9 +3512,9 @@ html.light .countdown-ring-track {
   visibility: hidden;
   transform: translateY(20px) scale(0.8);
   transition: 
-    opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease,
     visibility 0.3s ease,
-    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.55s var(--spring-elastic),
     box-shadow 0.3s ease;
 }
 
@@ -3485,7 +3525,7 @@ html.light .countdown-ring-track {
 }
 
 .back-to-top.hovering {
-  transform: translateY(-4px) scale(1.08);
+  transform: translateY(-6px) scale(1.1);
   box-shadow: 
     0 8px 32px rgba(59, 130, 246, 0.5),
     0 16px 48px rgba(139, 92, 246, 0.4),
@@ -3742,21 +3782,21 @@ html.light .tilt-card-glare {
 /* Stat card entrance animation - staggered blur-to-focus */
 .stat-card-enter {
   opacity: 0;
-  animation: statCardEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: statCardEnter 0.65s var(--spring-bouncy) forwards;
 }
 
 .stat-card-enter:nth-child(1) { animation-delay: 0ms; }
-.stat-card-enter:nth-child(2) { animation-delay: 80ms; }
-.stat-card-enter:nth-child(3) { animation-delay: 160ms; }
-.stat-card-enter:nth-child(4) { animation-delay: 240ms; }
+.stat-card-enter:nth-child(2) { animation-delay: 60ms; }
+.stat-card-enter:nth-child(3) { animation-delay: 120ms; }
+.stat-card-enter:nth-child(4) { animation-delay: 180ms; }
 
 @keyframes statCardEnter {
   0% { 
     opacity: 0; 
-    transform: translateY(16px) scale(0.94); 
+    transform: translateY(24px) scale(0.92); 
     filter: blur(8px);
   }
-  60% {
+  50% {
     filter: blur(2px);
   }
   100% { 
@@ -4001,12 +4041,12 @@ html.light .navigation-progress-container::after {
 
 .number-ticker-digit {
   display: inline-block;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition: transform 0.4s var(--spring-snappy),
               opacity 0.15s ease;
 }
 
 .number-ticker-digit.flipping {
-  animation: digitFlip 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: digitFlip 0.4s var(--spring-snappy);
 }
 
 @keyframes digitFlip {
