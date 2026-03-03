@@ -6224,3 +6224,225 @@ html.light .legend-indicator-dot {
     opacity: 0.5;
   }
 }
+
+/* ============================================
+   Animated Result Icons (Beat/Miss)
+   ============================================ */
+
+/* Container styles */
+.animated-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+/* Beat icon - green checkmark */
+.animated-result-icon--beat {
+  color: var(--success);
+}
+
+.animated-result-icon--beat .result-circle {
+  transform: scale(0);
+  transform-origin: center;
+  opacity: 0.2;
+  transition: none;
+}
+
+.animated-result-icon--beat.is-animating .result-circle {
+  animation: result-circle-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animated-result-icon--beat .result-check {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  transition: none;
+}
+
+.animated-result-icon--beat.is-animating .result-check {
+  animation: result-check-draw 0.5s ease-out 0.2s forwards;
+}
+
+/* Miss icon - red X */
+.animated-result-icon--miss {
+  color: var(--danger);
+}
+
+.animated-result-icon--miss .result-circle {
+  transform: scale(0);
+  transform-origin: center;
+  opacity: 0.2;
+  transition: none;
+}
+
+.animated-result-icon--miss.is-animating .result-circle {
+  animation: result-circle-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animated-result-icon--miss .result-x path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+
+.animated-result-icon--miss.is-animating .result-x path:first-child {
+  animation: result-x-draw 0.25s ease-out 0.2s forwards;
+}
+
+.animated-result-icon--miss.is-animating .result-x path:last-child {
+  animation: result-x-draw 0.25s ease-out 0.35s forwards;
+}
+
+.animated-result-icon--miss.is-animating {
+  animation: result-shake 0.4s ease-out 0.5s;
+}
+
+/* Badge icon variants (inline with text) */
+.animated-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+}
+
+.animated-badge-icon--beat {
+  color: currentColor;
+}
+
+.animated-badge-icon--beat .badge-check {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+.animated-badge-icon--beat.is-animating .badge-check {
+  animation: badge-check-draw 0.5s ease-out forwards;
+}
+
+.animated-badge-icon--miss {
+  color: currentColor;
+}
+
+.animated-badge-icon--miss .badge-x path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+
+.animated-badge-icon--miss.is-animating .badge-x path:first-child {
+  animation: badge-x-draw 0.25s ease-out forwards;
+}
+
+.animated-badge-icon--miss.is-animating .badge-x path:last-child {
+  animation: badge-x-draw 0.25s ease-out 0.15s forwards;
+}
+
+.animated-badge-icon--miss.is-animating {
+  animation: badge-shake 0.4s ease-out 0.3s;
+}
+
+/* Keyframe animations */
+@keyframes result-circle-pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+}
+
+@keyframes result-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes result-x-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes result-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(3px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes badge-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes badge-x-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes badge-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-2px);
+  }
+  40% {
+    transform: translateX(2px);
+  }
+  60% {
+    transform: translateX(-1px);
+  }
+  80% {
+    transform: translateX(1px);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animated-result-icon--beat .result-circle,
+  .animated-result-icon--miss .result-circle {
+    transform: scale(1);
+    opacity: 0.2;
+    animation: none !important;
+  }
+  
+  .animated-result-icon--beat .result-check,
+  .animated-result-icon--miss .result-x path,
+  .animated-badge-icon--beat .badge-check,
+  .animated-badge-icon--miss .badge-x path {
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+  
+  .animated-result-icon--miss,
+  .animated-badge-icon--miss {
+    animation: none !important;
+  }
+}
+
+/* Light mode adjustments */
+html.light .animated-result-icon--beat {
+  color: #16a34a;
+}
+
+html.light .animated-result-icon--miss {
+  color: #dc2626;
+}
