@@ -22,6 +22,7 @@ import { TiltCard } from '@/components/TiltCard';
 import { Ripple } from '@/components/Ripple';
 import { FloatingParticles } from '@/components/FloatingParticles';
 import { MagneticButton } from '@/components/MagneticButton';
+import { TodayButton } from '@/components/TodayButton';
 import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
@@ -192,6 +193,14 @@ export default function Home() {
     miss: earnings.filter(e => e.result === 'miss').length,
     pending: earnings.filter(e => e.eps === undefined || e.eps === null).length,
   }), []);
+
+  // Calculate pending earnings for TODAY (for notification indicator)
+  const pendingToday = useMemo(() => {
+    const todayStr = formatDate(new Date());
+    return earnings.filter(
+      e => e.date === todayStr && (e.eps === undefined || e.eps === null)
+    ).length;
+  }, []);
 
   // Filter earnings based on search and status filter
   const filteredEarnings = useMemo(() => {
@@ -385,14 +394,10 @@ export default function Home() {
               </div>
               <KeyboardShortcutsHint />
               <ThemeToggle />
-              <MagneticButton 
-                onClick={goToToday} 
-                className="btn btn-ghost magnetic-today-btn"
-                intensity={0.35}
-                radius={1.4}
-              >
-                Today
-              </MagneticButton>
+              <TodayButton 
+                onClick={goToToday}
+                pendingToday={pendingToday}
+              />
               <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-visible">
                 <MagneticButton
                   onClick={() => navigateWeek(-1)}

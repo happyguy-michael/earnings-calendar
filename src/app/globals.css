@@ -7471,3 +7471,220 @@ html.light .week-indicator-dot:hover {
     opacity: 0.4;
   }
 }
+
+/* ============================================
+   TODAY BUTTON - Live Notification Indicator
+   Shows pulsing dot when pending earnings exist
+   ============================================ */
+
+.today-button-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.today-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.today-button-text {
+  position: relative;
+}
+
+/* Notification indicator container */
+.today-notification {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+}
+
+/* Static notification dot */
+.today-notification-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 8px rgba(239, 68, 68, 0.6),
+    0 0 16px rgba(239, 68, 68, 0.3);
+  z-index: 2;
+}
+
+/* Pulsing ping animation ring */
+.today-notification-ping {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(239, 68, 68, 0.4);
+  border-radius: 50%;
+  animation: notification-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: 1;
+}
+
+@keyframes notification-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  75%, 100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Count badge (appears on hover) */
+.today-notification-count {
+  position: absolute;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 8px;
+  transform: scale(0);
+  transition: transform 0.2s var(--spring-bouncy);
+  z-index: 3;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+.today-button:hover .today-notification-count {
+  transform: scale(1);
+}
+
+.today-button:hover .today-notification-dot,
+.today-button:hover .today-notification-ping {
+  opacity: 0;
+}
+
+/* Button glow when live earnings */
+.today-button.has-live {
+  animation: today-button-glow 3s ease-in-out infinite;
+}
+
+@keyframes today-button-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+  }
+}
+
+/* Tooltip */
+.today-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 8px 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-primary);
+  opacity: 0;
+  visibility: hidden;
+  transition: 
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+  z-index: 100;
+  box-shadow: 
+    0 4px 16px var(--shadow-color),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  pointer-events: none;
+}
+
+.today-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: var(--bg-tertiary);
+  border-left: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border);
+}
+
+.today-tooltip-icon {
+  font-size: 14px;
+}
+
+.today-tooltip-text {
+  font-weight: 500;
+}
+
+.today-button-wrapper:hover .today-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Light mode */
+html.light .today-notification-dot {
+  box-shadow: 
+    0 0 6px rgba(239, 68, 68, 0.5),
+    0 0 12px rgba(239, 68, 68, 0.25);
+}
+
+html.light .today-button.has-live {
+  animation: today-button-glow-light 3s ease-in-out infinite;
+}
+
+@keyframes today-button-glow-light {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.1);
+  }
+}
+
+html.light .today-tooltip {
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.03) inset;
+}
+
+html.light .today-tooltip::before {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .today-notification-ping {
+    animation: none;
+    opacity: 0;
+  }
+  
+  .today-button.has-live {
+    animation: none;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+  }
+  
+  .today-notification-count {
+    transform: scale(1);
+  }
+  
+  .today-notification-dot {
+    animation: none;
+  }
+}
