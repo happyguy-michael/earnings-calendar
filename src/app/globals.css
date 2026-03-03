@@ -7087,3 +7087,159 @@ html.light .floating-ticker {
     animation: none !important;
   }
 }
+
+/* ==========================================
+   Week Indicator - Animated pagination dots
+   ========================================== */
+
+.week-indicator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.week-indicator-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+}
+
+/* Sliding active pill background */
+.week-indicator-pill {
+  position: absolute;
+  left: 16px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+  border-radius: 50%;
+  transition: transform 0.4s var(--spring-bouncy);
+  box-shadow: 
+    0 0 12px rgba(59, 130, 246, 0.5),
+    0 0 24px rgba(139, 92, 246, 0.3);
+  z-index: 0;
+}
+
+/* Individual dots */
+.week-indicator-dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  background: transparent;
+  border: 2px solid var(--border-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.25s var(--spring-snappy);
+  z-index: 1;
+}
+
+.week-indicator-dot:hover {
+  border-color: var(--accent-blue);
+  transform: scale(1.15);
+}
+
+.week-indicator-dot:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Active dot is transparent (pill shows through) */
+.week-indicator-dot.active {
+  border-color: transparent;
+  background: transparent;
+}
+
+/* Today marker - pulsing amber ring */
+.week-indicator-dot.today:not(.active) {
+  border-color: var(--warning);
+}
+
+.week-indicator-today-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--warning);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: week-indicator-pulse 2s ease-in-out infinite;
+}
+
+@keyframes week-indicator-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Week label */
+.week-indicator-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  transition: color 0.2s ease;
+}
+
+/* Light mode adjustments */
+html.light .week-indicator-track {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html.light .week-indicator-pill {
+  box-shadow: 
+    0 0 8px rgba(59, 130, 246, 0.35),
+    0 0 16px rgba(139, 92, 246, 0.2);
+}
+
+html.light .week-indicator-dot {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+html.light .week-indicator-dot:hover {
+  border-color: var(--accent-blue);
+}
+
+/* Responsive - hide label on mobile */
+@media (max-width: 640px) {
+  .week-indicator-label {
+    display: none;
+  }
+  
+  .week-indicator-track {
+    padding: 6px 12px;
+    gap: 12px;
+  }
+  
+  .week-indicator-pill {
+    left: 12px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .week-indicator-pill {
+    transition: transform 0.15s ease;
+  }
+  
+  .week-indicator-today-ring {
+    animation: none;
+    opacity: 0.4;
+  }
+}

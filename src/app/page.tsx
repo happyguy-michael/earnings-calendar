@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef, createRef } from 'react';
 import Link from 'next/link';
 import { earnings, getBeatStreak } from '@/lib/data';
 import { Earning } from '@/lib/types';
@@ -29,6 +29,7 @@ import { GrainOverlay } from '@/components/GrainOverlay';
 import { useToast } from '@/components/Toast';
 import { ValueChangeHighlight } from '@/components/ValueChangeHighlight';
 import { LegendIndicator, LegendProgressRing } from '@/components/LegendIndicator';
+import { WeekIndicator } from '@/components/WeekIndicator';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -316,6 +317,18 @@ export default function Home() {
   const pendingCount = totalEarnings - reportedCount;
   const isFiltering = searchQuery.trim().length > 0 || statusFilter !== 'all';
 
+  // Calculate which week (0-2) contains today for the week indicator
+  const todayWeekStart = getWeekStart(new Date());
+  const todayWeekIndex = weeks.findIndex(weekStart => 
+    weekStart.getTime() === todayWeekStart.getTime()
+  );
+
+  // Refs for each week card (for smooth scroll-to on indicator click)
+  const weekRefs = useMemo(() => 
+    Array.from({ length: 3 }, () => createRef<HTMLDivElement>()),
+    []
+  );
+
   return (
     <div className="min-h-screen relative">
       {/* Floating background particles */}
@@ -471,6 +484,15 @@ export default function Home() {
           </TiltCard>
         </div>
 
+        {/* Week Navigation Indicator */}
+        {(!isFiltering || filteredEarnings.length > 0) && (
+          <WeekIndicator
+            totalWeeks={3}
+            todayWeekIndex={todayWeekIndex >= 0 ? todayWeekIndex : null}
+            weekRefs={weekRefs}
+          />
+        )}
+
         {/* No Results State */}
         {isFiltering && filteredEarnings.length === 0 && (
           <div className="card">
@@ -499,7 +521,12 @@ export default function Home() {
           className={`space-y-6 ${slideDirection === 'left' ? 'week-slide-enter-right' : ''} ${slideDirection === 'right' ? 'week-slide-enter-left' : ''}`}
         >
           {weeks.map((weekStart, weekIndex) => (
-            <div key={weekIndex} className="card animate-fade-in" style={{ animationDelay: `${weekIndex * 100}ms` }}>
+            <div 
+              key={weekIndex} 
+              ref={weekRefs[weekIndex]}
+              className="card animate-fade-in" 
+              style={{ animationDelay: `${weekIndex * 100}ms` }}
+            >
               {/* Week Header */}
               <div className="week-header">
                 {days.map((day, dayIndex) => {
