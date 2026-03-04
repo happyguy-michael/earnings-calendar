@@ -1,5 +1,27 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-05 — Animated Gradient Border for Today Column
+**Inspiration:** Dribbble premium dashboards with flowing gradient borders and animated accents
+
+**What was added:**
+- Animated gradient left border on the "Today" column content area
+- Border flows through blue → purple → pink → purple → blue gradient
+- Pulsing glow effect that intensifies and softens smoothly
+- Box-shadow glow that matches the gradient colors
+
+**Technical details:**
+- Uses `::after` pseudo-element with `background-size: 100% 300%` for gradient animation
+- `todayBorderFlow` keyframe animation at 4s cycle
+- Shadow transitions between dim (opacity 0.7) and bright (opacity 1.0) states
+- Thinner border on mobile (2px vs 3px desktop) for space efficiency
+- Full reduced-motion support with static gradient fallback
+- Light mode uses softer indigo tones instead of pink
+
+**Files changed:**
+- `src/app/globals.css` — new `::after` styles, keyframes, and responsive overrides
+
+---
+
 ## 2026-03-04 — Fresh Badge for Breaking News
 **Inspiration:** Finance news sites (Bloomberg, CNBC) highlight breaking earnings with visual indicators
 
