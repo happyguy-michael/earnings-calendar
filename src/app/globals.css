@@ -7527,6 +7527,141 @@ html.light .week-indicator-dot:hover {
 }
 
 /* ============================================
+   WEEK PROGRESS BAR - Trading Week Progress
+   Shows how much of the current week has passed
+   ============================================ */
+
+.week-progress-container {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 8px;
+  padding: 0 4px;
+}
+
+.week-progress-track {
+  position: relative;
+  height: 4px;
+  background: var(--border-secondary);
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.week-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, 
+    var(--accent-blue) 0%, 
+    var(--accent-purple) 50%, 
+    var(--accent-pink) 100%
+  );
+  transition: width 0.5s var(--spring-smooth);
+  overflow: hidden;
+}
+
+.week-progress-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: week-progress-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes week-progress-shimmer {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.week-progress-head {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 0 6px rgba(139, 92, 246, 0.6),
+    0 0 12px rgba(59, 130, 246, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: left 0.5s var(--spring-smooth);
+}
+
+.week-progress-markers {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  pointer-events: none;
+}
+
+.week-progress-marker {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  transform: translateX(-50%);
+  transition: color 0.3s ease;
+}
+
+.week-progress-marker.passed {
+  color: var(--accent-purple);
+}
+
+/* Light mode */
+html.light .week-progress-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html.light .week-progress-head {
+  background: var(--accent-blue);
+  box-shadow: 
+    0 0 6px rgba(59, 130, 246, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .week-progress-container {
+    max-width: 160px;
+  }
+  
+  .week-progress-markers {
+    display: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .week-progress-fill {
+    transition: width 0.3s ease;
+  }
+  
+  .week-progress-shimmer {
+    animation: none;
+  }
+  
+  .week-progress-head {
+    transition: left 0.3s ease;
+  }
+}
+
+/* ============================================
    TODAY BUTTON - Live Notification Indicator
    Shows pulsing dot when pending earnings exist
    ============================================ */
