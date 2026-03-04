@@ -1,5 +1,27 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-05 — Premium Hover Lift Effect for Week Cards
+**Inspiration:** Dribbble card hover effects showcasing depth and interactivity
+
+**What was added:**
+- Smooth lift animation (translateY -4px) on week card hover
+- Enhanced shadow with increased depth and spread
+- Subtle indigo ambient glow via `::before` pseudo-element
+- Spring-based easing curve (0.22, 1, 0.36, 1) for premium feel
+- Full light mode support with softer, warmer shadow tones
+
+**Technical details:**
+- Multi-layered box-shadow on hover: depth shadow + inner highlight + ambient glow
+- Gradient `::before` overlay fades in on hover for subtle warmth
+- Transform and shadow transitions at 0.4s with spring easing
+- Full reduced-motion support (disables transform, keeps instant transitions)
+- Card positioned relative to support the glow pseudo-element
+
+**Files changed:**
+- `src/app/globals.css` — hover states, ::before glow, light mode variants, reduced-motion
+
+---
+
 ## 2026-03-05 — Animated Gradient Border for Today Column
 **Inspiration:** Dribbble premium dashboards with flowing gradient borders and animated accents
 
