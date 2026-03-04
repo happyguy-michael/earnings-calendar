@@ -34,6 +34,7 @@ import { LegendIndicator, LegendProgressRing } from '@/components/LegendIndicato
 import { WeekIndicator } from '@/components/WeekIndicator';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SessionDivider } from '@/components/SessionDivider';
+import { MarketStatus } from '@/components/MarketStatus';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -363,9 +364,12 @@ export default function Home() {
         <div className="sticky-header-inner">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-shrink-0">
-              <h1 className="sticky-header-title">
-                Earnings <span className="text-gradient">Calendar</span>
-              </h1>
+              <div className="flex items-center gap-3 mb-1">
+                <h1 className="sticky-header-title">
+                  Earnings <span className="text-gradient">Calendar</span>
+                </h1>
+                <MarketStatus />
+              </div>
               <p className="sticky-header-subtitle">
                 {months[currentWeekStart.getMonth()]} {currentWeekStart.getFullYear()}
               </p>
