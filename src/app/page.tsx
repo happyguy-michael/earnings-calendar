@@ -35,6 +35,7 @@ import { WeekIndicator } from '@/components/WeekIndicator';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SessionDivider } from '@/components/SessionDivider';
 import { MarketStatus } from '@/components/MarketStatus';
+import { TickerRibbon } from '@/components/TickerRibbon';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -451,6 +452,9 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Ticker Ribbon - scrolling earnings tape */}
+      <TickerRibbon earnings={earnings} speed={35} />
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Row with 3D Tilt Effect, Parallax Float, Rolling Numbers, and Change Highlights */}
