@@ -19,6 +19,77 @@ export function Tooltip({ children, content }: TooltipProps) {
   );
 }
 
+/**
+ * Animated comparison bar visualization for EPS/Revenue.
+ * Shows actual vs estimate with animated horizontal bars.
+ */
+function ComparisonBar({ 
+  actual, 
+  estimate, 
+  label,
+  formatValue,
+  delay = 0 
+}: { 
+  actual: number; 
+  estimate: number;
+  label: string;
+  formatValue: (v: number) => string;
+  delay?: number;
+}) {
+  // Calculate bar widths (estimate is always 100%, actual is relative)
+  const maxVal = Math.max(Math.abs(actual), Math.abs(estimate)) * 1.1;
+  const estimateWidth = (Math.abs(estimate) / maxVal) * 100;
+  const actualWidth = (Math.abs(actual) / maxVal) * 100;
+  const isBeat = actual > estimate;
+  const surprise = ((actual - estimate) / Math.abs(estimate)) * 100;
+  
+  return (
+    <div className="comparison-bar-container">
+      <div className="comparison-bar-label">{label}</div>
+      <div className="comparison-bar-bars">
+        {/* Estimate bar (dashed outline) */}
+        <div className="comparison-bar-track">
+          <div 
+            className="comparison-bar-estimate"
+            style={{ 
+              width: `${estimateWidth}%`,
+              animationDelay: `${delay}ms`
+            }}
+          >
+            <span className="comparison-bar-value estimate">
+              {formatValue(estimate)}
+            </span>
+          </div>
+        </div>
+        
+        {/* Actual bar (solid fill with gradient) */}
+        <div className="comparison-bar-track">
+          <div 
+            className={`comparison-bar-actual ${isBeat ? 'beat' : 'miss'}`}
+            style={{ 
+              width: `${actualWidth}%`,
+              animationDelay: `${delay + 100}ms`
+            }}
+          >
+            <span className="comparison-bar-value actual">
+              {formatValue(actual)}
+            </span>
+            {/* Surplus/deficit indicator */}
+            {Math.abs(actualWidth - estimateWidth) > 5 && (
+              <span 
+                className={`comparison-bar-delta ${isBeat ? 'beat' : 'miss'}`}
+                style={{ animationDelay: `${delay + 300}ms` }}
+              >
+                {isBeat ? '+' : ''}{surprise.toFixed(1)}%
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 interface EarningsTooltipProps {
   ticker: string;
   company: string;
@@ -49,6 +120,8 @@ export function EarningsTooltipContent({
     return `$${val.toFixed(2)}`;
   };
 
+  const formatEPS = (val: number) => `$${val.toFixed(2)}`;
+
   const epsSurprise = hasResult && estimate 
     ? ((eps! - estimate) / Math.abs(estimate)) * 100 
     : null;
@@ -71,42 +144,34 @@ export function EarningsTooltipContent({
       
       {hasResult ? (
         <div className="tooltip-metrics">
-          <div className="tooltip-row">
-            <span className="tooltip-label">EPS Actual</span>
-            <span className="tooltip-value">${eps?.toFixed(2)}</span>
-          </div>
-          <div className="tooltip-row">
-            <span className="tooltip-label">EPS Estimate</span>
-            <span className="tooltip-value text-zinc-400">${estimate?.toFixed(2)}</span>
-          </div>
-          <div className="tooltip-row">
-            <span className="tooltip-label">Surprise</span>
-            <span className={`tooltip-value ${epsSurprise && epsSurprise >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-              {epsSurprise !== null ? `${epsSurprise >= 0 ? '+' : ''}${epsSurprise.toFixed(1)}%` : '—'}
-            </span>
-          </div>
-          {revenue && (
-            <>
-              <div className="tooltip-spacer" />
-              <div className="tooltip-row">
-                <span className="tooltip-label">Revenue</span>
-                <span className="tooltip-value">{formatCurrency(revenue)}</span>
-              </div>
-              {revenueEstimate && (
-                <div className="tooltip-row">
-                  <span className="tooltip-label">Rev. Est.</span>
-                  <span className="tooltip-value text-zinc-400">{formatCurrency(revenueEstimate)}</span>
-                </div>
-              )}
-              {revSurprise !== null && (
-                <div className="tooltip-row">
-                  <span className="tooltip-label">Rev. Surprise</span>
-                  <span className={`tooltip-value ${revSurprise >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                    {revSurprise >= 0 ? '+' : ''}{revSurprise.toFixed(1)}%
-                  </span>
-                </div>
-              )}
-            </>
+          {/* Animated EPS comparison bars */}
+          {estimate && (
+            <ComparisonBar 
+              actual={eps!}
+              estimate={estimate}
+              label="EPS"
+              formatValue={formatEPS}
+              delay={0}
+            />
+          )}
+          
+          {/* Animated Revenue comparison bars */}
+          {revenue && revenueEstimate && (
+            <ComparisonBar 
+              actual={revenue}
+              estimate={revenueEstimate}
+              label="Revenue"
+              formatValue={formatCurrency}
+              delay={150}
+            />
+          )}
+          
+          {/* Legacy fallback for simple display */}
+          {!estimate && (
+            <div className="tooltip-row">
+              <span className="tooltip-label">EPS Actual</span>
+              <span className="tooltip-value">${eps?.toFixed(2)}</span>
+            </div>
           )}
         </div>
       ) : (
