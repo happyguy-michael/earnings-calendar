@@ -338,6 +338,10 @@ html.light .sticky-header.scrolled {
   color: #4ade80;
   border: 1px solid rgba(34, 197, 94, 0.4);
   box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+  transition: transform 0.3s var(--spring-snappy),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease,
+              background 0.3s ease;
 }
 
 /* Premium periodic shine sweep effect on beat badges */
@@ -405,6 +409,10 @@ html.light .badge-beat::after {
   color: #f87171;
   border: 1px solid rgba(239, 68, 68, 0.4);
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+  transition: transform 0.3s var(--spring-snappy),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease,
+              background 0.3s ease;
 }
 
 .badge-pending {
@@ -418,6 +426,48 @@ html.light .badge-beat::after {
   background: rgba(255, 255, 255, 0.08);
   color: #a1a1aa;
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Badge glow intensification on card hover */
+.earnings-row:hover .badge-beat {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.35) 0%, rgba(16, 185, 129, 0.25) 100%);
+  border-color: rgba(34, 197, 94, 0.6);
+  box-shadow: 
+    0 0 25px rgba(34, 197, 94, 0.35),
+    0 0 50px rgba(34, 197, 94, 0.15),
+    inset 0 0 15px rgba(34, 197, 94, 0.1);
+}
+
+.earnings-row:hover .badge-miss {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(220, 38, 38, 0.25) 100%);
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 
+    0 0 25px rgba(239, 68, 68, 0.35),
+    0 0 50px rgba(239, 68, 68, 0.15),
+    inset 0 0 15px rgba(239, 68, 68, 0.1);
+}
+
+/* Light mode adjustments for badge hover glow */
+html.light .earnings-row:hover .badge-beat {
+  box-shadow: 
+    0 0 20px rgba(34, 197, 94, 0.25),
+    0 0 40px rgba(34, 197, 94, 0.1);
+}
+
+html.light .earnings-row:hover .badge-miss {
+  box-shadow: 
+    0 0 20px rgba(239, 68, 68, 0.25),
+    0 0 40px rgba(239, 68, 68, 0.1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .earnings-row:hover .badge-beat,
+  .earnings-row:hover .badge-miss {
+    transform: none;
+  }
 }
 
 /* Stats cards with gradient borders and hover effects */
