@@ -7877,3 +7877,263 @@ html.light .today-tooltip::before {
     animation: none;
   }
 }
+
+/* ========================================
+   Session Divider - Animated Gradient Line
+   ======================================== */
+
+.session-divider {
+  position: relative;
+  height: 4px;
+  margin: 8px 0;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: 
+    opacity 0.4s ease-out,
+    transform 0.5s var(--spring-smooth);
+}
+
+.session-divider-visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Glow layer (blurred shadow) */
+.session-divider-glow {
+  position: absolute;
+  inset: -4px -8px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--divider-glow-color, rgba(59, 130, 246, 0.3)) 20%,
+    var(--divider-glow-color, rgba(139, 92, 246, 0.3)) 50%,
+    var(--divider-glow-color, rgba(59, 130, 246, 0.3)) 80%,
+    transparent 100%
+  );
+  filter: blur(8px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Main gradient line */
+.session-divider-line {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--divider-color-1, #3b82f6) 15%,
+    var(--divider-color-2, #8b5cf6) 50%,
+    var(--divider-color-1, #3b82f6) 85%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Animated gradient flow */
+.session-divider-animated .session-divider-line {
+  animation: session-divider-flow 3s linear infinite;
+}
+
+@keyframes session-divider-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Shimmer overlay */
+.session-divider-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: session-divider-shimmer 2s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes session-divider-shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* End caps */
+.session-divider-cap {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--divider-color-2, #8b5cf6);
+  box-shadow: 0 0 8px var(--divider-glow-color, rgba(139, 92, 246, 0.5));
+}
+
+.session-divider-cap-left {
+  left: 0;
+  animation: session-divider-cap-pulse 2s ease-in-out infinite;
+}
+
+.session-divider-cap-right {
+  right: 0;
+  animation: session-divider-cap-pulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes session-divider-cap-pulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.3);
+    opacity: 1;
+  }
+}
+
+/* Pre-market variant (blue/purple) */
+.session-divider-pre {
+  --divider-color-1: #3b82f6;
+  --divider-color-2: #8b5cf6;
+  --divider-glow-color: rgba(99, 102, 241, 0.4);
+}
+
+/* After hours variant (amber/orange) */
+.session-divider-post {
+  --divider-color-1: #f59e0b;
+  --divider-color-2: #f97316;
+  --divider-glow-color: rgba(245, 158, 11, 0.4);
+}
+
+/* ========================================
+   Compact Variant
+   ======================================== */
+
+.session-divider-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.session-divider-compact-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--divider-color-2, #8b5cf6);
+  animation: session-divider-dot-pulse 1.5s ease-in-out infinite;
+}
+
+.session-divider-compact-dot:last-child {
+  animation-delay: 0.75s;
+}
+
+.session-divider-compact-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--divider-color-1, #3b82f6),
+    var(--divider-color-2, #8b5cf6),
+    var(--divider-color-1, #3b82f6)
+  );
+  opacity: 0.5;
+}
+
+.session-divider-compact-pre {
+  --divider-color-1: #3b82f6;
+  --divider-color-2: #8b5cf6;
+}
+
+.session-divider-compact-post {
+  --divider-color-1: #f59e0b;
+  --divider-color-2: #f97316;
+}
+
+@keyframes session-divider-dot-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* ========================================
+   Light Mode
+   ======================================== */
+
+html.light .session-divider-glow {
+  opacity: 0.3;
+}
+
+html.light .session-divider-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  opacity: 0.7;
+}
+
+html.light .session-divider-pre {
+  --divider-glow-color: rgba(99, 102, 241, 0.2);
+}
+
+html.light .session-divider-post {
+  --divider-glow-color: rgba(245, 158, 11, 0.25);
+}
+
+html.light .session-divider-cap {
+  box-shadow: 0 0 6px var(--divider-glow-color);
+}
+
+html.light .session-divider-compact-line {
+  opacity: 0.6;
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .session-divider-animated .session-divider-line {
+    animation: none;
+    background-position: 50% 50%;
+  }
+  
+  .session-divider-shimmer {
+    animation: none;
+    opacity: 0;
+  }
+  
+  .session-divider-cap-left,
+  .session-divider-cap-right {
+    animation: none;
+  }
+  
+  .session-divider-compact-dot {
+    animation: none;
+    opacity: 0.8;
+  }
+  
+  .session-divider {
+    transition: opacity 0.2s ease-out;
+    transform: scaleX(1);
+  }
+}

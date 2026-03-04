@@ -33,6 +33,7 @@ import { ValueChangeHighlight } from '@/components/ValueChangeHighlight';
 import { LegendIndicator, LegendProgressRing } from '@/components/LegendIndicator';
 import { WeekIndicator } from '@/components/WeekIndicator';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
+import { SessionDivider } from '@/components/SessionDivider';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -596,6 +597,7 @@ export default function Home() {
                         <div className="space-y-5">
                           {preMarket.length > 0 && (
                             <div>
+                              <SessionDivider variant="pre" />
                               <div className="session-header pre-market">
                                 <MarketSessionIcon session="pre" size={18} />
                                 <span className="session-header-label">Pre-Market</span>
@@ -607,6 +609,7 @@ export default function Home() {
                           )}
                           {postMarket.length > 0 && (
                             <div>
+                              <SessionDivider variant="post" />
                               <div className="session-header after-hours">
                                 <MarketSessionIcon session="post" size={18} />
                                 <span className="session-header-label">After Hours</span>
