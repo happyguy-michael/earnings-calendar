@@ -36,6 +36,7 @@ import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SessionDivider } from '@/components/SessionDivider';
 import { MarketStatus } from '@/components/MarketStatus';
 import { TickerRibbon } from '@/components/TickerRibbon';
+import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -458,27 +459,32 @@ export default function Home() {
       <TickerRibbon earnings={earnings} speed={35} />
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Row with 3D Tilt Effect, Parallax Float, Rolling Numbers, and Change Highlights */}
+        {/* Stats Row with 3D Tilt Effect, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 stats-grid">
           <ParallaxFloat intensity={0.04} delay={0}>
             <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
               <div className="tilt-stat-card">
-                <div className="text-4xl font-bold text-white mb-1">
-                  <ValueChangeHighlight value={totalEarnings} variant="default">
-                    <RollingNumber value={totalEarnings} staggerDelay={40} />
-                  </ValueChangeHighlight>
+                <div className="flex items-center gap-3">
+                  <AnimatedStatIcon type="total" size={28} />
+                  <div>
+                    <div className="text-3xl font-bold text-white">
+                      <ValueChangeHighlight value={totalEarnings} variant="default">
+                        <RollingNumber value={totalEarnings} staggerDelay={40} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
+                  </div>
                 </div>
-                <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
               </div>
             </TiltCard>
           </ParallaxFloat>
           <ParallaxFloat intensity={0.05} delay={50}>
             <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
               <div className="tilt-stat-card tilt-stat-card-success">
-                <div className="flex items-center gap-4">
-                  <ProgressRing value={beatRate} size={56} color="#22c55e" delay={200} duration={1400} />
+                <div className="flex items-center gap-3">
+                  <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
                   <div>
-                    <div className="text-3xl font-bold text-gradient-green">
+                    <div className="text-2xl font-bold text-gradient-green">
                       <ValueChangeHighlight value={beatRate} variant="success">
                         <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
                       </ValueChangeHighlight>
@@ -492,24 +498,34 @@ export default function Home() {
           <ParallaxFloat intensity={0.035} delay={100}>
             <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
               <div className="tilt-stat-card">
-                <div className="text-4xl font-bold text-white mb-1">
-                  <ValueChangeHighlight value={reportedCount} variant="default">
-                    <RollingNumber value={reportedCount} staggerDelay={45} />
-                  </ValueChangeHighlight>
+                <div className="flex items-center gap-3">
+                  <AnimatedStatIcon type="reported" size={28} />
+                  <div>
+                    <div className="text-3xl font-bold text-white">
+                      <ValueChangeHighlight value={reportedCount} variant="default">
+                        <RollingNumber value={reportedCount} staggerDelay={45} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
+                  </div>
                 </div>
-                <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
               </div>
             </TiltCard>
           </ParallaxFloat>
           <ParallaxFloat intensity={0.045} delay={150}>
             <TiltCard tiltIntensity={10} glareIntensity={0.12} scale={1.02} className="stat-card-enter">
               <div className="tilt-stat-card tilt-stat-card-warning">
-                <div className="text-4xl font-bold text-amber-400 mb-1">
-                  <ValueChangeHighlight value={pendingCount} variant="warning">
-                    <RollingNumber value={pendingCount} staggerDelay={35} />
-                  </ValueChangeHighlight>
+                <div className="flex items-center gap-3">
+                  <AnimatedStatIcon type="pending" size={28} />
+                  <div>
+                    <div className="text-3xl font-bold text-amber-400">
+                      <ValueChangeHighlight value={pendingCount} variant="warning">
+                        <RollingNumber value={pendingCount} staggerDelay={35} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
+                  </div>
                 </div>
-                <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
               </div>
             </TiltCard>
           </ParallaxFloat>

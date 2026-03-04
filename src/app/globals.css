@@ -8632,3 +8632,349 @@ html.light .ticker-ribbon-paused-indicator {
     opacity: 1;
   }
 }
+
+/* ========================================
+   Animated Stat Icons
+   ======================================== */
+
+.stat-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+/* Icon entrance animations */
+.stat-icon.visible .stat-icon-bar {
+  animation: stat-bar-rise 0.6s var(--spring-bouncy) forwards;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.stat-icon.visible .stat-icon-bar-1 {
+  animation-delay: 0ms;
+}
+
+.stat-icon.visible .stat-icon-bar-2 {
+  animation-delay: 80ms;
+}
+
+.stat-icon.visible .stat-icon-bar-3 {
+  animation-delay: 160ms;
+}
+
+@keyframes stat-bar-rise {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* Total icon - ambient pulse on tallest bar */
+.stat-icon-total.visible .stat-icon-glow {
+  animation: stat-glow-pulse 3s ease-in-out infinite;
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+@keyframes stat-glow-pulse {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Trophy icon - shimmer sweep */
+.stat-icon-beatRate .stat-icon-shimmer {
+  opacity: 0;
+}
+
+.stat-icon-beatRate.visible .stat-icon-shimmer {
+  animation: trophy-shimmer 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes trophy-shimmer {
+  0%, 85%, 100% {
+    opacity: 0;
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  90%, 95% {
+    opacity: 1;
+    transform: translateX(100%) skewX(-15deg);
+  }
+}
+
+/* Trophy star twinkle */
+.stat-icon-beatRate.visible .stat-icon-trophy-star {
+  animation: star-twinkle 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes star-twinkle {
+  0%, 90%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  95% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+}
+
+/* Trophy entrance - scale in with bounce */
+.stat-icon-beatRate.visible .stat-icon-trophy-body,
+.stat-icon-beatRate.visible .stat-icon-trophy-handle,
+.stat-icon-beatRate.visible .stat-icon-trophy-base {
+  animation: trophy-pop 0.5s var(--spring-bouncy) forwards;
+  transform: scale(0);
+  transform-origin: center bottom;
+}
+
+.stat-icon-beatRate.visible .stat-icon-trophy-handle {
+  animation-delay: 0.1s;
+}
+
+.stat-icon-beatRate.visible .stat-icon-trophy-base {
+  animation-delay: 0.2s;
+}
+
+@keyframes trophy-pop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Clipboard icon - entrance */
+.stat-icon-reported .stat-icon-clipboard,
+.stat-icon-reported .stat-icon-clipboard-header {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.stat-icon-reported.visible .stat-icon-clipboard,
+.stat-icon-reported.visible .stat-icon-clipboard-header {
+  animation: clipboard-slide 0.4s ease-out forwards;
+}
+
+.stat-icon-reported.visible .stat-icon-clipboard-header {
+  animation-delay: 0.1s;
+}
+
+@keyframes clipboard-slide {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Checkmark draw animation */
+.stat-icon-reported .stat-icon-checkmark {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+
+.stat-icon-reported.visible .stat-icon-checkmark {
+  animation: checkmark-draw 0.5s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes checkmark-draw {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Checkmark glow pulse */
+.stat-icon-reported .stat-icon-check-glow {
+  opacity: 0;
+}
+
+.stat-icon-reported.visible .stat-icon-check-glow {
+  animation: check-glow-pulse 2s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+@keyframes check-glow-pulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Hourglass icon */
+.stat-icon-pending .stat-icon-hourglass-frame {
+  transform: scale(0);
+  transform-origin: center;
+}
+
+.stat-icon-pending.visible .stat-icon-hourglass-frame {
+  animation: hourglass-pop 0.4s var(--spring-bouncy) forwards;
+}
+
+@keyframes hourglass-pop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Sand stream animation - continuous fall */
+.stat-icon-pending .stat-icon-sand-stream {
+  opacity: 0;
+}
+
+.stat-icon-pending.visible .stat-icon-sand-stream {
+  animation: sand-fall 1.5s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes sand-fall {
+  0%, 100% {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  10% {
+    opacity: 1;
+    transform: scaleY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  90% {
+    opacity: 1;
+    transform: scaleY(0);
+  }
+}
+
+/* Sand pile grow animation */
+.stat-icon-pending .stat-icon-sand-bottom {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.stat-icon-pending.visible .stat-icon-sand-bottom {
+  animation: sand-pile-grow 0.6s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes sand-pile-grow {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scaleY(1);
+  }
+}
+
+/* Top sand shrink animation */
+.stat-icon-pending .stat-icon-sand-top {
+  transform-origin: top;
+}
+
+.stat-icon-pending.visible .stat-icon-sand-top {
+  animation: sand-top-shrink 4s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes sand-top-shrink {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scaleY(0.5);
+  }
+}
+
+/* Pending glow breathing */
+.stat-icon-pending .stat-icon-pending-glow {
+  opacity: 0;
+}
+
+.stat-icon-pending.visible .stat-icon-pending-glow {
+  animation: pending-glow-breathe 3s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+@keyframes pending-glow-breathe {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Light mode adjustments */
+html.light .stat-icon {
+  color: var(--text-secondary);
+}
+
+html.light .stat-icon-checkmark {
+  stroke: #16a34a;
+}
+
+html.light .stat-icon-sand-top,
+html.light .stat-icon-sand-stream,
+html.light .stat-icon-sand-bottom {
+  fill: #d97706;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .stat-icon.visible .stat-icon-bar,
+  .stat-icon-beatRate.visible .stat-icon-trophy-body,
+  .stat-icon-beatRate.visible .stat-icon-trophy-handle,
+  .stat-icon-beatRate.visible .stat-icon-trophy-base,
+  .stat-icon-reported.visible .stat-icon-clipboard,
+  .stat-icon-reported.visible .stat-icon-clipboard-header,
+  .stat-icon-reported.visible .stat-icon-checkmark,
+  .stat-icon-pending.visible .stat-icon-hourglass-frame,
+  .stat-icon-pending.visible .stat-icon-sand-bottom {
+    animation: none;
+    transform: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  
+  .stat-icon-total.visible .stat-icon-glow,
+  .stat-icon-beatRate.visible .stat-icon-shimmer,
+  .stat-icon-beatRate.visible .stat-icon-trophy-star,
+  .stat-icon-reported.visible .stat-icon-check-glow,
+  .stat-icon-pending.visible .stat-icon-sand-stream,
+  .stat-icon-pending.visible .stat-icon-sand-top,
+  .stat-icon-pending.visible .stat-icon-pending-glow {
+    animation: none;
+    opacity: 0.5;
+  }
+}
