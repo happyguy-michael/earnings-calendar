@@ -1153,6 +1153,54 @@ html.light .earnings-row:hover .logo-container {
   background: rgba(59, 130, 246, 0.03);
 }
 
+/* Animated gradient left border accent for today */
+.day-content.today::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    #3b82f6 15%,
+    #8b5cf6 35%,
+    #ec4899 50%,
+    #8b5cf6 65%,
+    #3b82f6 85%,
+    transparent 100%
+  );
+  background-size: 100% 300%;
+  animation: todayBorderFlow 4s ease-in-out infinite;
+  border-radius: 2px;
+  box-shadow: 
+    0 0 8px rgba(59, 130, 246, 0.5),
+    0 0 16px rgba(139, 92, 246, 0.3),
+    0 0 24px rgba(236, 72, 153, 0.2);
+  opacity: 0.85;
+  z-index: 1;
+}
+
+/* Pulsing glow intensity on the border */
+@keyframes todayBorderFlow {
+  0%, 100% {
+    background-position: 0% 0%;
+    opacity: 0.7;
+    box-shadow: 
+      0 0 6px rgba(59, 130, 246, 0.4),
+      0 0 12px rgba(139, 92, 246, 0.2);
+  }
+  50% {
+    background-position: 0% 100%;
+    opacity: 1;
+    box-shadow: 
+      0 0 10px rgba(59, 130, 246, 0.6),
+      0 0 20px rgba(139, 92, 246, 0.4),
+      0 0 30px rgba(236, 72, 153, 0.3);
+  }
+}
+
 /* Subtle aurora column effect for today's content */
 .day-content.today::before {
   content: '';
@@ -1181,6 +1229,12 @@ html.light .earnings-row:hover .logo-container {
 @media (prefers-reduced-motion: reduce) {
   .day-content.today::before {
     animation: none;
+  }
+  .day-content.today::after {
+    animation: none;
+    opacity: 0.8;
+    background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 50%, #3b82f6 100%);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
   }
 }
 
@@ -2546,6 +2600,14 @@ html.light .ripple-effect {
     color: #3b82f6;
   }
   
+  /* Animated border thinner on mobile */
+  .day-content.today::after {
+    width: 2px;
+    box-shadow: 
+      0 0 4px rgba(59, 130, 246, 0.4),
+      0 0 8px rgba(139, 92, 246, 0.2);
+  }
+  
   /* Hide "No reports" placeholder on mobile (save space) */
   .day-content > .flex.flex-col.items-center {
     display: none;
@@ -3336,6 +3398,24 @@ html.light .day-content.today::before {
     rgba(99, 102, 241, 0.02) 50%,
     rgba(59, 130, 246, 0.01) 100%
   );
+}
+
+/* Light mode animated gradient border for today - softer glow */
+html.light .day-content.today::after {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    #3b82f6 15%,
+    #6366f1 35%,
+    #8b5cf6 50%,
+    #6366f1 65%,
+    #3b82f6 85%,
+    transparent 100%
+  );
+  box-shadow: 
+    0 0 6px rgba(59, 130, 246, 0.35),
+    0 0 12px rgba(99, 102, 241, 0.2);
+  opacity: 0.75;
 }
 
 html.light .section-label {
