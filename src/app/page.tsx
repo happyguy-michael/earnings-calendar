@@ -15,6 +15,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
 import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 import { CountdownBadge } from '@/components/Countdown';
+import { FlipCountdownBadge } from '@/components/FlipDigit';
 import { TimeSinceInline } from '@/components/TimeSince';
 import { ProgressRing } from '@/components/ProgressRing';
 import { BackToTop } from '@/components/BackToTop';
@@ -136,9 +137,9 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           </div>
         </div>
 
-        {/* Countdown timer for today's pending earnings */}
+        {/* Countdown timer for today's pending earnings - flip digit style */}
         {isTodayPending && (
-          <CountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
+          <FlipCountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
         )}
 
         {hasResult ? (

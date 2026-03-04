@@ -9571,3 +9571,416 @@ html.light .fresh-dot-pulse {
     transform: scale(1.3);
   }
 }
+
+/* ============================================ */
+/* Flip Digit Animation - Airport Board Style  */
+/* ============================================ */
+
+/* Container for single flip digit */
+.flip-digit {
+  position: relative;
+  display: inline-flex;
+  width: 1.2em;
+  height: 1.8em;
+  font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-variant-numeric: tabular-nums;
+  perspective: 300px;
+}
+
+.flip-digit-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(30, 30, 35, 0.9) 0%, rgba(20, 20, 25, 0.95) 49%, rgba(25, 25, 30, 0.95) 51%, rgba(35, 35, 40, 0.9) 100%);
+  border-radius: 4px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Center divider line */
+.flip-digit-inner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 20%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
+  z-index: 10;
+}
+
+/* Common text styles */
+.flip-digit-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Top half (static) */
+.flip-digit-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 50%;
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;
+}
+
+.flip-digit-top .flip-digit-text {
+  top: auto;
+  bottom: -50%;
+}
+
+/* Bottom half (static) */
+.flip-digit-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  overflow: hidden;
+  border-radius: 0 0 4px 4px;
+}
+
+.flip-digit-bottom .flip-digit-text {
+  top: -50%;
+}
+
+/* Top flip panel (flips down) */
+.flip-digit-top-flip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 50%;
+  overflow: hidden;
+  transform-origin: bottom center;
+  transform: rotateX(0deg);
+  backface-visibility: hidden;
+  z-index: 5;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, rgba(30, 30, 35, 0.95) 0%, rgba(25, 25, 30, 0.98) 100%);
+}
+
+.flip-digit-top-flip .flip-digit-text {
+  top: auto;
+  bottom: -50%;
+}
+
+/* Bottom flip panel (revealed from top) */
+.flip-digit-bottom-flip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  overflow: hidden;
+  transform-origin: top center;
+  transform: rotateX(90deg);
+  backface-visibility: hidden;
+  z-index: 4;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(180deg, rgba(25, 25, 30, 0.98) 0%, rgba(35, 35, 40, 0.95) 100%);
+}
+
+.flip-digit-bottom-flip .flip-digit-text {
+  top: -50%;
+}
+
+/* Flipping animation */
+.flip-digit.flipping .flip-digit-top-flip {
+  animation: flip-top 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.flip-digit.flipping .flip-digit-bottom-flip {
+  animation: flip-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes flip-top {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flip-bottom {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+/* ============================================ */
+/* Flip Clock - Full countdown display         */
+/* ============================================ */
+
+.flip-clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.85rem;
+}
+
+.flip-clock-compact {
+  font-size: 0.75rem;
+}
+
+.flip-clock-compact .flip-digit {
+  width: 1em;
+  height: 1.5em;
+}
+
+.flip-clock-unit {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.flip-clock-label {
+  font-size: 0.65em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 1px;
+  font-weight: 500;
+}
+
+.flip-clock-separator {
+  font-size: 1em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 1px;
+  animation: separator-pulse 1s ease-in-out infinite;
+}
+
+.flip-clock-separator-urgent {
+  color: #ef4444;
+  animation: separator-pulse-urgent 0.5s ease-in-out infinite;
+}
+
+@keyframes separator-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes separator-pulse-urgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Urgent state - red glow */
+.flip-clock-urgent .flip-digit-inner {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 100, 100, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.flip-clock-urgent .flip-digit-text {
+  color: #fca5a5;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* ============================================ */
+/* Flip Countdown Badge                        */
+/* ============================================ */
+
+.flip-countdown-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, rgba(30, 30, 40, 0.9) 0%, rgba(20, 20, 30, 0.95) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.flip-countdown-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.flip-countdown-icon {
+  font-size: 0.8rem;
+}
+
+.flip-countdown-label {
+  font-weight: 500;
+}
+
+/* Urgent state */
+.flip-countdown-urgent {
+  border-color: rgba(239, 68, 68, 0.2);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(239, 68, 68, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: flip-countdown-urgent-pulse 2s ease-in-out infinite;
+}
+
+@keyframes flip-countdown-urgent-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(239, 68, 68, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 30px rgba(239, 68, 68, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+.flip-countdown-urgent .flip-countdown-header {
+  color: #fca5a5;
+}
+
+/* NOW state */
+.flip-countdown-now {
+  position: relative;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.2) 100%);
+  border-color: rgba(239, 68, 68, 0.3);
+  padding: 10px 16px;
+}
+
+.flip-countdown-now-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fca5a5;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: flip-now-text-pulse 1s ease-in-out infinite;
+}
+
+@keyframes flip-now-text-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.flip-countdown-now-pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: 12px;
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  animation: flip-now-ring-pulse 1.5s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes flip-now-ring-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* ============================================ */
+/* Light mode support                          */
+/* ============================================ */
+
+html.light .flip-digit-inner {
+  background: linear-gradient(180deg, rgba(240, 240, 245, 0.98) 0%, rgba(230, 230, 235, 0.98) 49%, rgba(235, 235, 240, 0.98) 51%, rgba(245, 245, 250, 0.98) 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+html.light .flip-digit-inner::after {
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 80%, transparent 100%);
+}
+
+html.light .flip-digit-text {
+  color: #1f2937;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+html.light .flip-digit-top-flip {
+  background: linear-gradient(180deg, rgba(240, 240, 245, 0.98) 0%, rgba(235, 235, 240, 0.98) 100%);
+}
+
+html.light .flip-digit-bottom-flip {
+  background: linear-gradient(180deg, rgba(235, 235, 240, 0.98) 0%, rgba(245, 245, 250, 0.98) 100%);
+}
+
+html.light .flip-clock-label {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+html.light .flip-clock-separator {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+html.light .flip-countdown-badge {
+  background: linear-gradient(135deg, rgba(250, 250, 252, 0.98) 0%, rgba(245, 245, 248, 0.98) 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+html.light .flip-countdown-header {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+html.light .flip-clock-urgent .flip-digit-text {
+  color: #dc2626;
+}
+
+html.light .flip-countdown-urgent .flip-countdown-header {
+  color: #dc2626;
+}
+
+/* ============================================ */
+/* Reduced motion support                      */
+/* ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-digit.flipping .flip-digit-top-flip,
+  .flip-digit.flipping .flip-digit-bottom-flip {
+    animation: none;
+    transform: none;
+  }
+  
+  .flip-digit-top-flip,
+  .flip-digit-bottom-flip {
+    display: none;
+  }
+  
+  .flip-clock-separator {
+    animation: none;
+  }
+  
+  .flip-countdown-urgent,
+  .flip-countdown-now-pulse,
+  .flip-now-text-pulse {
+    animation: none;
+  }
+}
