@@ -8978,3 +8978,156 @@ html.light .stat-icon-sand-bottom {
     opacity: 0.5;
   }
 }
+
+/* ===== Fresh Badge Component ===== */
+/* Animated badge for recently reported earnings - highlights breaking news */
+
+.fresh-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  overflow: visible;
+}
+
+.fresh-badge-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fresh-badge-icon {
+  color: #22c55e;
+  animation: fresh-icon-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes fresh-icon-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.fresh-badge-text {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #22c55e;
+  text-transform: uppercase;
+}
+
+/* Pulsing rings behind the badge */
+.fresh-badge-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  animation: fresh-pulse-ring 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.fresh-badge-pulse-delayed {
+  animation-delay: 0.5s;
+}
+
+@keyframes fresh-pulse-ring {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Compact dot version */
+.fresh-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+}
+
+.fresh-dot-core {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+.fresh-dot-pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.3);
+  animation: fresh-dot-pulse-ring 1.5s ease-out infinite;
+}
+
+@keyframes fresh-dot-pulse-ring {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+/* Light mode adjustments */
+html.light .fresh-badge {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+html.light .fresh-badge-icon,
+html.light .fresh-badge-text {
+  color: #16a34a;
+}
+
+html.light .fresh-badge-pulse {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+html.light .fresh-dot-core {
+  background: #16a34a;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.4);
+}
+
+html.light .fresh-dot-pulse {
+  background: rgba(22, 163, 74, 0.25);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .fresh-badge-icon {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .fresh-badge-pulse {
+    animation: none;
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+  
+  .fresh-dot-pulse {
+    animation: none;
+    opacity: 0.3;
+    transform: scale(1.3);
+  }
+}

@@ -37,6 +37,7 @@ import { SessionDivider } from '@/components/SessionDivider';
 import { MarketStatus } from '@/components/MarketStatus';
 import { TickerRibbon } from '@/components/TickerRibbon';
 import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
+import { FreshBadge } from '@/components/FreshBadge';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -141,17 +142,23 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         )}
 
         {hasResult ? (
-          earning.result === 'beat' ? (
-            <BadgeSparkle active={true} particleCount={6}>
-              <span className="badge badge-beat">
+          <div className="flex items-center gap-2">
+            {/* Fresh badge for recently reported earnings */}
+            {isToday && (
+              <FreshBadge reportedAt={new Date(earning.date)} time={earning.time} freshnessHours={4} />
+            )}
+            {earning.result === 'beat' ? (
+              <BadgeSparkle active={true} particleCount={6}>
+                <span className="badge badge-beat">
+                  {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+                </span>
+              </BadgeSparkle>
+            ) : (
+              <span className="badge badge-miss">
                 {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
               </span>
-            </BadgeSparkle>
-          ) : (
-            <span className="badge badge-miss">
-              {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
-            </span>
-          )
+            )}
+          </div>
         ) : earning.beatOdds ? (
           <div className="odds-indicator">
             <ProgressRing value={earning.beatOdds} size={32} color={oddsColor} delay={animationIndex * 80} duration={800} />
