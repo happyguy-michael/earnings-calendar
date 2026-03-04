@@ -314,6 +314,13 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigateWeek, goToToday]);
 
+  // Refs for each week card (for smooth scroll-to on indicator click)
+  // NOTE: Must be declared before any conditional returns (Rules of Hooks)
+  const week0Ref = useRef<HTMLDivElement>(null);
+  const week1Ref = useRef<HTMLDivElement>(null);
+  const week2Ref = useRef<HTMLDivElement>(null);
+  const weekRefs = useMemo(() => [week0Ref, week1Ref, week2Ref], []);
+
   if (isLoading) {
     return <SkeletonCalendar />;
   }
@@ -342,12 +349,6 @@ export default function Home() {
   const todayWeekIndex = weeks.findIndex(weekStart => 
     weekStart.getTime() === todayWeekStart.getTime()
   );
-
-  // Refs for each week card (for smooth scroll-to on indicator click)
-  const week0Ref = useRef<HTMLDivElement>(null);
-  const week1Ref = useRef<HTMLDivElement>(null);
-  const week2Ref = useRef<HTMLDivElement>(null);
-  const weekRefs = useMemo(() => [week0Ref, week1Ref, week2Ref], []);
 
   return (
     <div className="min-h-screen relative">
