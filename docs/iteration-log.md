@@ -1,5 +1,27 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-06 — Text Shine Sweep Effect
+**Inspiration:** Premium sites like Stripe, Linear, and ElevenLabs use periodic shine effects on headlines
+
+**What was added:**
+- Subtle white highlight that periodically sweeps across the "Calendar" gradient text
+- Creates a premium "polished" feel without being distracting
+- Runs every ~12 seconds with most of the cycle idle (85% pause, 15% sweep)
+- Smooth ease-in-out timing for natural movement
+
+**Technical details:**
+- Uses `::after` pseudo-element with linear gradient overlay
+- `mix-blend-mode: overlay` blends naturally with gradient text underneath
+- Light mode uses `soft-light` blend for better visibility on light backgrounds
+- Full `prefers-reduced-motion` support (animation disabled)
+- Applied via `.text-shine-sweep` class alongside `.text-gradient`
+
+**Files changed:**
+- `src/app/globals.css` — new `.text-shine-sweep` styles and keyframes
+- `src/app/page.tsx` — added class to header "Calendar" text
+
+---
+
 ## 2026-03-06 — Surprise Magnitude Visual Indicator
 **Inspiration:** Finance dashboards that show magnitude of changes visually, not just numerically
 
