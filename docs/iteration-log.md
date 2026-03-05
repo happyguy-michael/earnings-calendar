@@ -1,5 +1,47 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-05 — WaveLoader Premium Loading Animation Suite
+**Inspiration:** Vercel, Linear, Stripe loading states - wave-based animations that feel organic and fluid
+
+**What was added:**
+- `WaveLoader` component with cascading wave animation across children
+- `WaveDots` bouncing dots loader (classic three-dot with wave timing)
+- `WaveBar` horizontal progress bar with sweeping wave effect
+- `WaveText` character-by-character wave animation for loading text
+- MarketStatus now uses WaveDots for its loading state
+
+**Technical details:**
+- All animations use CSS `@keyframes` for performance
+- Configurable timing, direction, and intensity
+- Wave effect achieved via staggered `animation-delay` on children
+- Full `prefers-reduced-motion` support (animations disabled)
+- Light/dark mode aware with appropriate opacity adjustments
+- Inline `<style jsx>` keeps animations self-contained
+
+**Usage examples:**
+```tsx
+// Bouncing dots
+<WaveDots size={8} gap={6} speed={1400} />
+
+// Wave progress bar
+<WaveBar width="100%" height={4} duration={2000} />
+
+// Character wave text
+<WaveText text="Loading..." float={true} />
+
+// Wave across children
+<WaveLoader stagger={80}>
+  <Card /><Card /><Card />
+</WaveLoader>
+```
+
+**Files changed:**
+- `src/components/WaveLoader.tsx` — new component suite
+- `src/components/MarketStatus.tsx` — integrated WaveDots for loading state
+- `src/app/globals.css` — wave animation CSS utilities
+
+---
+
 ## 2026-03-05 — Animated Filter Transitions
 **Inspiration:** Micro-interactions article on NoBoringDesign - smooth filter transitions that provide immediate visual feedback
 
