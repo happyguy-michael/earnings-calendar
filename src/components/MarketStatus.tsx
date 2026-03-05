@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import { WaveDots } from './WaveLoader';
 
 interface MarketSession {
   isOpen: boolean;
@@ -249,11 +250,12 @@ export function MarketStatus() {
   }, [session?.phase]);
   
   if (!session || !phaseConfig) {
-    // Skeleton placeholder
+    // Premium wave loading placeholder
     return (
       <div className="market-status market-status-loading">
         <div className="market-status-dot" />
-        <div className="market-status-skeleton" />
+        <span className="market-status-label text-zinc-500">Loading</span>
+        <WaveDots size={5} gap={4} color="var(--text-faint, #71717a)" speed={1200} />
       </div>
     );
   }

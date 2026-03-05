@@ -10277,3 +10277,76 @@ html.light .border-glow-spot-outer {
     animation: none;
   }
 }
+
+/* ============================================ */
+/* Wave Loading Animations                      */
+/* ============================================ */
+
+.wave-loader {
+  display: contents;
+}
+
+.wave-loader-item {
+  will-change: transform, opacity, filter;
+}
+
+/* Wave dots styling */
+.wave-dots {
+  display: inline-flex;
+  align-items: center;
+}
+
+.wave-dot {
+  will-change: transform, opacity;
+}
+
+/* Wave bar styling */
+.wave-bar {
+  overflow: hidden;
+}
+
+.wave-bar-fill {
+  will-change: transform;
+}
+
+/* Wave text styling */
+.wave-text {
+  font-variant-numeric: tabular-nums;
+}
+
+.wave-char {
+  will-change: transform, opacity;
+}
+
+/* Light mode adjustments for wave effects */
+html.light .wave-dot {
+  opacity: 0.7;
+}
+
+html.light .wave-bar {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+html.light .wave-bar-fill {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(59, 130, 246, 0.15) 20%, 
+    rgba(59, 130, 246, 0.4) 50%, 
+    rgba(59, 130, 246, 0.15) 80%, 
+    transparent 100%
+  );
+}
+
+/* Reduced motion support for wave animations */
+@media (prefers-reduced-motion: reduce) {
+  .wave-loader-item,
+  .wave-dot,
+  .wave-bar-fill,
+  .wave-char {
+    animation: none !important;
+  }
+  
+  .wave-dot {
+    opacity: 0.7;
+  }
+}
