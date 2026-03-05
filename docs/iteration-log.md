@@ -1,5 +1,30 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-06 — Surprise Magnitude Visual Indicator
+**Inspiration:** Finance dashboards that show magnitude of changes visually, not just numerically
+
+**What was added:**
+- `SurpriseMagnitude` component with animated fill bar
+- Shows the magnitude of earnings surprise at a glance
+- Green bar fills right for beats, red bar fills for misses
+- Integrated into EarningsCard next to beat/miss badges
+
+**Technical details:**
+- Square root scaling for better visual distribution (small surprises still visible, large ones don't overflow)
+- Viewport-triggered animation via IntersectionObserver
+- Staggered delays based on card position for cascading effect
+- Shimmer overlay effect for large surprises (>15%)
+- Spring-based cubic-bezier easing (0.34, 1.56, 0.64, 1) for premium bounce
+- Full `prefers-reduced-motion` support
+- Light/dark mode aware with CSS custom properties
+- Accessible with aria-label describing the surprise
+
+**Files changed:**
+- `src/components/SurpriseMagnitude.tsx` — new component
+- `src/app/page.tsx` — integrated SurpriseMagnitudeCompact into EarningsCard
+
+---
+
 ## 2026-03-05 — WaveLoader Premium Loading Animation Suite
 **Inspiration:** Vercel, Linear, Stripe loading states - wave-based animations that feel organic and fluid
 
