@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
+import { CopyTicker } from './CopyTicker';
 
 interface TooltipProps {
   children: ReactNode;
@@ -133,7 +134,10 @@ export function EarningsTooltipContent({
   return (
     <div className="tooltip-content">
       <div className="tooltip-header">
-        <span className="tooltip-ticker">{ticker}</span>
+        <div className="tooltip-ticker-row">
+          <span className="tooltip-ticker">{ticker}</span>
+          <CopyTicker ticker={ticker} size="sm" />
+        </div>
         <span className={`tooltip-time ${time === 'pre' ? 'pre' : 'post'}`}>
           {time === 'pre' ? '☀️ Pre-Market' : '🌙 After Hours'}
         </span>

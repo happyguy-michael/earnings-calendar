@@ -2945,6 +2945,12 @@ a {
   animation-delay: 0.25s;
 }
 
+.tooltip-ticker-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .tooltip-ticker {
   font-size: 15px;
   font-weight: 700;

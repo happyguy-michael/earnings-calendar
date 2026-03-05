@@ -18,6 +18,7 @@ import { ScrollReveal, StaggeredReveal, RevealTableBody } from '@/components/Scr
 import { ShareMenu } from '@/components/ShareMenu';
 import { BeatStreak } from '@/components/BeatStreak';
 import { AnimatedBadgeIcon } from '@/components/AnimatedResultIcon';
+import { CopyTicker } from '@/components/CopyTicker';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -192,6 +193,7 @@ export default function ReportPage() {
               <div>
                 <div className="flex items-center gap-3 mb-1">
                   <h1 className="text-4xl font-bold text-white">{ticker}</h1>
+                  <CopyTicker ticker={ticker} size="md" />
                   <span className={`badge ${hasResult ? (earning.result === 'beat' ? 'badge-success' : 'badge-danger') : 'badge-warning'}`}>
                     {hasResult ? (
                       <>
