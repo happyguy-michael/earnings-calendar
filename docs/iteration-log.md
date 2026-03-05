@@ -1,5 +1,31 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-06 — Scroll Progress Indicator
+**Inspiration:** Premium reading apps (Medium, Substack) and dashboards (Linear, Stripe) that show scroll position
+
+**What was added:**
+- `ScrollProgress` component with thin gradient bar at top of viewport
+- Fills from left to right as user scrolls down the page
+- Smooth shimmer animation for premium polish
+- Glow effect on the leading edge for extra flair
+- Auto-hides when at top of page (appears after scrolling)
+- Includes optional `ScrollProgressCircle` variant for mobile use
+
+**Technical details:**
+- Uses `requestAnimationFrame` for smooth scroll tracking
+- Gradient matches site theme: blue → purple → pink
+- Shimmer uses CSS `background-position` animation
+- Full `prefers-reduced-motion` support
+- Light/dark mode compatible via CSS variables
+- ARIA progressbar role for accessibility
+- Z-index 9999 ensures visibility over sticky header
+
+**Files changed:**
+- `src/components/ScrollProgress.tsx` — new component with two variants
+- `src/app/page.tsx` — integrated ScrollProgress at top of page
+
+---
+
 ## 2026-03-06 — Text Shine Sweep Effect
 **Inspiration:** Premium sites like Stripe, Linear, and ElevenLabs use periodic shine effects on headlines
 
