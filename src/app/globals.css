@@ -2338,6 +2338,36 @@ html.light .sliding-pill-pending {
 }
 
 /* ============================================
+   FILTER TRANSITION ANIMATIONS
+   Smooth fade-out/in when switching filters
+   ============================================ */
+
+.filter-cards-container {
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.filter-cards-container.exiting {
+  opacity: 0.3;
+  transform: scale(0.98);
+}
+
+/* Add subtle slide direction based on filter type (visual hint) */
+.filter-cards-container.exiting .earnings-card-wrapper {
+  transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+  opacity: 0.5;
+  transform: translateY(-2px);
+}
+
+/* Reduced motion: instant transitions */
+@media (prefers-reduced-motion: reduce) {
+  .filter-cards-container,
+  .filter-cards-container.exiting,
+  .filter-cards-container.exiting .earnings-card-wrapper {
+    transition: none;
+  }
+}
+
+/* ============================================
    SKELETON LOADING STATES
    Premium shimmer effect for loading placeholders
    ============================================ */

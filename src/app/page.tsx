@@ -195,8 +195,25 @@ export default function Home() {
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [filterKey, setFilterKey] = useState(0);
+  const [isFilterTransitioning, setIsFilterTransitioning] = useState(false);
   const slideKey = useRef(0);
   const { showToast } = useToast();
+
+  // Handle filter changes with smooth transition animation
+  const handleFilterChange = useCallback((newFilter: FilterType) => {
+    if (newFilter === statusFilter) return;
+    
+    // Start exit animation
+    setIsFilterTransitioning(true);
+    
+    // After brief exit animation, update filter and trigger entrance
+    setTimeout(() => {
+      setStatusFilter(newFilter);
+      setFilterKey(prev => prev + 1);
+      setIsFilterTransitioning(false);
+    }, 150);
+  }, [statusFilter]);
 
   // Calculate counts for filter chips (before any filtering)
   const filterCounts = useMemo(() => ({
@@ -456,7 +473,7 @@ export default function Home() {
           <div className="sticky-header-filters">
             <FilterChips 
               value={statusFilter}
-              onChange={setStatusFilter}
+              onChange={handleFilterChange}
               counts={filterCounts}
             />
           </div>
@@ -635,8 +652,8 @@ export default function Home() {
                                 <MarketSessionIcon session="pre" size={18} />
                                 <span className="session-header-label">Pre-Market</span>
                               </div>
-                              <div className="space-y-2">
-                                {preMarket.map((e, i) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} animationIndex={i} />)}
+                              <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
+                                {preMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={i} />)}
                               </div>
                             </div>
                           )}
@@ -647,8 +664,8 @@ export default function Home() {
                                 <MarketSessionIcon session="post" size={18} />
                                 <span className="session-header-label">After Hours</span>
                               </div>
-                              <div className="space-y-2">
-                                {postMarket.map((e, i) => <EarningsCard key={e.ticker} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
+                              <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
+                                {postMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
                               </div>
                             </div>
                           )}
