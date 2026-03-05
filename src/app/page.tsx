@@ -43,6 +43,7 @@ import { FreshBadge } from '@/components/FreshBadge';
 import { DynamicTitle } from '@/components/DynamicTitle';
 import { BorderGlowSpot } from '@/components/BorderGlowSpot';
 import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
+import { ScrollProgress } from '@/components/ScrollProgress';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -384,6 +385,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative">
+      {/* Scroll progress indicator */}
+      <ScrollProgress height={3} hideAtTop={true} showGlow={true} />
+      
       {/* Dynamic tab title with pending count */}
       <DynamicTitle pendingToday={pendingToday} baseTitle="Earnings Calendar" />
       
