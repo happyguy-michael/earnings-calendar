@@ -42,6 +42,7 @@ import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
 import { FreshBadge } from '@/components/FreshBadge';
 import { DynamicTitle } from '@/components/DynamicTitle';
 import { BorderGlowSpot } from '@/components/BorderGlowSpot';
+import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -151,6 +152,8 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {isToday && (
               <FreshBadge reportedAt={new Date(earning.date)} time={earning.time} freshnessHours={4} />
             )}
+            {/* Surprise magnitude bar - visual indicator of beat/miss size */}
+            <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
               <BadgeSparkle active={true} particleCount={6}>
                 <span className="badge badge-beat">
