@@ -613,8 +613,15 @@ export default function Home() {
                   const dateStr = formatDate(date);
                   const dayEarnings = filteredEarnings.filter(e => e.date === dateStr);
                   
+                  // Wave animation delay: cascade from left (50ms between each day)
+                  const waveDelay = slideDirection ? dayIndex * 50 : 0;
+                  
                   return (
-                    <div key={dayIndex} className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}`}>
+                    <div 
+                      key={dayIndex} 
+                      className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
+                      style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                    >
                       <div className="day-name">{day}</div>
                       <div className="day-num">{date.getDate()}</div>
                       {dayEarnings.length > 0 && (
@@ -641,8 +648,16 @@ export default function Home() {
                   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
                   const mobileDate = `${dayNames[dayIndex]}, ${date.getDate()} ${months[date.getMonth()].slice(0, 3)}`;
                   
+                  // Wave animation delay: cascade from left (65ms between each day, slightly offset from headers)
+                  const waveDelay = slideDirection ? (dayIndex * 65) + 30 : 0;
+                  
                   return (
-                    <div key={dayIndex} className={`day-content ${isToday ? 'today' : ''}`} data-mobile-date={mobileDate}>
+                    <div 
+                      key={dayIndex} 
+                      className={`day-content ${isToday ? 'today' : ''} ${slideDirection ? 'day-wave-reveal' : ''}`} 
+                      data-mobile-date={mobileDate}
+                      style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                    >
                       {!hasEarnings ? (
                         <AnimatedEmptyState 
                           variant={isToday ? 'today' : date < today ? 'past' : 'future'} 

@@ -3924,6 +3924,105 @@ html.light .text-zinc-400 {
   }
 }
 
+/* ============================================
+   WAVE REVEAL ANIMATION
+   Staggered cascade animation for day columns
+   when navigating between weeks - premium UX
+   ============================================ */
+
+/* Day column wave reveal - staggered entrance */
+.day-wave-reveal {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  animation: dayWaveIn 0.5s var(--spring-bouncy) forwards;
+  animation-delay: var(--wave-delay, 0ms);
+}
+
+/* Day header wave - same animation, slightly faster */
+.day-header-wave {
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: dayHeaderWaveIn 0.4s var(--spring-smooth) forwards;
+  animation-delay: var(--wave-delay, 0ms);
+}
+
+@keyframes dayWaveIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dayHeaderWaveIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ripple highlight effect on day column during wave */
+.day-wave-reveal::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 16px;
+  background: radial-gradient(
+    ellipse at center top,
+    rgba(59, 130, 246, 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  animation: dayWaveRipple 0.8s ease-out forwards;
+  animation-delay: calc(var(--wave-delay, 0ms) + 150ms);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes dayWaveRipple {
+  0% {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+/* Light mode: softer ripple */
+html.light .day-wave-reveal::before {
+  background: radial-gradient(
+    ellipse at center top,
+    rgba(59, 130, 246, 0.05) 0%,
+    transparent 70%
+  );
+}
+
+/* Reduced motion: disable wave animations */
+@media (prefers-reduced-motion: reduce) {
+  .day-wave-reveal,
+  .day-header-wave {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .day-wave-reveal::before {
+    display: none;
+  }
+}
+
 /* Only show swipe hint on mobile/touch devices */
 @media (max-width: 768px), (hover: none) and (pointer: coarse) {
   .swipe-hint {
