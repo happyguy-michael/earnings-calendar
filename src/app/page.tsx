@@ -41,6 +41,7 @@ import { TickerRibbon } from '@/components/TickerRibbon';
 import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
 import { FreshBadge } from '@/components/FreshBadge';
 import { DynamicTitle } from '@/components/DynamicTitle';
+import { BorderGlowSpot } from '@/components/BorderGlowSpot';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -598,10 +599,15 @@ export default function Home() {
           className={`space-y-6 ${slideDirection === 'left' ? 'week-slide-enter-right' : ''} ${slideDirection === 'right' ? 'week-slide-enter-left' : ''}`}
         >
           {weeks.map((weekStart, weekIndex) => (
+            <BorderGlowSpot 
+              key={weekIndex}
+              variant="default"
+              intensity={0.5}
+              glowSize={200}
+              className="card animate-fade-in"
+            >
             <div 
-              key={weekIndex} 
               ref={weekRefs[weekIndex]}
-              className="card animate-fade-in" 
               style={{ animationDelay: `${weekIndex * 100}ms` }}
             >
               {/* Week Header */}
@@ -696,6 +702,7 @@ export default function Home() {
                 })}
               </div>
             </div>
+            </BorderGlowSpot>
           ))}
         </div>
         </SwipeNavigator>

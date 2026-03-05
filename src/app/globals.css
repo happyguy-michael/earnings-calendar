@@ -10205,3 +10205,42 @@ html.light .flip-countdown-urgent .flip-countdown-header {
     animation: none;
   }
 }
+
+/* ============================================ */
+/* Border Glow Spot Component                  */
+/* ============================================ */
+
+.border-glow-spot-container {
+  border-radius: inherit;
+}
+
+/* Additional glow pulse animation on hover */
+.border-glow-spot-container:hover .border-glow-spot-effect {
+  animation: borderGlowPulse 2s ease-in-out infinite;
+}
+
+@keyframes borderGlowPulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+/* Light mode adjustments */
+html.light .border-glow-spot-outer {
+  filter: blur(16px);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .border-glow-spot-effect,
+  .border-glow-spot-outer {
+    display: none;
+  }
+  
+  .border-glow-spot-container:hover .border-glow-spot-effect {
+    animation: none;
+  }
+}
