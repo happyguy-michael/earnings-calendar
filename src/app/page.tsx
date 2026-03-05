@@ -18,6 +18,7 @@ import { CountdownBadge } from '@/components/Countdown';
 import { FlipCountdownBadge } from '@/components/FlipDigit';
 import { TimeSinceInline } from '@/components/TimeSince';
 import { ProgressRing } from '@/components/ProgressRing';
+import { OddsGauge } from '@/components/OddsGauge';
 import { BackToTop } from '@/components/BackToTop';
 import { TiltCard } from '@/components/TiltCard';
 import { Ripple } from '@/components/Ripple';
@@ -162,12 +163,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             )}
           </div>
         ) : earning.beatOdds ? (
-          <div className="odds-indicator">
-            <ProgressRing value={earning.beatOdds} size={32} color={oddsColor} delay={animationIndex * 80} duration={800} />
-            <span className="text-xs font-semibold" style={{ color: oddsColor }}>
-              {earning.beatOdds}%
-            </span>
-          </div>
+          <OddsGauge 
+            value={earning.beatOdds} 
+            size={44} 
+            delay={animationIndex * 80} 
+            duration={800}
+          />
         ) : null}
       </Link>
       <div className="earnings-tooltip">

@@ -1359,6 +1359,92 @@ html.light .earnings-row:hover .logo-container {
   background: linear-gradient(90deg, #ef4444, #f87171);
 }
 
+/* Semi-circular Odds Gauge */
+.odds-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.odds-gauge-svg {
+  transform: rotate(0deg);
+}
+
+.odds-gauge-track {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+html.light .odds-gauge-track {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.odds-gauge-fill {
+  transition: stroke 0.3s ease;
+}
+
+.odds-gauge-needle {
+  transition: all 0.1s ease-out;
+}
+
+.odds-gauge-pivot {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+html.light .odds-gauge-pivot {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.odds-gauge-tick {
+  color: rgba(255, 255, 255, 0.15);
+}
+
+html.light .odds-gauge-tick {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+.odds-gauge-label {
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: -2px;
+  text-shadow: 0 0 8px currentColor;
+  transition: color 0.3s ease;
+}
+
+/* Pulsing glow for high probability gauges */
+@keyframes odds-gauge-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 16px currentColor);
+  }
+}
+
+.odds-gauge[data-high="true"] .odds-gauge-fill {
+  animation: odds-gauge-pulse 2s ease-in-out infinite;
+}
+
+/* Compact gauge variant */
+.odds-gauge-compact {
+  transform: scale(0.85);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .odds-gauge-fill,
+  .odds-gauge-needle,
+  .odds-gauge-label {
+    transition: none;
+  }
+  
+  .odds-gauge[data-high="true"] .odds-gauge-fill {
+    animation: none;
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+}
+
 /* Button styles */
 .btn {
   display: inline-flex;
