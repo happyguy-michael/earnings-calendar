@@ -39,6 +39,7 @@ import { MarketStatus } from '@/components/MarketStatus';
 import { TickerRibbon } from '@/components/TickerRibbon';
 import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
 import { FreshBadge } from '@/components/FreshBadge';
+import { DynamicTitle } from '@/components/DynamicTitle';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -378,6 +379,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative">
+      {/* Dynamic tab title with pending count */}
+      <DynamicTitle pendingToday={pendingToday} baseTitle="Earnings Calendar" />
+      
       {/* Floating background particles */}
       <FloatingParticles count={35} speed={0.25} maxSize={3} minSize={1} />
       
