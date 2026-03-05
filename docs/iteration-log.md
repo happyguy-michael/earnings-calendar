@@ -106,3 +106,25 @@
 ## 2026-03-04 — Session Dividers
 - Animated gradient dividers between pre-market and after-hours sections
 - Subtle flowing animation effect
+
+---
+
+## 2026-03-05 — Bell Ring Attention Animation for Today Button
+**Inspiration:** Dribbble notification bell micro-interactions - subtle animations that draw attention
+
+**What was added:**
+- Periodic "bell ring" wobble animation on the Today button notification dot
+- Animation triggers every 8 seconds, runs for ~0.6s, then pauses
+- Mimics a physical bell ringing with natural pendulum-like swing
+- Brief scale pulse (1.1x) adds extra visual pop
+
+**Technical details:**
+- CSS keyframe `notification-bell-ring` with 8s cycle
+- Swing pattern: 15° → -12° → 10° → -8° → 5° → -3° → 1° → 0° (dampening oscillation)
+- `transform-origin: center top` for natural rotation axis
+- Only 8% of animation cycle is active, rest is pause
+- Full reduced-motion support (animation: none)
+- Works in both light and dark modes
+
+**Files changed:**
+- `src/app/globals.css` — notification-bell-ring keyframes and animation property
