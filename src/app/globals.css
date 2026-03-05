@@ -273,6 +273,76 @@ html.light .card::before {
 }
 
 /* ============================================
+   Text Shine Sweep Effect
+   Premium periodic highlight that sweeps across text
+   ============================================ */
+.text-shine-sweep {
+  position: relative;
+  display: inline-block;
+}
+
+.text-shine-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.4) 60%,
+    rgba(255, 255, 255, 0) 80%,
+    transparent 100%
+  );
+  animation: shineSweep 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes shineSweep {
+  /* Hold still for most of the cycle, then sweep quickly */
+  0%, 85% {
+    left: -100%;
+    opacity: 0;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 200%;
+    opacity: 1;
+  }
+}
+
+/* Light mode - slightly more visible sweep */
+:root[data-theme="light"] .text-shine-sweep::after,
+.light .text-shine-sweep::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.7) 40%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.7) 60%,
+    rgba(255, 255, 255, 0) 80%,
+    transparent 100%
+  );
+  mix-blend-mode: soft-light;
+}
+
+/* Respect reduced motion - disable shine sweep */
+@media (prefers-reduced-motion: reduce) {
+  .text-shine-sweep::after {
+    animation: none;
+    display: none;
+  }
+}
+
+/* ============================================
    Shrinking Sticky Header
    ============================================ */
 .sticky-header {

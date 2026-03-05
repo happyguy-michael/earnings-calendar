@@ -403,7 +403,7 @@ export default function Home() {
             <div className="flex-shrink-0">
               <div className="flex items-center gap-3 mb-1">
                 <h1 className="sticky-header-title">
-                  Earnings <span className="text-gradient">Calendar</span>
+                  Earnings <span className="text-gradient text-shine-sweep">Calendar</span>
                 </h1>
                 <MarketStatus />
               </div>
