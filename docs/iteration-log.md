@@ -1,5 +1,27 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-05 — Animated Filter Transitions
+**Inspiration:** Micro-interactions article on NoBoringDesign - smooth filter transitions that provide immediate visual feedback
+
+**What was added:**
+- Smooth fade-out when switching between All/Beat/Miss/Pending filters
+- Cards scale down slightly (0.98) during exit transition
+- After 150ms exit, cards re-mount with existing blur-focus entrance animation
+- Creates a satisfying "whoosh" effect when filtering
+
+**Technical details:**
+- `filterKey` state increments on filter change, forcing React to remount cards
+- `isFilterTransitioning` state triggers exit animation class
+- `.filter-cards-container.exiting` CSS handles the fade-out/scale
+- 150ms timing chosen to feel snappy but visible
+- Full reduced-motion support (instant transitions)
+
+**Files changed:**
+- `src/app/page.tsx` — added filterKey state, handleFilterChange with animation timing
+- `src/app/globals.css` — filter-cards-container styles with exit animations
+
+---
+
 ## 2026-03-05 — Premium Hover Lift Effect for Week Cards
 **Inspiration:** Dribbble card hover effects showcasing depth and interactivity
 
