@@ -19,6 +19,7 @@ import { ShareMenu } from '@/components/ShareMenu';
 import { BeatStreak } from '@/components/BeatStreak';
 import { AnimatedBadgeIcon } from '@/components/AnimatedResultIcon';
 import { CopyTicker } from '@/components/CopyTicker';
+import { BrokerCTA, BrokerCTAGroup } from '@/components/BrokerCTA';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -446,6 +447,19 @@ export default function ReportPage() {
               <div className="glass-card p-5">
                 <h3 className="text-sm font-semibold text-white mb-4">EPS Trend</h3>
                 <EPSTrendSparkline data={historicalData} />
+              </div>
+
+              {/* Trade CTA */}
+              <div className="glass-card p-5">
+                <h3 className="text-sm font-semibold text-white mb-4">Trade ${ticker}</h3>
+                <div className="space-y-3">
+                  <BrokerCTA broker="robinhood" ticker={ticker} size="md" delay={0} />
+                  <BrokerCTA broker="webull" ticker={ticker} size="md" delay={50} />
+                  <BrokerCTA broker="ibkr" ticker={ticker} size="md" delay={100} />
+                </div>
+                <p className="text-[10px] text-zinc-600 mt-4 text-center">
+                  Affiliate links — we may earn a commission
+                </p>
               </div>
 
               <div className="glass-card p-5">
