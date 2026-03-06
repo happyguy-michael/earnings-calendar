@@ -47,6 +47,7 @@ import { ScrollProgress } from '@/components/ScrollProgress';
 import { ImminentGlow } from '@/components/ImminentGlow';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
 import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
+import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -167,11 +168,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
-              <BadgeSparkle active={true} particleCount={6}>
-                <span className="badge badge-beat">
-                  <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
-                </span>
-              </BadgeSparkle>
+              <ExceptionalGlow surprise={surprise} delay={animationIndex * 50 + 300}>
+                <BadgeSparkle active={true} particleCount={6}>
+                  <span className="badge badge-beat">
+                    <MonsterBeatIcon surprise={surprise} />
+                    <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                  </span>
+                </BadgeSparkle>
+              </ExceptionalGlow>
             ) : (
               <span className="badge badge-miss">
                 <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
