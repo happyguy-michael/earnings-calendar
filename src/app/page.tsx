@@ -50,6 +50,7 @@ import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
+import { FilterGlow } from '@/components/FilterGlow';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -632,6 +633,7 @@ export default function Home() {
 
         {/* Calendar Weeks with Swipe Navigation */}
         {(!isFiltering || filteredEarnings.length > 0) && (
+        <FilterGlow activeFilter={statusFilter}>
         <SwipeNavigator
           onSwipeLeft={() => navigateWeek(1, true)}
           onSwipeRight={() => navigateWeek(-1, true)}
@@ -749,6 +751,7 @@ export default function Home() {
           ))}
         </div>
         </SwipeNavigator>
+        </FilterGlow>
         )}
 
         {/* Legend with animated indicators */}
