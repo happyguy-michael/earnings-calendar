@@ -48,6 +48,7 @@ import { ImminentGlow } from '@/components/ImminentGlow';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
 import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
+import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
 
 function getWeekStart(date: Date): Date {
@@ -178,9 +179,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                 </BadgeSparkle>
               </ExceptionalGlow>
             ) : (
-              <span className="badge badge-miss">
-                <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
-              </span>
+              <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
+                <span className="badge badge-miss">
+                  <DisasterMissIcon surprise={surprise} />
+                  <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                </span>
+              </DisasterMiss>
             )}
           </div>
         ) : earning.beatOdds ? (
