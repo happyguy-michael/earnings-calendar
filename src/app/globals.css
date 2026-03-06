@@ -10420,3 +10420,124 @@ html.light .wave-bar-fill {
     opacity: 0.7;
   }
 }
+
+/* ============================================ */
+/* Imminent Glow Effect                         */
+/* Pulsing halo for earnings reporting soon     */
+/* ============================================ */
+
+.imminent-glow-outer,
+.imminent-glow-inner {
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Outer breathing glow - amber when imminent */
+.imminent-glow-outer {
+  background: transparent;
+  box-shadow: 
+    0 0 calc(15px * var(--glow-intensity, 0.5)) rgba(245, 158, 11, calc(0.3 * var(--glow-intensity, 0.5))),
+    0 0 calc(30px * var(--glow-intensity, 0.5)) rgba(245, 158, 11, calc(0.2 * var(--glow-intensity, 0.5))),
+    0 0 calc(45px * var(--glow-intensity, 0.5)) rgba(245, 158, 11, calc(0.1 * var(--glow-intensity, 0.5)));
+  animation: imminentBreathing var(--glow-duration, 2s) ease-in-out infinite;
+}
+
+/* Inner pulse ring */
+.imminent-glow-inner {
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(var(--bg-card, rgba(20, 20, 30, 0.8)), var(--bg-card, rgba(20, 20, 30, 0.8))) padding-box,
+    linear-gradient(135deg, rgba(245, 158, 11, calc(0.6 * var(--glow-intensity, 0.5))), rgba(251, 191, 36, calc(0.4 * var(--glow-intensity, 0.5)))) border-box;
+  animation: imminentPulse var(--glow-duration, 2s) ease-in-out infinite;
+  opacity: 0;
+}
+
+/* Urgent state - red pulsing glow */
+.imminent-glow-outer.urgent {
+  box-shadow: 
+    0 0 calc(20px * var(--glow-intensity, 0.5)) rgba(239, 68, 68, calc(0.4 * var(--glow-intensity, 0.5))),
+    0 0 calc(40px * var(--glow-intensity, 0.5)) rgba(239, 68, 68, calc(0.25 * var(--glow-intensity, 0.5))),
+    0 0 calc(60px * var(--glow-intensity, 0.5)) rgba(239, 68, 68, calc(0.15 * var(--glow-intensity, 0.5)));
+}
+
+.imminent-glow-inner.urgent {
+  background: 
+    linear-gradient(var(--bg-card, rgba(20, 20, 30, 0.8)), var(--bg-card, rgba(20, 20, 30, 0.8))) padding-box,
+    linear-gradient(135deg, rgba(239, 68, 68, calc(0.7 * var(--glow-intensity, 0.5))), rgba(248, 113, 113, calc(0.5 * var(--glow-intensity, 0.5)))) border-box;
+}
+
+/* Breathing animation - subtle intensity pulsing */
+@keyframes imminentBreathing {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* Pulse animation - expanding ring effect */
+@keyframes imminentPulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
+}
+
+/* Static fallback for reduced motion */
+.imminent-glow-static {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  border: 2px solid rgba(245, 158, 11, calc(0.5 * var(--glow-intensity, 0.5)));
+  box-shadow: 0 0 20px rgba(245, 158, 11, calc(0.2 * var(--glow-intensity, 0.5)));
+}
+
+.imminent-glow-static.urgent {
+  border-color: rgba(239, 68, 68, calc(0.6 * var(--glow-intensity, 0.5)));
+  box-shadow: 0 0 20px rgba(239, 68, 68, calc(0.3 * var(--glow-intensity, 0.5)));
+}
+
+/* Light mode adjustments */
+html.light .imminent-glow-outer {
+  box-shadow: 
+    0 0 calc(12px * var(--glow-intensity, 0.5)) rgba(245, 158, 11, calc(0.25 * var(--glow-intensity, 0.5))),
+    0 0 calc(24px * var(--glow-intensity, 0.5)) rgba(245, 158, 11, calc(0.15 * var(--glow-intensity, 0.5)));
+}
+
+html.light .imminent-glow-outer.urgent {
+  box-shadow: 
+    0 0 calc(15px * var(--glow-intensity, 0.5)) rgba(239, 68, 68, calc(0.3 * var(--glow-intensity, 0.5))),
+    0 0 calc(30px * var(--glow-intensity, 0.5)) rgba(239, 68, 68, calc(0.2 * var(--glow-intensity, 0.5)));
+}
+
+html.light .imminent-glow-inner {
+  background: 
+    linear-gradient(var(--bg-secondary, white), var(--bg-secondary, white)) padding-box,
+    linear-gradient(135deg, rgba(245, 158, 11, calc(0.5 * var(--glow-intensity, 0.5))), rgba(251, 191, 36, calc(0.3 * var(--glow-intensity, 0.5)))) border-box;
+}
+
+html.light .imminent-glow-inner.urgent {
+  background: 
+    linear-gradient(var(--bg-secondary, white), var(--bg-secondary, white)) padding-box,
+    linear-gradient(135deg, rgba(239, 68, 68, calc(0.6 * var(--glow-intensity, 0.5))), rgba(248, 113, 113, calc(0.4 * var(--glow-intensity, 0.5)))) border-box;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .imminent-glow-outer,
+  .imminent-glow-inner {
+    display: none;
+  }
+}

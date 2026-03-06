@@ -44,6 +44,7 @@ import { DynamicTitle } from '@/components/DynamicTitle';
 import { BorderGlowSpot } from '@/components/BorderGlowSpot';
 import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { ImminentGlow } from '@/components/ImminentGlow';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -107,6 +108,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
 
   return (
     <div className="earnings-card-wrapper">
+      {/* Imminent glow for earnings reporting within 15 minutes */}
+      {isTodayPending && (
+        <ImminentGlow 
+          targetDate={new Date(earning.date)} 
+          time={earning.time}
+          active={true}
+        />
+      )}
       <Link 
         href={`/report/${earning.ticker}`} 
         className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
