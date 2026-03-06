@@ -2524,6 +2524,54 @@ html.light .sliding-pill-pending {
 }
 
 /* ============================================
+   HOVER FOCUS MODE
+   When hovering a card, siblings dim/blur for spotlight effect
+   Premium pattern from Linear.app/Stripe dashboards
+   ============================================ */
+
+/* Container hover state triggers sibling dimming */
+.filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-card-wrapper:not(:hover) {
+  opacity: 0.55;
+  filter: blur(0.8px) saturate(0.8);
+  transform: scale(0.985);
+}
+
+/* Ensure hovered card stands out even more */
+.filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-card-wrapper:hover {
+  z-index: 10;
+  transform: scale(1.01) translateY(-2px);
+}
+
+/* Smooth transition for focus mode effect */
+.filter-cards-container .earnings-card-wrapper {
+  transition: 
+    opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s var(--spring-snappy);
+}
+
+/* Light mode: softer dimming */
+html.light .filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-card-wrapper:not(:hover) {
+  opacity: 0.5;
+  filter: blur(0.6px) saturate(0.85);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-card-wrapper:not(:hover) {
+    opacity: 0.6;
+    filter: none;
+    transform: none;
+  }
+  .filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-card-wrapper:hover {
+    transform: none;
+  }
+  .filter-cards-container .earnings-card-wrapper {
+    transition: opacity 0.15s ease;
+  }
+}
+
+/* ============================================
    SKELETON LOADING STATES
    Premium shimmer effect for loading placeholders
    ============================================ */
