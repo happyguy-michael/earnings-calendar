@@ -45,6 +45,7 @@ import { BorderGlowSpot } from '@/components/BorderGlowSpot';
 import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ImminentGlow } from '@/components/ImminentGlow';
+import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -399,6 +400,18 @@ export default function Home() {
       
       {/* Dynamic tab title with pending count */}
       <DynamicTitle pendingToday={pendingToday} baseTitle="Earnings Calendar" />
+      
+      {/* Animated dot grid background with cursor glow */}
+      <AnimatedGridBackground 
+        dotGap={40}
+        dotSize={1.2}
+        dotOpacity={0.15}
+        cursorGlow={true}
+        glowRadius={180}
+        glowIntensity={0.4}
+        pulse={true}
+        pulseSpeed={5000}
+      />
       
       {/* Floating background particles */}
       <FloatingParticles count={35} speed={0.25} maxSize={3} minSize={1} />
