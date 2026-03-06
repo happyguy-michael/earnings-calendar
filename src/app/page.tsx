@@ -46,6 +46,7 @@ import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ImminentGlow } from '@/components/ImminentGlow';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
+import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -168,12 +169,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {earning.result === 'beat' ? (
               <BadgeSparkle active={true} particleCount={6}>
                 <span className="badge badge-beat">
-                  {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+                  <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
                 </span>
               </BadgeSparkle>
             ) : (
               <span className="badge badge-miss">
-                {surprise >= 0 ? '+' : ''}{surprise.toFixed(1)}%
+                <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
               </span>
             )}
           </div>
