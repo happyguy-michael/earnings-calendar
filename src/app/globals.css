@@ -10541,3 +10541,396 @@ html.light .imminent-glow-inner.urgent {
     display: none;
   }
 }
+
+/* ============================================ */
+/* Search Empty State                           */
+/* Premium empty state for no search results    */
+/* ============================================ */
+
+.search-empty-state {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.search-empty-state.mounted {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Background orbs */
+.search-empty-orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.search-empty-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+}
+
+.search-empty-orb.orb-1 {
+  width: 200px;
+  height: 200px;
+  background: var(--accent-blue);
+  top: -50px;
+  left: 20%;
+  animation: orbFloat1 8s ease-in-out infinite;
+}
+
+.search-empty-orb.orb-2 {
+  width: 150px;
+  height: 150px;
+  background: var(--accent-purple);
+  bottom: -30px;
+  right: 15%;
+  animation: orbFloat2 10s ease-in-out infinite;
+}
+
+.search-empty-orb.orb-3 {
+  width: 100px;
+  height: 100px;
+  background: var(--accent-pink);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat3 6s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, 20px) scale(1.1); }
+  66% { transform: translate(-20px, 10px) scale(0.95); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25px, -15px) scale(1.05); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
+}
+
+/* Animated magnifying glass */
+.search-empty-icon-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.search-empty-icon {
+  color: var(--text-muted);
+  opacity: 0;
+  animation: searchIconEntrance 0.6s ease-out 0.2s forwards;
+}
+
+@keyframes searchIconEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* Circle drawing animation */
+.search-empty-circle {
+  stroke-dasharray: 44;
+  stroke-dashoffset: 44;
+  animation: drawCircle 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Handle drawing animation */
+.search-empty-handle {
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+  animation: drawHandle 0.4s ease-out 0.8s forwards;
+}
+
+@keyframes drawHandle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Scanning line animation */
+.search-empty-scan {
+  stroke: var(--accent-blue);
+  stroke-width: 1;
+  opacity: 0;
+  animation: scanLine 2s ease-in-out 1.2s infinite;
+}
+
+@keyframes scanLine {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(3px);
+  }
+  80% {
+    opacity: 0.8;
+  }
+}
+
+/* Pulse rings */
+.search-empty-pulse {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-blue);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.search-empty-pulse.pulse-1 {
+  animation: searchPulse 3s ease-out 1s infinite;
+}
+
+.search-empty-pulse.pulse-2 {
+  animation: searchPulse 3s ease-out 1.5s infinite;
+}
+
+@keyframes searchPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Text content */
+.search-empty-content {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+.search-empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease-out 0.4s forwards;
+}
+
+.search-empty-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease-out 0.5s forwards;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Suggestions */
+.search-empty-suggestions {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease-out 0.6s forwards;
+}
+
+.search-empty-suggestions-label {
+  font-size: 12px;
+  color: var(--text-faint);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.search-empty-suggestions-list {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-empty-suggestion {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 20px;
+  cursor: pointer;
+  opacity: 0;
+  animation: suggestionPop 0.4s var(--spring-bouncy) forwards;
+  transition: all 0.2s ease;
+}
+
+.search-empty-suggestion:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.search-empty-suggestion:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@keyframes suggestionPop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Action buttons */
+.search-empty-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease-out 0.7s forwards;
+}
+
+.search-empty-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+  border: 1px solid var(--border-primary);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-empty-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-secondary);
+  color: var(--text-primary);
+}
+
+.search-empty-action:active {
+  transform: scale(0.98);
+}
+
+.search-empty-action-primary {
+  color: white;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border: none;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.search-empty-action-primary:hover {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  opacity: 0.9;
+  color: white;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Light mode */
+html.light .search-empty-orb {
+  opacity: 0.1;
+}
+
+html.light .search-empty-suggestion {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.15);
+}
+
+html.light .search-empty-suggestion:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+html.light .search-empty-action {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+html.light .search-empty-action:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .search-empty-state,
+  .search-empty-icon,
+  .search-empty-circle,
+  .search-empty-handle,
+  .search-empty-scan,
+  .search-empty-pulse,
+  .search-empty-title,
+  .search-empty-subtitle,
+  .search-empty-suggestions,
+  .search-empty-suggestion,
+  .search-empty-actions,
+  .search-empty-orb {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .search-empty-circle,
+  .search-empty-handle {
+    stroke-dashoffset: 0 !important;
+  }
+  
+  .search-empty-scan {
+    opacity: 0.5 !important;
+    animation: none !important;
+  }
+  
+  .search-empty-pulse {
+    display: none;
+  }
+}

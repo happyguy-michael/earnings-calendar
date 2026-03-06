@@ -48,6 +48,7 @@ import { ImminentGlow } from '@/components/ImminentGlow';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
 import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
+import { SearchEmptyState } from '@/components/SearchEmptyState';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -605,16 +606,20 @@ export default function Home() {
           />
         )}
 
-        {/* No Results State */}
+        {/* No Results State - Enhanced with animations and suggestions */}
         {isFiltering && filteredEarnings.length === 0 && (
           <div className="card">
-            <div className="search-no-results">
-              <svg className="search-no-results-icon" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-              <div className="search-no-results-text">No earnings found for "{searchQuery}"</div>
-              <div className="search-no-results-hint">Try searching by ticker symbol (AAPL) or company name</div>
-            </div>
+            <SearchEmptyState
+              searchQuery={searchQuery}
+              statusFilter={statusFilter}
+              allTickers={earnings.map(e => e.ticker)}
+              onClearSearch={() => setSearchQuery('')}
+              onClearFilters={() => {
+                setSearchQuery('');
+                setStatusFilter('all');
+              }}
+              onSelectTicker={(ticker) => setSearchQuery(ticker)}
+            />
           </div>
         )}
 
