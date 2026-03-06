@@ -51,6 +51,7 @@ import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
 import { FilterGlow } from '@/components/FilterGlow';
+import { CardLightSweep } from '@/components/CardLightSweep';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -122,13 +123,19 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           active={true}
         />
       )}
-      <Link 
-        href={`/report/${earning.ticker}`} 
-        className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
-        style={{ animationDelay: `${animationIndex * 50}ms` }}
+      <CardLightSweep 
+        variant="diagonal" 
+        color={hasResult ? (earning.result === 'beat' ? 'blue' : 'purple') : 'white'}
+        duration={500}
+        delay={50}
       >
-        <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
-        <span className="shimmer-sweep" aria-hidden="true" />
+        <Link 
+          href={`/report/${earning.ticker}`} 
+          className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
+          style={{ animationDelay: `${animationIndex * 50}ms` }}
+        >
+          <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
+          <span className="shimmer-sweep" aria-hidden="true" />
         <div className="logo-container">
           <img
             src={logoUrl}
@@ -196,7 +203,8 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             duration={800}
           />
         ) : null}
-      </Link>
+        </Link>
+      </CardLightSweep>
       <div className="earnings-tooltip">
         <EarningsTooltipContent
           ticker={earning.ticker}
