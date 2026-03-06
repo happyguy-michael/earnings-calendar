@@ -9182,18 +9182,63 @@ html.light .market-status-skeleton {
 }
 
 .ticker-ribbon-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 4px 12px;
   white-space: nowrap;
   text-decoration: none;
-  transition: background 0.2s ease;
-  border-radius: 4px;
+  transition: 
+    background 0.25s ease,
+    transform 0.3s var(--spring-snappy);
+  border-radius: 6px;
+}
+
+/* Animated underline */
+.ticker-ribbon-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: width 0.3s var(--spring-snappy);
+  opacity: 0;
+}
+
+/* Ambient glow */
+.ticker-ribbon-item::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 8px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.15) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .ticker-ribbon-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.ticker-ribbon-item:hover::after {
+  width: 80%;
+  opacity: 1;
+}
+
+.ticker-ribbon-item:hover::before {
+  opacity: 1;
 }
 
 .ticker-ribbon-logo {
@@ -9206,6 +9251,12 @@ html.light .market-status-skeleton {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: transform 0.25s var(--spring-snappy), box-shadow 0.25s ease;
+}
+
+.ticker-ribbon-item:hover .ticker-ribbon-logo {
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
 }
 
 .ticker-ribbon-logo img {
@@ -9225,6 +9276,11 @@ html.light .market-status-skeleton {
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.ticker-ribbon-item:hover .ticker-ribbon-ticker {
+  color: var(--accent-blue);
 }
 
 .ticker-ribbon-result {
@@ -9234,19 +9290,44 @@ html.light .market-status-skeleton {
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  transition: transform 0.25s var(--spring-bouncy);
+}
+
+.ticker-ribbon-item:hover .ticker-ribbon-result {
+  transform: scale(1.1);
 }
 
 .ticker-ribbon-result.beat {
   color: var(--success);
 }
 
+/* Beat glow on hover */
+.ticker-ribbon-item:hover .ticker-ribbon-result.beat {
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
 .ticker-ribbon-result.miss {
   color: var(--danger);
+}
+
+/* Miss glow on hover */
+.ticker-ribbon-item:hover .ticker-ribbon-result.miss {
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
 }
 
 .ticker-ribbon-arrow {
   font-size: 9px;
   line-height: 1;
+  transition: transform 0.2s var(--spring-elastic);
+}
+
+/* Arrow bounce on hover */
+.ticker-ribbon-item:hover .ticker-ribbon-result.beat .ticker-ribbon-arrow {
+  transform: translateY(-2px);
+}
+
+.ticker-ribbon-item:hover .ticker-ribbon-result.miss .ticker-ribbon-arrow {
+  transform: translateY(2px);
 }
 
 .ticker-ribbon-pending {
@@ -9334,7 +9415,27 @@ html.light .ticker-ribbon {
 }
 
 html.light .ticker-ribbon-item:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+html.light .ticker-ribbon-item::after {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+}
+
+html.light .ticker-ribbon-item::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.1) 0%,
+    transparent 70%
+  );
+}
+
+html.light .ticker-ribbon-item:hover .ticker-ribbon-result.beat {
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.3);
+}
+
+html.light .ticker-ribbon-item:hover .ticker-ribbon-result.miss {
+  text-shadow: 0 0 6px rgba(239, 68, 68, 0.3);
 }
 
 html.light .ticker-ribbon-logo {
@@ -9385,7 +9486,7 @@ html.light .ticker-ribbon-paused-indicator {
   }
 }
 
-/* Reduced motion: no scroll animation */
+/* Reduced motion: disable animations */
 @media (prefers-reduced-motion: reduce) {
   .ticker-ribbon-track {
     animation: none;
@@ -9393,6 +9494,22 @@ html.light .ticker-ribbon-paused-indicator {
   
   .ticker-ribbon-pending-dot {
     animation: none;
+    opacity: 1;
+  }
+  
+  .ticker-ribbon-item,
+  .ticker-ribbon-item::after,
+  .ticker-ribbon-item::before,
+  .ticker-ribbon-logo,
+  .ticker-ribbon-ticker,
+  .ticker-ribbon-result,
+  .ticker-ribbon-arrow {
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .ticker-ribbon-item:hover::after {
+    width: 80%;
     opacity: 1;
   }
 }
