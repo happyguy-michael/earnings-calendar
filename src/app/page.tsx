@@ -352,7 +352,7 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Keyboard navigation for weeks
+  // Keyboard navigation for weeks and filters
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger if user is typing in an input
@@ -370,11 +370,29 @@ export default function Home() {
         e.preventDefault();
         goToToday();
       }
+      // Filter shortcuts (A/B/M/P)
+      else if (e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        handleFilterChange('all');
+        showToast('Showing all earnings', { type: 'info', icon: '📋', duration: 1500 });
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        handleFilterChange('beat');
+        showToast('Filtering to beats', { type: 'success', icon: '📈', duration: 1500 });
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        handleFilterChange('miss');
+        showToast('Filtering to misses', { type: 'warning', icon: '📉', duration: 1500 });
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        handleFilterChange('pending');
+        showToast('Filtering to pending', { type: 'info', icon: '⏳', duration: 1500 });
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [navigateWeek, goToToday]);
+  }, [navigateWeek, goToToday, handleFilterChange, showToast]);
 
   // Refs for each week card (for smooth scroll-to on indicator click)
   // NOTE: Must be declared before any conditional returns (Rules of Hooks)
@@ -473,8 +491,10 @@ export default function Home() {
                 <span className="kbd">→</span>
                 <span>navigate</span>
                 <span className="mx-1">·</span>
-                <span className="kbd">T</span>
-                <span>today</span>
+                <span className="kbd">B</span>
+                <span className="kbd">M</span>
+                <span className="kbd">P</span>
+                <span>filter</span>
                 <span className="mx-1">·</span>
                 <span className="kbd">?</span>
                 <span>help</span>

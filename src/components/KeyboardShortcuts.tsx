@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react';
 interface Shortcut {
   keys: string[];
   description: string;
-  category: 'navigation' | 'search' | 'general';
+  category: 'navigation' | 'search' | 'filter' | 'general';
 }
 
 const shortcuts: Shortcut[] = [
@@ -14,16 +14,21 @@ const shortcuts: Shortcut[] = [
   { keys: ['T'], description: 'Jump to today', category: 'navigation' },
   { keys: ['/'], description: 'Focus search bar', category: 'search' },
   { keys: ['Esc'], description: 'Clear search / Close dialogs', category: 'search' },
+  { keys: ['A'], description: 'Show all earnings', category: 'filter' },
+  { keys: ['B'], description: 'Filter to beats only', category: 'filter' },
+  { keys: ['M'], description: 'Filter to misses only', category: 'filter' },
+  { keys: ['P'], description: 'Filter to pending only', category: 'filter' },
   { keys: ['?'], description: 'Show keyboard shortcuts', category: 'general' },
 ];
 
 const categoryLabels: Record<Shortcut['category'], string> = {
   navigation: 'Navigation',
   search: 'Search',
+  filter: 'Filter',
   general: 'General',
 };
 
-const categoryOrder: Shortcut['category'][] = ['navigation', 'search', 'general'];
+const categoryOrder: Shortcut['category'][] = ['navigation', 'filter', 'search', 'general'];
 
 function Key({ children }: { children: React.ReactNode }) {
   return (
