@@ -41,6 +41,7 @@ import { TickerRibbon } from '@/components/TickerRibbon';
 import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
 import { FreshBadge } from '@/components/FreshBadge';
 import { DynamicTitle } from '@/components/DynamicTitle';
+import { DynamicFavicon } from '@/components/DynamicFavicon';
 import { BorderGlowSpot } from '@/components/BorderGlowSpot';
 import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
@@ -438,6 +439,9 @@ export default function Home() {
       
       {/* Dynamic tab title with pending count */}
       <DynamicTitle pendingToday={pendingToday} baseTitle="Earnings Calendar" />
+      
+      {/* Dynamic favicon badge with pending count */}
+      <DynamicFavicon count={pendingToday} animate={true} />
       
       {/* Animated dot grid background with cursor glow */}
       <AnimatedGridBackground 
