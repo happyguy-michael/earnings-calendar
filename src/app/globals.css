@@ -11819,3 +11819,114 @@ html.light .filter-count-ring.ring-down {
     display: none;
   }
 }
+
+/* ============================================
+   ScrollShadows - Edge fade indicators
+   Shows subtle shadows at scrollable edges
+   ============================================ */
+
+.scroll-shadows-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.scroll-shadows-container {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.scroll-shadows-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll-shadows-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-shadows-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+.scroll-shadows-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Light mode scrollbar */
+html.light .scroll-shadows-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+html.light .scroll-shadows-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Shadow overlays */
+.scroll-shadow {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 150ms ease-out;
+  will-change: opacity;
+}
+
+.scroll-shadow-top {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.scroll-shadow-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.scroll-shadow-left {
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.scroll-shadow-right {
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Enhanced shadows with subtle blur */
+.scroll-shadow-top,
+.scroll-shadow-bottom {
+  /* Extra glow for depth */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-shadow-left,
+.scroll-shadow-right {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Light mode - use lighter shadow base */
+html.light .scroll-shadow-top,
+html.light .scroll-shadow-bottom,
+html.light .scroll-shadow-left,
+html.light .scroll-shadow-right {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Disable shadows when reduced motion preferred */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-shadow {
+    transition: none;
+  }
+}
