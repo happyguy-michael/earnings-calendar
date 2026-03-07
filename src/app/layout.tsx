@@ -5,6 +5,7 @@ import { NavigationProgress } from "@/components/NavigationProgress";
 import { CursorSpotlight } from "@/components/CursorSpotlight";
 import { MeshGradient } from "@/components/MeshGradient";
 import { ClientProviders } from "@/components/ClientProviders";
+import { AnimatedFocusRing, SkipLink } from "@/components/AnimatedFocusRing";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -25,10 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className="antialiased min-h-screen">
+        {/* Animated focus ring system for keyboard accessibility */}
+        <AnimatedFocusRing />
         {/* Skip to main content - accessibility */}
-        <a href="#main-content" className="skip-to-main">
-          Skip to main content
-        </a>
+        <SkipLink targetId="main-content" />
         <MeshGradient />
         <CursorSpotlight />
         <Suspense fallback={null}>
