@@ -243,3 +243,34 @@
 
 **Files changed:**
 - `src/app/globals.css` — notification-bell-ring keyframes and animation property
+
+## 2026-03-07: CursorGlowBorder - Cursor-Tracking Gradient Border Glow
+
+**Inspiration:** Linear.app's premium card hover effects where the border glows and follows cursor position.
+
+**What was added:**
+- New `CursorGlowBorder` component with cursor position tracking
+- Smooth interpolation for natural glow movement (not instant snap)
+- `CursorGlowCard` variant combining glow with glass-morphism styling
+- Variant colors: default (indigo), success (green), warning (amber), danger (red)
+- Inner glow option for additional depth perception
+
+**Technical details:**
+- GPU-accelerated using CSS custom properties (`--cursor-x`, `--cursor-y`)
+- requestAnimationFrame loop with position interpolation (0.15 smoothing factor)
+- Radial gradient positioned at cursor location for border glow
+- Mask composite technique for glowing border effect
+- Theme-aware colors (dark/light mode detection via MutationObserver)
+- Respects `prefers-reduced-motion` - falls back to simple border
+
+**Integration:**
+- Replaced TiltCard in stats grid with CursorGlowCard
+- Each stat card now has contextual glow color (default, success, warning)
+- Combined with existing ParallaxFloat for layered micro-interactions
+
+**Files changed:**
+- `src/components/CursorGlowBorder.tsx` (new)
+- `src/app/globals.css` (added cursor glow styles)
+- `src/app/page.tsx` (stats grid integration)
+
+**Commit:** `7bcecfe`
