@@ -54,6 +54,7 @@ import { SearchEmptyState } from '@/components/SearchEmptyState';
 import { FilterGlow } from '@/components/FilterGlow';
 import { CardLightSweep } from '@/components/CardLightSweep';
 import { CursorGlowCard } from '@/components/CursorGlowBorder';
+import { DataFreshnessIndicator } from '@/components/DataFreshness';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -235,8 +236,21 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [filterKey, setFilterKey] = useState(0);
   const [isFilterTransitioning, setIsFilterTransitioning] = useState(false);
+  const [lastDataUpdate, setLastDataUpdate] = useState(() => new Date());
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const slideKey = useRef(0);
   const { showToast } = useToast();
+  
+  // Simulate data refresh (would be replaced with real API call)
+  const handleDataRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    // Simulate API call
+    setTimeout(() => {
+      setLastDataUpdate(new Date());
+      setIsRefreshing(false);
+      showToast('Data refreshed', { type: 'success', icon: '✓', duration: 2000 });
+    }, 1500);
+  }, [showToast]);
 
   // Handle filter changes with smooth transition animation
   const handleFilterChange = useCallback((newFilter: FilterType) => {
@@ -474,6 +488,16 @@ export default function Home() {
                   Earnings <span className="text-gradient text-shine-sweep">Calendar</span>
                 </h1>
                 <MarketStatus />
+                <div className="hidden lg:block">
+                  <DataFreshnessIndicator
+                    lastUpdated={lastDataUpdate}
+                    onRefresh={handleDataRefresh}
+                    isRefreshing={isRefreshing}
+                    compact
+                    agingThreshold={120}
+                    staleThreshold={600}
+                  />
+                </div>
               </div>
               <p className="sticky-header-subtitle">
                 {months[currentWeekStart.getMonth()]} {currentWeekStart.getFullYear()}

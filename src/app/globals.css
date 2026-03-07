@@ -11930,3 +11930,368 @@ html.light .scroll-shadow-right {
     transition: none;
   }
 }
+
+/* ============================================
+   Data Freshness Indicator
+   Premium data recency indicator with animated
+   pulse effects that intensify for fresh data.
+   ============================================ */
+
+.data-freshness {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-secondary);
+  font-size: 13px;
+  color: var(--text-secondary);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+}
+
+.data-freshness.compact {
+  padding: 4px 10px;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.data-freshness.hovered {
+  border-color: var(--border-primary);
+  background: var(--bg-tertiary);
+}
+
+/* Freshness levels */
+.data-freshness.fresh {
+  --freshness-color: #22c55e;
+  --freshness-glow: rgba(34, 197, 94, 0.4);
+}
+
+.data-freshness.aging {
+  --freshness-color: #f59e0b;
+  --freshness-glow: rgba(245, 158, 11, 0.4);
+}
+
+.data-freshness.stale {
+  --freshness-color: #ef4444;
+  --freshness-glow: rgba(239, 68, 68, 0.4);
+}
+
+/* Indicator container */
+.freshness-indicator {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animated dot */
+.freshness-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.freshness-dot-core {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--freshness-color);
+  box-shadow: 0 0 8px var(--freshness-glow);
+  z-index: 2;
+}
+
+.freshness-dot-pulse {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--freshness-color);
+  animation: freshness-pulse var(--pulse-speed, 2s) ease-out infinite;
+  opacity: 0.6;
+}
+
+.freshness-dot-pulse.delay {
+  animation-delay: calc(var(--pulse-speed, 2s) / 2);
+}
+
+@keyframes freshness-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Staleness ring */
+.freshness-ring {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: rotate(-90deg);
+}
+
+.freshness-ring-track {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.freshness-ring-fill {
+  stroke: var(--freshness-color);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-out, stroke 0.5s ease;
+  filter: drop-shadow(0 0 3px var(--freshness-glow));
+}
+
+/* Text */
+.freshness-text {
+  display: flex;
+  gap: 3px;
+}
+
+.freshness-label {
+  color: var(--text-muted);
+}
+
+.freshness-time {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
+}
+
+.data-freshness.fresh .freshness-time {
+  color: var(--freshness-color);
+}
+
+/* Refresh button */
+.freshness-refresh {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: all 0.2s var(--spring-snappy);
+  margin-left: 2px;
+}
+
+.freshness-refresh:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  transform: scale(1.1);
+}
+
+.freshness-refresh:active {
+  transform: scale(0.95);
+}
+
+.freshness-refresh:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.freshness-refresh svg {
+  width: 14px;
+  height: 14px;
+}
+
+.freshness-refresh.spinning svg {
+  animation: freshness-spin 1s linear infinite;
+}
+
+@keyframes freshness-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tooltip */
+.freshness-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 11px;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.data-freshness:hover .freshness-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Inline variant */
+.freshness-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.freshness-inline.fresh {
+  color: #22c55e;
+}
+
+.freshness-inline-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: freshness-inline-pulse 2s ease-out infinite;
+}
+
+.freshness-inline.fresh .freshness-inline-dot {
+  animation-duration: 1.5s;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+@keyframes freshness-inline-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+/* Mini dot variant */
+.freshness-mini-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.freshness-mini-core {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.freshness-mini-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: currentColor;
+  animation: freshness-mini-pulse 2s ease-out infinite;
+}
+
+.freshness-mini-dot.fresh {
+  color: #22c55e;
+}
+
+.freshness-mini-dot.fresh .freshness-mini-pulse {
+  animation-duration: 1.5s;
+}
+
+.freshness-mini-dot.stale {
+  color: #ef4444;
+}
+
+.freshness-mini-dot.stale .freshness-mini-pulse {
+  animation-duration: 3s;
+}
+
+@keyframes freshness-mini-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Light mode */
+html.light .data-freshness {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html.light .data-freshness.hovered {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+html.light .freshness-ring-track {
+  stroke: rgba(0, 0, 0, 0.1);
+}
+
+html.light .freshness-tooltip {
+  background: rgba(30, 30, 45, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.light .freshness-refresh:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+html.light .data-freshness.fresh {
+  --freshness-color: #16a34a;
+  --freshness-glow: rgba(22, 163, 74, 0.3);
+}
+
+html.light .data-freshness.aging {
+  --freshness-color: #d97706;
+  --freshness-glow: rgba(217, 119, 6, 0.3);
+}
+
+html.light .data-freshness.stale {
+  --freshness-color: #dc2626;
+  --freshness-glow: rgba(220, 38, 38, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .freshness-dot-pulse,
+  .freshness-inline-dot,
+  .freshness-mini-pulse {
+    animation: none;
+  }
+  
+  .freshness-refresh.spinning svg {
+    animation: none;
+  }
+  
+  .freshness-ring-fill {
+    transition: none;
+  }
+}
