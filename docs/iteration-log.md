@@ -1,5 +1,31 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-07 — Dynamic Favicon with Notification Badge
+**Inspiration:** Trading apps (Robinhood, Bloomberg, TradingView) that show notification counts on favicon
+
+**What was added:**
+- `DynamicFavicon` component that renders a notification badge on the favicon
+- Shows pending earnings count as a red badge overlay
+- Animated pulse effect when count increases (bounce animation)
+- Gradient badge styling with subtle glow for premium look
+- Canvas-based rendering for cross-browser support
+- `EmojiFavicon` fallback variant using SVG for simpler implementation
+
+**Technical details:**
+- Uses HTMLCanvasElement to composite base icon with badge overlay
+- Animated pulse uses requestAnimationFrame with bounce easing
+- Gradient badge (red → lighter red) with white border highlight
+- Count > 99 displays as "99+"
+- Auto-restores original favicon on unmount
+- Respects tab visibility for performance (no rendering when hidden)
+- Full light mode support (badge works on any background)
+
+**Files changed:**
+- `src/components/DynamicFavicon.tsx` — new component
+- `src/app/page.tsx` — integrated DynamicFavicon alongside DynamicTitle
+
+---
+
 ## 2026-03-06 — Scroll Progress Indicator
 **Inspiration:** Premium reading apps (Medium, Substack) and dashboards (Linear, Stripe) that show scroll position
 
