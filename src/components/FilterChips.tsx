@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import { AnimatedFilterCount } from './AnimatedFilterCount';
 
 type FilterType = 'all' | 'beat' | 'miss' | 'pending';
 
@@ -113,9 +114,11 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
             >
               {filter.icon && <span className="filter-chip-icon">{filter.icon}</span>}
               <span className="filter-chip-label">{filter.label}</span>
-              <span className={`filter-chip-count ${isActive ? 'visible' : ''}`}>
-                {count}
-              </span>
+              <AnimatedFilterCount 
+                value={count} 
+                isActive={isActive}
+                variant={filter.key === 'all' ? 'default' : filter.key}
+              />
             </button>
           );
         })}
