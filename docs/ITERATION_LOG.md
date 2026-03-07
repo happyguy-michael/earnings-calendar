@@ -1,5 +1,28 @@
 # Iteration Log
 
+## 2026-03-07 — AnimatedFocusRing (Keyboard Accessibility)
+**Component:** `AnimatedFocusRing.tsx`
+
+**What it does:**
+- Premium animated focus indicators for keyboard navigation
+- Gradient border with pulse animation (blue/purple/pink brand colors)
+- Detects keyboard vs mouse users - only shows on Tab navigation
+- Enhanced skip-to-main-content link with gradient styling
+- Card focus-within outer glow effects
+- Respects `prefers-reduced-motion` accessibility setting
+- Light mode adjustments for visibility
+
+**Inspiration:** 2026 UI Trends research:
+- "Accessibility as a top priority" (WCAG 2.1 compliance)
+- "Alive and responsive interfaces" - subtle motion feedback
+- "Minimalism with microinteractions" - purposeful details
+
+**Files changed:**
+- `src/components/AnimatedFocusRing.tsx` (new)
+- `src/app/layout.tsx` (integrated globally)
+
+---
+
 ## 2026-03-06 — ExceptionalGlow Effect
 **Component:** `ExceptionalGlow.tsx`
 
