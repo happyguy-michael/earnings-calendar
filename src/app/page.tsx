@@ -55,6 +55,7 @@ import { FilterGlow } from '@/components/FilterGlow';
 import { CardLightSweep } from '@/components/CardLightSweep';
 import { CursorGlowCard } from '@/components/CursorGlowBorder';
 import { DataFreshnessIndicator } from '@/components/DataFreshness';
+import { CompanyLogo } from '@/components/ProgressiveImage';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -96,7 +97,6 @@ function CircularProgress({ value, size = 40, color = '#22c55e' }: { value: numb
 
 function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earning; isToday?: boolean; animationIndex?: number }) {
   const hasResult = earning.eps !== undefined && earning.eps !== null;
-  const logoUrl = `https://logo.clearbit.com/${earning.company.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
   const isPending = !hasResult;
   const isTodayPending = isToday && isPending;
   const beatStreak = getBeatStreak(earning.ticker);
@@ -139,18 +139,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         >
           <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
           <span className="shimmer-sweep" aria-hidden="true" />
-        <div className="logo-container">
-          <img
-            src={logoUrl}
-            alt={earning.ticker}
-            className="w-full h-full object-contain p-2"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.nextElementSibling?.classList.remove('hidden');
-            }}
-          />
-          <span className="hidden text-xs font-bold text-zinc-500">{earning.ticker.slice(0, 2)}</span>
-        </div>
+        <CompanyLogo 
+          ticker={earning.ticker} 
+          company={earning.company} 
+          size={40}
+          className="logo-container"
+        />
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
