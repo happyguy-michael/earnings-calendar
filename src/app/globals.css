@@ -11486,3 +11486,100 @@ html.light .filter-glow-ambient-pending {
     opacity: 0.8;
   }
 }
+
+/* ============================================
+   Cursor Glow Border
+   Premium cursor-tracking gradient border glow effect
+   Similar to Linear.app's card hover effects
+   ============================================ */
+
+.cursor-glow-border-container {
+  position: relative;
+  isolation: isolate;
+}
+
+.cursor-glow-border-container.hovering {
+  z-index: 1;
+}
+
+/* Simple fallback for reduced motion */
+.cursor-glow-border-simple {
+  position: relative;
+  border: 1px solid var(--border-primary);
+  transition: border-color 0.3s ease;
+}
+
+.cursor-glow-border-simple:hover {
+  border-color: var(--accent-blue);
+}
+
+/* Ensure content layer is above glow */
+.cursor-glow-border-container > div:last-child {
+  position: relative;
+  z-index: 2;
+}
+
+/* Card variant specific styles */
+.cursor-glow-card {
+  transition: transform 0.3s var(--spring-smooth);
+}
+
+.cursor-glow-card:hover {
+  transform: translateY(-2px);
+}
+
+.cursor-glow-card-inner {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cursor-glow-card:hover .cursor-glow-card-inner {
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Light mode adjustments */
+html.light .cursor-glow-card:hover .cursor-glow-card-inner {
+  border-color: rgba(99, 102, 241, 0.15);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.03);
+}
+
+/* Stats grid integration - cursor glow on stat cards */
+.stats-grid .cursor-glow-card {
+  height: 100%;
+}
+
+.stats-grid .cursor-glow-card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Success variant */
+.cursor-glow-card.variant-success:hover .cursor-glow-card-inner {
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+/* Warning variant */
+.cursor-glow-card.variant-warning:hover .cursor-glow-card-inner {
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+/* Danger variant */
+.cursor-glow-card.variant-danger:hover .cursor-glow-card-inner {
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow-card:hover {
+    transform: none;
+  }
+  
+  .cursor-glow-border-glow,
+  .cursor-glow-border-mask,
+  .cursor-glow-border-inner {
+    display: none;
+  }
+}
