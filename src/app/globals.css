@@ -9775,6 +9775,68 @@ html.light .ticker-ribbon-paused-indicator {
   }
 }
 
+/* Scroll-velocity reactive ticker ribbon
+ * When user scrolls faster, the ticker speeds up creating a dynamic feel.
+ * Inspired by Linear.app and shadcn.io scroll-velocity patterns.
+ */
+.ticker-ribbon.velocity-boosted {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.ticker-ribbon.velocity-boosted::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 102, 241, calc(0.05 * var(--scroll-velocity, 1))) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: velocity-glow-pulse 0.8s ease-out;
+  pointer-events: none;
+}
+
+@keyframes velocity-glow-pulse {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Velocity indicator - shows current scroll-speed boost */
+.ticker-ribbon.velocity-boosted .ticker-ribbon-track {
+  /* Subtle glow when moving fast */
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, calc(0.2 * var(--scroll-velocity, 1))));
+}
+
+/* Items get slight blur at high velocity for motion effect */
+.ticker-ribbon.velocity-boosted .ticker-ribbon-item {
+  filter: blur(calc((var(--scroll-velocity, 1) - 1) * 0.15px));
+}
+
+/* Light mode adjustments */
+html.light .ticker-ribbon.velocity-boosted {
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+html.light .ticker-ribbon.velocity-boosted .ticker-ribbon-track {
+  filter: drop-shadow(0 0 6px rgba(99, 102, 241, calc(0.15 * var(--scroll-velocity, 1))));
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-ribbon.velocity-boosted::before,
+  .ticker-ribbon.velocity-boosted .ticker-ribbon-track,
+  .ticker-ribbon.velocity-boosted .ticker-ribbon-item {
+    filter: none;
+    animation: none;
+  }
+}
+
 /* ========================================
    Animated Stat Icons
    ======================================== */

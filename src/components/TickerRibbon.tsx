@@ -3,22 +3,35 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Earning } from '@/lib/types';
+import { useScrollVelocity } from './ScrollVelocity';
 
 interface TickerRibbonProps {
   earnings: Earning[];
   speed?: number; // pixels per second
+  reactToScroll?: boolean; // Enable scroll-velocity reactivity
 }
 
 /**
  * Animated stock ticker ribbon showing recent earnings results.
  * Premium finance dashboard pattern (Bloomberg, CNBC style).
  * Features: smooth infinite scroll, pause on hover, result indicators,
- * gradient fade edges, responsive speed.
+ * gradient fade edges, responsive speed, scroll-velocity reactivity.
+ * 
+ * When reactToScroll is enabled, the ticker speeds up as the user scrolls
+ * faster, creating a dynamic "alive" feel. Inspired by Linear.app and shadcn.io.
  */
-export function TickerRibbon({ earnings, speed = 40 }: TickerRibbonProps) {
+export function TickerRibbon({ earnings, speed = 40, reactToScroll = true }: TickerRibbonProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [animationDuration, setAnimationDuration] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
+  
+  // Track scroll velocity for dynamic speed adjustment
+  const scrollVelocity = useScrollVelocity({
+    smoothing: 0.12,
+    sensitivity: 0.004,
+    maxMultiplier: 3,
+    minMultiplier: 0.5,
+  });
   
   // Filter to only show reported earnings with results
   const displayItems = useMemo(() => {
@@ -61,15 +74,30 @@ export function TickerRibbon({ earnings, speed = 40 }: TickerRibbonProps) {
     }
   }, [allItems, speed]);
 
+  // Calculate effective animation duration based on scroll velocity
+  const effectiveDuration = useMemo(() => {
+    if (!reactToScroll || animationDuration === 0) {
+      return animationDuration > 0 ? animationDuration : 30;
+    }
+    // Faster scroll = shorter duration = faster animation
+    return animationDuration / scrollVelocity;
+  }, [animationDuration, scrollVelocity, reactToScroll]);
+
+  // Check if velocity is boosted for visual indicator
+  const isVelocityBoosted = reactToScroll && scrollVelocity > 1.1;
+
   if (allItems.length === 0) return null;
 
   return (
     <div 
-      className="ticker-ribbon"
+      className={`ticker-ribbon ${isVelocityBoosted ? 'velocity-boosted' : ''}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       role="marquee"
       aria-label="Recent earnings results"
+      style={{
+        '--scroll-velocity': scrollVelocity,
+      } as React.CSSProperties}
     >
       {/* Left fade gradient */}
       <div className="ticker-ribbon-fade ticker-ribbon-fade-left" aria-hidden="true" />
@@ -78,7 +106,7 @@ export function TickerRibbon({ earnings, speed = 40 }: TickerRibbonProps) {
         ref={trackRef}
         className={`ticker-ribbon-track ${isPaused ? 'paused' : ''}`}
         style={{ 
-          animationDuration: animationDuration > 0 ? `${animationDuration}s` : '30s',
+          animationDuration: `${effectiveDuration}s`,
         }}
       >
         {/* Duplicate content for seamless loop */}
