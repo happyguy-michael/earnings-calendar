@@ -1,5 +1,38 @@
 # Iteration Log
 
+## 2026-03-08 — ScrollDrivenAnimations (Native Scroll Effects)
+**Component:** `ScrollDrivenAnimations.tsx`
+
+**What it does:**
+- Modern scroll-driven animations using native CSS `animation-timeline: view()` API
+- Stat cards fade/scale up as they scroll into viewport
+- Week cards parallax slide-in effect
+- Earnings rows stagger-animate on scroll
+- Header shadow appears progressively based on scroll position
+- Progress rings draw themselves when entering view
+- Back-to-top button fades in after scrolling 300px
+
+**Technical highlights:**
+- Runs entirely off main thread (60fps guaranteed)
+- Uses `@supports (animation-timeline: view())` for progressive enhancement
+- Falls back gracefully on unsupported browsers (Safari)
+- Respects `prefers-reduced-motion` for accessibility
+- Zero JavaScript for animation logic — pure CSS
+
+**Inspiration:** Google I/O 2024 CSS recap:
+- "Scroll-driven animations for scrollytelling effects"
+- "80% reduction in code vs JS scroll observers"
+- "50% → 2% CPU usage improvement"
+- Tokopedia case study
+
+**Browser support:** Chrome 115+, Edge 115+, Firefox 135+ (graceful degradation)
+
+**Files changed:**
+- `src/components/ScrollDrivenAnimations.tsx` (new)
+- `src/app/layout.tsx` (integrated globally)
+
+---
+
 ## 2026-03-07 — AnimatedFocusRing (Keyboard Accessibility)
 **Component:** `AnimatedFocusRing.tsx`
 
