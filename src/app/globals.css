@@ -13108,3 +13108,211 @@ html.light .haptic-toggle.active {
     transition: none;
   }
 }
+
+/* ============================================
+   VIEW TRANSITION & STAGGER ANIMATIONS
+   Smooth content transitions inspired by iOS/macOS
+   ============================================ */
+
+/* Stagger fade-in animation */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Alternative: slide from left */
+@keyframes staggerSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Alternative: slide from right */
+@keyframes staggerSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale bounce entrance */
+@keyframes staggerScaleBounce {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Stagger container */
+.staggered-container {
+  display: contents;
+}
+
+/* Stagger child wrapper */
+.stagger-child {
+  --stagger-index: 0;
+  --stagger-delay: 0ms;
+}
+
+/* View transition container */
+.view-transition-container {
+  will-change: auto;
+}
+
+/* Week card stagger animation on load */
+.week-card-stagger {
+  animation: staggerFadeIn 500ms var(--spring-smooth) both;
+  animation-delay: calc(var(--week-index, 0) * 100ms);
+}
+
+/* Earnings card stagger animation */
+.earnings-card-stagger {
+  animation: staggerFadeIn 400ms var(--spring-smooth) both;
+  animation-delay: calc(var(--card-index, 0) * 40ms);
+}
+
+/* Content change blur-fade */
+.content-transitioning {
+  transition: opacity 150ms ease-out, filter 150ms ease-out;
+  opacity: 0.3;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* Native View Transitions API styling (modern browsers) */
+::view-transition-old(root) {
+  animation: fadeBlurOut 150ms ease-out both;
+}
+
+::view-transition-new(root) {
+  animation: fadeBlurIn 150ms ease-out both;
+}
+
+@keyframes fadeBlurOut {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+@keyframes fadeBlurIn {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Week navigation transition */
+.week-transition-left {
+  animation: weekSlideLeft 350ms var(--spring-smooth) both;
+}
+
+.week-transition-right {
+  animation: weekSlideRight 350ms var(--spring-smooth) both;
+}
+
+@keyframes weekSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes weekSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Stat card entrance animation */
+.stat-entrance {
+  animation: statPop 500ms var(--spring-bouncy) both;
+}
+
+.stat-entrance:nth-child(1) { animation-delay: 0ms; }
+.stat-entrance:nth-child(2) { animation-delay: 60ms; }
+.stat-entrance:nth-child(3) { animation-delay: 120ms; }
+.stat-entrance:nth-child(4) { animation-delay: 180ms; }
+
+@keyframes statPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Reduced motion: disable all stagger/transition animations */
+@media (prefers-reduced-motion: reduce) {
+  .stagger-child,
+  .week-card-stagger,
+  .earnings-card-stagger,
+  .week-transition-left,
+  .week-transition-right,
+  .stat-entrance {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  .view-transition-container,
+  .content-transitioning {
+    transition: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+  
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}

@@ -180,8 +180,11 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
       >
         <Link 
           href={`/report/${earning.ticker}`} 
-          className={`earnings-row earnings-card-animate ${isTodayPending ? 'today-pending' : ''}`}
-          style={{ animationDelay: `${animationIndex * 50}ms` }}
+          className={`earnings-row earnings-card-stagger ${isTodayPending ? 'today-pending' : ''}`}
+          style={{ 
+            '--card-index': animationIndex,
+            animationDelay: `${animationIndex * 40}ms` 
+          } as React.CSSProperties}
         >
           <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
           <span className="shimmer-sweep" aria-hidden="true" />
@@ -657,7 +660,7 @@ export default function Home() {
               borderRadius={20} 
               intensity={0.5} 
               glowRadius={180}
-              className="stat-card-enter"
+              className="stat-entrance"
             >
               <div className="flex items-center gap-3">
                 <AnimatedStatIcon type="total" size={28} />
@@ -678,7 +681,7 @@ export default function Home() {
               borderRadius={20} 
               intensity={0.5} 
               glowRadius={180}
-              className="stat-card-enter"
+              className="stat-entrance"
             >
               <div className="flex items-center gap-3">
                 <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
@@ -699,7 +702,7 @@ export default function Home() {
               borderRadius={20} 
               intensity={0.5} 
               glowRadius={180}
-              className="stat-card-enter"
+              className="stat-entrance"
             >
               <div className="flex items-center gap-3">
                 <AnimatedStatIcon type="reported" size={28} />
@@ -720,7 +723,7 @@ export default function Home() {
               borderRadius={20} 
               intensity={0.5} 
               glowRadius={180}
-              className="stat-card-enter"
+              className="stat-entrance"
             >
               <div className="flex items-center gap-3">
                 <AnimatedStatIcon type="pending" size={28} />
@@ -784,11 +787,14 @@ export default function Home() {
               variant="default"
               intensity={0.5}
               glowSize={200}
-              className="card animate-fade-in"
+              className="card week-card-stagger"
             >
             <div 
               ref={weekRefs[weekIndex]}
-              style={{ animationDelay: `${weekIndex * 100}ms` }}
+              style={{ 
+                '--week-index': weekIndex,
+                animationDelay: `${weekIndex * 100}ms` 
+              } as React.CSSProperties}
             >
               {/* Week Header */}
               <div className="week-header">
