@@ -61,6 +61,7 @@ import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, use
 import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
 import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
 import { PullToRefresh } from '@/components/PullToRefresh';
+import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -897,6 +898,13 @@ export default function Home() {
                   );
                 })}
               </div>
+              
+              {/* Week Summary Card - celebratory end-of-week recap */}
+              <WeekSummaryCard 
+                weekStart={weekStart} 
+                earnings={filteredEarnings}
+                isCurrentWeek={weekIndex === todayWeekIndex}
+              />
             </div>
             </BorderGlowSpot>
           ))}
