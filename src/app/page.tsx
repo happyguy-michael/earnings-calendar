@@ -59,6 +59,7 @@ import { DataFreshnessIndicator } from '@/components/DataFreshness';
 import { CompanyLogo } from '@/components/ProgressiveImage';
 import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, useSnapshot } from '@/components/SnapshotMode';
 import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
+import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -280,21 +281,27 @@ export default function Home() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const slideKey = useRef(0);
   const { showToast } = useToast();
+  const { trigger: haptic } = useHaptic();
   
   // Simulate data refresh (would be replaced with real API call)
   const handleDataRefresh = useCallback(() => {
+    haptic('light');
     setIsRefreshing(true);
     // Simulate API call
     setTimeout(() => {
       setLastDataUpdate(new Date());
       setIsRefreshing(false);
+      haptic('success');
       showToast('Data refreshed', { type: 'success', icon: '✓', duration: 2000 });
     }, 1500);
-  }, [showToast]);
+  }, [showToast, haptic]);
 
   // Handle filter changes with smooth transition animation
   const handleFilterChange = useCallback((newFilter: FilterType) => {
     if (newFilter === statusFilter) return;
+    
+    // Haptic feedback for selection
+    haptic('select');
     
     // Start exit animation
     setIsFilterTransitioning(true);
@@ -305,7 +312,7 @@ export default function Home() {
       setFilterKey(prev => prev + 1);
       setIsFilterTransitioning(false);
     }, 150);
-  }, [statusFilter]);
+  }, [statusFilter, haptic]);
 
   // Calculate counts for filter chips (before any filtering)
   const filterCounts = useMemo(() => ({
@@ -351,6 +358,9 @@ export default function Home() {
   }, [searchQuery, statusFilter]);
 
   const navigateWeek = useCallback((delta: number, fromSwipe = false) => {
+    // Haptic feedback for swipe/navigation
+    haptic(fromSwipe ? 'swipe' : 'light');
+    
     // Set slide direction for animation
     setSlideDirection(delta > 0 ? 'left' : 'right');
     slideKey.current += 1;
@@ -372,12 +382,14 @@ export default function Home() {
     
     // Clear slide direction after animation
     setTimeout(() => setSlideDirection(null), 350);
-  }, [showSwipeHint]);
+  }, [showSwipeHint, haptic]);
 
   const goToToday = useCallback(() => {
+    // Haptic feedback for success action
+    haptic('success');
     setCurrentWeekStart(getWeekStart(new Date()));
     showToast('Jumped to current week', { type: 'success', icon: '📅', duration: 2000 });
-  }, [showToast]);
+  }, [showToast, haptic]);
 
   // Simulate data loading - will be replaced with real API call
   useEffect(() => {
@@ -578,6 +590,7 @@ export default function Home() {
               </div>
               <KeyboardShortcutsHint />
               <MotionToggle size="sm" />
+              <HapticToggle size="sm" />
               <ThemeToggle />
               <TodayButton 
                 onClick={goToToday}

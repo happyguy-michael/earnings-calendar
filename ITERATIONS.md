@@ -1,4 +1,30 @@
 
+## 2026-03-08 — Haptic Feedback System
+
+**Inspiration:** 2025 micro-interaction trends emphasizing tactile feedback for mobile experiences (appnova.com, fuselabcreative.com)
+
+**What I built:**
+- New `HapticFeedback` component using the Web Vibration API
+- Multiple haptic patterns: light (8ms), medium (20ms), heavy (40ms), success (double tap), error (triple burst), swipe (directional feel)
+- `useHaptic` hook with automatic preference handling and reduced motion support
+- `HapticToggle` component for users to enable/disable (auto-hides on desktop)
+- Integrated haptics into key interactions:
+  - Filter chip selection → 'select' pattern
+  - Week navigation (swipe/buttons) → 'swipe'/'light' patterns
+  - Today button → 'success' pattern
+  - Data refresh → 'light' on start, 'success' on complete
+
+**Technical details:**
+- Gracefully degrades on unsupported devices (no errors)
+- Respects `prefers-reduced-motion` preference
+- Persists user preference to localStorage
+- Intensity multiplier for fine-tuning
+- CSS-only toggle (hidden on hover-capable devices)
+
+**Impact:** Mobile users get subtle tactile feedback that makes interactions feel more responsive and premium, without affecting desktop experience.
+
+---
+
 ## 2026-03-08 — AnimatedGradientBorder Component
 
 **Inspiration:** CSS @property for smooth gradient animations (codetv.dev, modern CSS techniques)
