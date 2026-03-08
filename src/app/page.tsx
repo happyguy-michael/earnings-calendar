@@ -60,6 +60,7 @@ import { CompanyLogo } from '@/components/ProgressiveImage';
 import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, useSnapshot } from '@/components/SnapshotMode';
 import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
 import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
+import { PullToRefresh } from '@/components/PullToRefresh';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -501,8 +502,17 @@ export default function Home() {
     weekStart.getTime() === todayWeekStart.getTime()
   );
 
+  // Pull-to-refresh handler (wraps existing refresh logic)
+  const handlePullRefresh = useCallback(async () => {
+    // Simulate data refresh - would be replaced with real API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setLastDataUpdate(new Date());
+    showToast('Data refreshed', { type: 'success', icon: '✓', duration: 2000 });
+  }, [showToast]);
+
   return (
     <SnapshotProvider autoResumeSeconds={300}>
+    <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <div className="min-h-screen relative">
       {/* Snapshot mode indicator (when paused) */}
       <SnapshotIndicator />
@@ -915,6 +925,7 @@ export default function Home() {
       {/* Floating back to top button */}
       <BackToTop />
     </div>
+    </PullToRefresh>
     </SnapshotProvider>
   );
 }

@@ -13316,3 +13316,173 @@ html.light .haptic-toggle.active {
     animation: none !important;
   }
 }
+
+/* ============================================
+   PULL TO REFRESH
+   Mobile-first refresh gesture with animations
+   ============================================ */
+
+.ptr-container {
+  position: relative;
+  overflow: visible;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ptr-indicator {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-60px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.ptr-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid var(--border-primary);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.ptr-spinner.ready {
+  border-color: var(--ptr-color, #3b82f6);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 20px -5px var(--ptr-color, #3b82f6);
+}
+
+.ptr-spinner.refreshing {
+  animation: ptrPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ptrPulse {
+  0%, 100% {
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 20px -5px var(--ptr-color, #3b82f6);
+  }
+  50% {
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 40px -5px var(--ptr-color, #3b82f6);
+  }
+}
+
+.ptr-spinner-svg {
+  width: 32px;
+  height: 32px;
+  color: var(--text-muted);
+  transition: transform 0.1s linear;
+}
+
+.ptr-arc-spin {
+  animation: ptrSpin 1s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes ptrSpin {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+.ptr-arrow {
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ptr-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.ptr-spinner.ready .ptr-text {
+  color: var(--ptr-color, #3b82f6);
+}
+
+.ptr-spinner.refreshing .ptr-text {
+  color: var(--ptr-color, #3b82f6);
+  animation: ptrTextPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ptrTextPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.ptr-content {
+  will-change: transform;
+}
+
+/* Light mode adjustments */
+html.light .ptr-spinner {
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+html.light .ptr-spinner.ready {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 20px -8px var(--ptr-color, #3b82f6);
+}
+
+/* Hide on devices without touch */
+@media (hover: hover) and (pointer: fine) {
+  .ptr-indicator {
+    display: none !important;
+  }
+  
+  .ptr-content {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Reduced motion - simplify animations */
+@media (prefers-reduced-motion: reduce) {
+  .ptr-spinner,
+  .ptr-spinner.refreshing,
+  .ptr-spinner.ready {
+    animation: none;
+  }
+  
+  .ptr-arc-spin {
+    animation: ptrSpinSlow 2s linear infinite;
+  }
+  
+  @keyframes ptrSpinSlow {
+    from { transform: rotate(-90deg); }
+    to { transform: rotate(270deg); }
+  }
+  
+  .ptr-spinner-svg {
+    transition: none;
+  }
+  
+  .ptr-content {
+    transition: transform 0.1s linear !important;
+  }
+}
