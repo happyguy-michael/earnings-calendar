@@ -62,6 +62,7 @@ import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
 import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
 import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
+import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -932,6 +933,53 @@ export default function Home() {
 
       {/* Floating back to top button */}
       <BackToTop />
+      
+      {/* Mobile Floating Action Menu - quick access to filters and actions */}
+      <FloatingActionMenu
+        actions={[
+          {
+            id: 'today',
+            icon: <FABIcons.Today />,
+            label: 'Jump to Today',
+            onClick: goToToday,
+            color: 'blue',
+          },
+          {
+            id: 'beat',
+            icon: <FABIcons.Beat />,
+            label: 'Show Beats',
+            onClick: () => handleFilterChange('beat'),
+            color: 'green',
+            badge: filterCounts.beat,
+          },
+          {
+            id: 'miss',
+            icon: <FABIcons.Miss />,
+            label: 'Show Misses',
+            onClick: () => handleFilterChange('miss'),
+            color: 'red',
+            badge: filterCounts.miss,
+          },
+          {
+            id: 'pending',
+            icon: <FABIcons.Pending />,
+            label: 'Show Pending',
+            onClick: () => handleFilterChange('pending'),
+            color: 'amber',
+            badge: pendingToday > 0 ? pendingToday : undefined,
+          },
+          {
+            id: 'refresh',
+            icon: <FABIcons.Refresh />,
+            label: 'Refresh Data',
+            onClick: handleDataRefresh,
+            color: 'purple',
+          },
+        ]}
+        position="bottom-right"
+        hideOnScroll={true}
+        hideOnDesktop={true}
+      />
     </div>
     </PullToRefresh>
     </SnapshotProvider>
