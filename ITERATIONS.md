@@ -43,3 +43,23 @@
 - Light mode support
 
 **Impact:** Exceptional earnings now have a premium animated border that draws attention without being distracting for normal results.
+
+## 2026-03-08: ViewTransition & Stagger Animations
+
+**Inspiration:** Browsed Dribbble financial dashboard designs - noticed polished blur-fade transitions and staggered entrance animations are a hallmark of premium UIs.
+
+**Added:**
+- `ViewTransition.tsx` - Reusable blur-fade transition component with:
+  - Smooth content transitions on key change
+  - Directional slide detection for week navigation
+  - Native View Transitions API support (modern browsers)
+  - `StaggeredChildren` component for cascading animations
+  - `CrossFade` for simple state changes
+- Enhanced CSS animations:
+  - `staggerFadeIn` - Blur+scale+fade entrance
+  - `stat-entrance` - Bouncy stat card entrance
+  - `week-card-stagger` - Week card cascade
+  - `earnings-card-stagger` - Individual card stagger
+  - Full reduced-motion support
+
+**Impact:** More fluid, app-like feel when loading and navigating. Cards cascade in with subtle blur-to-focus effect.
