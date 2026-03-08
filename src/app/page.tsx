@@ -63,6 +63,7 @@ import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
 import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
+import { EPSTrendDots } from '@/components/EPSTrendDots';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -202,6 +203,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-white">{earning.ticker}</span>
             <BeatStreakBadge streak={beatStreak} />
+            <EPSTrendDots 
+              estimate={earning.estimate}
+              currentBeat={earning.result === 'beat'}
+              actualEps={earning.eps ?? undefined}
+              delay={animationIndex * 50 + 100}
+              size="sm"
+            />
             <LiveDot isToday={!!isToday} isPending={isPending} />
           </div>
           <div className="text-xs text-zinc-500 truncate flex items-center gap-2">
