@@ -1,4 +1,32 @@
 
+## 2026-03-08 — Pull-to-Refresh Gesture
+
+**Inspiration:** Dribbble pull-to-refresh designs showing native-feeling mobile gestures with custom animations and physics (dribbble.com/tags/pull-to-refresh)
+
+**What I built:**
+- New `PullToRefresh` component with:
+  - Rubber-band physics for natural-feeling overscroll
+  - Animated spinner with progress arc that fills as you pull
+  - Morphing arrow that flips when crossing the threshold
+  - Three-state visual feedback: "Pull to refresh" → "Release to refresh" → "Refreshing..."
+  - Haptic feedback on threshold crossing and refresh completion
+- CSS animations:
+  - `ptrPulse` - Glowing border animation while refreshing
+  - `ptrSpin` - Continuous spinner rotation
+  - `ptrTextPulse` - Breathing text opacity
+
+**Technical details:**
+- Touch event handling with passive/non-passive listeners for scroll prevention
+- `rubberBand()` physics function for exponential decay at max distance
+- Graceful degradation: hidden on desktop (hover-capable devices)
+- Respects `prefers-reduced-motion` with simplified animations
+- Integrates with existing haptic feedback system
+- Spring animation (cubic-bezier) for content snap-back
+
+**Impact:** Mobile users can now pull down from the top of the page to refresh data, matching native app behavior. Premium animated feedback makes the gesture feel responsive and polished.
+
+---
+
 ## 2026-03-08 — Haptic Feedback System
 
 **Inspiration:** 2025 micro-interaction trends emphasizing tactile feedback for mobile experiences (appnova.com, fuselabcreative.com)
