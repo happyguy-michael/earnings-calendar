@@ -2,11 +2,14 @@
 
 import { ReactNode } from 'react';
 import { ToastProvider } from './Toast';
+import { MotionPreferencesProvider } from './MotionPreferences';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
-    <ToastProvider>
-      {children}
-    </ToastProvider>
+    <MotionPreferencesProvider>
+      <ToastProvider>
+        {children}
+      </ToastProvider>
+    </MotionPreferencesProvider>
   );
 }

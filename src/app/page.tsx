@@ -20,6 +20,7 @@ import { TimeSinceInline } from '@/components/TimeSince';
 import { ProgressRing } from '@/components/ProgressRing';
 import { OddsGauge } from '@/components/OddsGauge';
 import { BackToTop } from '@/components/BackToTop';
+import { MotionToggle } from '@/components/MotionPreferences';
 import { TiltCard } from '@/components/TiltCard';
 import { Ripple } from '@/components/Ripple';
 import { FloatingParticles } from '@/components/FloatingParticles';
@@ -523,6 +524,7 @@ export default function Home() {
                 <span>help</span>
               </div>
               <KeyboardShortcutsHint />
+              <MotionToggle size="sm" />
               <ThemeToggle />
               <TodayButton 
                 onClick={goToToday}
