@@ -1,5 +1,39 @@
 # Iteration Log
 
+## 2026-03-08 — LoadingMessages (Contextual Progress Messaging)
+**Component:** `LoadingMessages.tsx`
+
+**What it does:**
+- Rotating status messages during skeleton loading phase
+- Animated spinner with gradient stroke dash animation
+- Messages cycle through: "Loading earnings data...", "Fetching market schedules...", "Preparing charts...", "Analyzing beat rates...", "Almost ready..."
+- Blur fade-up/down transitions between messages
+- Progress dots showing current loading stage
+- Minimal variant for inline/compact use
+
+**Why it matters:**
+- Communicates what's happening during loading (not just "loading...")
+- Makes wait feel purposeful and faster (perceived performance)
+- Reduces user anxiety during data fetch
+- Follows premium UX patterns from Stripe/Linear
+
+**Technical highlights:**
+- Respects `prefers-reduced-motion` with instant cycling fallback
+- Light/dark mode support
+- Configurable message list and timing intervals
+- Zero external dependencies
+
+**Inspiration:** "6 Loading State Patterns That Feel Premium" (Medium UXWorld)
+- Pattern: Contextual Progress Messaging
+- "Premium applications don't just show that something is loading; they show what is loading"
+
+**Files changed:**
+- `src/components/LoadingMessages.tsx` (new)
+- `src/components/Skeleton.tsx` (integrated into SkeletonCalendar)
+- `src/app/globals.css` (loading messages styles)
+
+---
+
 ## 2026-03-08 — ScrollDrivenAnimations (Native Scroll Effects)
 **Component:** `ScrollDrivenAnimations.tsx`
 
