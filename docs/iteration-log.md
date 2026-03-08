@@ -1,5 +1,29 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-09 — Leading Edge Glow Effect for Progress Bar
+**Inspiration:** Dribbble/devsnap gradient glow progress bars - animated glow effects that make UI feel alive
+
+**What was added:**
+- Pulsing glow dot at the leading edge (right tip) of the beat rate progress bar
+- Glow inherits the bar's color (success green, warning amber, etc.)
+- Creates a "living" indicator feel - the bar breathes
+
+**Technical details:**
+- Uses `::before` pseudo-element with `filter: blur(6px)` for soft glow
+- Glow positioned at `right: -2px` to extend slightly beyond bar edge
+- 2-second pulse cycle: `scale(1)` → `scale(1.3)` with blur variance
+- 1-second animation delay to sync with bar fill animation
+- `background: inherit` pulls color from parent bar fill
+- Full `prefers-reduced-motion` support (hidden when reduced)
+- Works in both light and dark themes
+
+**Files changed:**
+- `src/app/globals.css` — added `::before` pseudo with `edgeGlow` keyframes
+
+**Commit:** `e7c2276`
+
+---
+
 ## 2026-03-07 — Dynamic Favicon with Notification Badge
 **Inspiration:** Trading apps (Robinhood, Bloomberg, TradingView) that show notification counts on favicon
 
