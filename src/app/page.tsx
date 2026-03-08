@@ -57,6 +57,7 @@ import { CardLightSweep } from '@/components/CardLightSweep';
 import { CursorGlowCard } from '@/components/CursorGlowBorder';
 import { DataFreshnessIndicator } from '@/components/DataFreshness';
 import { CompanyLogo } from '@/components/ProgressiveImage';
+import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, useSnapshot } from '@/components/SnapshotMode';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -442,7 +443,11 @@ export default function Home() {
   );
 
   return (
+    <SnapshotProvider autoResumeSeconds={300}>
     <div className="min-h-screen relative">
+      {/* Snapshot mode indicator (when paused) */}
+      <SnapshotIndicator />
+      
       {/* Scroll progress indicator */}
       <ScrollProgress height={3} hideAtTop={true} showGlow={true} />
       
@@ -483,7 +488,7 @@ export default function Home() {
                   Earnings <span className="text-gradient text-shine-sweep">Calendar</span>
                 </h1>
                 <MarketStatus />
-                <div className="hidden lg:block">
+                <div className="hidden lg:flex items-center gap-2">
                   <DataFreshnessIndicator
                     lastUpdated={lastDataUpdate}
                     onRefresh={handleDataRefresh}
@@ -492,6 +497,7 @@ export default function Home() {
                     agingThreshold={120}
                     staleThreshold={600}
                   />
+                  <SnapshotToggle size="sm" variant="pill" />
                 </div>
               </div>
               <p className="sticky-header-subtitle">
@@ -519,6 +525,9 @@ export default function Home() {
                 <span className="kbd">M</span>
                 <span className="kbd">P</span>
                 <span>filter</span>
+                <span className="mx-1">·</span>
+                <span className="kbd">⇧P</span>
+                <span>pause</span>
                 <span className="mx-1">·</span>
                 <span className="kbd">?</span>
                 <span>help</span>
@@ -843,5 +852,6 @@ export default function Home() {
       {/* Floating back to top button */}
       <BackToTop />
     </div>
+    </SnapshotProvider>
   );
 }

@@ -12324,3 +12324,429 @@ html.motion-none *::after {
     --motion-duration-multiplier: 1;
   }
 }
+
+/* ============================================
+   SNAPSHOT MODE
+   Pause/freeze real-time updates for analysis
+   ============================================ */
+
+/* Toggle Button Base */
+.snapshot-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary, rgba(20, 20, 30, 0.8));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 9999px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s var(--spring-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.snapshot-toggle:hover {
+  background: rgba(30, 30, 45, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.snapshot-toggle:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Size variants */
+.snapshot-toggle-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  gap: 0.375rem;
+}
+
+.snapshot-toggle-lg {
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  gap: 0.625rem;
+}
+
+/* Variant: icon only */
+.snapshot-toggle.icon {
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  justify-content: center;
+}
+
+.snapshot-toggle.icon.snapshot-toggle-sm {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.375rem;
+}
+
+/* Icon */
+.snapshot-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.snapshot-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Label */
+.snapshot-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.snapshot-status {
+  transition: color 0.2s ease;
+}
+
+.snapshot-elapsed {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+  font-size: 0.75em;
+}
+
+/* Keyboard hint */
+.snapshot-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.125rem 0.375rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  font-size: 0.625rem;
+  font-family: system-ui, sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 0.25rem;
+}
+
+/* Paused state */
+.snapshot-toggle.paused {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.snapshot-toggle.paused:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.snapshot-toggle.paused .snapshot-icon {
+  color: #22c55e;
+}
+
+/* Pulse ring when paused */
+.snapshot-pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  animation: snapshot-pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes snapshot-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* Floating Indicator */
+.snapshot-indicator {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: snapshot-indicator-in 0.4s var(--spring-bouncy);
+  box-shadow: 
+    0 4px 24px rgba(239, 68, 68, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  overflow: hidden;
+}
+
+@keyframes snapshot-indicator-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.snapshot-indicator-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.snapshot-indicator-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #f87171;
+  animation: snapshot-icon-pulse 2s ease-in-out infinite;
+}
+
+.snapshot-indicator-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes snapshot-icon-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.snapshot-indicator-text {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.snapshot-indicator-elapsed {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+.snapshot-indicator-resume {
+  padding: 0.375rem 0.75rem;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  color: #4ade80;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.snapshot-indicator-resume:hover {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.snapshot-indicator-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  animation: snapshot-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes snapshot-shimmer {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
+}
+
+/* Overlay Wrapper */
+.snapshot-overlay {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.snapshot-overlay.paused.frost {
+  filter: saturate(0.7);
+}
+
+.snapshot-overlay.paused.dim {
+  opacity: 0.85;
+}
+
+.snapshot-overlay.paused.border::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px dashed rgba(239, 68, 68, 0.4);
+  border-radius: inherit;
+  pointer-events: none;
+  animation: snapshot-border-march 1s linear infinite;
+}
+
+@keyframes snapshot-border-march {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -16px;
+  }
+}
+
+.snapshot-overlay-effect {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(239, 68, 68, 0.02) 10px,
+    rgba(239, 68, 68, 0.02) 20px
+  );
+  animation: snapshot-lines 2s linear infinite;
+}
+
+@keyframes snapshot-lines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 28px 0;
+  }
+}
+
+/* Mini Badge */
+.snapshot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 4px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #f87171;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.snapshot-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: snapshot-badge-blink 1s ease-in-out infinite;
+}
+
+@keyframes snapshot-badge-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.snapshot-badge-text {
+  line-height: 1;
+}
+
+/* Light mode */
+html.light .snapshot-toggle {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+html.light .snapshot-toggle:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+html.light .snapshot-toggle.paused {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #dc2626;
+}
+
+html.light .snapshot-kbd {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.4);
+}
+
+html.light .snapshot-indicator {
+  background: linear-gradient(135deg, rgba(254, 226, 226, 0.95) 0%, rgba(254, 202, 202, 0.9) 100%);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+html.light .snapshot-indicator-text {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+html.light .snapshot-indicator-elapsed {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+html.light .snapshot-indicator-resume {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #16a34a;
+}
+
+html.light .snapshot-badge {
+  background: rgba(254, 226, 226, 0.9);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #dc2626;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .snapshot-pulse,
+  .snapshot-indicator-shimmer,
+  .snapshot-overlay-effect {
+    animation: none;
+  }
+  
+  .snapshot-indicator {
+    animation: none;
+  }
+  
+  .snapshot-indicator-icon {
+    animation: none;
+  }
+  
+  .snapshot-badge-dot {
+    animation: none;
+  }
+}
