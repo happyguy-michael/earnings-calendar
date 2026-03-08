@@ -2935,6 +2935,175 @@ html.light .filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-c
 .skeleton-delay-5 { animation-delay: 0.5s; }
 
 /* ============================================
+   LOADING MESSAGES
+   Contextual progress messaging for skeleton loading
+   Premium pattern: communicates what's happening
+   ============================================ */
+
+.loading-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.loading-messages-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Animated spinner with gradient stroke */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.loading-spinner-svg {
+  width: 100%;
+  height: 100%;
+  animation: spinner-rotate 1.2s linear infinite;
+}
+
+.loading-spinner-track {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.loading-spinner-arc {
+  stroke: url(#loading-gradient);
+  stroke: var(--accent-blue);
+  stroke-dasharray: 40 62;
+  animation: spinner-dash 1.2s ease-in-out infinite;
+}
+
+@keyframes spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-dash {
+  0% {
+    stroke-dasharray: 1 62;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 40 62;
+    stroke-dashoffset: -15;
+  }
+  100% {
+    stroke-dasharray: 40 62;
+    stroke-dashoffset: -62;
+  }
+}
+
+/* Message text animation */
+.loading-message-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  animation: message-enter 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  min-width: 180px;
+  text-align: left;
+}
+
+.loading-message-text.exiting {
+  animation: message-exit 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes message-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes message-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(4px);
+  }
+}
+
+/* Progress dots */
+.loading-progress-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.loading-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.loading-dot.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  transform: scale(1.2);
+}
+
+.loading-dot.completed {
+  background: var(--accent-purple);
+}
+
+/* Minimal variant */
+.loading-message-minimal {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Light mode */
+html.light .loading-spinner-track {
+  stroke: rgba(0, 0, 0, 0.1);
+}
+
+html.light .loading-dot {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner-svg {
+    animation: none;
+  }
+  .loading-spinner-arc {
+    stroke-dasharray: 40 62;
+    animation: none;
+  }
+  .loading-message-text,
+  .loading-message-text.exiting {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .loading-dot {
+    transition: none;
+  }
+}
+
+/* ============================================
    RIPPLE EFFECT
    Material design-inspired click feedback
    ============================================ */

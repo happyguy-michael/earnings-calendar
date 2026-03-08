@@ -1,5 +1,7 @@
 'use client';
 
+import { LoadingMessages } from './LoadingMessages';
+
 /**
  * Skeleton Loading Components
  * Premium shimmer placeholders for a polished loading experience
@@ -132,6 +134,9 @@ export function SkeletonCalendar() {
           <SkeletonStatCard delay={3} />
           <SkeletonStatCard delay={4} />
         </div>
+
+        {/* Contextual Loading Messages */}
+        <LoadingMessages />
 
         {/* Calendar Weeks Skeleton */}
         <div className="space-y-6">
