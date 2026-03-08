@@ -12750,3 +12750,98 @@ html.light .snapshot-badge {
     animation: none;
   }
 }
+
+/* ============================================
+   ANIMATED GRADIENT BORDER COMPONENT
+   Premium conic-gradient border with animation
+   ============================================ */
+
+/* CSS @property for smooth angle interpolation */
+@property --agb-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes agb-spin {
+  to {
+    --agb-angle: 360deg;
+  }
+}
+
+.agb-wrapper {
+  position: relative;
+  border-radius: var(--agb-border-radius, 16px);
+  padding: var(--agb-border-width, 2px);
+  background: conic-gradient(
+    from var(--agb-angle, 0deg),
+    var(--agb-gradient-stops, oklch(0.75 0.32 0), oklch(0.75 0.32 120), oklch(0.75 0.32 240), oklch(0.75 0.32 360))
+  );
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.agb-content {
+  background: var(--agb-bg-color, rgba(20, 20, 30, 0.98));
+  border-radius: calc(var(--agb-border-radius, 16px) - var(--agb-border-width, 2px));
+  position: relative;
+  z-index: 1;
+}
+
+/* Animating state - spins the gradient */
+.agb-wrapper.agb-animating {
+  animation: agb-spin var(--agb-duration, 3s) linear infinite;
+  box-shadow: 
+    0 0 var(--agb-glow-size, 6px) rgba(120, 80, 255, 0.15),
+    0 0 calc(var(--agb-glow-size, 6px) * 2) rgba(120, 80, 255, 0.1);
+}
+
+/* Subtle shimmer effect on the border */
+.agb-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--agb-border-radius, 16px);
+  background: conic-gradient(
+    from var(--agb-angle, 0deg),
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 10%,
+    transparent 20%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.agb-wrapper.agb-animating::before {
+  opacity: 1;
+  animation: agb-spin calc(var(--agb-duration, 3s) * 0.8) linear infinite reverse;
+}
+
+/* Hover state without animation - subtle glow */
+.agb-wrapper:not(.agb-animating):hover {
+  box-shadow: 0 0 calc(var(--agb-glow-size, 6px) * 0.5) rgba(120, 80, 255, 0.1);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .agb-wrapper.agb-animating,
+  .agb-wrapper.agb-animating::before {
+    animation: none;
+  }
+  
+  .agb-wrapper.agb-animating {
+    /* Still show the gradient, just static */
+    box-shadow: 0 0 var(--agb-glow-size, 6px) rgba(120, 80, 255, 0.15);
+  }
+}
+
+/* Light mode adjustments */
+html.light .agb-content {
+  background: var(--agb-bg-color, rgba(255, 255, 255, 0.98));
+}
+
+html.light .agb-wrapper.agb-animating {
+  box-shadow: 
+    0 0 var(--agb-glow-size, 6px) rgba(120, 80, 255, 0.1),
+    0 0 calc(var(--agb-glow-size, 6px) * 2) rgba(120, 80, 255, 0.05);
+}

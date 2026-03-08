@@ -58,6 +58,7 @@ import { CursorGlowCard } from '@/components/CursorGlowBorder';
 import { DataFreshnessIndicator } from '@/components/DataFreshness';
 import { CompanyLogo } from '@/components/ProgressiveImage';
 import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, useSnapshot } from '@/components/SnapshotMode';
+import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -118,6 +119,47 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   const revenueActual = earning.revenue ? earning.revenue * 1e9 : null;
   const revenueEst = earning.revenueEstimate ? earning.revenueEstimate * 1e9 : null;
 
+  // Determine if this is an exceptional beat worthy of animated border
+  const isMonsterBeat = hasResult && earning.result === 'beat' && surprise >= 15;
+  const isDisasterMiss = hasResult && earning.result === 'miss' && surprise <= -15;
+
+  // Wrapper component - either AnimatedGradientBorder or fragment
+  const CardWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (isMonsterBeat) {
+      return (
+        <AnimatedGradientBorder
+          colorPreset="beat"
+          borderWidth={2}
+          borderRadius={14}
+          duration={4}
+          glowIntensity={0.35}
+          backgroundColor="transparent"
+          hoverOnly={false}
+          className="monster-beat-border"
+        >
+          {children}
+        </AnimatedGradientBorder>
+      );
+    }
+    if (isDisasterMiss) {
+      return (
+        <AnimatedGradientBorder
+          colorPreset="miss"
+          borderWidth={2}
+          borderRadius={14}
+          duration={5}
+          glowIntensity={0.25}
+          backgroundColor="transparent"
+          hoverOnly={false}
+          className="disaster-miss-border"
+        >
+          {children}
+        </AnimatedGradientBorder>
+      );
+    }
+    return <>{children}</>;
+  };
+
   return (
     <div className="earnings-card-wrapper">
       {/* Imminent glow for earnings reporting within 15 minutes */}
@@ -128,6 +170,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           active={true}
         />
       )}
+      <CardWrapper>
       <CardLightSweep 
         variant="diagonal" 
         color={hasResult ? (earning.result === 'beat' ? 'blue' : 'purple') : 'white'}
@@ -204,6 +247,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         ) : null}
         </Link>
       </CardLightSweep>
+      </CardWrapper>
       <div className="earnings-tooltip">
         <EarningsTooltipContent
           ticker={earning.ticker}
