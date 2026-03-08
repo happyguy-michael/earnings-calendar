@@ -1,4 +1,34 @@
 
+## 2026-03-09 — EPS Trend Dots Indicator
+
+**Inspiration:** Stock sparklines in trading apps, GitHub contribution graphs showing activity patterns at a glance
+
+**What I built:**
+- New `EPSTrendDots` component showing EPS trajectory:
+  - Row of 4 dots with varying heights representing relative EPS values per quarter
+  - Color-coded: green for beats, red for misses
+  - Trend arrow (↑/↓/→) indicating overall direction
+  - Hover tooltip reveals exact EPS values and quarter labels
+  - Animated entrance with staggered delays per dot
+  - Uses synthesized historical data based on current estimate (consistent per ticker)
+
+**Technical details:**
+- Intersection Observer triggers animation on viewport entry
+- Height normalization: 20-80% range for visual balance
+- Trend calculation: >3% growth = up, <-3% = down, else neutral
+- `prefers-reduced-motion` respected (instant render, no animations)
+- Light mode support with adapted tooltip styling
+- JSX-in-CSS for scoped tooltip styles
+
+**Integration:**
+- Added to `EarningsCard` between ticker name and live dot
+- Provides instant context about a company's earnings trajectory
+- Users can see at-a-glance whether a company is trending up or down
+
+**Impact:** Users now get immediate visual insight into a company's recent earnings history without clicking through to the detail page. The compact dot visualization adds information density without cluttering the interface.
+
+---
+
 ## 2026-03-08 — Pull-to-Refresh Gesture
 
 **Inspiration:** Dribbble pull-to-refresh designs showing native-feeling mobile gestures with custom animations and physics (dribbble.com/tags/pull-to-refresh)
