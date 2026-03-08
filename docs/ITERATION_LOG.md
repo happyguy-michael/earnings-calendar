@@ -1,5 +1,42 @@
 # Iteration Log
 
+## 2026-03-09 — WeekSummaryCard (Celebratory End-of-Week Recap)
+**Component:** `WeekSummaryCard.tsx`
+
+**What it does:**
+- Glassmorphism summary card at the bottom of each week
+- Displays week performance: total reported, beats, misses, pending
+- Animated beat rate progress bar with shimmer effect
+- "Mood" emoji indicator based on beat rate (🔥 Hot Week, 📈 Strong, ➡️ Mixed, 📉 Soft, ❄️ Cold Week)
+- Highlights biggest beat and biggest miss of the week with surprise percentages
+- Intersection observer triggers entrance animation when scrolled into view
+- Floating gradient orbs in background for premium glassmorphism effect
+
+**Why it matters:**
+- Provides "celebratory empty state" pattern — closure at end of each week
+- Turns data into narrative — "How was this week?" at a glance
+- Emotional design — mood emoji creates human connection with numbers
+- Reduces cognitive load — no need to mentally calculate week performance
+
+**Technical highlights:**
+- IntersectionObserver for visibility-triggered animations
+- Spring physics timing functions for bouncy entrance
+- CSS animation-timeline-ready structure
+- Respects `prefers-reduced-motion` accessibility setting
+- Full light/dark mode support
+- Mobile responsive with stacked highlights
+
+**Inspiration:** Eleken UX article on Empty States
+- "Celebratory empty states mark success with positive reinforcement"
+- "A cheerful message paired with a bit of humor turns a blank screen into a reward"
+
+**Files changed:**
+- `src/components/WeekSummaryCard.tsx` (new)
+- `src/app/page.tsx` (integrated at end of each week card)
+- `src/app/globals.css` (WeekSummaryCard styles)
+
+---
+
 ## 2026-03-08 — LoadingMessages (Contextual Progress Messaging)
 **Component:** `LoadingMessages.tsx`
 
