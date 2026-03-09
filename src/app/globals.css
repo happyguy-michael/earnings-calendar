@@ -2919,7 +2919,8 @@ html.light .filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-c
 
 /* ============================================
    SKELETON LOADING STATES
-   Premium shimmer effect for loading placeholders
+   Premium synchronized wave shimmer effect
+   2025 trend: brand-tinted, viewport-fixed shimmer
    ============================================ */
 
 @keyframes shimmer {
@@ -2931,19 +2932,46 @@ html.light .filter-cards-container:has(.earnings-card-wrapper:hover) .earnings-c
   }
 }
 
+/* Premium wave shimmer - synchronized across all elements */
+@keyframes waveShimmer {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: -200% 50%;
+  }
+}
+
 .skeleton {
+  /* Brand-tinted gradient shimmer with blue/purple highlights */
   background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.08) 20%,
-    rgba(255, 255, 255, 0.12) 40%,
-    rgba(255, 255, 255, 0.08) 60%,
-    rgba(255, 255, 255, 0.04) 80%,
-    rgba(255, 255, 255, 0.04) 100%
+    105deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.04) 10%,
+    rgba(59, 130, 246, 0.08) 20%,
+    rgba(139, 92, 246, 0.12) 30%,
+    rgba(236, 72, 153, 0.08) 40%,
+    rgba(139, 92, 246, 0.1) 50%,
+    rgba(59, 130, 246, 0.06) 60%,
+    rgba(255, 255, 255, 0.04) 70%,
+    rgba(255, 255, 255, 0.03) 100%
   );
-  background-size: 200% 100%;
-  animation: shimmer 1.8s ease-in-out infinite;
+  background-size: 400% 100%;
+  /* Fixed attachment syncs shimmer across all skeleton elements */
+  background-attachment: fixed;
+  animation: waveShimmer 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   border-radius: 8px;
+  /* Subtle inner glow for depth */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Respect reduced motion - static subtle background */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: rgba(255, 255, 255, 0.06);
+    background-attachment: scroll;
+  }
 }
 
 /* Skeleton stat card */
@@ -4499,18 +4527,23 @@ html.light header {
   border-color: rgba(0, 0, 0, 0.06);
 }
 
-/* Light mode skeleton */
+/* Light mode skeleton - softer brand tint */
 html.light .skeleton {
   background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.03) 0%,
-    rgba(0, 0, 0, 0.06) 20%,
-    rgba(0, 0, 0, 0.08) 40%,
-    rgba(0, 0, 0, 0.06) 60%,
-    rgba(0, 0, 0, 0.03) 80%,
-    rgba(0, 0, 0, 0.03) 100%
+    105deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.03) 10%,
+    rgba(59, 130, 246, 0.06) 20%,
+    rgba(139, 92, 246, 0.08) 30%,
+    rgba(236, 72, 153, 0.05) 40%,
+    rgba(139, 92, 246, 0.06) 50%,
+    rgba(59, 130, 246, 0.04) 60%,
+    rgba(0, 0, 0, 0.03) 70%,
+    rgba(0, 0, 0, 0.02) 100%
   );
-  background-size: 200% 100%;
+  background-size: 400% 100%;
+  background-attachment: fixed;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 /* Text color transitions for smooth theme switch */
