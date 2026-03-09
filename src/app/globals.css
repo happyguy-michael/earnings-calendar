@@ -1534,6 +1534,76 @@ html.light .earnings-row:hover .logo-container {
   }
 }
 
+/* ============================================
+   Day Column Hover Effect
+   Subtle visual feedback when hovering over day columns
+   Helps users track which day they're looking at
+   ============================================ */
+.day-content {
+  position: relative;
+  transition: background-color 0.25s ease;
+}
+
+/* Hover background highlight */
+.day-content:hover:not(.today) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Subtle top edge indicator on hover - use ::after for non-today columns */
+.day-content:not(.today)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.4) 20%,
+    rgba(139, 92, 246, 0.6) 50%,
+    rgba(139, 92, 246, 0.4) 80%,
+    transparent 100%
+  );
+  border-radius: 2px;
+  transition: transform 0.3s var(--spring-smooth), opacity 0.25s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.day-content:not(.today):hover::after {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 1;
+}
+
+/* Light mode adjustments */
+html.light .day-content:hover:not(.today) {
+  background: rgba(99, 102, 241, 0.03);
+}
+
+html.light .day-content:not(.today)::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.3) 20%,
+    rgba(99, 102, 241, 0.5) 50%,
+    rgba(99, 102, 241, 0.3) 80%,
+    transparent 100%
+  );
+}
+
+/* Disable hover effects for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .day-content:not(.today)::after {
+    transition: none;
+  }
+  .day-content:not(.today):hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
 /* Section label */
 .section-label {
   display: flex;
