@@ -1,4 +1,42 @@
 
+## 2026-03-09 — WeekNavigationStepper Component
+
+**Inspiration:** iOS page dots, Notion's table of contents navigator, and modern dashboard scroll position indicators. Based on research into scroll spy patterns and quick navigation UX in financial dashboards.
+
+**What was added:**
+- New `WeekNavigationStepper` component - floating dot navigation showing which week is in view
+- Scroll spy functionality auto-detects which week section is visible
+- Click any dot to smooth-scroll to that week
+- Auto-shows on scroll, auto-hides after 2s of inactivity
+- Expandable labels appear on hover showing week date
+- "Now" badge highlights current week
+- Animated dot states: default, hover, active, current week
+- Active dot has gradient glow pulse animation
+- Current week dot has pulsing ring animation
+- Arrow hints at top/bottom indicate more content
+- `useWeekNavigation` hook for generating week info from dates
+
+**Technical notes:**
+- Pure CSS animations with `@keyframes` (no framer-motion dependency)
+- Intersection-based scroll spy with debouncing
+- Keyboard navigation support (arrow keys)
+- Uses existing HapticFeedback hook for tactile response
+- Full light/dark mode support via CSS `:global()` selectors
+- Respects `prefers-reduced-motion` - disables animations
+- Mobile-responsive: smaller dots, hidden labels on small screens
+- Memoized component to prevent unnecessary re-renders
+
+**Why it matters:**
+- Quick navigation for power users who want to jump between weeks
+- Visual feedback about scroll position without distracting from content
+- Common pattern in modern dashboards (Bloomberg, TradingView have similar)
+- Improves discoverability of older/future weeks
+
+**Build:** ✓ Passed
+**Status:** Component ready for integration
+
+---
+
 ## 2026-03-08 — ScrollShadows Component
 
 **Inspiration:** Dashboard design trends 2025 - scroll indicators help users understand there's more content
