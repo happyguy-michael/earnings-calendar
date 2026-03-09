@@ -54,6 +54,7 @@ export function AnimatedEmptyState({ variant = 'past', className = '' }: Animate
     <div 
       ref={containerRef}
       className={`empty-state-container ${mounted ? 'mounted' : ''} ${className}`}
+      data-variant={variant}
     >
       {/* Floating particles */}
       <div className="empty-state-particles" aria-hidden="true">

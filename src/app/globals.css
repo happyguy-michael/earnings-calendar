@@ -7020,6 +7020,120 @@ html.light .shortcut-key {
 }
 
 /* =========================================
+   Empty State - Today Variant Enhancement
+   Adds ambient breathing glow for "today" columns
+   ========================================= */
+
+/* Ambient glow background for today's empty state */
+.empty-state-container::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 24px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--empty-state-glow-color, transparent) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Today variant - warm amber breathing glow */
+.empty-state-container[data-variant="today"]::before {
+  --empty-state-glow-color: rgba(245, 158, 11, 0.08);
+  opacity: 1;
+  animation: emptyStateTodayBreathing 4s ease-in-out infinite;
+}
+
+/* Spring-based entrance for today variant */
+.empty-state-container[data-variant="today"] {
+  animation: emptyStateTodayEntrance 0.6s var(--spring-bouncy) forwards;
+}
+
+.empty-state-container[data-variant="today"] .empty-state-icon-wrapper {
+  animation: 
+    emptyStateIconFloat 3s ease-in-out infinite,
+    emptyStateTodayIconEntrance 0.5s var(--spring-bouncy) 0.1s backwards;
+}
+
+/* Today icon has a subtle persistent glow */
+.empty-state-container[data-variant="today"] .empty-state-icon {
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.25));
+}
+
+/* Future variant - cool blue glow (more subtle) */
+.empty-state-container[data-variant="future"]::before {
+  --empty-state-glow-color: rgba(59, 130, 246, 0.05);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.empty-state-container[data-variant="future"]:hover::before {
+  opacity: 1;
+}
+
+/* Spring entrance animation */
+@keyframes emptyStateTodayEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Icon entrance with scale-bounce */
+@keyframes emptyStateTodayIconEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Breathing glow animation */
+@keyframes emptyStateTodayBreathing {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Light mode adjustments for today glow */
+html.light .empty-state-container[data-variant="today"]::before {
+  --empty-state-glow-color: rgba(245, 158, 11, 0.12);
+}
+
+html.light .empty-state-container[data-variant="today"] .empty-state-icon {
+  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.35));
+}
+
+/* Reduced motion - disable breathing and entrance animations */
+@media (prefers-reduced-motion: reduce) {
+  .empty-state-container[data-variant="today"]::before {
+    animation: none;
+    opacity: 0.8;
+  }
+  
+  .empty-state-container[data-variant="today"],
+  .empty-state-container[data-variant="today"] .empty-state-icon-wrapper {
+    animation: none;
+  }
+}
+
+/* =========================================
    Badge Sparkle Effect
    ========================================= */
 .badge-sparkle-container {
