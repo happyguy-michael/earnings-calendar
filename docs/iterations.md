@@ -33,7 +33,8 @@
 - Improves discoverability of older/future weeks
 
 **Build:** ✓ Passed
-**Status:** Component ready for integration
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Status:** Component ready for integration — can be added to page.tsx with week IDs
 
 ---
 
