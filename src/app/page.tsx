@@ -64,6 +64,7 @@ import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
+import { RevenueIndicator } from '@/components/RevenueIndicator';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -232,6 +233,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {isToday && (
               <FreshBadge reportedAt={new Date(earning.date)} time={earning.time} freshnessHours={4} />
             )}
+            {/* Revenue indicator - shows if revenue confirmed or diverged from EPS */}
+            <RevenueIndicator
+              revenue={earning.revenue ?? null}
+              revenueEstimate={earning.revenueEstimate ?? null}
+              epsResult={earning.result}
+              delay={animationIndex * 50 + 100}
+              size="sm"
+            />
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
