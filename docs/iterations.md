@@ -162,3 +162,33 @@
 **Build:** ✓ Passed
 **Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
 **Note:** The breathing animation is intentionally subtle - it provides a visual hint that the value is live without being distracting
+
+---
+
+## 2026-03-09 — Enhanced Today Empty State with Breathing Glow
+
+**Inspiration:** 2024 dashboard design trends from Muzli/Dribbble - subtle ambient effects that make interfaces feel "alive" and indicate active waiting states.
+
+**What was added:**
+- Ambient breathing glow effect for "today" variant of `AnimatedEmptyState`
+- Subtle radial gradient background that pulses with a 4-second breathing animation
+- Spring-based entrance animation using CSS custom properties (`--spring-bouncy`)
+- Icon drop-shadow adds depth and draws attention to today's empty cell
+- Future variant gets subtle glow on hover
+- `data-variant` attribute added for CSS targeting
+
+**Technical notes:**
+- CSS-only implementation using `::before` pseudo-element
+- Uses existing spring physics timing functions from CSS variables
+- Respects `prefers-reduced-motion` (disables animation, keeps static glow)
+- Light mode adjustments for visibility
+- Zero JavaScript overhead - pure CSS enhancement
+
+**Design rationale:**
+- Empty states for "today" should feel different from past/future days
+- Breathing animation subtly indicates "system is waiting for earnings to report"
+- Matches premium dashboard aesthetics without being distracting
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, deploying to Vercel
+**Commit:** `157019c`
