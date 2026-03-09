@@ -2084,15 +2084,73 @@ html.light .card:focus-within:has(:focus-visible) {
 .search-icon {
   flex-shrink: 0;
   color: #52525b;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.4s var(--spring-bouncy);
+  transform-origin: center;
+  position: relative;
 }
 
+/* Search icon morphing animation on focus */
 .search-bar:focus-within .search-icon {
   color: #3b82f6;
+  transform: rotate(-15deg) scale(1.15);
+  animation: searchIconPulse 2s ease-in-out infinite;
 }
 
+/* Subtle scanning pulse effect */
+@keyframes searchIconPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+  }
+}
+
+/* When user types, icon settles to "active" state */
 .search-bar.has-value .search-icon {
   color: #71717a;
+  transform: rotate(0deg) scale(1);
+  animation: none;
+}
+
+/* Active search state - subtle glow remains */
+.search-bar.has-value:focus-within .search-icon {
+  color: #3b82f6;
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+  animation: none;
+}
+
+/* Light mode adjustments */
+html.light .search-bar:focus-within .search-icon {
+  animation-name: searchIconPulseLight;
+}
+
+@keyframes searchIconPulseLight {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.35));
+  }
+}
+
+/* Reduced motion - disable rotation/pulse, keep color */
+@media (prefers-reduced-motion: reduce) {
+  .search-icon {
+    transition: color 0.2s ease;
+  }
+  
+  .search-bar:focus-within .search-icon {
+    transform: none;
+    animation: none;
+  }
+  
+  .search-bar.has-value .search-icon,
+  .search-bar.has-value:focus-within .search-icon {
+    transform: none;
+    filter: none;
+  }
 }
 
 .search-input {
@@ -2164,15 +2222,67 @@ html.light .card:focus-within:has(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.3s var(--spring-snappy);
 }
 
 .search-kbd.hidden {
   opacity: 0;
+  pointer-events: none;
 }
 
+/* Keyboard hint exits with scale/fade when focused */
 .search-bar:focus-within .search-kbd {
   opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+/* Keyboard trigger animation - flash when `/` is pressed */
+.search-kbd.triggered .kbd {
+  animation: kbdTrigger 0.4s var(--spring-bouncy);
+}
+
+@keyframes kbdTrigger {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  30% {
+    transform: scale(0.85);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Periodic attention pulse on kbd hint (draws user attention) */
+.search-kbd .kbd {
+  animation: kbdAttention 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes kbdAttention {
+  0%, 90%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  95% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Disable attention pulse when reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .search-kbd .kbd {
+    animation: none;
+  }
+  
+  .search-kbd.triggered .kbd {
+    animation: none;
+  }
 }
 
 .search-results-count {

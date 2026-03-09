@@ -15,6 +15,7 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [kbdTriggered, setKbdTriggered] = useState(false);
   const animatedPlaceholder = useEarningsSearchPlaceholder();
 
   // Show suggestions when focused and has query
@@ -42,6 +43,9 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
       
       if (e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) {
         e.preventDefault();
+        // Trigger keyboard hint animation
+        setKbdTriggered(true);
+        setTimeout(() => setKbdTriggered(false), 400);
         inputRef.current?.focus();
       }
     };
@@ -114,7 +118,7 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
         </button>
 
         {/* Keyboard hint */}
-        <div className={`search-kbd ${hasValue ? 'hidden' : ''}`}>
+        <div className={`search-kbd ${hasValue ? 'hidden' : ''} ${kbdTriggered ? 'triggered' : ''}`}>
           <span className="kbd">/</span>
         </div>
 
