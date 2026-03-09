@@ -1,4 +1,38 @@
 
+## 2026-03-09 — Revenue Match Indicator
+
+**Inspiration:** 2026 fintech UX trends emphasizing "information density without clutter" — users shouldn't need to click through to understand earnings quality. Also inspired by the "Calm Design Framework" for reducing cognitive load in financial decisions.
+
+**What I built:**
+- New `RevenueIndicator` component showing revenue performance at a glance:
+  - Compact pill badge next to EPS beat/miss badges
+  - Shows revenue surprise percentage (e.g., "↑ Rev +3.2%")
+  - Color-coded to show earnings quality:
+    - **Green**: Revenue beat (confirms EPS beat = strong quarter)
+    - **Red**: Revenue miss (confirms EPS miss = weak quarter)
+    - **Amber + ⚠**: Revenue diverged from EPS (mixed signals — e.g., EPS beat via cost cutting)
+  - Hover tooltip explains the signal ("Both EPS and revenue beat — strong quarter")
+
+**Technical details:**
+- Animated entrance with configurable delay (staggers with other card elements)
+- Tooltip with smooth fade/scale animation
+- Graceful handling of missing revenue data (hides completely)
+- Two variants: `RevenueIndicator` (with label) and `RevenueIndicatorCompact` (icon-only)
+
+**Integration:**
+- Added to `EarningsCard` between FreshBadge and SurpriseMagnitude
+- Only appears for reported earnings with revenue data
+- Positioned to give full earnings context at a glance
+
+**Impact:** Users can now instantly distinguish between:
+- "Real growth" quarters (EPS beat + revenue beat)
+- "Cost cutting" quarters (EPS beat + revenue miss)
+- Truly weak quarters (both miss)
+
+This adds critical context without requiring click-through to detail page.
+
+---
+
 ## 2026-03-09 — EPS Trend Dots Indicator
 
 **Inspiration:** Stock sparklines in trading apps, GitHub contribution graphs showing activity patterns at a glance
