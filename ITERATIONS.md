@@ -1,4 +1,32 @@
 
+## 2026-03-10 — Premium Wave Shimmer for Skeleton Loading
+
+**Inspiration:** 2025/2026 skeleton loading design trends (freefrontend.com, frontend-hero.com, matsimon.dev) — synchronized shimmer using `background-attachment: fixed`, multi-color brand-tinted gradients, and wave effects.
+
+**What I built:**
+- Upgraded skeleton shimmer from basic grayscale to premium brand-tinted effect:
+  - Gradient now includes subtle blue/purple/pink highlights matching brand colors
+  - Uses `background-attachment: fixed` so ALL skeleton elements shimmer in perfect sync across the viewport
+  - Increased gradient size (400% vs 200%) for smoother wave effect
+  - Smoother `cubic-bezier(0.4, 0, 0.2, 1)` timing at 2.4s duration
+  - Added subtle `box-shadow: inset` for depth
+
+- Light mode support:
+  - Softer brand tint that works on light backgrounds
+  - Maintains synchronized shimmer behavior
+
+- Accessibility:
+  - `prefers-reduced-motion` falls back to static subtle background (no animation)
+
+**Technical details:**
+- The `background-attachment: fixed` trick makes the gradient position relative to the viewport, not each element
+- This creates a unified "wave washing over the page" effect instead of individual shimmer per element
+- Brand colors at low opacity (6-12%) add visual interest without being distracting
+
+**Impact:** Loading states now feel more premium and cohesive. The synchronized shimmer creates a polished, app-like experience that matches the brand aesthetic.
+
+---
+
 ## 2026-03-09 — Accessible Filter Chips (WAI-ARIA Tablist)
 
 **Inspiration:** 2025 dashboard design principles emphasizing accessibility — "Dark mode and accessibility: Use high contrast, clear labels, and keyboard-friendly navigation" (Medium/Dribbble design principles). Also W3C WAI-ARIA Authoring Practices for tab/tablist patterns.
