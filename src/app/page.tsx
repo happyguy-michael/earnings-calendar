@@ -819,6 +819,9 @@ export default function Home() {
         >
         <div 
           key={slideKey.current}
+          id="earnings-content"
+          role="tabpanel"
+          aria-label={`Showing ${statusFilter === 'all' ? 'all' : statusFilter} earnings`}
           className={`space-y-6 ${slideDirection === 'left' ? 'week-slide-enter-right' : ''} ${slideDirection === 'right' ? 'week-slide-enter-left' : ''}`}
         >
           {weeks.map((weekStart, weekIndex) => (
