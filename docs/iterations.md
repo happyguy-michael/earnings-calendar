@@ -41,3 +41,50 @@
 
 **Build:** ✓ Passed
 **Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+
+## 2026-03-09 — Day Column Hover Effect
+
+**Iteration Type:** Micro-interaction
+**Inspired By:** Eleken's Calendar UI article + financial dashboard patterns
+
+**What Changed:**
+- Added subtle top edge indicator when hovering over day columns
+- Purple gradient line scales in from center on hover
+- Subtle background highlight for better column tracking
+- Supports light mode and reduced-motion preferences
+- Uses `::after` pseudo-element to avoid conflict with today's effects
+
+**Technical:**
+- CSS-only implementation, no JavaScript required
+- Uses CSS custom property `--spring-smooth` for natural animation
+- Selector `:not(.today)` prevents conflict with today column's aurora effect
+- Graceful degradation for reduced-motion preference
+
+**Commit:** 543c0d5
+
+## 2026-03-09 — PulseIndicator Component
+
+**Iteration Type:** Micro-interaction / Status Indicator
+**Inspired By:** Vercel deployment status, GitHub Actions workflow indicators, Slack presence dots
+
+**What was added:**
+- New `PulseIndicator` component - animated status dot with triple-ring pulse effect
+- Three animation variants: `pulse` (expanding rings), `breathing` (subtle scale), `ripple` (single expanding circle)
+- Five status presets: `live` (green), `pending` (amber), `syncing` (blue), `error` (red), `offline` (gray)
+- Four size options: `xs`, `sm`, `md`, `lg`
+- Configurable pulse speed
+- Convenience wrappers: `LiveIndicator`, `PendingIndicator`, `SyncingIndicator`
+
+**Integration:**
+- Added to "Pending" stat card - shows breathing amber pulse when pending count > 0
+- Provides subtle visual feedback that this is a "live" number that will change
+
+**Technical notes:**
+- CSS keyframe animations with staggered timing for smooth visual flow
+- Uses CSS custom properties for theming (colors, speed, size)
+- Respects `prefers-reduced-motion` - hides rings, shows static dot only
+- Theme-aware (adjusts glow intensity for light mode)
+- Memoized component to prevent unnecessary re-renders
+- Proper ARIA role="status" and label for accessibility
+
+**Build:** ✓ Passed

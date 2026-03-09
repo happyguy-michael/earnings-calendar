@@ -13961,3 +13961,147 @@ html.light .week-summary-highlight.miss {
     gap: 8px;
   }
 }
+
+/* ============================================
+   PulseIndicator - Live/Activity Status Dot
+   Animated rings with smooth pulse effect
+   ============================================ */
+.pulse-indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--container-size, 20px);
+  height: var(--container-size, 20px);
+  flex-shrink: 0;
+}
+
+/* Core dot - the solid center */
+.pulse-core {
+  position: absolute;
+  width: var(--dot-size, 8px);
+  height: var(--dot-size, 8px);
+  border-radius: 50%;
+  background: var(--pulse-core);
+  z-index: 3;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s var(--spring-snappy);
+}
+
+.pulse-core.mounted {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Breathing animation for subtle activity indication */
+.pulse-core.breathing {
+  animation: pulseBreathing var(--pulse-speed, 2000ms) ease-in-out infinite;
+}
+
+@keyframes pulseBreathing {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+/* Inner glow around core dot */
+.pulse-glow {
+  position: absolute;
+  width: var(--dot-size, 8px);
+  height: var(--dot-size, 8px);
+  border-radius: 50%;
+  background: var(--pulse-core);
+  filter: blur(4px);
+  opacity: 0.5;
+  z-index: 2;
+}
+
+/* Expanding pulse rings */
+.pulse-ring {
+  position: absolute;
+  width: var(--dot-size, 8px);
+  height: var(--dot-size, 8px);
+  border-radius: 50%;
+  border: 1.5px solid var(--pulse-ring);
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Staggered ring animations */
+.pulse-ring-1 {
+  animation: pulseRing var(--pulse-speed, 2000ms) ease-out infinite;
+  animation-delay: 0ms;
+}
+
+.pulse-ring-2 {
+  animation: pulseRing var(--pulse-speed, 2000ms) ease-out infinite;
+  animation-delay: calc(var(--pulse-speed, 2000ms) * 0.33);
+}
+
+.pulse-ring-3 {
+  animation: pulseRing var(--pulse-speed, 2000ms) ease-out infinite;
+  animation-delay: calc(var(--pulse-speed, 2000ms) * 0.66);
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Ripple variant - single expanding circle */
+.pulse-ripple {
+  position: absolute;
+  width: var(--dot-size, 8px);
+  height: var(--dot-size, 8px);
+  border-radius: 50%;
+  background: var(--pulse-glow);
+  animation: pulseRipple var(--pulse-speed, 2000ms) ease-out infinite;
+  z-index: 1;
+}
+
+@keyframes pulseRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Light mode adjustments */
+html.light .pulse-glow {
+  opacity: 0.4;
+}
+
+html.light .pulse-ring {
+  border-width: 2px;
+}
+
+/* Reduced motion - static dot only */
+@media (prefers-reduced-motion: reduce) {
+  .pulse-core.breathing {
+    animation: none;
+  }
+  
+  .pulse-ring,
+  .pulse-ripple {
+    display: none;
+  }
+}

@@ -63,6 +63,7 @@ import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
 import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
+import { PulseIndicator } from '@/components/PulseIndicator';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
 
@@ -762,7 +763,17 @@ export default function Home() {
                       <RollingNumber value={pendingCount} staggerDelay={35} />
                     </ValueChangeHighlight>
                   </div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Pending</div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
+                    Pending
+                    {pendingCount > 0 && (
+                      <PulseIndicator 
+                        status="pending" 
+                        size="xs" 
+                        variant="breathing"
+                        label={`${pendingCount} earnings pending`}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </CursorGlowCard>
