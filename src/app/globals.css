@@ -14282,3 +14282,96 @@ html.light .pulse-ring {
     display: none;
   }
 }
+
+/* ============================================
+   FlipMonth - Airport departure board animation
+   Premium flip effect for month/year display
+   ============================================ */
+.flip-month {
+  display: inline-flex;
+  perspective: 400px;
+}
+
+.flip-char {
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+}
+
+.flip-char-inner {
+  display: inline-block;
+  backface-visibility: hidden;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: var(--flip-delay, 0ms);
+}
+
+/* Flipping state */
+.flip-char.flipping .flip-char-inner {
+  animation: flipCharDown 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: var(--flip-delay, 0ms);
+}
+
+@keyframes flipCharDown {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  40% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+  41% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* Subtle shadow during flip */
+.flip-char.flipping::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(0, 0, 0, 0.1) 50%,
+    transparent 60%
+  );
+  animation: flipShadow 0.35s ease-out forwards;
+  animation-delay: var(--flip-delay, 0ms);
+  pointer-events: none;
+}
+
+@keyframes flipShadow {
+  0%, 100% {
+    opacity: 0;
+  }
+  40%, 60% {
+    opacity: 1;
+  }
+}
+
+/* Light mode - stronger shadow */
+html.light .flip-char.flipping::after {
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(0, 0, 0, 0.15) 50%,
+    transparent 60%
+  );
+}
+
+/* Reduced motion - instant change */
+@media (prefers-reduced-motion: reduce) {
+  .flip-char.flipping .flip-char-inner {
+    animation: none;
+  }
+  
+  .flip-char.flipping::after {
+    display: none;
+  }
+}

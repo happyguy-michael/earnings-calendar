@@ -66,6 +66,7 @@ import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingAc
 import { PulseIndicator } from '@/components/PulseIndicator';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
+import { FlipMonth } from '@/components/FlipMonth';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -590,7 +591,10 @@ export default function Home() {
                 </div>
               </div>
               <p className="sticky-header-subtitle">
-                {months[currentWeekStart.getMonth()]} {currentWeekStart.getFullYear()}
+                <FlipMonth 
+                  month={months[currentWeekStart.getMonth()]} 
+                  year={currentWeekStart.getFullYear()} 
+                />
               </p>
             </div>
             
