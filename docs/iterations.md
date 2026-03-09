@@ -1,4 +1,36 @@
 
+## 2026-03-09 — ShimmerText Component
+
+**Inspiration:** Premium UI patterns from Stripe, Linear, and Apple - subtle light sweep effects that add polish to headlines and important text elements.
+
+**What was added:**
+- New `ShimmerText` component - animated shine/shimmer effect for text
+- Four trigger modes: `continuous`, `hover`, `once`, `interval`
+- Customizable shimmer color, width, angle, and duration
+- Pre-configured variants: `ShimmerHeadline`, `ShimmerLink`, `ShimmerBadge`, `ShimmerLoading`
+- Theme-aware (adjusts opacity for light/dark mode)
+- Uses CSS `mix-blend-mode: overlay` for natural blending
+- Hardware-accelerated gradient animation
+
+**Technical notes:**
+- Pure CSS animation with `@keyframes shimmer-sweep`
+- JSX inline styles for encapsulation (no external CSS needed)
+- Uses CSS custom properties for runtime configuration
+- Respects `prefers-reduced-motion` preference
+- IntersectionObserver-free (simpler than scroll-based triggers)
+- Memoization-friendly for React rendering
+
+**Use cases:**
+- Headlines that periodically catch attention
+- CTAs with hover shimmer
+- Badge/tag elements with one-time attention grab
+- Loading states with subtle skeleton-like effect
+
+**Build:** ✓ Passed
+**Status:** Component ready for integration
+
+---
+
 ## 2026-03-09 — WeekNavigationStepper Component
 
 **Inspiration:** iOS page dots, Notion's table of contents navigator, and modern dashboard scroll position indicators. Based on research into scroll spy patterns and quick navigation UX in financial dashboards.
