@@ -88,3 +88,5 @@
 - Proper ARIA role="status" and label for accessibility
 
 **Build:** ✓ Passed
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Note:** The breathing animation is intentionally subtle - it provides a visual hint that the value is live without being distracting
