@@ -67,6 +67,7 @@ import { PulseIndicator } from '@/components/PulseIndicator';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
 import { FlipMonth } from '@/components/FlipMonth';
+import { TodayNarrative } from '@/components/TodayNarrative';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -783,6 +784,9 @@ export default function Home() {
             </CursorGlowCard>
           </ParallaxFloat>
         </div>
+
+        {/* Today's Narrative Summary - conversational overview */}
+        <TodayNarrative earnings={earnings} />
 
         {/* Week Navigation Indicator */}
         {(!isFiltering || filteredEarnings.length > 0) && (
