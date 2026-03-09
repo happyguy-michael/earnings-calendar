@@ -1,4 +1,38 @@
 
+## 2026-03-09 — Accessible Filter Chips (WAI-ARIA Tablist)
+
+**Inspiration:** 2025 dashboard design principles emphasizing accessibility — "Dark mode and accessibility: Use high contrast, clear labels, and keyboard-friendly navigation" (Medium/Dribbble design principles). Also W3C WAI-ARIA Authoring Practices for tab/tablist patterns.
+
+**What I built:**
+- Enhanced `FilterChips` component with full WAI-ARIA support:
+  - `role="tablist"` on container, `role="tab"` on each chip
+  - Roving tabindex keyboard navigation (Arrow keys move between tabs)
+  - `aria-selected`, `aria-controls`, `aria-label` for each tab
+  - Screen reader live region announcing current filter state
+  - Descriptive labels explaining each filter's purpose
+  - Auto-select on arrow key navigation (standard tab pattern)
+
+- Accessibility utilities added to globals.css:
+  - `.sr-only` - Visually hidden but accessible to screen readers
+  - `.skip-link` - Skip to content link for keyboard users
+
+- Focus-visible styles per filter type:
+  - Blue ring for "All" filter
+  - Green ring for "Beat" filter
+  - Red ring for "Miss" filter
+  - Amber ring for "Pending" filter
+
+**Technical details:**
+- `tabIndex={isActive ? 0 : -1}` implements roving tabindex
+- Arrow keys (Left/Right/Up/Down), Home, End for navigation
+- Enter/Space to select (though auto-select on arrow is also active)
+- Syncs focusedIndex when value changes externally (e.g., keyboard shortcuts)
+- `id="earnings-content"` added to content area for `aria-controls`
+
+**Impact:** Screen reader users can now navigate filters with clear announcements like "Beat: 24 reports. Show earnings that beat estimates" and use standard tab navigation patterns. Keyboard users get clear focus indicators that match each filter's color theme.
+
+---
+
 ## 2026-03-09 — Revenue Match Indicator
 
 **Inspiration:** 2026 fintech UX trends emphasizing "information density without clutter" — users shouldn't need to click through to understand earnings quality. Also inspired by the "Calm Design Framework" for reducing cognitive load in financial decisions.
