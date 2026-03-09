@@ -27,7 +27,8 @@
 - Loading states with subtle skeleton-like effect
 
 **Build:** ✓ Passed
-**Status:** Component ready for integration
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Status:** Component ready for integration — can be used with ShimmerHeadline, ShimmerLink, ShimmerBadge wrappers
 
 ---
 
