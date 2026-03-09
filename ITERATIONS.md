@@ -1,4 +1,42 @@
 
+## 2026-03-10 — TodayNarrative: Conversational Daily Summary
+
+**Inspiration:** 2026 UI/UX trend "Post-Dashboard Era: Narrative Interfaces" (orizon.co) — dashboards become stories, not spreadsheets. Users want synthesis, not widgets. "Here's what changed today" reports, adaptive insights instead of static charts.
+
+**What I built:**
+- New `TodayNarrative` component providing a human-readable summary:
+  - Dynamic narrative that adapts to today's situation:
+    - "4 reports today — 2 pre-market, 2 after hours"
+    - "AAPL already crushed it with +12% surprise"
+    - "Quiet day — no earnings scheduled"
+  - Six mood states: `hot`, `good`, `mixed`, `rough`, `waiting`, `calm`
+  - Contextual emoji indicators (🔥📈⏳❄️☀️🌙)
+  - Highlights noteworthy beats/misses in secondary text
+  - Teases upcoming earnings with time/probability
+
+- Premium animations:
+  - Staggered entrance (primary text → secondary text)
+  - Emoji bounce with slight rotation
+  - Animated gradient underline shimmer
+  - Mood-specific background gradients (subtle glassmorphism)
+
+- Accessibility:
+  - `role="status"` with `aria-live="polite"` for screen readers
+  - Full `prefers-reduced-motion` support
+  - Light mode styling
+
+**Technical details:**
+- Memoized narrative generation based on earnings data
+- Calculates reported/pending, beats/misses, surprise percentages
+- Finds top beat and top miss for highlights
+- CSS-only animations with staggered delays
+
+**Impact:** Converts data into conversational insights. Instead of just seeing "4 pending", users see "4 after-hours reports today — NVDA has 94% beat probability". More engaging and informative without adding cognitive load.
+
+**Deploy verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-10 — Morphing Search Icon Animation
 
 **Inspiration:** 2025 micro-animation trends for search bars (bricxlabs.com, expertappdevs.com) — morphing icons that transform on interaction, providing satisfying visual feedback during search activation.
