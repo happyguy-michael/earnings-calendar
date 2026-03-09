@@ -1,4 +1,37 @@
 
+## 2026-03-10 — Morphing Search Icon Animation
+
+**Inspiration:** 2025 micro-animation trends for search bars (bricxlabs.com, expertappdevs.com) — morphing icons that transform on interaction, providing satisfying visual feedback during search activation.
+
+**What I built:**
+- Enhanced search icon with focus-triggered morphing animation:
+  - Icon rotates -15° and scales 1.15x when search bar is focused
+  - Subtle pulsing glow effect (2s loop) during active search mode
+  - When user starts typing, icon settles to "active" state (no rotation, subtle glow)
+  - Smooth spring-based transitions using `--spring-bouncy` timing
+
+- Keyboard hint enhancements:
+  - `/` key hint scales down and fades when focused (exit animation)
+  - When keyboard shortcut is triggered, kbd shows "press" animation (scales to 0.85 then bounces back)
+  - Periodic attention pulse (every 4s) on kbd hint to draw user attention
+  - Animation disabled if reduced motion preference
+
+- Light mode support:
+  - Adjusted glow intensity for light backgrounds
+  - Maintains visual impact without being harsh
+
+**Technical details:**
+- Uses CSS `filter: drop-shadow()` for the glow effect (works on SVG)
+- Spring timing function for bouncy, satisfying feel
+- State management in SearchBar component tracks `kbdTriggered` for animation trigger
+- Respects `prefers-reduced-motion` - disables all transforms and animations
+
+**Impact:** Search interaction now feels more alive and responsive. The morphing icon provides clear visual feedback that the user is in "search mode", while the keyboard hint animation rewards users who discover the shortcut.
+
+**Deploy verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-10 — Premium Wave Shimmer for Skeleton Loading
 
 **Inspiration:** 2025/2026 skeleton loading design trends (freefrontend.com, frontend-hero.com, matsimon.dev) — synchronized shimmer using `background-attachment: fixed`, multi-color brand-tinted gradients, and wave effects.
