@@ -219,7 +219,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               delay={animationIndex * 50 + 100}
               size="sm"
             />
-            <LiveDot isToday={!!isToday} isPending={isPending} />
+            <LiveDot isToday={!!isToday} isPending={isPending} time={earning.time} />
           </div>
           <div className="text-xs text-zinc-500 truncate flex items-center gap-2">
             {earning.company}

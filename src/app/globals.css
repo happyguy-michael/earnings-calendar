@@ -4996,6 +4996,235 @@ html.light .live-badge.upcoming {
   border-color: rgba(245, 158, 11, 0.2);
 }
 
+/* ============================================
+   LiveBadge v2 - Premium Time-Aware Indicator
+   ============================================ */
+
+.live-badge-v2 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.3s var(--spring-smooth);
+}
+
+/* Live state - red pulsing */
+.live-badge-v2.live {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+/* Soon state - amber urgent */
+.live-badge-v2.soon {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.15) 100%);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* Upcoming state - blue calm */
+.live-badge-v2.upcoming {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 100%);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Waiting state - muted */
+.live-badge-v2.waiting {
+  background: linear-gradient(135deg, rgba(113, 113, 122, 0.15) 0%, rgba(82, 82, 91, 0.1) 100%);
+  color: #a1a1aa;
+  border: 1px solid rgba(113, 113, 122, 0.25);
+}
+
+/* Dot indicator */
+.live-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+  flex-shrink: 0;
+}
+
+.live-badge-dot.pulsing {
+  animation: liveBadgeDotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes liveBadgeDotPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 6px currentColor;
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.85);
+    box-shadow: 0 0 12px currentColor;
+  }
+}
+
+/* Main text label */
+.live-badge-text {
+  line-height: 1;
+  font-weight: 700;
+}
+
+/* Countdown sub-label */
+.live-badge-countdown {
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-left: 2px;
+  padding-left: 4px;
+  border-left: 1px solid currentColor;
+  opacity: 0.4;
+}
+
+/* Live glow effect - radiating pulse */
+.live-badge-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: transparent;
+  pointer-events: none;
+  animation: liveBadgeGlowPulse 2s ease-in-out infinite;
+}
+
+@keyframes liveBadgeGlowPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 0 0 rgba(239, 68, 68, 0),
+      inset 0 0 15px rgba(239, 68, 68, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 4px rgba(239, 68, 68, 0.15),
+      inset 0 0 20px rgba(239, 68, 68, 0.15);
+  }
+}
+
+/* Soon glow effect - breathing amber */
+.live-badge-soon-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: transparent;
+  pointer-events: none;
+  animation: liveBadgeSoonPulse 3s ease-in-out infinite;
+}
+
+@keyframes liveBadgeSoonPulse {
+  0%, 100% {
+    box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.1);
+  }
+  50% {
+    box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.2);
+  }
+}
+
+/* Live dot inline - enhanced */
+.live-dot-inline {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fbbf24;
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.5);
+  margin-left: 6px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.live-dot-inline.live {
+  background: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
+  animation: liveDotInlinePulse 1.5s ease-in-out infinite;
+}
+
+.live-dot-inline.soon {
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+  animation: liveDotSoonPulse 2s ease-in-out infinite;
+}
+
+@keyframes liveDotInlinePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes liveDotSoonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Light mode v2 styles */
+html.light .live-badge-v2.live {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(220, 38, 38, 0.08) 100%);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #dc2626;
+}
+
+html.light .live-badge-v2.soon {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.08) 100%);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #d97706;
+}
+
+html.light .live-badge-v2.upcoming {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.06) 100%);
+  border-color: rgba(59, 130, 246, 0.2);
+  color: #2563eb;
+}
+
+html.light .live-badge-v2.waiting {
+  background: linear-gradient(135deg, rgba(113, 113, 122, 0.08) 0%, rgba(82, 82, 91, 0.04) 100%);
+  border-color: rgba(113, 113, 122, 0.15);
+  color: #52525b;
+}
+
+html.light .live-dot-inline {
+  background: #d97706;
+  box-shadow: 0 0 6px rgba(217, 119, 6, 0.4);
+}
+
+html.light .live-dot-inline.live {
+  background: #dc2626;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .live-badge-dot.pulsing,
+  .live-dot-inline.live,
+  .live-dot-inline.soon {
+    animation: none;
+  }
+  
+  .live-badge-glow,
+  .live-badge-soon-glow {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
 /* Countdown Timer Styles with Progress Ring */
 .countdown-badge {
   display: flex;
