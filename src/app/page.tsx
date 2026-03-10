@@ -68,6 +68,7 @@ import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
 import { FlipMonth } from '@/components/FlipMonth';
 import { TodayNarrative } from '@/components/TodayNarrative';
+import { SessionProgressBar } from '@/components/SessionProgressBar';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
 import { SentimentPulse } from '@/components/SentimentPulse';
 import { DayHeatIndicator } from '@/components/DayHeatIndicator';
@@ -688,6 +689,11 @@ export default function Home() {
 
       {/* Ticker Ribbon - scrolling earnings tape */}
       <TickerRibbon earnings={earnings} speed={35} />
+
+      {/* Session Progress Bar - visual timeline of trading day */}
+      <div className="max-w-4xl mx-auto px-6 mt-4">
+        <SessionProgressBar showLabels={true} compact={false} />
+      </div>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Row with Cursor Glow, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
