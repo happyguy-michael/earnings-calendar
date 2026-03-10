@@ -1,3 +1,41 @@
+## 2026-03-10 — SentimentPulse: Dynamic Earnings Momentum Indicator
+
+**Inspiration:** Heart rate monitors, live trading dashboards, and market sentiment indicators. The goal was to create an organic, alive feeling that reflects the real-time mood of the market based on earnings results.
+
+**What I built:**
+- New `SentimentPulse` component with ECG-style waveform visualization:
+  - Animated heartbeat that speeds up or slows down based on beat/miss ratio
+  - Six sentiment states: hot (🔥), bullish (📈), neutral (➡️), bearish (📉), cold (❄️), waiting (⏳)
+  - Color transitions from green (beats) to amber (mixed) to red (misses)
+  - Glow intensity pulses with each beat animation
+
+- Dynamic metrics:
+  - Hot: 85%+ beat rate → fast 600ms pulse
+  - Bullish: 65%+ → 900ms pulse
+  - Neutral: 45%+ → 1200ms pulse amber
+  - Bearish: 25%+ → 1500ms pulse
+  - Cold: <25% → slow 2000ms red pulse
+  - Waiting: No data → gray flatline
+
+- Layout enhancement:
+  - Integrated next to TodayNarrative in a flex row
+  - Shows beat/miss counts and pending count
+  - Glassmorphic container styling
+  - Stacks vertically on mobile
+
+**Technical details:**
+- Uses requestAnimationFrame for smooth pulse animation
+- SVG path morphing for ECG waveform effect
+- Respects prefers-reduced-motion (static display)
+- Full light mode support
+- Compact variant available for tight spaces
+
+**Impact:** Users get an instant visual indicator of how earnings season is going — the pulse tells the story at a glance without reading numbers.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 
 ## 2026-03-10 — Day Stats Popover: Quick Stats on Day Header Hover
 
