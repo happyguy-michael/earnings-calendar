@@ -192,3 +192,27 @@
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, deploying to Vercel
 **Commit:** `157019c`
+
+## 2026-03-10: Enhanced AlsoReporting Sidebar Component
+
+**Inspiration:** Dribbble finance dashboards with premium glassmorphism cards
+
+**Change:** Replaced basic "Also Reporting" list with polished component featuring:
+- Company logos using existing CompanyLogo component
+- Beat/miss result badges with surprise percentages  
+- Mini animated odds gauge for pending earnings
+- Staggered entrance animations with spring physics
+- Premium hover glow effects on each item
+- Monster beat/disaster miss pulse animations for extreme results
+- Arrow indicator on hover for click affordance
+- Empty state when no other reports that day
+- Full light mode support
+- Reduced motion accessibility support
+
+**Files:**
+- `src/components/AlsoReporting.tsx` (new)
+- `src/app/globals.css` (added ~300 lines)
+- `src/app/report/[ticker]/page.tsx` (integrated component)
+
+**Commit:** fe37f35
+**Deploy:** https://earnings-calendar-omega.vercel.app/report/AAPL
