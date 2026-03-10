@@ -20,6 +20,7 @@ import { BeatStreak } from '@/components/BeatStreak';
 import { AnimatedBadgeIcon } from '@/components/AnimatedResultIcon';
 import { CopyTicker } from '@/components/CopyTicker';
 import { BrokerCTA, BrokerCTAGroup } from '@/components/BrokerCTA';
+import { AlsoReporting } from '@/components/AlsoReporting';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -478,21 +479,12 @@ export default function ReportPage() {
                 </div>
               </div>
 
-              <div className="glass-card p-5">
-                <h3 className="text-sm font-semibold text-white mb-4">Also Reporting</h3>
-                <div className="space-y-2">
-                  {earnings.filter(e => e.date === earning.date && e.ticker !== ticker).slice(0, 4).map(e => (
-                    <Link 
-                      key={e.ticker} 
-                      href={`/report/${e.ticker}`}
-                      className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-smooth"
-                    >
-                      <span className="text-white font-medium">{e.ticker}</span>
-                      <span className="text-xs text-zinc-500">{e.time === 'pre' ? '☀️' : '🌙'}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+              <AlsoReporting 
+                earnings={earnings} 
+                currentDate={earning.date}
+                currentTicker={ticker}
+                limit={5}
+              />
             </div>
           </div>
         )}
