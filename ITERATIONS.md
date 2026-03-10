@@ -1,3 +1,48 @@
+## 2026-03-11 — AmbientBackground: Time-Aware Living Interface
+
+**Inspiration:** Apple's Dynamic Wallpapers that shift with time of day, financial trading floors with ambient lighting indicating market sessions, and the 2026 UI trend of "living interfaces" that breathe with real-world context.
+
+**What I built:**
+- New `AmbientBackground` component that subtly shifts the page's gradient colors based on market session:
+
+  **Phase-Specific Color Palettes:**
+  - **Pre-market (4am-9:30am ET):** Cool dawn blues and soft purples — creates an "awakening" feel, building anticipation for market open
+  - **Regular hours (9:30am-4pm ET):** Energetic, balanced tones with a hint of green — focused, alert trading environment
+  - **After hours (4pm-8pm ET):** Warm sunset oranges and purples — "winding down" feel, reflection time
+  - **Closed (night/weekends):** Deep cool tones — restful, reset mode
+
+  **Subtle Phase Animations:**
+  - Pre-market gets a gentle 8s pulsing dawn effect
+  - After hours has a 10s breathing animation
+  - Regular hours stays steady and confident
+  - Closed remains static and restful
+
+  **Technical Implementation:**
+  - Smooth 2-second cross-fade transitions between phases
+  - Uses CSS custom properties for gradient colors
+  - Updates every minute for accurate phase detection
+  - Layered with existing MeshGradient for combined effect
+  - Full light mode support with reduced intensity
+  - SSR-safe with hydration handling
+
+**Accessibility:**
+- `aria-hidden="true"` — purely decorative
+- Respects `prefers-reduced-motion` (disables animations, instant transitions)
+- Subtle enough to not distract from content
+
+**Technical details:**
+- Calculates US Eastern Time from UTC for accurate market session detection
+- Handles DST approximation (March-November)
+- Weekend detection returns "closed" phase
+- MutationObserver watches for light mode class changes
+- ~300 lines of component code + 100 lines CSS
+
+**Impact:** Users get a subliminal sense of time and market context without needing to look at any indicator. The page literally feels different during pre-market vs. after hours, creating an immersive, living interface that connects the digital experience to real-world market rhythms.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — StreamingText: AI-Style Typewriter Effect
 
 **Inspiration:** Modern AI chat interfaces (ChatGPT, Claude) and the "Post-Dashboard Era: Narrative Interfaces" trend from Muzli 2026. The goal was to make narrative text feel "generated" in real-time, bringing the app closer to a conversational AI experience.
