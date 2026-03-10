@@ -52,6 +52,7 @@ import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
+import { EPSComparisonBadge } from '@/components/EPSComparisonBadge';
 import { FilterGlow } from '@/components/FilterGlow';
 import { CardLightSweep } from '@/components/CardLightSweep';
 import { CursorGlowCard } from '@/components/CursorGlowBorder';
@@ -248,6 +249,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               delay={animationIndex * 50 + 100}
               size="sm"
             />
+            {/* EPS comparison badge - shows actual EPS vs estimate with mini bar */}
+            {earning.estimate && (
+              <EPSComparisonBadge
+                actual={earning.eps!}
+                estimate={earning.estimate}
+                delay={animationIndex * 50 + 50}
+                size="sm"
+                showBar={true}
+              />
+            )}
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
