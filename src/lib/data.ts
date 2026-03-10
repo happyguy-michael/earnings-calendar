@@ -70,6 +70,19 @@ export const earnings: Earning[] = [
   { ticker: 'AVGO', company: 'Broadcom', date: '2026-03-06', time: 'post', estimate: 1.51, beatOdds: 82, revenueEstimate: 14.6 },
   { ticker: 'COST', company: 'Costco', date: '2026-03-06', time: 'post', estimate: 4.08, beatOdds: 78, revenueEstimate: 62.5 },
   { ticker: 'MDB', company: 'MongoDB', date: '2026-03-06', time: 'post', estimate: 0.68, beatOdds: 71, revenueEstimate: 0.52 },
+  
+  // Week of Mar 10 (current week)
+  { ticker: 'ORCL', company: 'Oracle', date: '2026-03-11', time: 'post', estimate: 1.48, beatOdds: 76, revenueEstimate: 14.4 },
+  { ticker: 'ADBE', company: 'Adobe', date: '2026-03-12', time: 'post', estimate: 4.97, beatOdds: 81, revenueEstimate: 5.65 },
+  { ticker: 'S', company: 'SentinelOne', date: '2026-03-12', time: 'post', estimate: 0.02, beatOdds: 68, revenueEstimate: 0.22 },
+  { ticker: 'DG', company: 'Dollar General', date: '2026-03-13', time: 'pre', estimate: 1.48, beatOdds: 55, revenueEstimate: 10.2 },
+  { ticker: 'ULTA', company: 'Ulta Beauty', date: '2026-03-13', time: 'post', estimate: 8.12, beatOdds: 72, revenueEstimate: 3.55 },
+  
+  // Week of Mar 17
+  { ticker: 'FDX', company: 'FedEx', date: '2026-03-17', time: 'post', estimate: 4.62, beatOdds: 64, revenueEstimate: 22.1 },
+  { ticker: 'MU', company: 'Micron Technology', date: '2026-03-18', time: 'post', estimate: 1.42, beatOdds: 85, revenueEstimate: 8.6 },
+  { ticker: 'NKE', company: 'Nike', date: '2026-03-19', time: 'post', estimate: 0.55, beatOdds: 58, revenueEstimate: 11.2 },
+  { ticker: 'LULU', company: 'Lululemon', date: '2026-03-20', time: 'post', estimate: 5.85, beatOdds: 74, revenueEstimate: 3.15 },
 ];
 
 export const analyses: Record<string, Analysis> = {
