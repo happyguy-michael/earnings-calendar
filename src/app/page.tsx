@@ -73,6 +73,7 @@ import { SessionProgressBar } from '@/components/SessionProgressBar';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
 import { SentimentPulse } from '@/components/SentimentPulse';
 import { DayHeatIndicator } from '@/components/DayHeatIndicator';
+import { QuickPeek } from '@/components/QuickPeek';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -174,33 +175,47 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
     return <>{children}</>;
   };
 
+  // QuickPeek data for hover/long-press preview
+  const quickPeekData = {
+    ticker: earning.ticker,
+    company: earning.company,
+    eps: earning.eps,
+    estimate: earning.estimate,
+    revenue: earning.revenue,
+    revenueEstimate: earning.revenueEstimate,
+    beatOdds: earning.beatOdds,
+    result: earning.result,
+    time: earning.time,
+  };
+
   return (
-    <div className="earnings-card-wrapper">
-      {/* Imminent glow for earnings reporting within 15 minutes */}
-      {isTodayPending && (
-        <ImminentGlow 
-          targetDate={new Date(earning.date)} 
-          time={earning.time}
-          active={true}
-        />
-      )}
-      <CardWrapper>
-      <CardLightSweep 
-        variant="diagonal" 
-        color={hasResult ? (earning.result === 'beat' ? 'blue' : 'purple') : 'white'}
-        duration={500}
-        delay={50}
-      >
-        <Link 
-          href={`/report/${earning.ticker}`} 
-          className={`earnings-row earnings-card-stagger ${isTodayPending ? 'today-pending' : ''}`}
-          style={{ 
-            '--card-index': animationIndex,
-            animationDelay: `${animationIndex * 40}ms` 
-          } as React.CSSProperties}
+    <QuickPeek data={quickPeekData}>
+      <div className="earnings-card-wrapper">
+        {/* Imminent glow for earnings reporting within 15 minutes */}
+        {isTodayPending && (
+          <ImminentGlow 
+            targetDate={new Date(earning.date)} 
+            time={earning.time}
+            active={true}
+          />
+        )}
+        <CardWrapper>
+        <CardLightSweep 
+          variant="diagonal" 
+          color={hasResult ? (earning.result === 'beat' ? 'blue' : 'purple') : 'white'}
+          duration={500}
+          delay={50}
         >
-          <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
-          <span className="shimmer-sweep" aria-hidden="true" />
+          <Link 
+            href={`/report/${earning.ticker}`} 
+            className={`earnings-row earnings-card-stagger ${isTodayPending ? 'today-pending' : ''}`}
+            style={{ 
+              '--card-index': animationIndex,
+              animationDelay: `${animationIndex * 40}ms` 
+            } as React.CSSProperties}
+          >
+            <Ripple color="rgba(59, 130, 246, 0.25)" duration={500} />
+            <span className="shimmer-sweep" aria-hidden="true" />
         <CompanyLogo 
           ticker={earning.ticker} 
           company={earning.company} 
@@ -290,21 +305,22 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         </Link>
       </CardLightSweep>
       </CardWrapper>
-      <div className="earnings-tooltip">
-        <EarningsTooltipContent
-          ticker={earning.ticker}
-          company={earning.company}
-          eps={earning.eps}
-          estimate={earning.estimate}
-          revenue={revenueActual}
-          revenueEstimate={revenueEst}
-          beatOdds={earning.beatOdds}
-          time={earning.time}
-          result={earning.result}
-        />
-        <div className="tooltip-arrow" />
+        <div className="earnings-tooltip">
+          <EarningsTooltipContent
+            ticker={earning.ticker}
+            company={earning.company}
+            eps={earning.eps}
+            estimate={earning.estimate}
+            revenue={revenueActual}
+            revenueEstimate={revenueEst}
+            beatOdds={earning.beatOdds}
+            time={earning.time}
+            result={earning.result}
+          />
+          <div className="tooltip-arrow" />
+        </div>
       </div>
-    </div>
+    </QuickPeek>
   );
 }
 
