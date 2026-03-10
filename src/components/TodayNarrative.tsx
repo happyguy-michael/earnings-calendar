@@ -1,11 +1,14 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { Earning } from '@/lib/types';
+import { StreamingText } from './StreamingText';
 
 interface TodayNarrativeProps {
   earnings: Earning[];
   className?: string;
+  /** Enable AI-style streaming text effect */
+  streaming?: boolean;
 }
 
 /**
@@ -19,22 +22,31 @@ interface TodayNarrativeProps {
  * - Highlights noteworthy beats/misses
  * - Teases upcoming earnings with time
  * - Contextual emoji mood indicators
+ * - AI-style streaming text effect (new!)
  * - Smooth typewriter-style entrance
  * - Respects prefers-reduced-motion
  */
-export function TodayNarrative({ earnings, className = '' }: TodayNarrativeProps) {
+export function TodayNarrative({ earnings, className = '', streaming = true }: TodayNarrativeProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [showSecondary, setShowSecondary] = useState(false);
+  const [primaryComplete, setPrimaryComplete] = useState(false);
+
+  const handlePrimaryComplete = useCallback(() => {
+    setPrimaryComplete(true);
+    // Show secondary shortly after primary completes
+    setTimeout(() => setShowSecondary(true), 200);
+  }, []);
 
   useEffect(() => {
     // Stagger the entrance
     const t1 = setTimeout(() => setIsVisible(true), 200);
-    const t2 = setTimeout(() => setShowSecondary(true), 600);
+    // For non-streaming mode, show secondary after delay
+    const t2 = !streaming ? setTimeout(() => setShowSecondary(true), 600) : null;
     return () => {
       clearTimeout(t1);
-      clearTimeout(t2);
+      if (t2) clearTimeout(t2);
     };
-  }, []);
+  }, [streaming]);
 
   const narrative = useMemo(() => {
     const today = new Date();
@@ -166,7 +178,7 @@ export function TodayNarrative({ earnings, className = '' }: TodayNarrativeProps
 
   return (
     <div 
-      className={`today-narrative ${narrative.mood} ${isVisible ? 'visible' : ''} ${className}`}
+      className={`today-narrative ${narrative.mood} ${isVisible ? 'visible' : ''} ${streaming ? 'streaming-mode' : ''} ${className}`}
       role="status"
       aria-live="polite"
     >
@@ -176,11 +188,34 @@ export function TodayNarrative({ earnings, className = '' }: TodayNarrativeProps
         </span>
         <div className="today-narrative-text">
           <p className={`today-narrative-primary ${isVisible ? 'visible' : ''}`}>
-            {narrative.primary}
+            {streaming && isVisible ? (
+              <StreamingText 
+                text={narrative.primary}
+                speed={45}
+                delay={100}
+                humanize={true}
+                cursor={!primaryComplete}
+                cursorHideDelay={400}
+                onComplete={handlePrimaryComplete}
+              />
+            ) : (
+              narrative.primary
+            )}
           </p>
           {narrative.secondary && (
             <p className={`today-narrative-secondary ${showSecondary ? 'visible' : ''}`}>
-              {narrative.secondary}
+              {streaming && showSecondary ? (
+                <StreamingText 
+                  text={narrative.secondary}
+                  speed={50}
+                  delay={0}
+                  humanize={true}
+                  cursor={true}
+                  cursorHideDelay={1500}
+                />
+              ) : (
+                narrative.secondary
+              )}
             </p>
           )}
         </div>

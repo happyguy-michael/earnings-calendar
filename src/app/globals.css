@@ -16166,3 +16166,126 @@ html.light .day-heat-strip {
     display: none;
   }
 }
+
+/* ============================================
+   StreamingText - AI-style typewriter effect
+   Inspired by modern AI chat interfaces
+   ============================================ */
+
+.streaming-text {
+  position: relative;
+  display: inline;
+}
+
+.streaming-text.typing {
+  /* Subtle highlight while typing */
+}
+
+/* Blinking cursor */
+.streaming-cursor {
+  display: inline-block;
+  color: var(--accent-blue);
+  font-weight: 300;
+  margin-left: 1px;
+  opacity: 1;
+  animation: none;
+}
+
+.streaming-cursor.blinking {
+  animation: cursorBlink 0.8s ease-in-out infinite;
+}
+
+.streaming-cursor.fade-out {
+  animation: cursorFadeOut 0.5s ease-out forwards;
+}
+
+@keyframes cursorBlink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes cursorFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Word-by-word streaming */
+.streaming-words .streaming-word {
+  display: inline;
+  animation: wordFadeIn 0.15s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes wordFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+/* Paragraph streaming */
+.streaming-paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.streaming-line {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.streaming-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Premium glow effect on cursor */
+.streaming-cursor.blinking {
+  text-shadow: 
+    0 0 8px var(--accent-blue),
+    0 0 16px rgba(59, 130, 246, 0.3);
+}
+
+/* Light mode adjustments */
+html.light .streaming-cursor {
+  color: #2563eb;
+  text-shadow: none;
+}
+
+html.light .streaming-cursor.blinking {
+  text-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+}
+
+/* Reduced motion - instant display */
+@media (prefers-reduced-motion: reduce) {
+  .streaming-cursor {
+    display: none;
+  }
+  
+  .streaming-words .streaming-word {
+    animation: none;
+    opacity: 1;
+  }
+  
+  .streaming-line {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
