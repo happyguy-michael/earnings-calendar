@@ -69,6 +69,7 @@ import { RevenueIndicator } from '@/components/RevenueIndicator';
 import { FlipMonth } from '@/components/FlipMonth';
 import { TodayNarrative } from '@/components/TodayNarrative';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
+import { SentimentPulse } from '@/components/SentimentPulse';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -786,8 +787,11 @@ export default function Home() {
           </ParallaxFloat>
         </div>
 
-        {/* Today's Narrative Summary - conversational overview */}
-        <TodayNarrative earnings={earnings} />
+        {/* Today's Narrative Summary + Sentiment Pulse */}
+        <div className="today-summary-row">
+          <TodayNarrative earnings={earnings} />
+          <SentimentPulse earnings={earnings} size="md" showLabel={true} />
+        </div>
 
         {/* Week Navigation Indicator */}
         {(!isFiltering || filteredEarnings.length > 0) && (

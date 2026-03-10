@@ -15367,3 +15367,46 @@ html.light .highlight-label {
     display: none;
   }
 }
+
+
+/* ==========================================
+   Today Summary Row - Narrative + Pulse
+   ========================================== */
+.today-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.today-summary-row .today-narrative {
+  flex: 1;
+}
+
+.today-summary-row .sentiment-pulse {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 8px 12px;
+  backdrop-filter: blur(8px);
+}
+
+html.light .today-summary-row .sentiment-pulse {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Stack on mobile */
+@media (max-width: 640px) {
+  .today-summary-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .today-summary-row .sentiment-pulse {
+    justify-content: center;
+  }
+}
+
