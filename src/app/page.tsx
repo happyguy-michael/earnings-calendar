@@ -74,6 +74,7 @@ import { DayStatsPopover } from '@/components/DayStatsPopover';
 import { SentimentPulse } from '@/components/SentimentPulse';
 import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
+import { NextUpQueue } from '@/components/NextUpQueue';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -826,6 +827,9 @@ export default function Home() {
           <TodayNarrative earnings={earnings} />
           <SentimentPulse earnings={earnings} size="md" showLabel={true} />
         </div>
+
+        {/* Next Up Queue - upcoming earnings with countdowns */}
+        <NextUpQueue earnings={earnings} maxItems={6} />
 
         {/* Week Navigation Indicator */}
         {(!isFiltering || filteredEarnings.length > 0) && (
