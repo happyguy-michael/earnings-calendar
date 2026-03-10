@@ -16289,3 +16289,113 @@ html.light .streaming-cursor.blinking {
     transition: none;
   }
 }
+
+/* ============================================
+   Ambient Background - Time-Aware Gradients
+   Subtly shifts colors based on market session
+   ============================================ */
+
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Primary gradient orb (top-left) */
+.ambient-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse 100% 100% at 0% 0%,
+    var(--ambient-primary, rgba(59, 130, 246, 0.15)),
+    transparent 50%
+  );
+  opacity: var(--ambient-glow-opacity, 1);
+  transition: 
+    background var(--ambient-transition, 2s) ease-in-out,
+    opacity var(--ambient-transition, 2s) ease-in-out;
+}
+
+/* Secondary and tertiary gradient orbs */
+.ambient-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(
+      ellipse 80% 80% at 100% 0%,
+      var(--ambient-secondary, rgba(139, 92, 246, 0.15)),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 60% at 50% 100%,
+      var(--ambient-tertiary, rgba(236, 72, 153, 0.1)),
+      transparent 50%
+    );
+  opacity: var(--ambient-glow-opacity, 1);
+  transition: 
+    background var(--ambient-transition, 2s) ease-in-out,
+    opacity var(--ambient-transition, 2s) ease-in-out;
+}
+
+/* Phase-specific subtle effects */
+
+/* Pre-market: Subtle pulsing dawn effect */
+.ambient-background[data-phase="pre-market"]::before {
+  animation: ambientPreMarketPulse 8s ease-in-out infinite;
+}
+
+@keyframes ambientPreMarketPulse {
+  0%, 100% {
+    opacity: calc(var(--ambient-glow-opacity, 1) * 0.9);
+  }
+  50% {
+    opacity: var(--ambient-glow-opacity, 1);
+  }
+}
+
+/* Regular hours: Steady, confident glow */
+.ambient-background[data-phase="regular"]::before {
+  animation: none;
+}
+
+/* After hours: Gentle breathing effect */
+.ambient-background[data-phase="after-hours"]::before {
+  animation: ambientAfterHoursBreathe 10s ease-in-out infinite;
+}
+
+@keyframes ambientAfterHoursBreathe {
+  0%, 100% {
+    opacity: var(--ambient-glow-opacity, 1);
+  }
+  50% {
+    opacity: calc(var(--ambient-glow-opacity, 1) * 0.85);
+  }
+}
+
+/* Closed: Minimal, restful */
+.ambient-background[data-phase="closed"]::before,
+.ambient-background[data-phase="closed"]::after {
+  animation: none;
+}
+
+/* Reduced motion - disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .ambient-background::before,
+  .ambient-background::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Light mode - ensure visibility */
+html.light .ambient-background::before,
+html.light .ambient-background::after {
+  mix-blend-mode: multiply;
+}

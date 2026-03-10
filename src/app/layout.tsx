@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { NavigationProgress } from "@/components/NavigationProgress";
 import { CursorSpotlight } from "@/components/CursorSpotlight";
 import { MeshGradient } from "@/components/MeshGradient";
+import { AmbientBackground } from "@/components/AmbientBackground";
 import { ClientProviders } from "@/components/ClientProviders";
 import { AnimatedFocusRing, SkipLink } from "@/components/AnimatedFocusRing";
 import { ScrollDrivenAnimations } from "@/components/ScrollDrivenAnimations";
@@ -33,6 +34,8 @@ export default function RootLayout({
         <ScrollDrivenAnimations />
         {/* Skip to main content - accessibility */}
         <SkipLink targetId="main-content" />
+        {/* Time-aware ambient background gradients */}
+        <AmbientBackground />
         <MeshGradient />
         <CursorSpotlight />
         <Suspense fallback={null}>
