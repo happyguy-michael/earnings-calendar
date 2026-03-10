@@ -1,4 +1,39 @@
 
+## 2026-03-10 — Day Stats Popover: Quick Stats on Day Header Hover
+
+**Inspiration:** Financial calendar apps that show event previews on hover, reducing clicks needed to understand a day's activity.
+
+**What I built:**
+- New `DayStatsPopover` component that appears when hovering over day column headers:
+  - Shows beat/miss/pending counts with color-coded badges
+  - Displays pre-market vs after-hours breakdown
+  - Highlights top beat and worst miss with surprise percentages
+  - Shows average surprise for the day
+
+- Premium micro-interactions:
+  - Staggered entrance animations (each stat fades in sequentially)
+  - Glassmorphic popover with subtle arrow pointer
+  - Smooth spring-based show/hide transitions
+  - Today variant gets a subtle blue glow highlight
+
+- Accessibility & polish:
+  - `role="tooltip"` with proper `aria-hidden` state
+  - Full light mode support
+  - Respects `prefers-reduced-motion`
+  - Hides on touch devices (hover-dependent feature)
+
+**Technical details:**
+- Memoized stats calculation for performance
+- Wraps existing day header without changing layout
+- Uses CSS-only animations for entrance effects
+- Positioned with transform to stay centered under pointer
+
+**Impact:** Users can quickly scan day summaries without scrolling through individual cards. Hovering on "Tue" instantly shows "2 beats, 1 miss, NVDA +8.2% top beat" — faster decision making.
+
+**Deploy verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-10 — TodayNarrative: Conversational Daily Summary
 
 **Inspiration:** 2026 UI/UX trend "Post-Dashboard Era: Narrative Interfaces" (orizon.co) — dashboards become stories, not spreadsheets. Users want synthesis, not widgets. "Here's what changed today" reports, adaptive insights instead of static charts.
