@@ -1,3 +1,53 @@
+## 2026-03-10 — LiveBadge v2: Time-Aware Session Indicator
+
+**Inspiration:** Muzli's "Curated Dashboard Design Examples for 2026" — emphasis on time-aware UI elements and contextual states. Also inspired by financial trading dashboards that show market session awareness.
+
+**What I built:**
+- Complete rewrite of the LiveBadge as a premium time-aware indicator:
+
+  **Real-Time Session Awareness:**
+  - Tracks ET timezone for accurate market session timing
+  - Pre-market: 6:00 AM - 9:30 AM ET
+  - After-hours: 4:00 PM - 8:00 PM ET
+  - Updates every 30 seconds automatically
+
+  **Multiple States:**
+  - **Live** (red pulsing): Session is active, shows remaining time
+  - **Soon** (amber urgent): Starting within 30 minutes, breathing animation
+  - **Upcoming** (blue calm): Starting within 2 hours
+  - **Waiting** (muted): More than 2 hours away
+  - **Ended** (hidden): Session completed, badge disappears
+
+  **Premium Animations:**
+  - Pulsing glow effect for live state (radiating red pulse)
+  - Breathing amber glow for "soon" state (urgency without alarm)
+  - Dot indicator with scale/opacity pulse
+  - All animations respect prefers-reduced-motion
+
+  **Enhanced LiveDot Inline:**
+  - Compact dot now also time-aware
+  - Different styles for live vs soon states
+  - Passed `time` prop to know which session to track
+
+  **Styling:**
+  - Glassmorphic backgrounds with gradient overlays
+  - Color-coded borders matching state
+  - Full light mode support with adjusted colors
+  - Countdown text with separator styling
+
+**Technical details:**
+- Uses `toLocaleString` with timezone for ET conversion
+- Session status calculation with minute-level precision
+- 30-second interval updates (efficient, not over-polling)
+- Separate countdown formatting for hours vs minutes
+- Clean state machine: live > soon > upcoming > waiting > ended
+
+**Impact:** Users now know exactly when earnings might drop — "LIVE 45m" tells them the session is active with 45 minutes remaining. The urgency ramps up naturally as sessions approach, making pending earnings feel more dynamic.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-10 — Progress-Aware BackToTop with Celebration
 
 **Inspiration:** 2026 UI trend article "Beyond the Glass: 7 Mobile UI Trends Defining 2026" — specifically the "Emotional Micro-interactions" trend: "In 2026, a button press is never just a button press. It is an event."
