@@ -68,6 +68,7 @@ import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
 import { FlipMonth } from '@/components/FlipMonth';
 import { TodayNarrative } from '@/components/TodayNarrative';
+import { DayStatsPopover } from '@/components/DayStatsPopover';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -861,19 +862,25 @@ export default function Home() {
                   const waveDelay = slideDirection ? dayIndex * 50 : 0;
                   
                   return (
-                    <div 
-                      key={dayIndex} 
-                      className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
-                      style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                    <DayStatsPopover
+                      key={dayIndex}
+                      earnings={dayEarnings}
+                      date={date}
+                      isToday={isToday}
                     >
-                      <div className="day-name">{day}</div>
-                      <div className="day-num">{date.getDate()}</div>
-                      {dayEarnings.length > 0 && (
-                        <div className="badge badge-neutral mt-2 text-[10px] py-1 px-2">
-                          {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
-                        </div>
-                      )}
-                    </div>
+                      <div 
+                        className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
+                        style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                      >
+                        <div className="day-name">{day}</div>
+                        <div className="day-num">{date.getDate()}</div>
+                        {dayEarnings.length > 0 && (
+                          <div className="badge badge-neutral mt-2 text-[10px] py-1 px-2">
+                            {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
+                          </div>
+                        )}
+                      </div>
+                    </DayStatsPopover>
                   );
                 })}
               </div>
