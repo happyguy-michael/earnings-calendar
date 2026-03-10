@@ -216,3 +216,38 @@
 
 **Commit:** fe37f35
 **Deploy:** https://earnings-calendar-omega.vercel.app/report/AAPL
+
+## 2026-03-10 — SessionProgressBar Component
+
+**Iteration Type:** Micro-interaction / Status Indicator
+**Inspired By:** Vercel deployment timeline, Linear progress indicators, trading platform session displays
+
+**What was added:**
+- New `SessionProgressBar` component - visual timeline showing progress through the trading day
+- Three session segments: Pre-Market (4am-9:30am), Regular (9:30am-4pm), After-Hours (4pm-8pm)
+- Animated gradient fills for each session phase with glow effects
+- Pulsing dot indicator showing current position in the trading day
+- Real-time updates every 30 seconds
+- Handles weekends (displays "Markets Closed")
+- Segment labels with hover effects
+- Compact variant (`SessionProgressInline`) available for header use
+
+**Technical notes:**
+- Uses ET timezone calculation (handles DST)
+- CSS-in-JS with styled-jsx for scoped styles
+- Respects `prefers-reduced-motion` preference
+- Theme-aware (light/dark mode adjustments)
+- Memoized component for performance
+- Loading skeleton state for initial render
+- Proper ARIA attributes for accessibility
+
+**Integration:**
+- Added below TickerRibbon on main calendar page
+- Provides at-a-glance context about current market session
+- Complements existing MarketStatus component with visual timeline
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Commit:** f30a070
+
+---
