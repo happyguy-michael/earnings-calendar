@@ -15410,3 +15410,190 @@ html.light .today-summary-row .sentiment-pulse {
   }
 }
 
+
+
+/* ==========================================
+   DayHeatIndicator - Activity Heat Map
+   ==========================================
+   Shows the "heat" level of each day based on
+   earnings volume. More reports = warmer color.
+   
+   Inspired by GitHub contribution heat maps
+   and Dribbble dashboard designs.
+   ========================================== */
+
+.day-heat-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.day-heat-bar {
+  position: absolute;
+  inset: 0;
+  background: var(--heat-color, transparent);
+  opacity: calc(0.4 + var(--heat-intensity, 0) * 0.6);
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+/* Gradient glow effect */
+.day-heat-glow {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 20px;
+  background: radial-gradient(
+    ellipse 100% 200% at 50% 100%,
+    var(--heat-color, transparent),
+    transparent 70%
+  );
+  opacity: var(--heat-glow, 0);
+  filter: blur(8px);
+  transform: translateY(50%);
+  transition: opacity 0.3s ease;
+}
+
+/* Pulse animation for hot days */
+.day-heat-indicator.hot .day-heat-bar {
+  animation: heatPulse 2s ease-in-out infinite;
+}
+
+.day-heat-indicator.hot .day-heat-glow {
+  animation: heatGlowPulse 2s ease-in-out infinite;
+}
+
+@keyframes heatPulse {
+  0%, 100% {
+    opacity: calc(0.5 + var(--heat-intensity, 0) * 0.5);
+  }
+  50% {
+    opacity: calc(0.7 + var(--heat-intensity, 0) * 0.3);
+  }
+}
+
+@keyframes heatGlowPulse {
+  0%, 100% {
+    opacity: var(--heat-glow, 0);
+    transform: translateY(50%) scale(1);
+  }
+  50% {
+    opacity: calc(var(--heat-glow, 0) * 1.3);
+    transform: translateY(40%) scale(1.1);
+  }
+}
+
+/* Floating particles for very hot days */
+.day-heat-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.day-heat-particle {
+  position: absolute;
+  bottom: 0;
+  left: var(--particle-x, 50%);
+  width: 3px;
+  height: 3px;
+  background: var(--heat-color, #f97316);
+  border-radius: 50%;
+  opacity: 0;
+  animation: heatParticleFloat 2.5s ease-out infinite;
+  animation-delay: var(--particle-delay, 0s);
+}
+
+@keyframes heatParticleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0);
+  }
+}
+
+/* Heat label */
+.day-heat-label {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--heat-color, #71717a);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.day-heat-indicator:hover .day-heat-label {
+  opacity: 1;
+}
+
+/* Heat strip (week view) */
+.day-heat-strip {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.day-heat-strip .day-heat-indicator {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* Mini heat dot */
+.mini-heat-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dot-color, #3b82f6);
+  opacity: calc(0.4 + var(--dot-intensity, 0) * 0.6);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mini-heat-dot:hover {
+  transform: scale(1.3);
+  opacity: 1;
+}
+
+/* Light mode adjustments */
+html.light .day-heat-bar {
+  opacity: calc(0.3 + var(--heat-intensity, 0) * 0.5);
+}
+
+html.light .day-heat-glow {
+  opacity: calc(var(--heat-glow, 0) * 0.7);
+}
+
+html.light .day-heat-strip {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .day-heat-indicator.hot .day-heat-bar,
+  .day-heat-indicator.hot .day-heat-glow {
+    animation: none;
+  }
+  
+  .day-heat-particle {
+    display: none;
+  }
+}

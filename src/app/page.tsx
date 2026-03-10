@@ -70,6 +70,7 @@ import { FlipMonth } from '@/components/FlipMonth';
 import { TodayNarrative } from '@/components/TodayNarrative';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
 import { SentimentPulse } from '@/components/SentimentPulse';
+import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -891,63 +892,88 @@ export default function Home() {
 
               {/* Week Content */}
               <div className="week-content">
-                {days.map((_, dayIndex) => {
-                  const date = new Date(weekStart);
-                  date.setDate(date.getDate() + dayIndex);
-                  const dateStr = formatDate(date);
-                  const preMarket = filteredEarnings.filter((e) => e.date === dateStr && e.time === 'pre');
-                  const postMarket = filteredEarnings.filter((e) => e.date === dateStr && e.time === 'post');
-                  const hasEarnings = preMarket.length > 0 || postMarket.length > 0;
-                  const isToday = date.getTime() === today.getTime();
+                {(() => {
+                  // Pre-calculate day data for heat indicator
+                  const weekDayData = days.map((_, dayIndex) => {
+                    const date = new Date(weekStart);
+                    date.setDate(date.getDate() + dayIndex);
+                    const dateStr = formatDate(date);
+                    const dayEarnings = filteredEarnings.filter((e) => e.date === dateStr);
+                    const beats = dayEarnings.filter(e => e.result === 'beat').length;
+                    const misses = dayEarnings.filter(e => e.result === 'miss').length;
+                    const pending = dayEarnings.filter(e => !e.result).length;
+                    return { count: dayEarnings.length, beats, misses, pending };
+                  });
+                  const maxDayCount = Math.max(...weekDayData.map(d => d.count), 1);
+                  
+                  return days.map((_, dayIndex) => {
+                    const date = new Date(weekStart);
+                    date.setDate(date.getDate() + dayIndex);
+                    const dateStr = formatDate(date);
+                    const preMarket = filteredEarnings.filter((e) => e.date === dateStr && e.time === 'pre');
+                    const postMarket = filteredEarnings.filter((e) => e.date === dateStr && e.time === 'post');
+                    const hasEarnings = preMarket.length > 0 || postMarket.length > 0;
+                    const isToday = date.getTime() === today.getTime();
+                    const dayData = weekDayData[dayIndex];
 
-                  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-                  const mobileDate = `${dayNames[dayIndex]}, ${date.getDate()} ${months[date.getMonth()].slice(0, 3)}`;
-                  
-                  // Wave animation delay: cascade from left (65ms between each day, slightly offset from headers)
-                  const waveDelay = slideDirection ? (dayIndex * 65) + 30 : 0;
-                  
-                  return (
-                    <div 
-                      key={dayIndex} 
-                      className={`day-content ${isToday ? 'today' : ''} ${slideDirection ? 'day-wave-reveal' : ''}`} 
-                      data-mobile-date={mobileDate}
-                      style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
-                    >
-                      {!hasEarnings ? (
-                        <AnimatedEmptyState 
-                          variant={isToday ? 'today' : date < today ? 'past' : 'future'} 
+                    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+                    const mobileDate = `${dayNames[dayIndex]}, ${date.getDate()} ${months[date.getMonth()].slice(0, 3)}`;
+                    
+                    // Wave animation delay: cascade from left (65ms between each day, slightly offset from headers)
+                    const waveDelay = slideDirection ? (dayIndex * 65) + 30 : 0;
+                    
+                    return (
+                      <div 
+                        key={dayIndex} 
+                        className={`day-content ${isToday ? 'today' : ''} ${slideDirection ? 'day-wave-reveal' : ''}`} 
+                        data-mobile-date={mobileDate}
+                        style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                      >
+                        {!hasEarnings ? (
+                          <AnimatedEmptyState 
+                            variant={isToday ? 'today' : date < today ? 'past' : 'future'} 
+                          />
+                        ) : (
+                          <div className="space-y-5">
+                            {preMarket.length > 0 && (
+                              <div>
+                                <SessionDivider variant="pre" />
+                                <div className="session-header pre-market">
+                                  <MarketSessionIcon session="pre" size={18} />
+                                  <span className="session-header-label">Pre-Market</span>
+                                </div>
+                                <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
+                                  {preMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={i} />)}
+                                </div>
+                              </div>
+                            )}
+                            {postMarket.length > 0 && (
+                              <div>
+                                <SessionDivider variant="post" />
+                                <div className="session-header after-hours">
+                                  <MarketSessionIcon session="post" size={18} />
+                                  <span className="session-header-label">After Hours</span>
+                                </div>
+                                <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
+                                  {postMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Heat indicator showing day volume */}
+                        <DayHeatIndicator
+                          count={dayData.count}
+                          maxCount={maxDayCount}
+                          beats={dayData.beats}
+                          misses={dayData.misses}
+                          pending={dayData.pending}
                         />
-                      ) : (
-                        <div className="space-y-5">
-                          {preMarket.length > 0 && (
-                            <div>
-                              <SessionDivider variant="pre" />
-                              <div className="session-header pre-market">
-                                <MarketSessionIcon session="pre" size={18} />
-                                <span className="session-header-label">Pre-Market</span>
-                              </div>
-                              <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
-                                {preMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={i} />)}
-                              </div>
-                            </div>
-                          )}
-                          {postMarket.length > 0 && (
-                            <div>
-                              <SessionDivider variant="post" />
-                              <div className="session-header after-hours">
-                                <MarketSessionIcon session="post" size={18} />
-                                <span className="session-header-label">After Hours</span>
-                              </div>
-                              <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
-                                {postMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                      </div>
+                    );
+                  });
+                })()}
               </div>
               
               {/* Week Summary Card - celebratory end-of-week recap */}
