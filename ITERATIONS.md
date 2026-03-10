@@ -1,3 +1,57 @@
+## 2026-03-11 — StreamingText: AI-Style Typewriter Effect
+
+**Inspiration:** Modern AI chat interfaces (ChatGPT, Claude) and the "Post-Dashboard Era: Narrative Interfaces" trend from Muzli 2026. The goal was to make narrative text feel "generated" in real-time, bringing the app closer to a conversational AI experience.
+
+**What I built:**
+- New reusable `StreamingText` component family:
+
+  **StreamingText (character-by-character):**
+  - Smooth character reveal at configurable speed (default 40 chars/sec)
+  - Humanized timing option with ±30% variance for natural feel
+  - Blinking cursor with glow effect during typing
+  - Cursor fades out gracefully after completion
+  - onComplete callback for chaining animations
+
+  **StreamingWords (word-by-word):**
+  - Faster variant for longer text (default 8 words/sec)
+  - Each word fades in with subtle blur-to-sharp animation
+  - Maintains natural reading flow
+
+  **StreamingParagraph (multi-line):**
+  - Staggered line reveals for structured content
+  - Combines word streaming with line entrance animations
+  - Perfect for longer narrative blocks
+
+  **Premium Styling:**
+  - Blinking cursor with blue glow (text-shadow effect)
+  - Cursor fade-out animation after typing completes
+  - Word fade-in with blur-to-sharp micro-animation
+  - Full light mode support with adjusted glow colors
+
+**Integration:**
+- Applied to `TodayNarrative` component
+- Primary narrative streams in first (45 chars/sec)
+- Secondary narrative streams after primary completes (50 chars/sec)
+- Creates AI chat-like experience for daily summaries
+
+**Accessibility:**
+- Full `prefers-reduced-motion` support (instant display, no cursor)
+- Proper ARIA attributes maintained
+- No content delay for screen readers
+
+**Technical details:**
+- useRef for index tracking (avoids stale closure issues)
+- useCallback for memoized typing function
+- Cleanup on unmount to prevent memory leaks
+- Reset handling when text prop changes
+- ~250 lines of new component code + 100 lines CSS
+
+**Impact:** The TodayNarrative now feels like an AI assistant "thinking" and composing its message in real-time. This aligns with 2026 trends of making dashboards feel more conversational and alive.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-10 — LiveBadge v2: Time-Aware Session Indicator
 
 **Inspiration:** Muzli's "Curated Dashboard Design Examples for 2026" — emphasis on time-aware UI elements and contextual states. Also inspired by financial trading dashboards that show market session awareness.
