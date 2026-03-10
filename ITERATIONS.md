@@ -1,3 +1,51 @@
+## 2026-03-10 — Progress-Aware BackToTop with Celebration
+
+**Inspiration:** 2026 UI trend article "Beyond the Glass: 7 Mobile UI Trends Defining 2026" — specifically the "Emotional Micro-interactions" trend: "In 2026, a button press is never just a button press. It is an event."
+
+**What I built:**
+- Complete reimagining of the BackToTop button as a progress-aware, celebratory experience:
+  
+  **Scroll Progress Ring:**
+  - Circular SVG progress ring shows scroll position (0-100%)
+  - Real-time updates as user scrolls through the page
+  - Glowing blue gradient stroke with drop shadow
+  - Dark track background that brightens on hover
+
+  **Hover Reveal:**
+  - Percentage text (e.g., "75%") fades in below the arrow on hover
+  - Arrow lifts up to make room for the percentage
+  - Smooth spring-based transitions
+
+  **Celebration on Success:**
+  - When scrolling completes and reaches top → confetti burst!
+  - 12 particles explode outward in radial pattern
+  - Color-coded particles (blue, green, amber, pink)
+  - Haptic "success" feedback when celebration triggers
+
+  **Haptic Integration:**
+  - Medium haptic on click (tactile confirmation)
+  - Success haptic when reaching top (reward feeling)
+
+  **Premium Styling:**
+  - Glassmorphic dark mode background
+  - Ambient glow that intensifies on hover
+  - Ripple effect on click
+  - Full light mode support with inverted colors
+  - Mobile-responsive (accounts for FAB menu offset)
+
+**Technical details:**
+- Uses `requestAnimationFrame` for smooth scroll tracking
+- Ref-based scroll-to-top detection for celebration trigger
+- Integrates with existing `useHaptic` and `useMotionPreferences` hooks
+- Full `prefers-reduced-motion` support (disables confetti, smooth scroll)
+- ~300 lines of new CSS for v2 styling
+
+**Impact:** What was a utilitarian "scroll up" button now becomes a delightful interaction. Users can see their scroll progress, get tactile feedback, and receive a tiny celebration when they reach the top. Makes scrolling feel rewarding.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-10 — SentimentPulse: Dynamic Earnings Momentum Indicator
 
 **Inspiration:** Heart rate monitors, live trading dashboards, and market sentiment indicators. The goal was to create an organic, alive feeling that reflects the real-time mood of the market based on earnings results.
