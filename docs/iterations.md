@@ -1,4 +1,51 @@
 
+## 2026-03-11 — QuickPeek Component (Peek & Pop Preview)
+
+**Inspiration:** iOS Peek & Pop (3D Touch / Haptic Touch), macOS Quick Look (spacebar preview), and trading terminal quick stats popups. Based on UX research from micro-interactions for data tables.
+
+**What was added:**
+- New `QuickPeek` component - hover/long-press preview showing expanded company details
+- Desktop: Shows on hover after 400ms delay
+- Mobile: Shows on long-press (300ms) with haptic feedback
+- Glassmorphic design with smooth scale/fade entrance animation
+- Displays key stats without navigating away:
+  - Company logo (larger) + ticker + sector
+  - EPS actual vs estimate with surprise badge
+  - Revenue actual vs estimate
+  - Beat odds gauge for pending earnings
+  - EPS trend dots visualization (4 quarters)
+  - Reporting time (BMO/AMC)
+- Smart positioning to avoid viewport edges
+- Dismisses on scroll, click outside, or mouse leave
+- Uses React Portal for proper z-index layering
+
+**Technical notes:**
+- Pure CSS animations (no framer-motion dependency)
+- Uses existing HapticFeedback hook for mobile tactile response
+- Uses existing EPSTrendDots and OddsGauge components
+- Respects `prefers-reduced-motion` preference
+- Full light/dark mode support via `:global()` selectors
+- Touch event handling with movement cancellation
+- Intersection with existing tooltip system avoided via portal
+
+**Integration:**
+- Wrapped `EarningsCard` component on main calendar page
+- Every earnings card now shows QuickPeek preview on hover/long-press
+- Click-through to full report still works
+
+**Why it matters:**
+- Power users can quickly scan company details without navigating
+- Reduces round-trips to report pages for quick lookups
+- Mobile-friendly alternative to hover tooltips
+- Matches premium dashboard UX patterns (Bloomberg, TradingView)
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 0ebeff4
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-09 — ShimmerText Component
 
 **Inspiration:** Premium UI patterns from Stripe, Linear, and Apple - subtle light sweep effects that add polish to headlines and important text elements.
