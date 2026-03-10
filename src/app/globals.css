@@ -15428,18 +15428,18 @@ html.light .today-summary-row .sentiment-pulse {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  border-radius: 0 0 8px 8px;
-  overflow: hidden;
+  height: 6px;
+  border-radius: 0 0 6px 6px;
+  overflow: visible;
   pointer-events: none;
-  z-index: 1;
+  z-index: 10;
 }
 
 .day-heat-bar {
   position: absolute;
   inset: 0;
   background: var(--heat-color, transparent);
-  opacity: calc(0.4 + var(--heat-intensity, 0) * 0.6);
+  opacity: calc(0.6 + var(--heat-intensity, 0) * 0.4);
   transition: opacity 0.3s ease, background 0.3s ease;
 }
 
@@ -15447,16 +15447,16 @@ html.light .today-summary-row .sentiment-pulse {
 .day-heat-glow {
   position: absolute;
   bottom: 0;
-  left: 10%;
-  right: 10%;
-  height: 20px;
+  left: 5%;
+  right: 5%;
+  height: 30px;
   background: radial-gradient(
     ellipse 100% 200% at 50% 100%,
     var(--heat-color, transparent),
     transparent 70%
   );
-  opacity: var(--heat-glow, 0);
-  filter: blur(8px);
+  opacity: calc(var(--heat-glow, 0) * 1.5);
+  filter: blur(10px);
   transform: translateY(50%);
   transition: opacity 0.3s ease;
 }
