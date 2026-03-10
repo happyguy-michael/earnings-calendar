@@ -156,3 +156,41 @@ Animated percentage reveal on beat/miss badges with counting animation.
 **Component:** `AnimatedGridBackground.tsx`
 
 Dot grid background with cursor-following glow effect and subtle pulse animation.
+
+## 2026-03-10 — DayHeatIndicator (Visual Activity Heat Map)
+**Component:** `DayHeatIndicator.tsx`
+
+**What it does:**
+- Subtle gradient bar at the bottom of each day column
+- Color intensity correlates with number of earnings reports
+- Sentiment-aware coloring: green tint for beat-heavy days, red for miss-heavy
+- Animated pulse effect on high-volume days (10+ reports)
+- Floating particle effects for "hot" days
+- Glow effect that scales with volume
+- Heat levels: blue (1-2), purple (3-5), amber (6-9), orange (10-14), red (15+)
+
+**Why it matters:**
+- At-a-glance volume indicator without counting cards
+- Pattern recognition: quickly spot busy vs quiet days
+- Emotional design: "hot" days feel energetic
+- GitHub-style contribution heat map familiarity
+- Reduces cognitive load when scanning weeks
+
+**Technical highlights:**
+- Pre-calculates max count across week for relative scaling
+- CSS custom properties for dynamic coloring
+- Three exported variants: DayHeatIndicator, DayHeatStrip, MiniHeatDot
+- Respects `prefers-reduced-motion`
+- Full light/dark mode support
+
+**Inspiration:** 
+- GitHub contribution heatmap (color intensity = activity)
+- Waton Calendar Dashboard (Dribbble - soft color coding)
+- Seektask Dashboard heat indicators
+
+**Files changed:**
+- `src/components/DayHeatIndicator.tsx` (new)
+- `src/app/page.tsx` (integrated into week content)
+- `src/app/globals.css` (DayHeatIndicator styles)
+
+---
