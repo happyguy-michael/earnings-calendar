@@ -2,7 +2,7 @@
 
 import { useMemo, useEffect, useState, useRef } from 'react';
 import { Earning } from '@/lib/types';
-import { CountUp } from './CountUp';
+import { NumberRoller, PercentageRoller } from './NumberRoller';
 
 interface WeekSummaryCardProps {
   weekStart: Date;
@@ -161,37 +161,53 @@ export function WeekSummaryCard({
         <div className="week-summary-range">{weekRange}</div>
       </div>
       
-      {/* Stats grid - numbers animate when card scrolls into view */}
+      {/* Stats grid - numbers animate with slot-machine effect when card scrolls into view */}
       <div className="week-summary-stats">
         <div className="week-summary-stat">
           <span className="week-summary-stat-value">
-            {isVisible ? <CountUp end={stats.reported} duration={600} /> : '0'}
+            <NumberRoller 
+              value={isVisible ? stats.reported : 0} 
+              spring={{ duration: 600 }}
+              continuous
+            />
           </span>
           <span className="week-summary-stat-label">Reported</span>
         </div>
         <div className="week-summary-stat beat">
           <span className="week-summary-stat-value">
-            {isVisible ? <CountUp end={stats.beats} duration={700} /> : '0'}
+            <NumberRoller 
+              value={isVisible ? stats.beats : 0} 
+              spring={{ duration: 700 }}
+              continuous
+            />
           </span>
           <span className="week-summary-stat-label">Beats</span>
         </div>
         <div className="week-summary-stat miss">
           <span className="week-summary-stat-value">
-            {isVisible ? <CountUp end={stats.misses} duration={700} /> : '0'}
+            <NumberRoller 
+              value={isVisible ? stats.misses : 0} 
+              spring={{ duration: 700 }}
+              continuous
+            />
           </span>
           <span className="week-summary-stat-label">Misses</span>
         </div>
         {stats.pending > 0 && (
           <div className="week-summary-stat pending">
             <span className="week-summary-stat-value">
-              {isVisible ? <CountUp end={stats.pending} duration={600} /> : '0'}
+              <NumberRoller 
+                value={isVisible ? stats.pending : 0} 
+                spring={{ duration: 600 }}
+                continuous
+              />
             </span>
             <span className="week-summary-stat-label">Pending</span>
           </div>
         )}
       </div>
       
-      {/* Beat rate bar - animated fill and percentage */}
+      {/* Beat rate bar - animated fill and percentage with slot-machine digits */}
       {stats.reported > 0 && (
         <div className="week-summary-bar-container">
           <div className="week-summary-bar">
@@ -205,12 +221,17 @@ export function WeekSummaryCard({
             />
           </div>
           <span className="week-summary-bar-label">
-            {isVisible ? <CountUp end={stats.beatRate} duration={800} suffix="%" /> : '0%'} beat rate
+            <PercentageRoller 
+              value={isVisible ? stats.beatRate : 0} 
+              decimals={0}
+              spring={{ duration: 800 }}
+              continuous
+            /> beat rate
           </span>
         </div>
       )}
       
-      {/* Highlights - animated surprise percentages */}
+      {/* Highlights - animated surprise percentages with slot-machine digits */}
       {(stats.biggestBeat || stats.biggestMiss) && (
         <div className="week-summary-highlights">
           {stats.biggestBeat && (
@@ -218,15 +239,13 @@ export function WeekSummaryCard({
               <span className="week-summary-highlight-icon">🏆</span>
               <span className="week-summary-highlight-ticker">{stats.biggestBeat.ticker}</span>
               <span className="week-summary-highlight-value">
-                {isVisible ? (
-                  <CountUp 
-                    end={getSurprisePercent(stats.biggestBeat)} 
-                    duration={900} 
-                    decimals={1}
-                    prefix="+"
-                    suffix="%"
-                  />
-                ) : '+0.0%'}
+                <NumberRoller 
+                  value={isVisible ? getSurprisePercent(stats.biggestBeat) : 0}
+                  format={{ minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: 'always' }}
+                  suffix="%"
+                  spring={{ duration: 900 }}
+                  trend={1}
+                />
               </span>
             </div>
           )}
@@ -235,14 +254,13 @@ export function WeekSummaryCard({
               <span className="week-summary-highlight-icon">📉</span>
               <span className="week-summary-highlight-ticker">{stats.biggestMiss.ticker}</span>
               <span className="week-summary-highlight-value">
-                {isVisible ? (
-                  <CountUp 
-                    end={getSurprisePercent(stats.biggestMiss)} 
-                    duration={900} 
-                    decimals={1}
-                    suffix="%"
-                  />
-                ) : '0.0%'}
+                <NumberRoller 
+                  value={isVisible ? getSurprisePercent(stats.biggestMiss) : 0}
+                  format={{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}
+                  suffix="%"
+                  spring={{ duration: 900 }}
+                  trend={-1}
+                />
               </span>
             </div>
           )}

@@ -16557,3 +16557,79 @@ html.light .audio-volume-input {
     animation: none;
   }
 }
+
+/* ========================================
+   NumberRoller - Premium Digit Animation
+   ======================================== */
+
+/* Base NumberFlow/NumberRoller styling */
+.number-roller {
+  display: inline-flex;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.85;
+}
+
+/* NumberFlow part styling - suffix/prefix */
+:root[data-supports-dsd] number-flow-react::part(suffix) {
+  margin-left: 0.0625em;
+  opacity: 0.7;
+}
+
+:root[data-supports-dsd] number-flow-react::part(prefix) {
+  margin-right: 0.0625em;
+  opacity: 0.7;
+}
+
+/* Stat card specific roller styling */
+.stat-value .number-roller {
+  --number-flow-mask-height: 0.15em;
+  --number-flow-mask-width: 0.3em;
+}
+
+/* Hero stats - larger roller */
+.hero-stat .number-roller {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Beat rate specific styling */
+.beat-rate-value .number-roller {
+  color: #22c55e;
+}
+
+/* Beat rate value when low */
+.beat-rate-value.low .number-roller {
+  color: #ef4444;
+}
+
+/* Pending count pulse effect */
+.pending-stat .number-roller {
+  color: #f59e0b;
+}
+
+/* Theme: light mode adjustments */
+html.light .stat-value .number-roller {
+  --number-flow-mask-height: 0.12em;
+}
+
+/* Roller with glow effect */
+.number-roller-glow {
+  text-shadow: 0 0 20px currentColor;
+}
+
+/* Roller scale on change */
+@keyframes rollerPop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.number-roller-pop {
+  animation: rollerPop 0.3s ease-out;
+}
+
+/* Reduced motion: disable roller animations */
+@media (prefers-reduced-motion: reduce) {
+  .number-roller {
+    /* NumberFlow respects this automatically via respectMotionPreference */
+  }
+}

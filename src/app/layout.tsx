@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
+import Script from "next/script";
 import { NavigationProgress } from "@/components/NavigationProgress";
 import { CursorSpotlight } from "@/components/CursorSpotlight";
 import { MeshGradient } from "@/components/MeshGradient";
@@ -27,6 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        {/* Declarative Shadow DOM feature detection for NumberFlow styling */}
+        <Script id="dsd-detection" strategy="beforeInteractive">{`
+          if (
+            HTMLTemplateElement.prototype.hasOwnProperty('shadowRootMode') ||
+            HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot')
+          ) document.documentElement.setAttribute('data-supports-dsd', '')
+        `}</Script>
+      </head>
       <body className="antialiased min-h-screen">
         {/* Animated focus ring system for keyboard accessibility */}
         <AnimatedFocusRing />
