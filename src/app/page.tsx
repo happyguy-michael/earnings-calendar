@@ -80,6 +80,7 @@ import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 import { OrbitDot } from '@/components/OrbitDot';
+import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -643,8 +644,14 @@ export default function Home() {
       {/* Keyboard shortcuts overlay */}
       <KeyboardShortcutsOverlay />
       
-      {/* Header - shrinks on scroll */}
-      <header className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
+      {/* Header - shrinks on scroll with enhanced frosted glass */}
+      <FrostedHeader
+        scrolled={isScrolled}
+        className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}
+        blurRadius={isScrolled ? 24 : 20}
+        extension={isScrolled ? 100 : 80}
+        showTopGradient={true}
+      >
         <div className="sticky-header-inner">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-shrink-0">
@@ -756,7 +763,7 @@ export default function Home() {
             />
           </div>
         </div>
-      </header>
+      </FrostedHeader>
 
       {/* Ticker Ribbon - scrolling earnings tape */}
       <TickerRibbon earnings={earnings} speed={35} />

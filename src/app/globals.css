@@ -432,11 +432,27 @@ html.light .card::before {
   position: sticky;
   top: 0;
   z-index: 20;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* backdrop-filter now handled by EnhancedFrostedGlass wrapper */
   border-bottom: 1px solid var(--border-secondary);
   background: var(--header-bg);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced frosted glass integration */
+.frosted-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--border-secondary);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.frosted-header.scrolled {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+html.light .frosted-header.scrolled {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
 }
 
 .sticky-header-inner {
