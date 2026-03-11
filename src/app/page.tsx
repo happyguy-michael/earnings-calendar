@@ -62,6 +62,7 @@ import { CompanyLogo } from '@/components/ProgressiveImage';
 import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, useSnapshot } from '@/components/SnapshotMode';
 import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
 import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
+import { useAudioFeedback, AudioToggle } from '@/components/AudioFeedback';
 import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
@@ -688,6 +689,7 @@ export default function Home() {
               <KeyboardShortcutsHint />
               <MotionToggle size="sm" />
               <HapticToggle size="sm" />
+              <AudioToggle size="sm" />
               <ThemeToggle />
               <TodayButton 
                 onClick={goToToday}

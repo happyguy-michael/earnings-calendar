@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { useAudioFeedback } from './AudioFeedback';
 
 interface Particle {
   id: number;
@@ -47,10 +48,13 @@ export function Confetti({
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
   const hasTriggeredRef = useRef(false);
+  const { play: playAudio } = useAudioFeedback();
 
   useEffect(() => {
     if (trigger && !hasTriggeredRef.current) {
       hasTriggeredRef.current = true;
+      // Play celebration sound for beat confetti
+      playAudio('celebration');
       
       // Create initial particles
       const newParticles: Particle[] = Array.from({ length: particleCount }, (_, i) => {

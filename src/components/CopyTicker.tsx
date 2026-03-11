@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useAudioFeedback } from './AudioFeedback';
 
 interface CopyTickerProps {
   ticker: string;
@@ -22,6 +23,7 @@ interface CopyTickerProps {
 export function CopyTicker({ ticker, className = '', size = 'sm', showLabel = false }: CopyTickerProps) {
   const [copied, setCopied] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const { play: playAudio } = useAudioFeedback();
 
   const handleCopy = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,13 +32,15 @@ export function CopyTicker({ ticker, className = '', size = 'sm', showLabel = fa
     try {
       await navigator.clipboard.writeText(ticker);
       setCopied(true);
+      playAudio('success');
       
       // Reset after animation
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
+      playAudio('error');
     }
-  }, [ticker]);
+  }, [ticker, playAudio]);
 
   const sizeClasses = {
     sm: 'w-6 h-6 text-xs',

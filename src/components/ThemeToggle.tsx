@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from './Toast';
+import { useAudioFeedback } from './AudioFeedback';
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
   const [mounted, setMounted] = useState(false);
   const { showToast } = useToast();
+  const { play: playAudio } = useAudioFeedback();
 
   // Only run on client to avoid hydration mismatch
   useEffect(() => {
@@ -27,6 +29,7 @@ export function ThemeToggle() {
   const toggleTheme = () => {
     const newIsDark = !isDark;
     setIsDark(newIsDark);
+    playAudio('toggle');
     
     if (newIsDark) {
       document.documentElement.classList.remove('light');

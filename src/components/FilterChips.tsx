@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import { AnimatedFilterCount } from './AnimatedFilterCount';
+import { useAudioFeedback } from './AudioFeedback';
 
 type FilterType = 'all' | 'beat' | 'miss' | 'pending';
 
@@ -45,6 +46,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
   const [focusedIndex, setFocusedIndex] = useState<number>(() => 
     filters.findIndex(f => f.key === value)
   );
+  const { play: playAudio } = useAudioFeedback();
 
   // Measure and update pill position
   const updatePillPosition = useCallback(() => {
@@ -125,6 +127,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
 
     if (newIndex !== currentIndex) {
       setFocusedIndex(newIndex);
+      playAudio('toggle');
       // Move focus to the new tab
       const newFilter = filters[newIndex];
       const newButton = buttonRefs.current.get(newFilter.key);
@@ -132,7 +135,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
       // Auto-select on arrow navigation (common pattern for tabs)
       onChange(newFilter.key);
     }
-  }, [focusedIndex, onChange]);
+  }, [focusedIndex, onChange, playAudio]);
 
   // Get pill color class based on active filter
   const getPillColorClass = () => {
@@ -173,7 +176,10 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
               ref={(el) => {
                 if (el) buttonRefs.current.set(filter.key, el);
               }}
-              onClick={() => onChange(filter.key)}
+              onClick={() => {
+                playAudio('toggle');
+                onChange(filter.key);
+              }}
               onFocus={() => setFocusedIndex(index)}
               className={`filter-chip ${isActive ? 'active' : ''} ${filter.key !== 'all' ? `filter-chip-${filter.key}` : ''}`}
               role="tab"
