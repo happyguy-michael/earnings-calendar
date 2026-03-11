@@ -79,6 +79,7 @@ import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
+import { OrbitDot } from '@/components/OrbitDot';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -968,8 +969,20 @@ export default function Home() {
           className={`space-y-6 ${slideDirection === 'left' ? 'week-slide-enter-right' : ''} ${slideDirection === 'right' ? 'week-slide-enter-left' : ''}`}
         >
           {weeks.map((weekStart, weekIndex) => (
-            <BorderGlowSpot 
+            <OrbitDot
               key={weekIndex}
+              duration={12000 + weekIndex * 2000}
+              delay={weekIndex * 4000}
+              dotSize={3}
+              glowSize={10}
+              glowIntensity={0.5}
+              color={weekIndex === 0 ? 'brand' : weekIndex === 1 ? 'success' : 'warning'}
+              trail={true}
+              trailLength={2}
+              borderRadius={20}
+              hoverOnly={false}
+            >
+            <BorderGlowSpot 
               variant="default"
               intensity={0.5}
               glowSize={200}
@@ -1113,6 +1126,7 @@ export default function Home() {
               />
             </div>
             </BorderGlowSpot>
+            </OrbitDot>
           ))}
         </div>
         </SwipeNavigator>
