@@ -1,3 +1,56 @@
+## 2026-03-12 — EnhancedFrostedGlass: Josh Comeau's Next-Level Blur
+
+**Inspiration:** Josh Comeau's article "Next-level frosted glass with backdrop-filter" (July 2025). Standard `backdrop-filter: blur()` only considers pixels directly behind an element, which means nearby colorful content doesn't create the soft glow you'd expect from real frosted glass.
+
+**What I built:**
+- New `EnhancedFrostedGlass` component that implements advanced frosted glass technique:
+
+  **Core Technique:**
+  - Extends a backdrop child element beyond container bounds (configurable `extension` prop)
+  - Uses `mask-image` to trim visual bounds back to original container size
+  - This allows the blur algorithm to consider nearby elements, not just what's directly behind
+  - Adds a subtle top gradient to prevent edge flickering when content scrolls out
+
+  **Enhancement Filters:**
+  - `brightness` filter (default: 1.05) subtly enhances the blur for richness
+  - `saturation` filter (default: 1.15) makes blurred colors more vibrant
+  - Both work together to create a more premium, lush frosted glass effect
+
+  **Extension Directions:**
+  - `bottom`: Default for headers (extends downward)
+  - `top`: For footers (extends upward)
+  - `both`: For floating cards (extends in both directions)
+
+  **Preset Components:**
+  - `FrostedHeader`: Optimized for sticky headers with dynamic scroll state
+  - `FrostedCard`: Optimized for floating card containers
+
+**Integration:**
+- Wrapped the main sticky header with `FrostedHeader`
+- Blur radius dynamically increases on scroll (20px → 24px)
+- Extension increases on scroll (80px → 100px) for better nearby content consideration
+- Full theme detection via MutationObserver for light mode support
+- `pointer-events: none` on backdrop layer preserves interactivity
+
+**Accessibility:**
+- Full `prefers-reduced-motion` support (simplified blur, no enhancement filters)
+- `aria-hidden="true"` on decorative layers
+- Content remains fully accessible
+
+**Technical details:**
+- ResizeObserver tracks container height for accurate mask calculations
+- MutationObserver watches for theme class changes
+- ~250 lines of component code with TypeScript types
+- CSS custom properties for theme-aware gradient colors
+
+**Impact:** The header now has a more realistic frosted glass effect. When colorful elements (like beat badges, navigation buttons) are near the header edge, they create a soft glow even before being directly behind it — just like real frosted glass.
+
+**Reference:** https://www.joshwcomeau.com/css/backdrop-filter/
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — GlassReflection: Liquid Glass Light Beam Effect
 
 **Inspiration:** Apple's Liquid Glass (iOS 26) design language, Apple Card metal shimmer effect, premium fintech dashboards (Revolut, Linear), and the 2026 trend of "Liquid Glass" — translucent surfaces with depth, refraction, and light play.
