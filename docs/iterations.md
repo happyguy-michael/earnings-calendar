@@ -1,4 +1,53 @@
 
+## 2026-03-11 — NumberRoller Component (Premium Slot-Machine Numbers)
+
+**Inspiration:** Stripe Dashboard, Robinhood portfolio values, Linear task counters - premium financial apps use slot-machine style number animations where each digit rolls independently like an odometer.
+
+**What was added:**
+- New `NumberRoller` component using @number-flow/react library
+- Multiple convenience variants:
+  - `NumberRoller` - base component with full customization
+  - `CompactNumberRoller` - large numbers with K/M/B notation
+  - `CurrencyRoller` - currency formatting ($1,234.56)
+  - `PercentageRoller` - percentages with configurable decimals
+  - `IntegerRoller` - whole numbers only
+- Features:
+  - Each digit animates independently (odometer/slot-machine style)
+  - Configurable animation direction (trend: up/down/neutral)
+  - Continuous mode (passes through intermediate values)
+  - Spring physics timing with customizable duration/easing
+  - Intl.NumberFormat support for localization
+  - Prefix/suffix support
+  - SSR-safe with hydration handling
+
+**Integration:**
+- Upgraded `WeekSummaryCard` to use NumberRoller
+  - Stats (Reported, Beats, Misses, Pending) now roll with slot-machine effect
+  - Beat rate percentage animates smoothly
+  - Biggest beat/miss surprise percentages have direction-aware rolling
+- Added DSD (Declarative Shadow DOM) feature detection for ::part styling
+- Added CSS custom properties for theming
+
+**Technical notes:**
+- Uses @number-flow/react (3 packages, 0 vulnerabilities)
+- Respects `prefers-reduced-motion` automatically
+- CSS ::part selectors for prefix/suffix styling (with DSD detection fallback)
+- Spring-based animations via transformTiming/spinTiming/opacityTiming
+- Type-safe format options matching NumberFlow's restricted subset
+
+**Why it matters:**
+- Numbers feel "alive" - creates perception of real-time updates
+- Premium visual polish that matches high-end financial apps
+- Makes the app feel more dynamic and responsive
+- Industry-standard pattern (seen in Stripe, Robinhood, Linear)
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** ae78a78
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — QuickPeek Component (Peek & Pop Preview)
 
 **Inspiration:** iOS Peek & Pop (3D Touch / Haptic Touch), macOS Quick Look (spacebar preview), and trading terminal quick stats popups. Based on UX research from micro-interactions for data tables.
