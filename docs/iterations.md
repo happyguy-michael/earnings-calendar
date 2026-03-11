@@ -1,4 +1,46 @@
 
+## 2026-03-11 — DepthHover Component (Physics-Based Card Lift)
+
+**Inspiration:** Linear.app card interactions, Stripe Dashboard hover states, iOS Liquid Glass depth perception, and premium fintech dashboard patterns where cards have tactile, 3D-like hover responses.
+
+**What was added:**
+- New `DepthHover` component with spring physics animation engine
+- Features:
+  - Cards lift up on hover with configurable height (default 6px)
+  - Subtle scale increase (default 1.015x) for "pop" effect
+  - Dynamic shadow that grows with lift height
+  - Spring physics (stiffness/damping) for natural, organic motion
+  - Optional `DepthHoverContainer` for neighbor-aware effects (cards sink when neighbor lifts)
+  - Standalone mode for individual card use without container
+  - Hardware-accelerated transforms (will-change, separate shadow layer)
+  - Respects prefers-reduced-motion (fallback to simple CSS transition)
+  - Theme-aware shadows (darker in dark mode, subtle in light mode)
+
+**Integration:**
+- Wrapped `EarningsCard` component on main calendar page
+- Every earnings card now has physics-based lift on hover
+- Complements existing CardLightSweep and QuickPeek interactions
+
+**Technical notes:**
+- Pure JavaScript spring physics loop using requestAnimationFrame
+- No external animation library dependency
+- CSS custom properties for shadow manipulation (--depth-shadow-blur, etc.)
+- Context-based coordination for neighbor effects
+- Inverse-square falloff for natural neighbor influence decay
+
+**Why it matters:**
+- Creates tactile, premium feel - cards feel "real" and responsive
+- Adds depth perception to flat list interfaces
+- Industry-standard pattern from high-end apps (Linear, Stripe, Notion)
+- Subtle but noticeable polish that elevates the entire UI
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 96a25bd
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — NumberRoller Component (Premium Slot-Machine Numbers)
 
 **Inspiration:** Stripe Dashboard, Robinhood portfolio values, Linear task counters - premium financial apps use slot-machine style number animations where each digit rolls independently like an odometer.
