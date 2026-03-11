@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { ScrambleNumber } from './TextScramble';
 
 interface AnimatedSurpriseBadgeProps {
   surprise: number; // Surprise percentage (can be negative)
@@ -281,6 +282,70 @@ export function SurpriseCountUp({
   return (
     <span ref={ref} className={`tabular-nums ${className}`}>
       {displayValue >= 0 ? '+' : ''}{displayValue.toFixed(1)}%
+    </span>
+  );
+}
+
+/**
+ * SurpriseScramble - Premium variant using text scramble effect
+ * 
+ * Characters scramble through random digits before settling on the final value.
+ * Creates a high-end fintech feel for important data reveals.
+ */
+export function SurpriseScramble({
+  value,
+  delay = 0,
+  duration = 600,
+  className = '',
+  glowColor,
+}: {
+  value: number;
+  delay?: number;
+  duration?: number;
+  className?: string;
+  glowColor?: string;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  // Auto-determine glow color based on value
+  const defaultGlowColor = value >= 0 ? '#22c55e' : '#ef4444';
+  const formattedValue = `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <span 
+      ref={ref} 
+      className={`surprise-scramble tabular-nums ${className}`}
+      style={{ visibility: isVisible ? 'visible' : 'hidden' }}
+    >
+      {isVisible ? (
+        <ScrambleNumber
+          text={formattedValue}
+          duration={duration}
+          glowColor={glowColor ?? defaultGlowColor}
+          showGlow={true}
+        />
+      ) : (
+        <span style={{ opacity: 0 }}>{formattedValue}</span>
+      )}
     </span>
   );
 }

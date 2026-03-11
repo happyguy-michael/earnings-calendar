@@ -48,7 +48,8 @@ import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ImminentGlow } from '@/components/ImminentGlow';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
-import { SurpriseCountUp } from '@/components/AnimatedSurpriseBadge';
+import { SurpriseCountUp, SurpriseScramble } from '@/components/AnimatedSurpriseBadge';
+import { ScrambleTicker } from '@/components/TextScramble';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
@@ -226,7 +227,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-white">{earning.ticker}</span>
+            <span className="text-sm font-semibold text-white">
+              <ScrambleTicker 
+                text={earning.ticker} 
+                delay={animationIndex * 60}
+                duration={350}
+              />
+            </span>
             <BeatStreakBadge streak={beatStreak} />
             <EPSTrendDots 
               estimate={earning.estimate}
@@ -282,7 +289,17 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                 <BadgeSparkle active={true} particleCount={6}>
                   <span className="badge badge-beat">
                     <MonsterBeatIcon surprise={surprise} />
-                    <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                    {/* Use scramble effect for monster beats (≥15%), count-up for others */}
+                    {surprise >= 15 ? (
+                      <SurpriseScramble 
+                        value={surprise} 
+                        delay={animationIndex * 50 + 200} 
+                        duration={600}
+                        glowColor="#22c55e"
+                      />
+                    ) : (
+                      <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                    )}
                   </span>
                 </BadgeSparkle>
               </ExceptionalGlow>
@@ -290,7 +307,17 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
                 <span className="badge badge-miss">
                   <DisasterMissIcon surprise={surprise} />
-                  <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                  {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
+                  {surprise <= -15 ? (
+                    <SurpriseScramble 
+                      value={surprise} 
+                      delay={animationIndex * 50 + 200} 
+                      duration={600}
+                      glowColor="#ef4444"
+                    />
+                  ) : (
+                    <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                  )}
                 </span>
               </DisasterMiss>
             )}
