@@ -1,3 +1,55 @@
+## 2026-03-11 — GlassReflection: Liquid Glass Light Beam Effect
+
+**Inspiration:** Apple's Liquid Glass (iOS 26) design language, Apple Card metal shimmer effect, premium fintech dashboards (Revolut, Linear), and the 2026 trend of "Liquid Glass" — translucent surfaces with depth, refraction, and light play.
+
+**What I built:**
+- New `GlassReflection` component that adds premium animated light beams to glass surfaces:
+
+  **Animation Modes:**
+  - **hover:** Light sweep triggers on mouse hover
+  - **auto:** Periodic automatic sweeps with configurable interval
+  - **mouse:** Spotlight follows cursor position
+  - **always:** Continuous looping animation
+
+  **Customization Options:**
+  - `beamWidth`: Width of the light beam (px)
+  - `angle`: Diagonal angle of sweep (-15° default for natural look)
+  - `duration`: Animation speed
+  - `color`: White, rainbow, blue, gold, or custom gradient
+  - `intensity`: Opacity of the effect
+  - `beamCount`: 1-3 beams with stagger timing
+  - `blur`: Softness of beam edges
+
+  **Preset Components:**
+  - `PremiumCardReflection`: Perfect for stat cards with auto sweep
+  - `InteractiveGlass`: Mouse-following spotlight
+  - `CelebrationShimmer`: Rainbow sweep for exceptional results
+
+**Integration Points:**
+- Stat cards now have staggered auto-sweep reflections
+- Total Reports & Reported: White beam, subtle elegance
+- Beat Rate: Green-tinted beam matching success theme
+- Pending: Amber-tinted beam matching warning theme
+- Each card sweeps at different intervals for organic feel
+
+**Accessibility:**
+- Full `prefers-reduced-motion` support (effect disabled)
+- Purely decorative, doesn't affect functionality
+- `aria-hidden` on overlay layer
+
+**Technical details:**
+- ~350 lines of component code
+- Pure CSS keyframe animations
+- GPU-accelerated transforms
+- mix-blend-mode: overlay for glass integration
+- Cleanup on unmount
+
+**Impact:** The stat cards now have that premium "Liquid Glass" feel from iOS 26, with subtle light beams periodically sweeping across the surface. Creates the illusion of light refracting through translucent material.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — AudioFeedback: Subtle UI Sound Effects
 
 **Inspiration:** macOS Sonoma UI sounds, Bloomberg Terminal audio feedback, Robinhood's satisfying trade confirmation sounds, and the 2026 trend of "sensory UI" — where interfaces engage multiple senses beyond just visual.
