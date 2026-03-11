@@ -1,3 +1,47 @@
+## 2026-03-11 — TextScramble: Premium Data Materialization Effect
+
+**Inspiration:** High-end fintech dashboards (Revolut, Robinhood, Linear), crypto trading interfaces, The New York Times data visualizations, and terminal-style reveals. The "data materializing" effect creates a sense of information arriving in real-time.
+
+**What I built:**
+- New `TextScramble` component family for premium text reveal animations:
+
+  **Core Components:**
+  - **TextScramble:** Configurable character scramble with multiple charset presets (numeric, alpha, alphanumeric, symbols, matrix, binary, hex, finance)
+  - **ScrambleNumber:** Pre-configured for percentages and prices with finance charset
+  - **ScrambleTicker:** Optimized for stock ticker symbols with alpha charset
+  - **ScrambleSlot:** Single character slot-machine style animation
+  - **ScrambleGroup:** Orchestrated multi-character scramble for countdowns
+
+  **Animation Features:**
+  - Characters scramble through random values before settling on final text
+  - Progressive settling from left to right (like a lock tumbling into place)
+  - Configurable duration, delay, and stagger timing
+  - Glow effect during scramble (color-matched to context)
+  - Trigger modes: mount, change, hover, or manual
+
+  **Integration Points:**
+  - Ticker symbols now scramble on card entrance (staggered by card index)
+  - Monster beats (≥15%) use `SurpriseScramble` with green glow for extra emphasis
+  - Disaster misses (≤-15%) use `SurpriseScramble` with red glow
+  - Regular beats/misses retain smooth `SurpriseCountUp` animation
+
+**Accessibility:**
+- Full `prefers-reduced-motion` support (instant reveal, no animation)
+- Text remains readable throughout animation
+- Tabular-nums for consistent number widths
+
+**Technical details:**
+- requestAnimationFrame-based animation loop
+- Configurable charset strings (built-in presets + custom)
+- Cleanup on unmount to prevent memory leaks
+- ~400 lines of component code with full TypeScript types
+
+**Impact:** The scramble effect adds a signature "premium fintech" feel to data reveals. Exceptional results (monster beats, disaster misses) now have an extra layer of visual emphasis that makes them feel truly special.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — AmbientBackground: Time-Aware Living Interface
 
 **Inspiration:** Apple's Dynamic Wallpapers that shift with time of day, financial trading floors with ambient lighting indicating market sessions, and the 2026 UI trend of "living interfaces" that breathe with real-world context.
