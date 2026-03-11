@@ -298,3 +298,26 @@
 **Commit:** f30a070
 
 ---
+
+## 2026-03-11 — Animated CountUp in WeekSummaryCard
+
+**Component:** `WeekSummaryCard.tsx`
+
+**What changed:**
+- Added `CountUp` animation to all stat values (Reported, Beats, Misses, Pending)
+- Beat rate bar now animates from 0% width with smooth cubic-bezier easing
+- Beat rate percentage uses `CountUp` animation
+- Biggest beat/miss surprise percentages animate with `CountUp` (decimals support)
+
+**Technical details:**
+- Uses `isVisible` state from IntersectionObserver to trigger animations
+- Numbers start at 0 and count up when card scrolls into view
+- Staggered durations (600-900ms) for visual interest
+- Bar fill uses CSS transition synced with CountUp timing
+
+**Visual impact:**
+- Premium "data loading" feel when scrolling to week summaries
+- Numbers feel alive rather than static
+- Coordinates with existing glassmorphism and gradient orbs
+
+**Commit:** `748c8fc` — feat: Add animated CountUp numbers to WeekSummaryCard
