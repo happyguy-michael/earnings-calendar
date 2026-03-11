@@ -1,4 +1,52 @@
 
+## 2026-03-11 — OrbitDot Component (Firefly Border Animation)
+
+**Inspiration:** Vercel's card borders with traveling light, Linear.app's subtle ambient animations, and the 2025/2026 "living UI" trend seen on Dribbble/design sites where static elements have organic motion.
+
+**What was added:**
+- New `OrbitDot` component with CSS-only path animation
+- Features:
+  - Single glowing dot orbits card borders continuously
+  - Calculates perimeter-aware path for consistent speed
+  - Optional trail effect (fading ghost followers)
+  - Configurable: speed, size, glow intensity, color presets
+  - Multiple color presets: brand (purple), success (green), warning (amber), danger, neutral, rainbow (hue-rotating)
+  - Pause on hover option for interactivity
+  - `hoverOnly` mode - only shows animation when element is hovered
+  - Hardware-accelerated via CSS transforms (no JS animation loop)
+  - Respects prefers-reduced-motion
+- Variants:
+  - `DualOrbitDot` - two dots on opposite sides
+  - `PulseOrbitDot` - dot pulses as it orbits
+
+**Integration:**
+- Wrapped each week card on the main calendar page
+- Week 1: brand purple orbit (12s cycle)
+- Week 2: success green orbit (14s cycle, 4s delay)
+- Week 3: warning amber orbit (16s cycle, 8s delay)
+- Trail enabled with 2 ghost followers
+- Creates subtle "alive" effect without being distracting
+
+**Technical notes:**
+- Pure CSS keyframe animation (no requestAnimationFrame loop)
+- Dynamic keyframe generation based on container dimensions
+- ResizeObserver tracks container size changes
+- Uses styled-jsx for scoped keyframe injection
+- Smooth corner following via multi-step keyframe path
+
+**Why it matters:**
+- Static cards feel "alive" without being distracting
+- Adds premium polish seen in high-end SaaS products (Vercel, Linear)
+- Subtle motion draws attention to important sections
+- Different timing per week creates organic, non-mechanical feel
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 76214d9
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — DepthHover Component (Physics-Based Card Lift)
 
 **Inspiration:** Linear.app card interactions, Stripe Dashboard hover states, iOS Liquid Glass depth perception, and premium fintech dashboard patterns where cards have tactile, 3D-like hover responses.
