@@ -2,6 +2,7 @@
 
 import { useMemo, useEffect, useState, useRef } from 'react';
 import { Earning } from '@/lib/types';
+import { CountUp } from './CountUp';
 
 interface WeekSummaryCardProps {
   weekStart: Date;
@@ -160,45 +161,56 @@ export function WeekSummaryCard({
         <div className="week-summary-range">{weekRange}</div>
       </div>
       
-      {/* Stats grid */}
+      {/* Stats grid - numbers animate when card scrolls into view */}
       <div className="week-summary-stats">
         <div className="week-summary-stat">
-          <span className="week-summary-stat-value">{stats.reported}</span>
+          <span className="week-summary-stat-value">
+            {isVisible ? <CountUp end={stats.reported} duration={600} /> : '0'}
+          </span>
           <span className="week-summary-stat-label">Reported</span>
         </div>
         <div className="week-summary-stat beat">
-          <span className="week-summary-stat-value">{stats.beats}</span>
+          <span className="week-summary-stat-value">
+            {isVisible ? <CountUp end={stats.beats} duration={700} /> : '0'}
+          </span>
           <span className="week-summary-stat-label">Beats</span>
         </div>
         <div className="week-summary-stat miss">
-          <span className="week-summary-stat-value">{stats.misses}</span>
+          <span className="week-summary-stat-value">
+            {isVisible ? <CountUp end={stats.misses} duration={700} /> : '0'}
+          </span>
           <span className="week-summary-stat-label">Misses</span>
         </div>
         {stats.pending > 0 && (
           <div className="week-summary-stat pending">
-            <span className="week-summary-stat-value">{stats.pending}</span>
+            <span className="week-summary-stat-value">
+              {isVisible ? <CountUp end={stats.pending} duration={600} /> : '0'}
+            </span>
             <span className="week-summary-stat-label">Pending</span>
           </div>
         )}
       </div>
       
-      {/* Beat rate bar */}
+      {/* Beat rate bar - animated fill and percentage */}
       {stats.reported > 0 && (
         <div className="week-summary-bar-container">
           <div className="week-summary-bar">
             <div 
               className="week-summary-bar-fill"
               style={{ 
-                width: `${stats.beatRate}%`,
+                width: isVisible ? `${stats.beatRate}%` : '0%',
                 backgroundColor: stats.mood.color,
+                transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             />
           </div>
-          <span className="week-summary-bar-label">{stats.beatRate}% beat rate</span>
+          <span className="week-summary-bar-label">
+            {isVisible ? <CountUp end={stats.beatRate} duration={800} suffix="%" /> : '0%'} beat rate
+          </span>
         </div>
       )}
       
-      {/* Highlights */}
+      {/* Highlights - animated surprise percentages */}
       {(stats.biggestBeat || stats.biggestMiss) && (
         <div className="week-summary-highlights">
           {stats.biggestBeat && (
@@ -206,7 +218,15 @@ export function WeekSummaryCard({
               <span className="week-summary-highlight-icon">🏆</span>
               <span className="week-summary-highlight-ticker">{stats.biggestBeat.ticker}</span>
               <span className="week-summary-highlight-value">
-                +{getSurprisePercent(stats.biggestBeat).toFixed(1)}%
+                {isVisible ? (
+                  <CountUp 
+                    end={getSurprisePercent(stats.biggestBeat)} 
+                    duration={900} 
+                    decimals={1}
+                    prefix="+"
+                    suffix="%"
+                  />
+                ) : '+0.0%'}
               </span>
             </div>
           )}
@@ -215,7 +235,14 @@ export function WeekSummaryCard({
               <span className="week-summary-highlight-icon">📉</span>
               <span className="week-summary-highlight-ticker">{stats.biggestMiss.ticker}</span>
               <span className="week-summary-highlight-value">
-                {getSurprisePercent(stats.biggestMiss).toFixed(1)}%
+                {isVisible ? (
+                  <CountUp 
+                    end={getSurprisePercent(stats.biggestMiss)} 
+                    duration={900} 
+                    decimals={1}
+                    suffix="%"
+                  />
+                ) : '0.0%'}
               </span>
             </div>
           )}
