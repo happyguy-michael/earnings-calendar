@@ -82,6 +82,7 @@ import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 import { OrbitDot } from '@/components/OrbitDot';
 import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
 import { VelocityBlurProvider, VelocityBlurCard } from '@/components/VelocityBlur';
+import { ContextualCardActions } from '@/components/ContextualCardActions';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -208,6 +209,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
       standalone
     >
     <QuickPeek data={quickPeekData}>
+      <ContextualCardActions ticker={earning.ticker} company={earning.company}>
       <div className="earnings-card-wrapper">
         {/* Imminent glow for earnings reporting within 15 minutes */}
         {isTodayPending && (
@@ -364,6 +366,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           <div className="tooltip-arrow" />
         </div>
       </div>
+      </ContextualCardActions>
     </QuickPeek>
     </DepthHover>
   );
