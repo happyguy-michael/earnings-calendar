@@ -81,6 +81,7 @@ import { GlassReflection } from '@/components/GlassReflection';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 import { OrbitDot } from '@/components/OrbitDot';
 import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
+import { VelocityBlurProvider, VelocityBlurCard } from '@/components/VelocityBlur';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -609,6 +610,7 @@ export default function Home() {
 
   return (
     <SnapshotProvider autoResumeSeconds={300}>
+    <VelocityBlurProvider threshold={0.6} maxBlur={2.5} sensitivity={2}>
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <div className="min-h-screen relative">
       {/* Snapshot mode indicator (when paused) */}
@@ -1092,7 +1094,11 @@ export default function Home() {
                                   <span className="session-header-label">Pre-Market</span>
                                 </div>
                                 <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
-                                  {preMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={i} />)}
+                                  {preMarket.map((e, i) => (
+                                    <VelocityBlurCard key={`${e.ticker}-${filterKey}`} staggerIndex={i}>
+                                      <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
+                                    </VelocityBlurCard>
+                                  ))}
                                 </div>
                               </div>
                             )}
@@ -1104,7 +1110,11 @@ export default function Home() {
                                   <span className="session-header-label">After Hours</span>
                                 </div>
                                 <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
-                                  {postMarket.map((e, i) => <EarningsCard key={`${e.ticker}-${filterKey}`} earning={e} isToday={isToday} animationIndex={preMarket.length + i} />)}
+                                  {postMarket.map((e, i) => (
+                                    <VelocityBlurCard key={`${e.ticker}-${filterKey}`} staggerIndex={preMarket.length + i}>
+                                      <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
+                                    </VelocityBlurCard>
+                                  ))}
                                 </div>
                               </div>
                             )}
@@ -1208,6 +1218,7 @@ export default function Home() {
       />
     </div>
     </PullToRefresh>
+    </VelocityBlurProvider>
     </SnapshotProvider>
   );
 }
