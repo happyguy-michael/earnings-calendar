@@ -1,4 +1,51 @@
 
+## 2026-03-12 — VelocityBlur Component (Motion Blur on Fast Scroll)
+
+**Inspiration:** Apple's iOS momentum scrolling with motion blur, Linear.app's buttery-smooth scrolling feel, Framer Motion scroll-linked animations, and the 2024/2025 "physical UI" trend where interfaces have weight and momentum.
+
+**What was added:**
+- New `VelocityBlur` component system:
+  - `VelocityBlurProvider` - Context provider tracking scroll velocity
+  - `VelocityBlurCard` - Wrapper applying blur to individual cards
+  - `VelocityBlurContainer` - Container-level blur for groups
+  - `VelocityIndicator` - Debug component showing current velocity
+
+**Features:**
+- Directional motion blur based on scroll direction (up/down)
+- Velocity-proportional intensity (faster scroll = more blur)
+- SVG filter-based blur for hardware acceleration
+- Smooth blur fade in/out with configurable attack/release speeds
+- Staggered blur per card creates wave-like cascading effect
+- Subtle Y-offset during blur enhances motion perception
+- Respects prefers-reduced-motion preference
+- Configurable threshold, max blur, and sensitivity
+
+**Technical notes:**
+- Uses SVG `feGaussianBlur` filter (GPU accelerated)
+- Spring-like smoothing for blur transitions
+- RAF loop for smooth state updates
+- Scroll velocity calculated from delta/time
+- Idle detection fades blur after scroll stops
+
+**Integration:**
+- Wrapped main calendar content with `VelocityBlurProvider`
+- Applied `VelocityBlurCard` to each earnings card
+- Stagger index creates wave effect during scroll
+- Threshold: 0.6 px/ms, Max blur: 2.5px, Sensitivity: 2x
+
+**Why it matters:**
+- Creates sense of physical weight and momentum during scrolling
+- Premium polish seen in native iOS/macOS interfaces
+- Subtle effect that users "feel" but don't consciously notice
+- Makes the app feel more responsive and alive
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 0dc16f5
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — OrbitDot Component (Firefly Border Animation)
 
 **Inspiration:** Vercel's card borders with traveling light, Linear.app's subtle ambient animations, and the 2025/2026 "living UI" trend seen on Dribbble/design sites where static elements have organic motion.
