@@ -78,6 +78,7 @@ import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
+import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -193,6 +194,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   };
 
   return (
+    <DepthHover 
+      liftHeight={6} 
+      hoverScale={1.015} 
+      shadowBlur={24}
+      shadowSpread={6}
+      borderRadius={14}
+      stiffness={350}
+      damping={28}
+      standalone
+    >
     <QuickPeek data={quickPeekData}>
       <div className="earnings-card-wrapper">
         {/* Imminent glow for earnings reporting within 15 minutes */}
@@ -351,6 +362,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         </div>
       </div>
     </QuickPeek>
+    </DepthHover>
   );
 }
 

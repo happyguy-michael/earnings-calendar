@@ -16633,3 +16633,88 @@ html.light .stat-value .number-roller {
     /* NumberFlow respects this automatically via respectMotionPreference */
   }
 }
+
+/* ========================================
+   DepthHover - Physics-Based Card Depth
+   ======================================== */
+
+.depth-hover {
+  position: relative;
+  cursor: pointer;
+  /* Ensure transforms don't affect layout */
+  transform-origin: center center;
+}
+
+.depth-hover-container {
+  /* Ensure proper stacking context for z-index management */
+  position: relative;
+  isolation: isolate;
+}
+
+.depth-hover-container > * {
+  /* All direct children participate in depth layering */
+  position: relative;
+}
+
+/* Lifted cards get elevated z-index for proper visual layering */
+.depth-hover-lifted {
+  z-index: 10;
+}
+
+/* Shadow layer - hardware accelerated */
+.depth-hover-shadow {
+  will-change: opacity, box-shadow;
+  transition: none; /* Handled by JS spring physics */
+}
+
+/* Reduced motion fallback - simple opacity/scale */
+.depth-hover-reduced {
+  transition: transform 0.2s ease, opacity 0.15s ease;
+}
+
+.depth-hover-reduced:hover {
+  transform: translateY(-2px) scale(1.01);
+  opacity: 0.98;
+}
+
+/* Dark mode shadow color */
+.depth-hover {
+  --depth-shadow-color: rgba(0, 0, 0, 0.35);
+}
+
+/* Light mode - softer shadows */
+html.light .depth-hover {
+  --depth-shadow-color: rgba(0, 0, 0, 0.12);
+}
+
+/* When inside container, coordinate with siblings */
+.depth-hover-container .depth-hover {
+  /* Smooth transition for neighbor sink effect */
+}
+
+/* Earnings card integration */
+.earnings-card-wrapper .depth-hover {
+  border-radius: 14px;
+}
+
+/* Prevent text selection during interaction */
+.depth-hover:active {
+  user-select: none;
+}
+
+/* Focus styles for keyboard navigation */
+.depth-hover:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Stacking context for lifted cards within day columns */
+.day-content .depth-hover-lifted {
+  z-index: 15;
+}
+
+/* Ensure QuickPeek still works with depth hover */
+.depth-hover .earnings-row {
+  position: relative;
+}
+
