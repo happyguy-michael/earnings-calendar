@@ -77,6 +77,7 @@ import { SentimentPulse } from '@/components/SentimentPulse';
 import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
+import { GlassReflection } from '@/components/GlassReflection';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -753,101 +754,151 @@ export default function Home() {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Row with Cursor Glow, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
+        {/* Stats Row with Liquid Glass Reflection, Cursor Glow, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 stats-grid">
           <ParallaxFloat intensity={0.04} delay={0}>
-            <CursorGlowCard 
-              variant="default" 
-              borderRadius={20} 
-              intensity={0.5} 
-              glowRadius={180}
-              className="stat-entrance"
+            <GlassReflection 
+              mode="auto" 
+              interval={10000} 
+              delay={500} 
+              duration={900}
+              beamWidth={100}
+              angle={-18}
+              intensity={0.3}
+              blur={50}
+              borderRadius={20}
             >
-              <div className="flex items-center gap-3">
-                <AnimatedStatIcon type="total" size={28} />
-                <div>
-                  <div className="text-3xl font-bold text-white">
-                    <ValueChangeHighlight value={totalEarnings} variant="default">
-                      <RollingNumber value={totalEarnings} staggerDelay={40} />
-                    </ValueChangeHighlight>
+              <CursorGlowCard 
+                variant="default" 
+                borderRadius={20} 
+                intensity={0.5} 
+                glowRadius={180}
+                className="stat-entrance"
+              >
+                <div className="flex items-center gap-3">
+                  <AnimatedStatIcon type="total" size={28} />
+                  <div>
+                    <div className="text-3xl font-bold text-white">
+                      <ValueChangeHighlight value={totalEarnings} variant="default">
+                        <RollingNumber value={totalEarnings} staggerDelay={40} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
                   </div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
                 </div>
-              </div>
-            </CursorGlowCard>
+              </CursorGlowCard>
+            </GlassReflection>
           </ParallaxFloat>
           <ParallaxFloat intensity={0.05} delay={50}>
-            <CursorGlowCard 
-              variant="success" 
-              borderRadius={20} 
-              intensity={0.5} 
-              glowRadius={180}
-              className="stat-entrance"
+            <GlassReflection 
+              mode="auto" 
+              interval={10000} 
+              delay={2500} 
+              duration={900}
+              beamWidth={100}
+              angle={-18}
+              color="rgba(34, 197, 94, 0.5)"
+              intensity={0.35}
+              blur={50}
+              borderRadius={20}
             >
-              <div className="flex items-center gap-3">
-                <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
-                <div>
-                  <div className="text-2xl font-bold text-gradient-green">
-                    <ValueChangeHighlight value={beatRate} variant="success">
-                      <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
-                    </ValueChangeHighlight>
+              <CursorGlowCard 
+                variant="success" 
+                borderRadius={20} 
+                intensity={0.5} 
+                glowRadius={180}
+                className="stat-entrance"
+              >
+                <div className="flex items-center gap-3">
+                  <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
+                  <div>
+                    <div className="text-2xl font-bold text-gradient-green">
+                      <ValueChangeHighlight value={beatRate} variant="success">
+                        <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
                   </div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
                 </div>
-              </div>
-            </CursorGlowCard>
+              </CursorGlowCard>
+            </GlassReflection>
           </ParallaxFloat>
           <ParallaxFloat intensity={0.035} delay={100}>
-            <CursorGlowCard 
-              variant="default" 
-              borderRadius={20} 
-              intensity={0.5} 
-              glowRadius={180}
-              className="stat-entrance"
+            <GlassReflection 
+              mode="auto" 
+              interval={10000} 
+              delay={4500} 
+              duration={900}
+              beamWidth={100}
+              angle={-18}
+              intensity={0.3}
+              blur={50}
+              borderRadius={20}
             >
-              <div className="flex items-center gap-3">
-                <AnimatedStatIcon type="reported" size={28} />
-                <div>
-                  <div className="text-3xl font-bold text-white">
-                    <ValueChangeHighlight value={reportedCount} variant="default">
-                      <RollingNumber value={reportedCount} staggerDelay={45} />
-                    </ValueChangeHighlight>
+              <CursorGlowCard 
+                variant="default" 
+                borderRadius={20} 
+                intensity={0.5} 
+                glowRadius={180}
+                className="stat-entrance"
+              >
+                <div className="flex items-center gap-3">
+                  <AnimatedStatIcon type="reported" size={28} />
+                  <div>
+                    <div className="text-3xl font-bold text-white">
+                      <ValueChangeHighlight value={reportedCount} variant="default">
+                        <RollingNumber value={reportedCount} staggerDelay={45} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
                   </div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
                 </div>
-              </div>
-            </CursorGlowCard>
+              </CursorGlowCard>
+            </GlassReflection>
           </ParallaxFloat>
           <ParallaxFloat intensity={0.045} delay={150}>
-            <CursorGlowCard 
-              variant="warning" 
-              borderRadius={20} 
-              intensity={0.5} 
-              glowRadius={180}
-              className="stat-entrance"
+            <GlassReflection 
+              mode="auto" 
+              interval={10000} 
+              delay={6500} 
+              duration={900}
+              beamWidth={100}
+              angle={-18}
+              color="rgba(251, 191, 36, 0.4)"
+              intensity={0.35}
+              blur={50}
+              borderRadius={20}
             >
-              <div className="flex items-center gap-3">
-                <AnimatedStatIcon type="pending" size={28} />
-                <div>
-                  <div className="text-3xl font-bold text-amber-400">
-                    <ValueChangeHighlight value={pendingCount} variant="warning">
-                      <RollingNumber value={pendingCount} staggerDelay={35} />
-                    </ValueChangeHighlight>
-                  </div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
-                    Pending
-                    {pendingCount > 0 && (
-                      <PulseIndicator 
-                        status="pending" 
-                        size="xs" 
-                        variant="breathing"
-                        label={`${pendingCount} earnings pending`}
-                      />
-                    )}
+              <CursorGlowCard 
+                variant="warning" 
+                borderRadius={20} 
+                intensity={0.5} 
+                glowRadius={180}
+                className="stat-entrance"
+              >
+                <div className="flex items-center gap-3">
+                  <AnimatedStatIcon type="pending" size={28} />
+                  <div>
+                    <div className="text-3xl font-bold text-amber-400">
+                      <ValueChangeHighlight value={pendingCount} variant="warning">
+                        <RollingNumber value={pendingCount} staggerDelay={35} />
+                      </ValueChangeHighlight>
+                    </div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
+                      Pending
+                      {pendingCount > 0 && (
+                        <PulseIndicator 
+                          status="pending" 
+                          size="xs" 
+                          variant="breathing"
+                          label={`${pendingCount} earnings pending`}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CursorGlowCard>
+              </CursorGlowCard>
+            </GlassReflection>
           </ParallaxFloat>
         </div>
 
