@@ -1,3 +1,57 @@
+## 2026-03-11 — AudioFeedback: Subtle UI Sound Effects
+
+**Inspiration:** macOS Sonoma UI sounds, Bloomberg Terminal audio feedback, Robinhood's satisfying trade confirmation sounds, and the 2026 trend of "sensory UI" — where interfaces engage multiple senses beyond just visual.
+
+**What I built:**
+- New `AudioFeedback` component with Web Audio API synthesis (no external files needed):
+
+  **Sound Types:**
+  - **click:** Quick subtle tap (8ms) for buttons and selections
+  - **success:** Rising triumphant two-note tone for beats, completions
+  - **error:** Descending minor third for misses, failures  
+  - **notification:** Gentle ping chime for new data
+  - **toggle:** Soft switch whoosh for filter/theme changes
+  - **hover:** Ultra-subtle whisper (nearly inaudible) for focus states
+  - **countdown:** Urgent clock tick for imminent events
+  - **celebration:** Ascending major chord arpeggio (C-E-G-C) for monster beats
+
+  **Integration Points:**
+  - FilterChips: plays `toggle` when switching filters
+  - ThemeToggle: plays `toggle` when switching dark/light mode
+  - CopyTicker: plays `success` on clipboard copy, `error` on failure
+  - Confetti: plays `celebration` when beat confetti triggers
+
+  **User Controls:**
+  - AudioToggle in header (🔊/🔇) next to haptic toggle
+  - Volume slider when enabled
+  - Settings persisted to localStorage
+
+**Technical Implementation:**
+- Pure Web Audio API oscillator synthesis
+- Multiple waveform types (sine, triangle, square)
+- Gain envelope shaping for natural attack/decay
+- Frequency modulation for organic sound
+- Single AudioContext singleton for efficiency
+- Graceful degradation on unsupported browsers
+
+**Accessibility:**
+- Full `prefers-reduced-motion` support (audio disabled)
+- Sounds are off by default (opt-in)
+- Volume control available
+- No sounds block or delay UI interactions
+
+**Technical details:**
+- ~350 lines of new component code
+- Zero external dependencies (no audio files)
+- Sounds synthesized from pure oscillators
+- Each sound completes in <400ms
+
+**Impact:** The app now has an optional premium "feel" that engages users beyond visuals. The ascending celebration arpeggio on monster beats creates a satisfying reward moment. All sounds are subtle enough to use in an office environment.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-11 — TextScramble: Premium Data Materialization Effect
 
 **Inspiration:** High-end fintech dashboards (Revolut, Robinhood, Linear), crypto trading interfaces, The New York Times data visualizations, and terminal-style reveals. The "data materializing" effect creates a sense of information arriving in real-time.
