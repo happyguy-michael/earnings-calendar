@@ -1,3 +1,52 @@
+## 2026-03-12 — UndoToast: Reversible Actions with Visual Countdown
+
+**Inspiration:** Stan.vision's 2026 UX research article "UX/UI Trends Shaping Digital Products" — specifically the section on "Micro-interactions as infrastructure: Animations that prevent errors, not just decorate" with cited stats: *"8% faster tasks, 12% fewer errors."*
+
+Also inspired by: Gmail's "Message sent. Undo" pattern, Notion's reversible actions, Linear.app's elegant undo interactions.
+
+**What I built:**
+- New `UndoToast` component — enhanced toast system with reversible action support:
+
+  **Core Features:**
+  - `showUndoToast(message, undoCallback)` — one-liner to add undo support to any action
+  - Visual countdown ring showing time remaining to undo
+  - Pause-on-hover: timer stops when user hovers, giving them time to decide
+  - Global keyboard shortcut: Ctrl/Cmd + Z undoes the last action
+  - Progress bar at bottom showing elapsed time
+  - Haptic feedback on undo (mobile devices)
+
+  **Design Details:**
+  - Blue accent color for undo toasts (distinct from success/error)
+  - "Undo" button with hover scale effect
+  - Paused state shows subtle blue glow border
+  - 5-second default duration for undo toasts (vs 3s for regular)
+  - Progress ring integrated around the icon
+  - Glassmorphism styling matching existing toast system
+
+  **Accessibility:**
+  - Full ARIA live region support
+  - Keyboard dismissible (Escape)
+  - Reduced motion support (simplified animations)
+  - Focus management for undo button
+
+  **Technical Implementation:**
+  - Pause/resume uses `startTime` adjustment to extend duration
+  - requestAnimationFrame for smooth progress animation
+  - Context provider pattern for global access
+  - Tracks last undoable toast for Ctrl+Z support
+
+**Integration:**
+- Added `UndoToastProvider` to `ClientProviders.tsx`
+- Updated `SearchEmptyState` handlers:
+  - "Clear search" now shows undo toast to restore query
+  - "Clear filters" shows undo toast to restore both query and filter
+
+**Impact:** Users can now safely clear filters or search without fear of losing their state. The visual countdown gives them confidence about how long they have to undo. This follows the 2026 UX principle of "micro-interactions that prevent errors" — reducing user anxiety and improving task completion rates.
+
+**Reference:** https://www.stan.vision/journal/ux-ui-trends-shaping-digital-products
+
+---
+
 ## 2026-03-12 — ContextualCardActions: Ultra-Contextual Navigation
 
 **Inspiration:** Orizon Design's "10 UI/UX Trends That Will Shape 2026" article - specifically the trend "Ultra-Contextual Navigation (UI That Shrinks Itself)": *"Micro toolbars that appear near selected content, dissolve when not needed."*

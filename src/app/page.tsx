@@ -83,6 +83,7 @@ import { OrbitDot } from '@/components/OrbitDot';
 import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
 import { VelocityBlurProvider, VelocityBlurCard } from '@/components/VelocityBlur';
 import { ContextualCardActions } from '@/components/ContextualCardActions';
+import { useUndoToast } from '@/components/UndoToast';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -386,6 +387,7 @@ export default function Home() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const slideKey = useRef(0);
   const { showToast } = useToast();
+  const { showUndoToast } = useUndoToast();
   const { trigger: haptic } = useHaptic();
   
   // Simulate data refresh (would be replaced with real API call)
@@ -952,10 +954,22 @@ export default function Home() {
               searchQuery={searchQuery}
               statusFilter={statusFilter}
               allTickers={earnings.map(e => e.ticker)}
-              onClearSearch={() => setSearchQuery('')}
+              onClearSearch={() => {
+                const prevQuery = searchQuery;
+                setSearchQuery('');
+                showUndoToast('Search cleared', () => {
+                  setSearchQuery(prevQuery);
+                });
+              }}
               onClearFilters={() => {
+                const prevQuery = searchQuery;
+                const prevFilter = statusFilter;
                 setSearchQuery('');
                 setStatusFilter('all');
+                showUndoToast('Filters cleared', () => {
+                  setSearchQuery(prevQuery);
+                  setStatusFilter(prevFilter);
+                });
               }}
               onSelectTicker={(ticker) => setSearchQuery(ticker)}
             />
