@@ -1,3 +1,52 @@
+## 2026-03-12 — SkeletonTransition: Premium Loading-to-Content Crossfade
+
+**Inspiration:** Linear.app's butter-smooth loading states, Notion's fade-in page transitions, iOS skeleton → content animations, and Material Design 3's "Progressive Reveal" pattern.
+
+**What I built:**
+- New `SkeletonTransition` component — a layered crossfade wrapper that provides a smooth, premium transition from skeleton loading state to actual content:
+
+  **Core Features:**
+  - Layered crossfade: skeleton fades out as content fades in simultaneously
+  - Blur-to-sharp effect: content starts with 8px blur, animates to sharp (0px)
+  - Scale-up animation: content starts at 0.98 scale, grows to 1.0
+  - Skeleton exit: slight scale-up (1.01) as it fades out for depth
+
+  **Technical Details:**
+  - Phase state machine: 'loading' → 'transitioning' → 'complete'
+  - Uses `will-change: opacity, transform, filter` for GPU acceleration
+  - CSS keyframes for smooth, hardware-accelerated animations
+  - 500ms duration with easeOutQuint easing (cubic-bezier(0.22, 1, 0.36, 1))
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support — instant swap, no animations
+  - Content remains accessible during transition
+  - No impact on focus management
+
+  **Usage:**
+  ```tsx
+  <SkeletonTransition
+    loading={isLoading}
+    skeleton={<SkeletonCalendar />}
+    duration={500}
+    blur={true}
+    scale={true}
+  >
+    <ActualContent />
+  </SkeletonTransition>
+  ```
+
+  **Also includes:**
+  - `useSkeletonTransition` hook for custom implementations
+  - Configurable blur amount, scale factor, duration, and easing
+
+**Impact:** The transition from loading skeleton to real content now feels intentional and premium. Instead of a jarring instant swap, users see content gracefully emerge from the skeleton with a soft blur-to-sharp effect and subtle scale-up. This creates a sense of craftsmanship and attention to detail.
+
+**Reference:** Inspired by Linear.app, Notion, iOS skeleton transitions, and Material Design 3 patterns
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-12 — SmoothThemeTransition: Premium Circular Reveal Animation
 
 **Inspiration:** Apple's iOS dark mode transition, Linear.app's elegant theme switching, and the growing 2026 trend of "choreographed state changes" where UI transitions feel intentional and premium rather than instant jumps.
