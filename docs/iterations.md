@@ -1,4 +1,55 @@
 
+## 2026-03-13 — CommandPalette Component (⌘K Spotlight Search)
+
+**Inspiration:** Linear, Vercel, Raycast, Notion command palettes - the modern standard for power-user navigation in SaaS apps. ⌘K interfaces reduce friction for keyboard-focused workflows and provide instant access to search, navigation, and actions.
+
+**What was added:**
+- New `CommandPalette` component - full spotlight-style command interface
+- `CommandPaletteProvider` - context wrapper with global keyboard shortcut
+- `CommandTrigger` - button to open palette with ⌘K hint
+- Features:
+  - Trigger with ⌘K (Mac) or Ctrl+K (Windows)
+  - Fuzzy search for tickers and company names
+  - Quick actions: filter to beats/misses/pending, jump to today
+  - Toggle theme, toggle focus mode, refresh data
+  - Recent searches stored in localStorage (up to 5)
+  - Keyboard navigation: ↑↓ to select, Enter to confirm, Esc to close
+  - Glassmorphic design with backdrop blur
+  - Type-ahead text highlighting for matched queries
+  - Grouped results by type (Results, Recent, Actions, Navigation)
+  - Haptic and audio feedback integration
+  - Full light/dark mode support
+  - Respects prefers-reduced-motion
+
+**Technical notes:**
+- Uses React Portal for proper z-index layering
+- Next.js router for navigation to report pages
+- Memoized command list with useMemo for performance
+- Flat index tracking for keyboard navigation across groups
+- LocalStorage for recent search persistence
+- styled-jsx for scoped styles (no external CSS)
+- Integrates with existing HapticFeedback and AudioFeedback hooks
+
+**Integration:**
+- Wrapped main page with CommandPaletteProvider
+- Added CommandTrigger button in header (hidden on mobile)
+- Added ⌘K hint to keyboard shortcuts in header
+- Callbacks wired to: filter changes, search, jump to today, theme toggle, refresh
+
+**Why it matters:**
+- Industry-standard UX pattern expected by power users
+- Reduces navigation friction for keyboard workflows
+- Combines search and actions in one interface
+- Makes the app feel more like a native desktop app
+- Common in high-end tools (Linear, Vercel, Notion, Raycast)
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** c84a777
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-12 — ScrollAnchoredWeekBadge Component (Floating Week Context)
 
 **Inspiration:** iOS Calendar's floating date indicator, Google Calendar's section headers, modern dashboard scroll context patterns from UX Studio's 2026 UI trends research, and "alive and responsive interfaces" trend.
