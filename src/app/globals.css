@@ -17198,3 +17198,214 @@ html.light .filter-chips-liquid::after {
     transition: none !important;
   }
 }
+
+/* ============================================
+   FOCUS MODE
+   Ambient dimming for focused reading
+   Press 'F' to toggle
+   ============================================ */
+
+/* When focus mode is active, dim non-interactive elements */
+html.focus-mode-active .card,
+html.focus-mode-active .stat-card,
+html.focus-mode-active .week-header,
+html.focus-mode-active .earnings-row {
+  opacity: var(--focus-mode-dim, 0.35);
+  transition: opacity var(--focus-mode-transition, 300ms) ease-out;
+}
+
+/* Hovered/focused elements emerge from the dimmed background */
+html.focus-mode-active .card:hover,
+html.focus-mode-active .card:focus-within,
+html.focus-mode-active .stat-card:hover,
+html.focus-mode-active .stat-card:focus-within,
+html.focus-mode-active .earnings-row:hover,
+html.focus-mode-active .earnings-row:focus-visible {
+  opacity: 1;
+  z-index: 10;
+  /* Enhanced shadow for "emerging" effect */
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(99, 102, 241, 0.15);
+}
+
+/* Light mode adjustments */
+html.light.focus-mode-active .card:hover,
+html.light.focus-mode-active .card:focus-within,
+html.light.focus-mode-active .stat-card:hover,
+html.light.focus-mode-active .stat-card:focus-within,
+html.light.focus-mode-active .earnings-row:hover,
+html.light.focus-mode-active .earnings-row:focus-visible {
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 0 60px rgba(99, 102, 241, 0.1);
+}
+
+/* Keep header and controls visible */
+html.focus-mode-active .sticky-header,
+html.focus-mode-active .frosted-header,
+html.focus-mode-active .filter-chips,
+html.focus-mode-active .search-bar,
+html.focus-mode-active .back-to-top,
+html.focus-mode-active .fab-container,
+html.focus-mode-active .scroll-minimap {
+  opacity: 1;
+}
+
+/* Focus mode indicator badge */
+.focus-mode-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.9) 0%,
+    rgba(139, 92, 246, 0.85) 100%
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 
+    0 4px 20px rgba(99, 102, 241, 0.4),
+    0 0 40px rgba(139, 92, 246, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  animation: focus-indicator-enter 0.3s var(--spring-bouncy) forwards;
+}
+
+.focus-mode-indicator.exiting {
+  animation: focus-indicator-exit 0.3s ease-out forwards;
+}
+
+.focus-mode-indicator kbd {
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.focus-mode-indicator svg {
+  opacity: 0.9;
+}
+
+@keyframes focus-indicator-enter {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes focus-indicator-exit {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+  }
+}
+
+/* Focus mode toggle button */
+.focus-mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 10px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: 
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.focus-mode-toggle:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-secondary);
+  color: var(--text-primary);
+}
+
+.focus-mode-toggle.active {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.2) 0%,
+    rgba(139, 92, 246, 0.15) 100%
+  );
+  border-color: rgba(99, 102, 241, 0.4);
+  color: #a5b4fc;
+}
+
+html.light .focus-mode-toggle.active {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(139, 92, 246, 0.1) 100%
+  );
+  color: #6366f1;
+}
+
+.focus-mode-toggle-icon {
+  transition: transform 0.3s var(--spring-bouncy);
+}
+
+.focus-mode-toggle.active .focus-mode-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .focus-mode-indicator {
+    animation: none;
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+  
+  .focus-mode-indicator.exiting {
+    opacity: 0;
+  }
+  
+  html.focus-mode-active .card,
+  html.focus-mode-active .stat-card,
+  html.focus-mode-active .week-header,
+  html.focus-mode-active .earnings-row {
+    transition: none;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .focus-mode-indicator {
+    bottom: 80px; /* Above FAB */
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  .focus-mode-indicator kbd {
+    display: none; /* Hide keyboard hint on mobile */
+  }
+}

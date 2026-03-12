@@ -18,6 +18,7 @@ const shortcuts: Shortcut[] = [
   { keys: ['B'], description: 'Filter to beats only', category: 'filter' },
   { keys: ['M'], description: 'Filter to misses only', category: 'filter' },
   { keys: ['P'], description: 'Filter to pending only', category: 'filter' },
+  { keys: ['F'], description: 'Toggle focus mode', category: 'general' },
   { keys: ['?'], description: 'Show keyboard shortcuts', category: 'general' },
 ];
 

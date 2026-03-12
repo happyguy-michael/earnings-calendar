@@ -1,3 +1,44 @@
+## 2026-03-13 — FocusMode: Ambient Dimming for Focused Reading
+
+**Inspiration:** Safari Reader Mode, Kindle's focus features, premium document editors like iA Writer, and the 2026 trend of "attention-aware interfaces" — UIs that adapt to help users concentrate on what matters.
+
+**What I built:**
+- New `FocusMode` component system — an accessibility and UX feature that dims surrounding content:
+
+  **Core Features:**
+  - Toggle with 'F' key (mnemonic: Focus)
+  - Dims non-hovered/non-focused elements to 35% opacity
+  - Hovered/focused elements "emerge" from the dimmed background
+  - Smooth opacity transitions (300ms) with spring easing
+  - Visual indicator badge showing focus mode is active
+  - KeyPressEcho integration for visual feedback
+
+  **Technical Details:**
+  - Context provider pattern for global access
+  - CSS custom properties for dynamic dimming control
+  - Class-based state management on `<html>` element
+  - Enhanced shadow on hovered elements for "emerging" depth effect
+  - Header, search, and navigation controls remain visible
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (instant transitions)
+  - Escape key to exit focus mode
+  - ARIA status announcements for mode changes
+  - Keyboard-navigable toggle button
+
+  **Integration:**
+  - Added to `ClientProviders.tsx` for automatic page-level effect
+  - Registered in `KeyboardShortcuts.tsx` help overlay
+  - Works with all existing hover/focus effects
+
+**Impact:** Users can now press 'F' to dim surrounding content and focus on individual earnings cards. This is particularly useful when analyzing specific stocks in a busy calendar view. The feature follows the 2026 trend of "contextual UI dimming" — interfaces that reduce visual noise when concentration is needed.
+
+**Reference:** Inspired by Safari Reader, Kindle, iA Writer, and attention-aware interface patterns
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — LiquidGlass: iOS 26-Style Glass Refraction Effect
 
 **Inspiration:** Apple's iOS 26 "Liquid Glass" UI pattern, LogRocket's SVG filter tutorial, CSS-Tricks realistic glass effects, and freefrontend.com's liquid glass examples. The trend goes beyond standard glassmorphism by adding physically-plausible optical effects — light bending (refraction) at curved edges and specular rim highlights.
