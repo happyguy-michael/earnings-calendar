@@ -88,6 +88,7 @@ import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
+import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -619,6 +620,29 @@ export default function Home() {
     weekStart.getTime() === todayWeekStart.getTime()
   );
 
+  // Calculate week date ranges for minimap labels
+  const weekDates = weeks.map(weekStart => {
+    const start = new Date(weekStart);
+    const end = new Date(weekStart);
+    end.setDate(end.getDate() + 4); // Friday
+    return {
+      start: start.toISOString().split('T')[0],
+      end: end.toISOString().split('T')[0],
+    };
+  });
+
+  // Track which week is currently most visible in viewport
+  const activeWeekIndex = useActiveWeekIndex(weekRefs);
+
+  // Scroll to a specific week when minimap is clicked
+  const scrollToWeek = useCallback((weekIndex: number) => {
+    const ref = weekRefs[weekIndex];
+    if (ref?.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      haptic('light');
+    }
+  }, [weekRefs, haptic]);
+
   // Pull-to-refresh handler (wraps existing refresh logic)
   const handlePullRefresh = useCallback(async () => {
     // Simulate data refresh - would be replaced with real API call
@@ -645,6 +669,19 @@ export default function Home() {
         todayWeekIndex={todayWeekIndex}
         topOffset={isScrolled ? 80 : 100}
         hideAtTop={true}
+      />
+      
+      {/* Scroll minimap - visual week navigation on right edge */}
+      <ScrollMinimap
+        weekCount={weeks.length}
+        activeWeekIndex={activeWeekIndex}
+        weekDates={weekDates}
+        onWeekClick={scrollToWeek}
+        position="right"
+        offset={16}
+        showLabels={true}
+        hideAtTop={true}
+        showAfterScroll={150}
       />
       
       {/* Dynamic tab title with pending count */}
