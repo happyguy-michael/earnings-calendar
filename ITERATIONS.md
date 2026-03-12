@@ -1,3 +1,51 @@
+## 2026-03-12 — CursorAmbientLight: Page-Level Ambient Cursor Glow
+
+**Inspiration:** Frontend Masters' "CSS Spotlight Effect" article (2025) — demonstrating how simple mouse position tracking combined with radial gradients can create sophisticated interactive lighting effects. Also inspired by Linear.app's subtle ambient lighting and Orizon.co's "Living Interfaces" trend for 2026.
+
+**What I built:**
+- New `CursorAmbientLight` component — a subtle, page-level radial gradient that follows the cursor:
+
+  **Core Features:**
+  - Large (500px radius) soft radial gradient follows mouse movement
+  - Ultra-smooth tracking with momentum (0.06 smoothing factor)
+  - Exponential easing creates buttery-smooth, lag-free movement
+  - Only updates when meaningful position change detected (performance)
+  - Auto-initializes position on first mouse move
+
+  **Visual Design:**
+  - Indigo/purple gradient in dark mode for cool, premium feel
+  - `mix-blend-mode: screen` for subtle additive blending
+  - Softer tones in light mode with `multiply` blend
+  - Very low intensity (0.12) — noticeable but never distracting
+
+  **Lifecycle:**
+  - Fades in when cursor enters viewport
+  - Fades out smoothly (500ms) when cursor leaves
+  - GPU-accelerated via inline style updates
+  - `pointer-events: none` — never blocks interactions
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (completely disabled)
+  - `aria-hidden="true"` — purely decorative
+  - No impact on page content or interactivity
+
+  **Variants:**
+  - `CursorAmbientLight` — single gradient, configurable
+  - `DualCursorAmbientLight` — dual-tone with trailing warm accent
+  - `CursorAmbientLightProvider` — wrapper for easy integration
+
+**Integration:**
+- Added to `ClientProviders.tsx` for automatic page-level effect
+- Parameters: `intensity={0.12} radius={500} smoothing={0.06}`
+
+**Impact:** The page now feels subtly "alive" — as users move their cursor, a soft glow follows them, creating a premium, responsive feel without being distracting. This aligns with the 2026 "Living Interfaces" trend where UIs respond organically to user presence.
+
+**Reference:** https://frontendmasters.com/blog/css-spotlight-effect/
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-12 — KeyPressEcho: Visual Keyboard Shortcut Feedback
 
 **Inspiration:** UX Collective's "10 UX design shifts you can't ignore in 2026" — specifically the insight that *"Micro-interactions now serve as the primary communication method between interfaces and users. They confirm actions without requiring people to pause and digest confirmation messages."*
