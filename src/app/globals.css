@@ -17409,3 +17409,293 @@ html.light .focus-mode-toggle.active {
     display: none; /* Hide keyboard hint on mobile */
   }
 }
+
+/* ============================================
+   MarketMoodRing - Week sentiment indicator
+   ============================================ */
+
+.market-mood-ring {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.market-mood-ring-svg {
+  display: block;
+}
+
+.market-mood-ring-track {
+  color: var(--border-secondary);
+  opacity: 0.5;
+}
+
+.market-mood-ring-fill {
+  transform-origin: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.market-mood-ring.visible .market-mood-ring-fill {
+  opacity: 1;
+}
+
+.market-mood-ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1px;
+}
+
+.market-mood-ring.compact .market-mood-ring-center {
+  transform: translate(-50%, calc(-50% - 2px));
+}
+
+.market-mood-ring-percentage {
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: 
+    opacity 0.4s ease 0.3s,
+    transform 0.5s var(--spring-bouncy) 0.3s;
+}
+
+.market-mood-ring.visible .market-mood-ring-percentage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.market-mood-ring.compact .market-mood-ring-percentage {
+  font-size: 11px;
+}
+
+.market-mood-ring-unit {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 1px;
+}
+
+.market-mood-ring-empty {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+.market-mood-ring.compact .market-mood-ring-empty {
+  font-size: 11px;
+}
+
+.market-mood-ring-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: 
+    opacity 0.3s ease 0.5s,
+    transform 0.4s var(--spring-smooth) 0.5s,
+    color 0.3s ease;
+}
+
+.market-mood-ring.visible .market-mood-ring-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pending dots animation */
+.market-mood-pending-dot {
+  opacity: 0.7;
+  animation: pendingDotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pendingDotPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Exceptional glow */
+.market-mood-ring-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: moodGlowPulse 2.5s ease-in-out infinite;
+}
+
+.market-mood-ring.exceptional .market-mood-ring-glow {
+  opacity: 1;
+}
+
+@keyframes moodGlowPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Has pending indicator */
+.market-mood-ring.has-pending .market-mood-ring-label::after {
+  content: '•';
+  margin-left: 4px;
+  color: var(--warning);
+  animation: pendingDotPulse 1.5s ease-in-out infinite;
+}
+
+/* Light mode */
+html.light .market-mood-ring-track {
+  color: var(--border-primary);
+  opacity: 0.3;
+}
+
+html.light .market-mood-ring-glow {
+  opacity: 0.5;
+}
+
+html.light .market-mood-ring.exceptional .market-mood-ring-glow {
+  opacity: 0.3;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .market-mood-ring-fill {
+    transition: none;
+  }
+  
+  .market-mood-ring-percentage,
+  .market-mood-ring-label {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .market-mood-pending-dot,
+  .market-mood-ring-glow {
+    animation: none;
+    opacity: 0.6;
+  }
+  
+  .market-mood-ring.has-pending .market-mood-ring-label::after {
+    animation: none;
+  }
+}
+
+/* Week Mood Header - date range + mood ring */
+.week-mood-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.week-mood-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.week-mood-header-dates {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.week-mood-header-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  opacity: 0.9;
+}
+
+.week-mood-header-current::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  animation: currentWeekPulse 2s ease-in-out infinite;
+}
+
+@keyframes currentWeekPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Light mode */
+html.light .week-mood-header {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
+  border-bottom-color: var(--border-primary);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .week-mood-header {
+    padding: 10px 12px;
+  }
+  
+  .week-mood-header-dates {
+    font-size: 13px;
+  }
+  
+  .week-mood-header .market-mood-ring {
+    transform: scale(0.85);
+    transform-origin: right center;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .week-mood-header-current::before {
+    animation: none;
+    opacity: 1;
+  }
+}

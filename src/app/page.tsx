@@ -78,6 +78,7 @@ import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
+import { MarketMoodRing } from '@/components/MarketMoodRing';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 import { OrbitDot } from '@/components/OrbitDot';
 import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
@@ -1138,6 +1139,47 @@ export default function Home() {
                 animationDelay: `${weekIndex * 100}ms` 
               } as React.CSSProperties}
             >
+              {/* Week Mood Ring Header */}
+              {(() => {
+                // Calculate week stats for mood ring
+                const weekEnd = new Date(weekStart);
+                weekEnd.setDate(weekEnd.getDate() + 6);
+                weekEnd.setHours(23, 59, 59, 999);
+                
+                const weekEarnings = filteredEarnings.filter(e => {
+                  const date = new Date(e.date);
+                  return date >= weekStart && date <= weekEnd;
+                });
+                
+                const weekBeats = weekEarnings.filter(e => e.result === 'beat').length;
+                const weekMisses = weekEarnings.filter(e => e.result === 'miss').length;
+                const weekPending = weekEarnings.filter(e => !e.result).length;
+                const weekStartStr = weekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const weekEndDate = new Date(weekStart);
+                weekEndDate.setDate(weekEndDate.getDate() + 4);
+                const weekEndStr = weekEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                
+                return (weekBeats + weekMisses + weekPending > 0) ? (
+                  <div className="week-mood-header">
+                    <div className="week-mood-header-left">
+                      <span className="week-mood-header-dates">{weekStartStr} – {weekEndStr}</span>
+                      {weekIndex === todayWeekIndex && (
+                        <span className="week-mood-header-current">This Week</span>
+                      )}
+                    </div>
+                    <MarketMoodRing
+                      beats={weekBeats}
+                      misses={weekMisses}
+                      pending={weekPending}
+                      size={44}
+                      delay={weekIndex * 150}
+                      compact={false}
+                      showLabel={true}
+                    />
+                  </div>
+                ) : null;
+              })()}
+
               {/* Week Header */}
               <div className="week-header">
                 {days.map((day, dayIndex) => {
