@@ -89,6 +89,7 @@ import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
+import { SkeletonTransition } from '@/components/SkeletonTransition';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -591,10 +592,6 @@ export default function Home() {
   const week2Ref = useRef<HTMLDivElement>(null);
   const weekRefs = useMemo(() => [week0Ref, week1Ref, week2Ref], []);
 
-  if (isLoading) {
-    return <SkeletonCalendar />;
-  }
-
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const today = new Date();
@@ -652,6 +649,13 @@ export default function Home() {
   }, [showToast]);
 
   return (
+    <SkeletonTransition
+      loading={isLoading}
+      skeleton={<SkeletonCalendar />}
+      duration={500}
+      blur={true}
+      scale={true}
+    >
     <SnapshotProvider autoResumeSeconds={300}>
     <VelocityBlurProvider threshold={0.6} maxBlur={2.5} sensitivity={2}>
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
@@ -1330,5 +1334,6 @@ export default function Home() {
     </PullToRefresh>
     </VelocityBlurProvider>
     </SnapshotProvider>
+    </SkeletonTransition>
   );
 }
