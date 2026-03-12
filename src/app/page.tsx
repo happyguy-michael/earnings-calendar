@@ -85,6 +85,7 @@ import { VelocityBlurProvider, VelocityBlurCard } from '@/components/VelocityBlu
 import { ContextualCardActions } from '@/components/ContextualCardActions';
 import { useUndoToast } from '@/components/UndoToast';
 import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
+import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -391,6 +392,7 @@ export default function Home() {
   const { showUndoToast } = useUndoToast();
   const { trigger: haptic } = useHaptic();
   const { showKeyEcho } = useKeyPressEcho();
+  const weekNavPreview = useWeekNavPreview(currentWeekStart);
   
   // Simulate data refresh (would be replaced with real API call)
   const handleDataRefresh = useCallback(() => {
@@ -732,30 +734,58 @@ export default function Home() {
                 onClick={goToToday}
                 pendingToday={pendingToday}
               />
-              <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-visible">
-                <MagneticButton
-                  onClick={() => navigateWeek(-1)}
-                  aria-label="Previous week"
-                  className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-l-xl"
-                  intensity={0.5}
-                  radius={1.6}
+              <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-visible relative">
+                {/* Previous Week Button */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => weekNavPreview.showPreview('prev')}
+                  onMouseLeave={weekNavPreview.hidePreview}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M15 18l-6-6 6-6" />
-                  </svg>
-                </MagneticButton>
+                  <MagneticButton
+                    onClick={() => navigateWeek(-1)}
+                    aria-label="Previous week"
+                    className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-l-xl"
+                    intensity={0.5}
+                    radius={1.6}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </MagneticButton>
+                  {weekNavPreview.previewWeek && weekNavPreview.previewDirection === 'prev' && (
+                    <WeekNavPreview
+                      targetWeek={weekNavPreview.previewWeek}
+                      direction="prev"
+                      visible={weekNavPreview.isVisible}
+                    />
+                  )}
+                </div>
                 <div className="w-px bg-white/10" />
-                <MagneticButton
-                  onClick={() => navigateWeek(1)}
-                  aria-label="Next week"
-                  className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-r-xl"
-                  intensity={0.5}
-                  radius={1.6}
+                {/* Next Week Button */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => weekNavPreview.showPreview('next')}
+                  onMouseLeave={weekNavPreview.hidePreview}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M9 18l6-6-6-6" />
-                  </svg>
-                </MagneticButton>
+                  <MagneticButton
+                    onClick={() => navigateWeek(1)}
+                    aria-label="Next week"
+                    className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-r-xl"
+                    intensity={0.5}
+                    radius={1.6}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </MagneticButton>
+                  {weekNavPreview.previewWeek && weekNavPreview.previewDirection === 'next' && (
+                    <WeekNavPreview
+                      targetWeek={weekNavPreview.previewWeek}
+                      direction="next"
+                      visible={weekNavPreview.isVisible}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>

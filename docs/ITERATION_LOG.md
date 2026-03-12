@@ -1,5 +1,42 @@
 # Iteration Log
 
+## 2026-03-12 — WeekNavPreview (Navigation Context Tooltip)
+**Component:** `WeekNavPreview.tsx`
+
+**What it does:**
+- Floating tooltip preview when hovering week navigation arrows
+- Shows the target week's date range (e.g., "Jan 6–10" or "Jan 27 – Feb 1")
+- Displays relative week context ("Next Week", "2 Weeks Ahead", "Last Week", etc.)
+- Direction-aware positioning (left arrow shows preview on right, vice versa)
+- Smooth spring-physics entrance/exit animation
+- Glass morphism styling with subtle shadow and border glow
+
+**Why it matters:**
+- Provides context before action — users know where they're navigating
+- Reduces cognitive load — no need to mentally calculate target dates
+- Prevents accidental navigation — preview confirms intent
+- Matches premium app patterns (Linear, Notion, Google Calendar)
+
+**Technical highlights:**
+- `useWeekNavPreview` hook manages hover state and calculates target weeks
+- Formats both absolute dates and relative week position
+- Debounced hide with 100ms delay for smoother UX
+- Respects `prefers-reduced-motion` for accessibility
+- Hidden on mobile/touch devices (no hover available)
+- Full light/dark mode support
+
+**Inspiration:**
+- Linear's navigation preview hints
+- Notion's page navigation tooltips  
+- Google Calendar's month preview on arrow hover
+
+**Files changed:**
+- `src/components/WeekNavPreview.tsx` (new)
+- `src/app/page.tsx` (integrated with week navigation buttons)
+- `src/app/globals.css` (WeekNavPreview styles)
+
+---
+
 ## 2026-03-09 — WeekSummaryCard (Celebratory End-of-Week Recap)
 **Component:** `WeekSummaryCard.tsx`
 

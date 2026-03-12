@@ -16920,3 +16920,114 @@ html.light .contextual-action-btn:hover {
 .earnings-card-wrapper:has(.contextual-actions-bar.visible) {
   z-index: 20;
 }
+
+/* ============================================
+   WEEK NAVIGATION PREVIEW
+   Floating preview showing target week dates
+   when hovering on navigation arrows
+   ============================================ */
+
+.week-nav-preview {
+  position: absolute;
+  top: calc(100% + 8px);
+  padding: 8px 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 45, 0.95) 0%,
+    rgba(20, 20, 30, 0.98) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px) scale(0.96);
+  transition: 
+    opacity var(--preview-duration) cubic-bezier(0.4, 0, 0.2, 1),
+    transform var(--preview-duration) cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility var(--preview-duration);
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+.week-nav-preview.prev {
+  right: 0;
+}
+
+.week-nav-preview.next {
+  left: 0;
+}
+
+.week-nav-preview.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.week-nav-preview-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.week-nav-preview-arrow {
+  font-size: 14px;
+  color: var(--accent-blue);
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.week-nav-preview-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.week-nav-preview-dates {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.week-nav-preview-relative {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Light mode */
+html.light .week-nav-preview {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.99) 100%
+  );
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .week-nav-preview {
+    transition: opacity 0ms, visibility 0ms;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile: hide preview (touch doesn't hover) */
+@media (max-width: 768px), (hover: none) {
+  .week-nav-preview {
+    display: none;
+  }
+}
