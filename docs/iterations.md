@@ -1,4 +1,49 @@
 
+## 2026-03-12 — ScrollAnchoredWeekBadge Component (Floating Week Context)
+
+**Inspiration:** iOS Calendar's floating date indicator, Google Calendar's section headers, modern dashboard scroll context patterns from UX Studio's 2026 UI trends research, and "alive and responsive interfaces" trend.
+
+**What was added:**
+- New `ScrollAnchoredWeekBadge` component - floating indicator showing which week section is in view
+- Features:
+  - Glassmorphic pill design with subtle blur and gradient border
+  - Auto-appears when scrolling through calendar content
+  - Shows "This Week" vs "Week 1/2/3" with date range (e.g., "Mar 10–14")
+  - Smooth scale/fade transitions when changing between weeks
+  - "This Week" highlight with pulsing purple accent dot
+  - Smart viewport intersection detection with scroll-position bias toward top
+  - Auto-hides after 2s of scroll inactivity
+  - Hidden at top of page (no redundancy with visible week headers)
+  - Full light mode support
+  - Respects `prefers-reduced-motion`
+  - Responsive mobile sizing
+
+**Technical notes:**
+- Uses scroll event with RAF throttling for smooth updates
+- Intersection scoring considers both overlap area and proximity to viewport center
+- Scale animation on week transition (1.03x bump) for visual feedback
+- CSS-only animations for pulse and transitions
+- styled-jsx for scoped styles
+- ARIA live region for accessibility
+
+**Integration:**
+- Added to main page after ScrollProgress indicator
+- Positioned below sticky header with dynamic `topOffset` based on scroll state
+- Works with existing `weekRefs` for section tracking
+
+**Why it matters:**
+- Provides scroll context without interrupting focus on content
+- Common UX pattern in calendar/timeline apps users expect
+- Reduces disorientation when scrolling through multi-week views
+- Subtle enough to not distract, visible enough to help navigation
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 9e8adde
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-12 — VelocityBlur Component (Motion Blur on Fast Scroll)
 
 **Inspiration:** Apple's iOS momentum scrolling with motion blur, Linear.app's buttery-smooth scrolling feel, Framer Motion scroll-linked animations, and the 2024/2025 "physical UI" trend where interfaces have weight and momentum.
