@@ -1,5 +1,46 @@
 # Iteration Log
 
+## 2026-03-12 — ScrollMinimap (Visual Week Navigation)
+**Component:** `ScrollMinimap.tsx`
+
+**What it does:**
+- Small vertical minimap fixed to the right edge of the screen
+- Shows all weeks in the calendar as small blocks
+- Active/visible week highlighted with gradient glow
+- Click any block to smooth-scroll to that week
+- Hover shows week date range tooltip (e.g., "Mar 9–13")
+- Today's week gets an amber dot indicator
+- Fades in after scrolling 150px, hidden at top of page
+
+**Why it matters:**
+- Orientation in long content — always know which week you're viewing
+- Quick navigation — jump to any week with one click
+- Visual progress indicator — see overall calendar structure at a glance
+- Reduces scroll fatigue for multi-week browsing
+- Professional pattern from code editors and document viewers
+
+**Technical highlights:**
+- `useActiveWeekIndex` hook uses IntersectionObserver to track visible week
+- Multiple thresholds (0, 0.25, 0.5, 0.75, 1) for precise visibility tracking
+- Glassmorphic track with backdrop blur
+- Spring physics on hover scale (scaleY 1.15)
+- Position-aware label tooltips (left of block when on right edge)
+- Respects `prefers-reduced-motion` for accessibility
+- Hidden on mobile (<768px) — insufficient screen real estate
+- Full light/dark mode support
+
+**Inspiration:**
+- VS Code minimap (scroll position context)
+- Figma layer panel scroll indicators
+- Linear.app sidebar scroll indicators
+- Medium reading progress bars
+
+**Files changed:**
+- `src/components/ScrollMinimap.tsx` (new)
+- `src/app/page.tsx` (integrated with week refs)
+
+---
+
 ## 2026-03-12 — WeekNavPreview (Navigation Context Tooltip)
 **Component:** `WeekNavPreview.tsx`
 
