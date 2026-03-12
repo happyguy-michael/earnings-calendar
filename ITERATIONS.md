@@ -1,3 +1,42 @@
+## 2026-03-12 — SmoothThemeTransition: Premium Circular Reveal Animation
+
+**Inspiration:** Apple's iOS dark mode transition, Linear.app's elegant theme switching, and the growing 2026 trend of "choreographed state changes" where UI transitions feel intentional and premium rather than instant jumps.
+
+**What I built:**
+- New `SmoothThemeTransition` component — a page-level overlay that creates a smooth circular reveal animation when switching between light and dark themes:
+
+  **Core Technique:**
+  - Uses CSS `clip-path: circle()` animation for GPU-accelerated performance
+  - Circular reveal emanates from the theme toggle button position
+  - Creates a "wipe" effect where the new theme is revealed underneath
+  - Overlay captures the previous theme's background color
+
+  **Technical Details:**
+  - MutationObserver watches for class changes on `<html>` element
+  - Dynamically calculates toggle button position for accurate origin point
+  - Uses `will-change: clip-path, opacity` for optimal rendering
+  - Animation duration: 450ms with cubic-bezier easing
+  - Fallback: Simple opacity fade for browsers without clip-path animation support
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (hidden/disabled completely)
+  - `aria-hidden="true"` — purely decorative
+  - No impact on focus management or keyboard navigation
+  - Falls back gracefully on unsupported browsers
+
+  **Integration:**
+  - Added to `ClientProviders.tsx` — works automatically
+  - No changes needed to existing `ThemeToggle` component
+  - Zero runtime cost when not transitioning (display: none)
+
+**Impact:** Theme switching now feels intentional and premium. Instead of a jarring instant switch between light/dark, users see a smooth circular reveal animation that draws attention to the action they just took. This aligns with the 2026 trend of "Living Interfaces" where every state change is an opportunity for micro-delight.
+
+**Reference:** Inspired by CSS clip-path animation techniques and View Transitions API concepts
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-12 — CursorAmbientLight: Page-Level Ambient Cursor Glow
 
 **Inspiration:** Frontend Masters' "CSS Spotlight Effect" article (2025) — demonstrating how simple mouse position tracking combined with radial gradients can create sophisticated interactive lighting effects. Also inspired by Linear.app's subtle ambient lighting and Orizon.co's "Living Interfaces" trend for 2026.
