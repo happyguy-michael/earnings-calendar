@@ -90,6 +90,7 @@ import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
+import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -648,6 +649,22 @@ export default function Home() {
     showToast('Data refreshed', { type: 'success', icon: '✓', duration: 2000 });
   }, [showToast]);
 
+  // Theme toggle callback for command palette
+  const toggleTheme = useCallback(() => {
+    const isDark = !document.documentElement.classList.contains('light');
+    if (isDark) {
+      document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+      showToast('Light mode enabled', { type: 'info', icon: '☀️', duration: 2000 });
+    } else {
+      document.documentElement.classList.remove('light');
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+      showToast('Dark mode enabled', { type: 'info', icon: '🌙', duration: 2000 });
+    }
+  }, [showToast]);
+
   return (
     <SkeletonTransition
       loading={isLoading}
@@ -655,6 +672,13 @@ export default function Home() {
       duration={500}
       blur={true}
       scale={true}
+    >
+    <CommandPaletteProvider
+      onFilterChange={handleFilterChange}
+      onSearch={setSearchQuery}
+      onJumpToToday={goToToday}
+      onToggleTheme={toggleTheme}
+      onRefresh={handleDataRefresh}
     >
     <SnapshotProvider autoResumeSeconds={300}>
     <VelocityBlurProvider threshold={0.6} maxBlur={2.5} sensitivity={2}>
@@ -763,6 +787,9 @@ export default function Home() {
             
             <div className="flex items-center gap-3 flex-shrink-0">
               <div className="sticky-header-hints">
+                <span className="kbd">⌘K</span>
+                <span>search</span>
+                <span className="mx-1">·</span>
                 <span className="kbd">←</span>
                 <span className="kbd">→</span>
                 <span>navigate</span>
@@ -772,13 +799,11 @@ export default function Home() {
                 <span className="kbd">P</span>
                 <span>filter</span>
                 <span className="mx-1">·</span>
-                <span className="kbd">⇧P</span>
-                <span>pause</span>
-                <span className="mx-1">·</span>
                 <span className="kbd">?</span>
                 <span>help</span>
               </div>
               <KeyboardShortcutsHint />
+              <CommandTrigger className="hidden lg:flex" />
               <MotionToggle size="sm" />
               <HapticToggle size="sm" />
               <AudioToggle size="sm" />
@@ -1334,6 +1359,7 @@ export default function Home() {
     </PullToRefresh>
     </VelocityBlurProvider>
     </SnapshotProvider>
+    </CommandPaletteProvider>
     </SkeletonTransition>
   );
 }
