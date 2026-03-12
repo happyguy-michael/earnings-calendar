@@ -87,6 +87,7 @@ import { useUndoToast } from '@/components/UndoToast';
 import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
+import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -636,6 +637,15 @@ export default function Home() {
       
       {/* Scroll progress indicator */}
       <ScrollProgress height={3} hideAtTop={true} showGlow={true} />
+      
+      {/* Floating week indicator - shows which week section is in view */}
+      <ScrollAnchoredWeekBadge
+        weekRefs={weekRefs}
+        weekStarts={weeks}
+        todayWeekIndex={todayWeekIndex}
+        topOffset={isScrolled ? 80 : 100}
+        hideAtTop={true}
+      />
       
       {/* Dynamic tab title with pending count */}
       <DynamicTitle pendingToday={pendingToday} baseTitle="Earnings Calendar" />
