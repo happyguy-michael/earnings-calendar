@@ -86,6 +86,8 @@ import { ContextualCardActions } from '@/components/ContextualCardActions';
 import { useUndoToast } from '@/components/UndoToast';
 import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
+import { TodayMarkerLine } from '@/components/TodayMarkerLine';
+import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -1091,6 +1093,11 @@ export default function Home() {
                             {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
                           </div>
                         )}
+                        {/* Today marker line - animated "you are here" indicator */}
+                        <TodayMarkerLine 
+                          isToday={isToday} 
+                          delay={weekIndex * 100 + 300}
+                        />
                       </div>
                     </DayStatsPopover>
                   );

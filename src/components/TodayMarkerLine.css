@@ -1,0 +1,241 @@
+/* TodayMarkerLine - "You are here" indicator for today's column */
+
+.today-marker-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Track container */
+.today-marker-track {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0 0 4px 4px;
+}
+
+/* Fill that animates in from center */
+.today-marker-fill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.6) 10%,
+    rgba(59, 130, 246, 1) 50%,
+    rgba(59, 130, 246, 0.6) 90%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  transition: width 0.5s var(--spring-bouncy);
+}
+
+.today-marker-line.visible .today-marker-fill {
+  width: 100%;
+}
+
+/* Glow layer - breathing animation */
+.today-marker-glow {
+  position: absolute;
+  inset: -4px 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.3) 20%,
+    rgba(59, 130, 246, 0.5) 50%,
+    rgba(59, 130, 246, 0.3) 80%,
+    transparent 100%
+  );
+  filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+}
+
+.today-marker-line.visible .today-marker-glow {
+  opacity: 1;
+}
+
+.today-marker-line.entered .today-marker-glow {
+  animation: markerBreathing 3s ease-in-out infinite;
+}
+
+/* Endpoint dot */
+.today-marker-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.4s, transform 0.5s var(--spring-elastic) 0.4s;
+}
+
+.today-marker-line.visible .today-marker-dot {
+  opacity: 1;
+}
+
+.today-marker-dot-inner {
+  position: absolute;
+  inset: 0;
+  background: #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+}
+
+/* Expanding ring effect */
+.today-marker-dot-ring {
+  position: absolute;
+  inset: -2px;
+  border: 1.5px solid rgba(59, 130, 246, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.today-marker-line.entered .today-marker-dot-ring {
+  animation: markerRingPulse 2.5s ease-out infinite;
+}
+
+/* Breathing animation */
+@keyframes markerBreathing {
+  0%, 100% {
+    opacity: 0.5;
+    filter: blur(6px);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(8px);
+  }
+}
+
+/* Ring pulse animation */
+@keyframes markerRingPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Minimal variant - simpler, less distracting */
+.today-marker-line.minimal .today-marker-fill {
+  background: rgba(59, 130, 246, 0.8);
+}
+
+.today-marker-line.minimal .today-marker-dot {
+  display: none;
+}
+
+/* ===== TodayBeacon ===== */
+
+.today-beacon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: 
+    opacity 0.3s ease,
+    transform 0.4s var(--spring-elastic);
+}
+
+.today-beacon.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.today-beacon-core {
+  position: absolute;
+  inset: 0;
+  background: #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.7);
+}
+
+.today-beacon-ring {
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  border-radius: 50%;
+  animation: beaconRing 2s ease-out infinite;
+}
+
+.today-beacon-ring-2 {
+  animation-delay: 1s;
+}
+
+@keyframes beaconRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Light mode adjustments */
+html.light .today-marker-fill {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.4) 10%,
+    rgba(59, 130, 246, 0.8) 50%,
+    rgba(59, 130, 246, 0.4) 90%,
+    transparent 100%
+  );
+}
+
+html.light .today-marker-glow {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.2) 20%,
+    rgba(59, 130, 246, 0.35) 50%,
+    rgba(59, 130, 246, 0.2) 80%,
+    transparent 100%
+  );
+}
+
+html.light .today-marker-dot-inner {
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.6);
+}
+
+html.light .today-beacon-core {
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .today-marker-fill {
+    transition: width 0.2s ease;
+  }
+  
+  .today-marker-glow,
+  .today-marker-dot-ring,
+  .today-beacon-ring {
+    display: none;
+  }
+  
+  .today-beacon {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+}
