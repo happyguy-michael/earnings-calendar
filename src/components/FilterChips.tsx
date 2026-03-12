@@ -148,6 +148,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
   };
 
   return (
+    <div className="filter-chips-liquid">
     <div className="filter-chips-container" ref={containerRef}>
       {/* Sliding pill background */}
       <div 
@@ -207,6 +208,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
           filters.find(f => f.key === value)?.label
         } filter with {counts[value]} {counts[value] === 1 ? 'result' : 'results'}.
       </div>
+    </div>
     </div>
   );
 }

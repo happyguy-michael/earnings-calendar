@@ -1,3 +1,54 @@
+## 2026-03-13 — LiquidGlass: iOS 26-Style Glass Refraction Effect
+
+**Inspiration:** Apple's iOS 26 "Liquid Glass" UI pattern, LogRocket's SVG filter tutorial, CSS-Tricks realistic glass effects, and freefrontend.com's liquid glass examples. The trend goes beyond standard glassmorphism by adding physically-plausible optical effects — light bending (refraction) at curved edges and specular rim highlights.
+
+**What I built:**
+- New `LiquidGlass` component using SVG filters for realistic glass effects:
+
+  **Core Techniques:**
+  - **Refraction via feTurbulence + feDisplacementMap** — procedurally generated noise creates subtle "lens distortion" at element edges, simulating light bending through curved glass
+  - **Specular highlights via conic gradients** — CSS conic gradients create rim lighting that mimics light reflection on glossy surfaces
+  - **Chromatic dispersion** — ultra-subtle color fringing at edges (red/blue separation) for added realism
+
+  **Technical Details:**
+  - Uses `useId()` for unique filter IDs (SSR-safe)
+  - Three intensity presets: subtle, medium, strong
+  - Three shape presets: rounded, pill, circle
+  - Configurable specular highlights and chromatic effects
+  - Interactive mode with hover state (displacement intensifies on hover)
+  - Full `prefers-reduced-motion` support (falls back to simple glassmorphism)
+  - Light mode support with adjusted opacity values
+  - `will-change` hints for GPU acceleration
+
+  **SVG Filter Pipeline:**
+  1. feTurbulence generates fractalNoise pattern
+  2. Source is slightly blurred for smoother distortion
+  3. feDisplacementMap warps pixels based on noise
+  4. feGaussianBlur creates backdrop blur
+  5. feColorMatrix boosts saturation and brightness
+
+  **Preset Components:**
+  - `LiquidGlassButton` — interactive pill-shaped buttons
+  - `LiquidGlassCard` — subtle cards with rounded corners
+  - `LiquidGlassCircle` — circular elements (icons, avatars)
+
+- Applied liquid glass effect to **Filter Chips**:
+  - Added `.filter-chips-liquid` wrapper class
+  - Conic gradient specular overlay for premium appearance
+  - Enhanced backdrop blur with saturation boost
+  - Both dark and light mode optimized
+
+**Impact:** The filter chips now have a premium, iOS 26-inspired glass appearance. The subtle refraction and specular highlights make the glass feel "alive" — more physically real than flat transparency. This aligns with the 2026 trend toward optically-accurate material simulation in UI.
+
+**Reference:** 
+- LogRocket: https://blog.logrocket.com/how-create-liquid-glass-effects-css-and-svg/
+- freefrontend: https://freefrontend.com/css-liquid-glass/
+- CSS-Tricks: https://css-tricks.com/making-a-realistic-glass-effect-with-svg/
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-12 — SkeletonTransition: Premium Loading-to-Content Crossfade
 
 **Inspiration:** Linear.app's butter-smooth loading states, Notion's fade-in page transitions, iOS skeleton → content animations, and Material Design 3's "Progressive Reveal" pattern.
