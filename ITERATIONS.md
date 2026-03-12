@@ -1,3 +1,52 @@
+## 2026-03-13 — MarketMoodRing: Visual Week Sentiment Indicator
+
+**Inspiration:** Muzli's 2026 dashboard design trends, Apple Health's activity rings, mood ring aesthetics, and the trend toward "data-driven color coding" — using visual indicators to convey information at a glance without requiring users to read numbers.
+
+**What I built:**
+- New `MarketMoodRing` component — a circular sentiment indicator for each week:
+
+  **Core Features:**
+  - Animated gradient ring that fills based on beat/miss ratio
+  - Color interpolation: red (0-30%) → amber (30-70%) → green (70-100%)
+  - Pending earnings shown as animated dots along the ring arc
+  - Percentage display in center with mood label below
+  - Exceptional glow effect for standout weeks (>80% or <20%)
+
+  **Technical Details:**
+  - SVG-based ring with stroke-dasharray animation
+  - HSL color interpolation for smooth gradient transitions
+  - Intersection Observer for scroll-triggered animations
+  - Spring physics easing for premium feel
+  - Unique gradient IDs for multiple instances
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support
+  - ARIA labels with mood description
+  - Title tooltip with beat/miss/pending counts
+  - Light mode optimized colors
+
+  **Integration:**
+  - Added to week card headers showing date range (e.g., "Mar 10 – Mar 14")
+  - "This Week" indicator with pulsing dot for current week
+  - Compact variant available via `WeekMoodBadge`
+
+**CSS Additions:**
+- Week mood header layout with flexbox spacing
+- Current week indicator with pulse animation
+- Mobile-responsive scaling
+- Light mode gradient adjustments
+
+**Impact:** Users now get instant visual feedback on how each week is performing. A quick glance at the colored ring tells you if it's a bullish (green) or bearish (red) week without reading any numbers. This aligns with the 2026 trend of "sentiment visualization" in financial dashboards.
+
+**Reference:**
+- Muzli 2026 Dashboard Trends: https://muz.li/blog/best-dashboard-design-examples-inspirations-for-2026/
+- Apple Health Activity Rings pattern
+- Financial dashboard sentiment indicators
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — FocusMode: Ambient Dimming for Focused Reading
 
 **Inspiration:** Safari Reader Mode, Kindle's focus features, premium document editors like iA Writer, and the 2026 trend of "attention-aware interfaces" — UIs that adapt to help users concentrate on what matters.
