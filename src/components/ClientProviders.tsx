@@ -7,6 +7,7 @@ import { MotionPreferencesProvider } from './MotionPreferences';
 import { AudioFeedbackProvider } from './AudioFeedback';
 import { KeyPressEchoProvider } from './KeyPressEcho';
 import { CursorAmbientLight } from './CursorAmbientLight';
+import { SmoothThemeTransition } from './SmoothThemeTransition';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export function ClientProviders({ children }: { children: ReactNode }) {
           <ToastProvider>
             <UndoToastProvider>
               <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
+              <SmoothThemeTransition />
               {children}
             </UndoToastProvider>
           </ToastProvider>
