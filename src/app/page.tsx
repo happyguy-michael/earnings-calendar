@@ -84,6 +84,7 @@ import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
 import { VelocityBlurProvider, VelocityBlurCard } from '@/components/VelocityBlur';
 import { ContextualCardActions } from '@/components/ContextualCardActions';
 import { useUndoToast } from '@/components/UndoToast';
+import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -389,6 +390,7 @@ export default function Home() {
   const { showToast } = useToast();
   const { showUndoToast } = useUndoToast();
   const { trigger: haptic } = useHaptic();
+  const { showKeyEcho } = useKeyPressEcho();
   
   // Simulate data refresh (would be replaced with real API call)
   const handleDataRefresh = useCallback(() => {
@@ -537,29 +539,36 @@ export default function Home() {
       
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault();
+        showKeyEcho(formatKeyName(e.key), 'Previous week');
         navigateWeek(-1);
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault();
+        showKeyEcho(formatKeyName(e.key), 'Next week');
         navigateWeek(1);
       } else if (e.key === 't' || e.key === 'T') {
         e.preventDefault();
+        showKeyEcho('T', 'Jump to today');
         goToToday();
       }
       // Filter shortcuts (A/B/M/P)
       else if (e.key === 'a' || e.key === 'A') {
         e.preventDefault();
+        showKeyEcho('A', 'All');
         handleFilterChange('all');
         showToast('Showing all earnings', { type: 'info', icon: '📋', duration: 1500 });
       } else if (e.key === 'b' || e.key === 'B') {
         e.preventDefault();
+        showKeyEcho('B', 'Beats');
         handleFilterChange('beat');
         showToast('Filtering to beats', { type: 'success', icon: '📈', duration: 1500 });
       } else if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
+        showKeyEcho('M', 'Misses');
         handleFilterChange('miss');
         showToast('Filtering to misses', { type: 'warning', icon: '📉', duration: 1500 });
       } else if (e.key === 'p' || e.key === 'P') {
         e.preventDefault();
+        showKeyEcho('P', 'Pending');
         handleFilterChange('pending');
         showToast('Filtering to pending', { type: 'info', icon: '⏳', duration: 1500 });
       }
@@ -567,7 +576,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [navigateWeek, goToToday, handleFilterChange, showToast]);
+  }, [navigateWeek, goToToday, handleFilterChange, showToast, showKeyEcho]);
 
   // Refs for each week card (for smooth scroll-to on indicator click)
   // NOTE: Must be declared before any conditional returns (Rules of Hooks)
