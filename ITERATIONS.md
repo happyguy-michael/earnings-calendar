@@ -1,3 +1,48 @@
+## 2026-03-12 — KeyPressEcho: Visual Keyboard Shortcut Feedback
+
+**Inspiration:** UX Collective's "10 UX design shifts you can't ignore in 2026" — specifically the insight that *"Micro-interactions now serve as the primary communication method between interfaces and users. They confirm actions without requiring people to pause and digest confirmation messages."*
+
+Also from Ripplix's "UI Animation Trends 2026": *"Feedback and Status — Every action should respond within 100ms"* and *"Teaching: Here's how this feature behaves."*
+
+**What I built:**
+- New `KeyPressEcho` component — animated visual feedback when keyboard shortcuts are triggered:
+
+  **Core Features:**
+  - Shows brief animated indicator displaying the key pressed + action label
+  - Example: Pressing `←` shows `[ ← ] Previous week`
+  - Glassmorphism styling with blur backdrop matching existing UI
+  - Smooth physics-based enter/exit animations (blur + scale + translate)
+  - Multiple echoes can stack (up to 2 by default)
+  - Context provider pattern for global access
+
+  **Animation Details:**
+  - Enter: Fade up from below with blur, 150ms duration
+  - Visible: Hold for 1.2 seconds
+  - Exit: Fade up and out with slight blur, 300ms duration
+  - Uses cubic-bezier(0.16, 1, 0.3, 1) for natural spring-like feel
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (simplified fade only)
+  - `role="status"` and `aria-live="polite"` for screen readers
+  - Key badges use monospace font for clarity
+
+  **Integration:**
+  - Added `KeyPressEchoProvider` to `ClientProviders.tsx`
+  - Wired to all existing keyboard shortcuts in page.tsx:
+    - `←` / `↑` → "Previous week"
+    - `→` / `↓` → "Next week"
+    - `T` → "Jump to today"
+    - `A` → "All"
+    - `B` → "Beats"
+    - `M` → "Misses"
+    - `P` → "Pending"
+
+**Impact:** Users now get instant visual confirmation when they use keyboard shortcuts. This serves two purposes: (1) teaching users what shortcuts exist and what they do, and (2) providing immediate feedback that their keypress was registered. The subtle animations make the interface feel more alive and responsive.
+
+**Reference:** https://uxdesign.cc/10-ux-design-shifts-you-cant-ignore-in-2026-8f0da1c6741d
+
+---
+
 ## 2026-03-12 — UndoToast: Reversible Actions with Visual Countdown
 
 **Inspiration:** Stan.vision's 2026 UX research article "UX/UI Trends Shaping Digital Products" — specifically the section on "Micro-interactions as infrastructure: Animations that prevent errors, not just decorate" with cited stats: *"8% faster tasks, 12% fewer errors."*
