@@ -1,4 +1,58 @@
 
+## 2026-03-13 — PushableButton Component (3D Tactile Press Effect)
+
+**Inspiration:** Josh Comeau's "Building a Magical 3D Button with HTML and CSS" tutorial. The key insight: buttons should feel physical and satisfying to press, not just flat pixels that happen to be clickable.
+
+**What was added:**
+- New `PushableButton` component - 3D tactile button with layered transforms
+- `PushableIconButton` variant - square icon buttons with the same effect
+- Features:
+  - 3D depth illusion using edge and shadow layers
+  - Front layer slides down when pressed, revealing edge
+  - Quick snap-down on press (34ms, ~2 frames)
+  - Bouncy spring release (250ms with overshoot)
+  - Hover rise effect (+2px lift before press)
+  - Brightness increase on hover (110%)
+  - Shadow moves opposite to front layer
+  - Multiple variants: primary, success, danger, warning, neutral, ghost
+  - Size options: sm, md, lg
+  - Optional blurred drop shadow
+  - Full accessibility support
+  - Respects `prefers-reduced-motion`
+  - Light/dark mode aware
+
+**Integration:**
+- Updated TodayButton to use PushableButton instead of MagneticButton
+- Primary blue variant for call-to-action visibility
+- 3px depth for compact header fit
+- Maintains notification indicator and tooltip functionality
+
+**Technical notes:**
+- Uses transform: translateY() for hardware-accelerated animations
+- Three layers: shadow (bottom), edge (middle), front (top)
+- CSS custom properties for variant colors
+- styled-jsx for scoped styles with CSS variables
+- Edge layer has gradient for subtle rounded corner shading
+- forwardRef for proper ref forwarding
+
+**Physics breakdown:**
+- Press: 34ms linear (instant tactile feedback)
+- Release/hover: 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5) (spring overshoot)
+- Equilibrium: 600ms cubic-bezier(0.3, 0.7, 0.4, 1) (gradual ease-out return)
+
+**Why it matters:**
+- Makes buttons feel tangible and responsive
+- Satisfying micro-interaction that rewards clicking
+- Premium polish expected in modern SaaS apps
+- Differentiates from flat, lifeless button styles
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 113303d
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — CascadeReveal Component (Staggered Entrance Animation)
 
 **Inspiration:** Lummi.ai 2025 UI trends article highlighting "complex animations - scroll-triggered interactions" as a key pattern. Linear, Stripe, and Notion use cascading reveal animations where elements animate in with staggered delays rather than all at once.
