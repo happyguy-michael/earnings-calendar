@@ -17699,3 +17699,109 @@ html.light .week-mood-header {
     opacity: 1;
   }
 }
+
+/* ============================================
+   BlurReveal - Premium text entrance animation
+   Inspired by Linear.app hero animations
+   ============================================ */
+
+/* Container for word-by-word reveal */
+.blur-reveal-container {
+  display: inline;
+}
+
+.blur-reveal-word-wrapper {
+  display: inline;
+}
+
+/* Individual word styling - hidden state */
+.blur-reveal-word {
+  display: inline-block;
+  filter: blur(var(--blur-amount, 12px));
+  opacity: 0;
+  transform: var(--transform-hidden, translateY(25%));
+  transition: 
+    filter var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms),
+    opacity var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms),
+    transform var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms);
+  will-change: filter, opacity, transform;
+}
+
+/* Word - visible state */
+.blur-reveal-word.blur-reveal-visible {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
+
+/* Single element mode - hidden state */
+.blur-reveal-single {
+  filter: blur(var(--blur-amount, 12px));
+  opacity: 0;
+  transform: var(--transform-hidden, translateY(25%));
+  transition: 
+    filter var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms),
+    opacity var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms),
+    transform var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms);
+  will-change: filter, opacity, transform;
+}
+
+/* Single element - visible state */
+.blur-reveal-single.blur-reveal-visible {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
+
+/* Group container */
+.blur-reveal-group {
+  display: contents;
+}
+
+/* Group items - hidden state */
+.blur-reveal-group-item {
+  filter: blur(var(--blur-amount, 12px));
+  opacity: 0;
+  transform: var(--transform-hidden, translateY(25%));
+  transition: 
+    filter var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms),
+    opacity var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms),
+    transform var(--duration, 700ms) var(--easing, cubic-bezier(0.25, 0.1, 0.25, 1)) var(--delay, 0ms);
+  will-change: filter, opacity, transform;
+}
+
+/* Group items - visible state */
+.blur-reveal-group-item.blur-reveal-visible {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
+
+/* Light mode adjustments - slightly stronger initial blur for better contrast */
+html.light .blur-reveal-word,
+html.light .blur-reveal-single,
+html.light .blur-reveal-group-item {
+  --blur-amount: 14px;
+}
+
+/* Mobile optimizations - reduce motion intensity */
+@media (max-width: 768px) {
+  .blur-reveal-word,
+  .blur-reveal-single,
+  .blur-reveal-group-item {
+    --blur-amount: 8px;
+    --duration: 500ms;
+  }
+}
+
+/* Reduced motion - instant reveal, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .blur-reveal-word,
+  .blur-reveal-single,
+  .blur-reveal-group-item {
+    filter: blur(0);
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

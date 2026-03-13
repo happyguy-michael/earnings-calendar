@@ -92,6 +92,7 @@ import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
+import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1047,11 +1048,18 @@ export default function Home() {
           </ParallaxFloat>
         </div>
 
-        {/* Today's Narrative Summary + Sentiment Pulse */}
-        <div className="today-summary-row">
+        {/* Today's Narrative Summary + Sentiment Pulse - blur reveal entrance */}
+        <BlurReveal 
+          triggerOnMount 
+          delay={200}
+          blurAmount={10}
+          yOffset={15}
+          duration={700}
+          className="today-summary-row"
+        >
           <TodayNarrative earnings={earnings} />
           <SentimentPulse earnings={earnings} size="md" showLabel={true} />
-        </div>
+        </BlurReveal>
 
         {/* Next Up Queue - upcoming earnings with countdowns */}
         <NextUpQueue earnings={earnings} maxItems={6} />
@@ -1331,21 +1339,30 @@ export default function Home() {
         </FilterGlow>
         )}
 
-        {/* Legend with animated indicators */}
-        <div className="mt-10 flex items-center justify-center gap-8 text-xs text-zinc-500">
-          <div className="flex items-center gap-2">
-            <LegendIndicator type="beat" size={12} />
-            Beat Estimates
-          </div>
-          <div className="flex items-center gap-2">
-            <LegendIndicator type="miss" size={12} />
-            Missed Estimates
-          </div>
-          <div className="flex items-center gap-2">
-            <LegendProgressRing value={75} size={14} color="#f59e0b" />
-            <span className="ml-1">Beat Probability</span>
-          </div>
-        </div>
+        {/* Legend with animated indicators - blur reveal on scroll */}
+        <BlurRevealGroup
+          staggerDelay={80}
+          blurAmount={10}
+          yOffset={20}
+          duration={600}
+          threshold={0.3}
+          className="mt-10 flex items-center justify-center gap-8 text-xs text-zinc-500"
+        >
+          {[
+            <div key="beat" className="flex items-center gap-2">
+              <LegendIndicator type="beat" size={12} />
+              Beat Estimates
+            </div>,
+            <div key="miss" className="flex items-center gap-2">
+              <LegendIndicator type="miss" size={12} />
+              Missed Estimates
+            </div>,
+            <div key="odds" className="flex items-center gap-2">
+              <LegendProgressRing value={75} size={14} color="#f59e0b" />
+              <span className="ml-1">Beat Probability</span>
+            </div>
+          ]}
+        </BlurRevealGroup>
       </main>
 
       {/* Floating back to top button */}
