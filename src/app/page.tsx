@@ -95,6 +95,7 @@ import { SkeletonTransition } from '@/components/SkeletonTransition';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
+import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -742,6 +743,9 @@ export default function Home() {
       
       {/* Keyboard shortcuts overlay */}
       <KeyboardShortcutsOverlay />
+      
+      {/* Hidden Easter egg - Konami Code (↑↑↓↓←→←→BA) */}
+      <KonamiEasterEgg />
       
       {/* Header - shrinks on scroll with enhanced frosted glass */}
       <FrostedHeader
