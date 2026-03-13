@@ -1,3 +1,74 @@
+## 2026-03-13 — SwipeActions: iOS-Style Swipe-to-Reveal Actions
+
+**Inspiration:** Motion.dev's swipe actions tutorial, iOS Mail app, and the 2025/2026 trend of "gestural shortcuts" — enabling quick actions through natural touch gestures rather than tapping through menus.
+
+**What I built:**
+- New `SwipeActions` component — iOS-style swipe-to-reveal actions for mobile:
+
+  **Core Features:**
+  - Swipe right to reveal left action (e.g., add to watchlist)
+  - Swipe left to reveal right action (e.g., hide/dismiss)
+  - Rubber band effect when dragging beyond bounds
+  - Velocity-aware action triggering (fast swipe = easier to trigger)
+  - Haptic feedback when crossing action threshold
+  - Spring physics animation for natural snap-back
+
+  **Technical Details:**
+  - Pure vanilla React with CSS transitions (no framer-motion dependency)
+  - Touch event handling with velocity tracking
+  - Mouse support for desktop testing (disabled by default)
+  - Threshold-based action triggering with visual feedback
+  - Icon scale-up animation when threshold is crossed
+  - RequestAnimationFrame-based spring animation
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (instant transitions)
+  - Works alongside existing keyboard shortcuts
+  - Visual feedback for action state
+  - Touch-only on mobile (doesn't interfere with mouse users)
+
+  **Included Icons:**
+  - `SwipeActionIcons.Star` / `StarOutline` — watchlist toggle
+  - `SwipeActionIcons.EyeOff` — hide/dismiss
+  - `SwipeActionIcons.Bell` / `BellOff` — notification toggle
+  - `SwipeActionIcons.Bookmark` / `BookmarkOutline` — save
+  - `SwipeActionIcons.Share` — share action
+  - `SwipeActionIcons.Trash` — delete
+  - `SwipeActionIcons.Check` — mark complete
+
+  **Usage Example:**
+  ```tsx
+  <SwipeActions
+    leftAction={{
+      icon: <SwipeActionIcons.StarOutline />,
+      label: "Watchlist",
+      color: "#fff",
+      bgColor: "#f59e0b",
+      onAction: () => addToWatchlist(ticker)
+    }}
+    rightAction={{
+      icon: <SwipeActionIcons.EyeOff />,
+      label: "Hide",
+      color: "#fff",
+      bgColor: "#ef4444",
+      onAction: () => hideEarning(ticker)
+    }}
+  >
+    <EarningsCard />
+  </SwipeActions>
+  ```
+
+**Impact:** Mobile users can now quickly interact with earnings cards using natural swipe gestures. This reduces the friction of tapping through menus and follows the iOS design language that mobile users already understand. The component is designed to be easily integrated into the earnings cards for future iterations.
+
+**Reference:**
+- Motion.dev Swipe Actions Tutorial: https://motion.dev/tutorials/react-swipe-actions
+- iOS Human Interface Guidelines: Swipe Actions
+- UX trend: Gestural shortcuts in financial apps
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — MarketMoodRing: Visual Week Sentiment Indicator
 
 **Inspiration:** Muzli's 2026 dashboard design trends, Apple Health's activity rings, mood ring aesthetics, and the trend toward "data-driven color coding" — using visual indicators to convey information at a glance without requiring users to read numbers.

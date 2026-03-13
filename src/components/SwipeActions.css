@@ -1,0 +1,131 @@
+/* SwipeActions - iOS-style swipe-to-reveal actions */
+
+.swipe-actions-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.swipe-actions-content {
+  position: relative;
+  z-index: 1;
+  background-color: inherit;
+  will-change: transform;
+}
+
+.swipe-action {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  will-change: opacity, transform;
+  overflow: hidden;
+}
+
+.swipe-action-left {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 20px;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.swipe-action-right {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 20px;
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.swipe-action-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.swipe-action-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swipe-action-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Desktop: disable swipe by default for mouse users */
+@media (hover: hover) and (pointer: fine) {
+  .swipe-actions-container:not(.swipe-force-enable) .swipe-actions-content {
+    cursor: default !important;
+    pointer-events: auto;
+  }
+  
+  .swipe-actions-container:not(.swipe-force-enable) {
+    overflow: visible;
+  }
+}
+
+/* Touch devices: enable swipe */
+@media (hover: none) and (pointer: coarse) {
+  .swipe-actions-content {
+    cursor: grab;
+  }
+  
+  .swipe-actions-content:active {
+    cursor: grabbing;
+  }
+}
+
+/* Force enable class - for demos and specific use cases */
+.swipe-force-enable .swipe-actions-content {
+  cursor: grab !important;
+}
+
+.swipe-force-enable .swipe-actions-content:active {
+  cursor: grabbing !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .swipe-actions-content,
+  .swipe-action,
+  .swipe-action-icon {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .swipe-action-left,
+  .swipe-action-right {
+    /* Actions retain their explicit colors in dark mode */
+  }
+}
+
+/* Light mode - ensure content bg doesn't bleed */
+.swipe-actions-container {
+  --swipe-bg: var(--card-bg, #ffffff);
+}
+
+.swipe-actions-content {
+  background-color: var(--swipe-bg);
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .swipe-action-label {
+    font-weight: 600;
+  }
+}
