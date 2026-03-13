@@ -78,6 +78,7 @@ import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
+import { GlitchPending } from '@/components/GlitchText';
 import { MarketMoodRing } from '@/components/MarketMoodRing';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 import { OrbitDot } from '@/components/OrbitDot';
@@ -1028,7 +1029,7 @@ export default function Home() {
                   <div>
                     <div className="text-3xl font-bold text-amber-400">
                       <ValueChangeHighlight value={pendingCount} variant="warning">
-                        <RollingNumber value={pendingCount} staggerDelay={35} />
+                        <GlitchPending value={pendingCount} />
                       </ValueChangeHighlight>
                     </div>
                     <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
