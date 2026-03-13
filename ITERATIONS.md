@@ -1,3 +1,51 @@
+## 2026-03-13 — GlitchText: Cyberpunk-Style Pending State Indicator
+
+**Inspiration:** FreeFrontend's "Animated Futuristic State Button" micro-interaction and the 2025/2026 trend of "digital artifact" animations — using glitch effects to indicate waiting/loading states with a cyberpunk aesthetic.
+
+**What I built:**
+- New `GlitchText` component with retro digital glitch effect:
+
+  **Core Features:**
+  - RGB color channel splitting (cyan/magenta shift)
+  - Random position jitter during glitch bursts
+  - Scan line overlay for authentic CRT feel
+  - Configurable intensity: subtle, medium, intense
+  - Periodic glitch bursts with customizable interval/duration
+
+  **Variants:**
+  - `GlitchText` — Base component for any text
+  - `GlitchNumber` — Numeric variant with locale formatting and prefix/suffix
+  - `GlitchPending` — Pre-configured amber theme for pending states
+
+  **Technical Details:**
+  - Pure CSS animations with JSX-in-CSS for scoped styles
+  - No external dependencies
+  - Sub-component layers for RGB shift effect
+  - Configurable timing: 4s interval, 150ms duration for subtle mode
+  - Mix-blend-mode for authentic color separation
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (no animation)
+  - ARIA labels for screen readers
+  - Static fallback when inactive
+
+  **Integration:**
+  - Added to pending stat card in main dashboard
+  - Replaces static RollingNumber with glitching effect
+  - Amber color scheme matches existing pending badge styling
+  - Only activates when pendingCount > 0
+
+**Impact:** The pending earnings count now has visual "life" — a subtle glitch effect draws attention to the fact that earnings are still awaited, creating anticipation. The effect is unobtrusive (fires every 4 seconds for 150ms) but adds premium polish and aligns with cyberpunk/futuristic UI trends.
+
+**Reference:**
+- FreeFrontend UI Micro-interactions: https://freefrontend.com/ui-micro-interaction/
+- 2025 Motion UI Trends: Futuristic state indicators
+- Cyberpunk 2077 UI aesthetic for inspiration
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — SwipeActions: iOS-Style Swipe-to-Reveal Actions
 
 **Inspiration:** Motion.dev's swipe actions tutorial, iOS Mail app, and the 2025/2026 trend of "gestural shortcuts" — enabling quick actions through natural touch gestures rather than tapping through menus.
