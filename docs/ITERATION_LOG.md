@@ -1,5 +1,51 @@
 # Iteration Log
 
+## 2026-03-13 — BlurReveal (Scroll-Triggered Text Entrance)
+**Component:** `BlurReveal.tsx`
+
+**What it does:**
+- Premium text entrance animation with blur-to-clear transition
+- Elements start blurred, translated, and faded
+- Reveals with smooth spring-like transition on scroll-into-view
+- Word-by-word staggered mode for headlines
+- Single-element mode for containers and badges
+- Configurable direction: up, down, left, right
+
+**Why it matters:**
+- Modern premium pattern from Linear.app, Vercel, Stripe
+- Creates "wow" moment on first scroll
+- Guides eye through content hierarchy
+- Adds polish without being distracting
+- Respects user motion preferences
+
+**Technical highlights:**
+- IntersectionObserver for efficient scroll detection
+- CSS-based animation (no JS animation loop)
+- CSS custom properties for configurable timing
+- Stagger delay via inline styles
+- `rootMargin: '0px 0px -50px 0px'` triggers slightly before element enters view
+- `will-change: filter, opacity, transform` for GPU acceleration
+- Mobile optimization: reduced blur (8px vs 12px), shorter duration (500ms vs 700ms)
+- Light mode: slightly stronger initial blur for contrast
+
+**Applied to:**
+- Today's Narrative section (triggerOnMount with 200ms delay)
+- Legend section (scroll-triggered with 80ms stagger between items)
+
+**Inspiration:**
+- Linear.app hero animations
+- Vercel landing page reveals
+- Stripe checkout flow animations
+- Cruip's blur reveal tutorial
+
+**Files changed:**
+- `src/components/BlurReveal.tsx` (new component)
+- `src/app/globals.css` (blur reveal CSS)
+- `src/app/page.tsx` (integrations)
+
+---
+
+
 ## 2026-03-12 — ScrollMinimap (Visual Week Navigation)
 **Component:** `ScrollMinimap.tsx`
 
