@@ -651,3 +651,55 @@
 - Coordinates with existing glassmorphism and gradient orbs
 
 **Commit:** `748c8fc` — feat: Add animated CountUp numbers to WeekSummaryCard
+
+---
+
+## HoloCard - Holographic Card Effect
+
+**Date:** 2026-03-13  
+**Component:** `HoloCard.tsx`  
+**Category:** Micro-interaction / Visual Polish
+
+### Inspiration
+- Pokémon holographic trading cards
+- Apple's premium card interactions
+- Stripe Dashboard metallic accents
+- Linear.app's iridescent highlights
+
+### What it does
+Creates a premium holographic rainbow shimmer effect that responds to cursor movement. The effect includes:
+- **Rainbow iridescent overlay** - follows cursor with color-dodge blending
+- **Glare shine** - radial gradient highlight at cursor position
+- **Iridescent border glow** - rainbow border that pulses
+- **Sparkle particles** - optional pop-in sparkles on mouse movement
+- **3D tilt** - subtle tilt that syncs with holographic movement
+
+### Usage
+```tsx
+import { HoloCard, HoloBadge } from '@/components/HoloCard';
+
+// Full featured
+<HoloCard intensity="intense" sparkles>
+  <YourCard />
+</HoloCard>
+
+// Subtle for less important items
+<HoloCard intensity="subtle">
+  <SecondaryCard />
+</HoloCard>
+
+// Badge variant (no tilt)
+<HoloBadge>
+  <span>Featured</span>
+</HoloBadge>
+```
+
+### Intensity variants
+- `subtle` - Light shimmer, good for secondary content
+- `medium` (default) - Balanced effect for most use cases  
+- `intense` - Strong holographic for featured items
+
+### Accessibility
+- Respects `prefers-reduced-motion`
+- Disabled on mobile (performance)
+- Light/dark mode aware blending

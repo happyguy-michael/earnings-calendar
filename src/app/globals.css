@@ -17805,3 +17805,128 @@ html.light .blur-reveal-group-item {
     transition: none;
   }
 }
+
+/* ============================================
+   HoloCard - Holographic Card Effect
+   Premium trading-card shimmer animation
+   ============================================ */
+
+/* HoloCard Base */
+.holo-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  isolation: isolate;
+}
+
+.holo-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Rainbow holographic layer */
+.holo-rainbow-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: color-dodge;
+  transition: opacity 0.3s ease;
+}
+
+html.light .holo-rainbow-layer {
+  mix-blend-mode: overlay;
+}
+
+/* Glare shine layer */
+.holo-glare-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 4;
+  mix-blend-mode: overlay;
+  transition: opacity 0.3s ease;
+}
+
+/* Iridescent border glow */
+.holo-border-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+/* Sparkle particles */
+.holo-sparkle {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  pointer-events: none;
+  z-index: 5;
+  animation: holo-sparkle-pop ease-out forwards;
+  box-shadow: 
+    0 0 4px 1px rgba(255, 255, 255, 0.8),
+    0 0 8px 2px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes holo-sparkle-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0) translate(-50%, -50%);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.2) translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translate(-50%, -50%) translateY(-20px);
+  }
+}
+
+/* Reduced motion */
+.holo-card-reduced {
+  position: relative;
+}
+
+.holo-card-reduced:hover {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Badge variant */
+.holo-badge {
+  display: inline-flex;
+}
+
+/* Light mode adjustments */
+html.light .holo-rainbow-layer {
+  mix-blend-mode: multiply;
+  opacity: calc(var(--holo-opacity, 0) * 0.5);
+}
+
+html.light .holo-glare-layer {
+  mix-blend-mode: soft-light;
+}
+
+html.light .holo-border-glow {
+  filter: blur(6px);
+  opacity: calc(var(--border-glow, 0) * 0.6);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .holo-card {
+    transform: none !important;
+  }
+  
+  .holo-rainbow-layer,
+  .holo-glare-layer,
+  .holo-border-glow {
+    display: none;
+  }
+}
