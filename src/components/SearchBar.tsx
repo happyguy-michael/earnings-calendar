@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useEarningsSearchPlaceholder } from './AnimatedPlaceholder';
 import { SearchSuggestions } from './SearchSuggestions';
+import { SearchPulseWave, useSearchPulse } from './SearchPulseWave';
 
 interface SearchBarProps {
   value: string;
@@ -17,6 +18,9 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [kbdTriggered, setKbdTriggered] = useState(false);
   const animatedPlaceholder = useEarningsSearchPlaceholder();
+  
+  // Pulse wave effect when typing
+  const shouldPulse = useSearchPulse(value, isFocused);
 
   // Show suggestions when focused and has query
   useEffect(() => {
@@ -70,6 +74,14 @@ export function SearchBar({ value, onChange, resultCount, totalCount }: SearchBa
   return (
     <div className="search-container">
       <div className={`search-bar ${hasValue ? 'has-value' : ''} ${isFocused ? 'focused' : ''}`}>
+        {/* Pulse wave effect on typing */}
+        <SearchPulseWave 
+          isActive={shouldPulse} 
+          intensity={1.2}
+          offsetX={24}
+          offsetY={20}
+        />
+        
         {/* Search Icon */}
         <svg 
           className="search-icon" 
