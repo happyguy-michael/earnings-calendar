@@ -93,6 +93,7 @@ import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
+import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1282,13 +1283,24 @@ export default function Home() {
                                   <MarketSessionIcon session="pre" size={18} />
                                   <span className="session-header-label">Pre-Market</span>
                                 </div>
-                                <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
+                                <CascadeReveal
+                                  staggerDelay={50}
+                                  duration={400}
+                                  preset="spring"
+                                  direction="up"
+                                  distance={16}
+                                  threshold={0.1}
+                                  delay={weekIndex * 80}
+                                  className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}
+                                >
                                   {preMarket.map((e, i) => (
-                                    <VelocityBlurCard key={`${e.ticker}-${filterKey}`} staggerIndex={i}>
-                                      <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
-                                    </VelocityBlurCard>
+                                    <CascadeItem key={`${e.ticker}-${filterKey}`} index={i}>
+                                      <VelocityBlurCard staggerIndex={i}>
+                                        <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
+                                      </VelocityBlurCard>
+                                    </CascadeItem>
                                   ))}
-                                </div>
+                                </CascadeReveal>
                               </div>
                             )}
                             {postMarket.length > 0 && (
@@ -1298,13 +1310,24 @@ export default function Home() {
                                   <MarketSessionIcon session="post" size={18} />
                                   <span className="session-header-label">After Hours</span>
                                 </div>
-                                <div className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}>
+                                <CascadeReveal
+                                  staggerDelay={50}
+                                  duration={400}
+                                  preset="spring"
+                                  direction="up"
+                                  distance={16}
+                                  threshold={0.1}
+                                  delay={weekIndex * 80 + (preMarket.length > 0 ? 150 : 0)}
+                                  className={`space-y-2 filter-cards-container ${isFilterTransitioning ? 'exiting' : ''}`}
+                                >
                                   {postMarket.map((e, i) => (
-                                    <VelocityBlurCard key={`${e.ticker}-${filterKey}`} staggerIndex={preMarket.length + i}>
-                                      <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
-                                    </VelocityBlurCard>
+                                    <CascadeItem key={`${e.ticker}-${filterKey}`} index={i}>
+                                      <VelocityBlurCard staggerIndex={preMarket.length + i}>
+                                        <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
+                                      </VelocityBlurCard>
+                                    </CascadeItem>
                                   ))}
-                                </div>
+                                </CascadeReveal>
                               </div>
                             )}
                           </div>
