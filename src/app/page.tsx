@@ -97,6 +97,7 @@ import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPale
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
 import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
+import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1292,6 +1293,7 @@ export default function Home() {
                                   <MarketSessionIcon session="pre" size={18} />
                                   <span className="session-header-label">Pre-Market</span>
                                 </div>
+                                <SpotlightContainer>
                                 <CascadeReveal
                                   staggerDelay={50}
                                   duration={400}
@@ -1304,12 +1306,15 @@ export default function Home() {
                                 >
                                   {preMarket.map((e, i) => (
                                     <CascadeItem key={`${e.ticker}-${filterKey}`} index={i}>
+                                      <SpotlightCard id={`pre-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
                                       <VelocityBlurCard staggerIndex={i}>
                                         <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
                                       </VelocityBlurCard>
+                                      </SpotlightCard>
                                     </CascadeItem>
                                   ))}
                                 </CascadeReveal>
+                                </SpotlightContainer>
                               </div>
                             )}
                             {postMarket.length > 0 && (
@@ -1319,6 +1324,7 @@ export default function Home() {
                                   <MarketSessionIcon session="post" size={18} />
                                   <span className="session-header-label">After Hours</span>
                                 </div>
+                                <SpotlightContainer>
                                 <CascadeReveal
                                   staggerDelay={50}
                                   duration={400}
@@ -1331,12 +1337,15 @@ export default function Home() {
                                 >
                                   {postMarket.map((e, i) => (
                                     <CascadeItem key={`${e.ticker}-${filterKey}`} index={i}>
+                                      <SpotlightCard id={`post-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
                                       <VelocityBlurCard staggerIndex={preMarket.length + i}>
                                         <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
                                       </VelocityBlurCard>
+                                      </SpotlightCard>
                                     </CascadeItem>
                                   ))}
                                 </CascadeReveal>
+                                </SpotlightContainer>
                               </div>
                             )}
                           </div>
