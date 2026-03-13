@@ -88,6 +88,7 @@ import { ContextualCardActions } from '@/components/ContextualCardActions';
 import { useUndoToast } from '@/components/UndoToast';
 import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
+import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/components/DayColumnHighlight';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
@@ -1113,6 +1114,7 @@ export default function Home() {
 
         {/* Calendar Weeks with Swipe Navigation */}
         {(!isFiltering || filteredEarnings.length > 0) && (
+        <DayColumnProvider>
         <FilterGlow activeFilter={statusFilter}>
         <SwipeNavigator
           onSwipeLeft={() => navigateWeek(1, true)}
@@ -1214,23 +1216,25 @@ export default function Home() {
                       date={date}
                       isToday={isToday}
                     >
-                      <div 
-                        className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
-                        style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
-                      >
-                        <div className="day-name">{day}</div>
-                        <div className="day-num">{date.getDate()}</div>
-                        {dayEarnings.length > 0 && (
-                          <div className="badge badge-neutral mt-2 text-[10px] py-1 px-2">
-                            {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
-                          </div>
-                        )}
-                        {/* Today marker line - animated "you are here" indicator */}
-                        <TodayMarkerLine 
-                          isToday={isToday} 
-                          delay={weekIndex * 100 + 300}
-                        />
-                      </div>
+                      <DayHeaderHighlight dayIndex={dayIndex}>
+                        <div 
+                          className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
+                          style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                        >
+                          <div className="day-name">{day}</div>
+                          <div className="day-num">{date.getDate()}</div>
+                          {dayEarnings.length > 0 && (
+                            <div className="badge badge-neutral mt-2 text-[10px] py-1 px-2">
+                              {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
+                            </div>
+                          )}
+                          {/* Today marker line - animated "you are here" indicator */}
+                          <TodayMarkerLine 
+                            isToday={isToday} 
+                            delay={weekIndex * 100 + 300}
+                          />
+                        </div>
+                      </DayHeaderHighlight>
                     </DayStatsPopover>
                   );
                 })}
@@ -1269,14 +1273,14 @@ export default function Home() {
                     const waveDelay = slideDirection ? (dayIndex * 65) + 30 : 0;
                     
                     return (
-                      <div 
-                        key={dayIndex} 
-                        className={`day-content ${isToday ? 'today' : ''} ${slideDirection ? 'day-wave-reveal' : ''}`} 
-                        data-mobile-date={mobileDate}
-                        style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
-                      >
-                        {!hasEarnings ? (
-                          <AnimatedEmptyState 
+                      <DayColumnCard key={dayIndex} dayIndex={dayIndex}>
+                        <div 
+                          className={`day-content ${isToday ? 'today' : ''} ${slideDirection ? 'day-wave-reveal' : ''}`} 
+                          data-mobile-date={mobileDate}
+                          style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
+                        >
+                          {!hasEarnings ? (
+                            <AnimatedEmptyState 
                             variant={isToday ? 'today' : date < today ? 'past' : 'future'} 
                           />
                         ) : (
@@ -1340,13 +1344,14 @@ export default function Home() {
                         
                         {/* Heat indicator showing day volume */}
                         <DayHeatIndicator
-                          count={dayData.count}
-                          maxCount={maxDayCount}
-                          beats={dayData.beats}
-                          misses={dayData.misses}
-                          pending={dayData.pending}
-                        />
-                      </div>
+                            count={dayData.count}
+                            maxCount={maxDayCount}
+                            beats={dayData.beats}
+                            misses={dayData.misses}
+                            pending={dayData.pending}
+                          />
+                        </div>
+                      </DayColumnCard>
                     );
                   });
                 })()}
@@ -1365,6 +1370,7 @@ export default function Home() {
         </div>
         </SwipeNavigator>
         </FilterGlow>
+        </DayColumnProvider>
         )}
 
         {/* Legend with animated indicators - blur reveal on scroll */}
