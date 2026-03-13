@@ -1,3 +1,46 @@
+## 2026-03-14 — DayColumnHighlight: Hover-to-Spotlight Day Columns
+
+**Inspiration:** Google Calendar's column hover highlighting, Notion's database column focus, and premium dashboard UIs (Linear, Vercel) — using contextual highlighting to help users parse information quickly.
+
+**What I built:**
+- New `DayColumnHighlight` component system for spotlighting earnings by day:
+
+  **Core Features:**
+  - Hover any day header (Mon-Fri) to highlight that column's earnings
+  - Non-hovered columns dim subtly (opacity 0.55) for visual focus
+  - Animated left border glow on highlighted cards (blue/purple gradient)
+  - Shimmer effect sweeps across active header
+  - Context-aware system using React context
+
+  **Components:**
+  - `DayColumnProvider` — Context provider, manages hover state globally
+  - `DayHeaderHighlight` — Wrapper for day headers, triggers highlight on hover
+  - `DayColumnCard` — Wrapper for earnings cards, receives highlight styling
+  - `DayColumnIndicator` — Optional floating badge showing active day
+
+  **Technical Details:**
+  - CSS custom properties for global coordination (`--day-column-active`)
+  - Class-based styling for performance (no style prop thrashing)
+  - Smooth transitions with spring easing
+  - Full keyboard support (focus triggers highlight)
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (instant transitions, no animation)
+  - Keyboard focusable day headers
+  - ARIA pressed state for header buttons
+  - Works in both light and dark modes
+
+**Impact:** Makes it much easier to visually scan earnings for a specific day. When you hover Monday's header, all Monday's earnings cards glow while other days dim — a premium UX affordance that reduces cognitive load when parsing the calendar.
+
+**Reference:**
+- Google Calendar column highlighting pattern
+- Notion database column focus interactions
+- 2025/2026 trend: Contextual UI dimming, attention-aware interfaces
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — BorderBeam: Animated Traveling Light Effect
 
 **Inspiration:** Magic UI's Border Beam component (magicui.design), Linear.app's card highlights, and the 2025/2026 "Living Interfaces" trend — elements with subtle constant motion that feel alive without being distracting.
