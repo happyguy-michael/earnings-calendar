@@ -1,4 +1,52 @@
 
+## 2026-03-13 — CascadeReveal Component (Staggered Entrance Animation)
+
+**Inspiration:** Lummi.ai 2025 UI trends article highlighting "complex animations - scroll-triggered interactions" as a key pattern. Linear, Stripe, and Notion use cascading reveal animations where elements animate in with staggered delays rather than all at once.
+
+**What was added:**
+- New `CascadeReveal` component - container that triggers staggered animations when scrolling into view
+- `CascadeItem` wrapper - applies timed entrance animation based on index
+- `CascadeGroup` - auto-indexes children for convenience
+- `CascadeSection` - combined wrapper for simple use cases
+- Features:
+  - Intersection Observer based triggering with configurable threshold
+  - Multiple animation presets: fade, slide, scale, flip, blur, spring
+  - Direction options: up, down, left, right (for slide/flip effects)
+  - Configurable stagger delay between items (default 50ms)
+  - Spring physics easing for bouncy, premium feel
+  - Distance and duration controls
+  - Once vs repeat animation modes
+  - Initial delay offset for coordinating with other animations
+  - Respects `prefers-reduced-motion` preference
+  - `useCascadeReveal` hook for custom implementations
+
+**Integration:**
+- Wrapped pre-market and after-hours card groups with CascadeReveal
+- Spring preset with 16px upward movement for natural card lift
+- Week-aware delay offsets (later weeks start cascade slightly later)
+- Post-market cards delayed 150ms after pre-market for visual separation
+- Works with existing VelocityBlurCard for scroll blur effects
+
+**Technical notes:**
+- Pure CSS transitions with dynamic delay calculation
+- Context-based coordination between container and items
+- Memoized config and callbacks for performance
+- No external animation library dependency
+- Will-change optimization during animation
+
+**Why it matters:**
+- Cards feel alive and responsive when scrolling through the calendar
+- Cascading wave effect draws attention to new content entering viewport
+- Premium polish pattern expected in high-end SaaS apps (Linear, Stripe, Notion)
+- Makes browsing through weeks feel more dynamic and engaging
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** f745ca1
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-13 — CommandPalette Component (⌘K Spotlight Search)
 
 **Inspiration:** Linear, Vercel, Raycast, Notion command palettes - the modern standard for power-user navigation in SaaS apps. ⌘K interfaces reduce friction for keyboard-focused workflows and provide instant access to search, navigation, and actions.
