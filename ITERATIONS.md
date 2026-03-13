@@ -1,3 +1,54 @@
+## 2026-03-13 — BorderBeam: Animated Traveling Light Effect
+
+**Inspiration:** Magic UI's Border Beam component (magicui.design), Linear.app's card highlights, and the 2025/2026 "Living Interfaces" trend — elements with subtle constant motion that feel alive without being distracting.
+
+**What I built:**
+- New `BorderBeam` component that creates an animated light beam traveling around element borders:
+
+  **Core Features:**
+  - Glowing light beam (or dot) that continuously travels around the border
+  - Uses CSS conic-gradient with @property for smooth angle animation
+  - Mask-composite creates the hollow border effect
+  - Outer glow layer for added depth
+  - Hardware-accelerated via transform/opacity
+
+  **Variants:**
+  - `BorderBeam` — Base component with full customization
+  - `BorderBeamCard` — Pre-configured card wrapper
+  - `TodayBeam` — Warm amber/gold for highlighting "today" elements
+  - `MonsterBeam` — Fast green beam for exceptional results (monster beats)
+  - `LiveBeam` — Pulsing blue beam for "live" elements
+
+  **Configuration Options:**
+  - `variant`: 'default' | 'slow' | 'fast' | 'pulse' (animation speed)
+  - `color`: 'gradient' | 'blue' | 'purple' | 'success' | 'warning' | 'mono'
+  - `size`: 'sm' | 'md' | 'lg' (border/glow thickness)
+  - `spread`: Beam spread angle in degrees (how wide the glow is)
+  - `pauseOnHover`: Option to pause animation on hover
+  - `customGradient`: Override with custom gradient
+
+  **Technical Details:**
+  - CSS @property enables smooth angle interpolation (beam-rotate keyframes)
+  - Optional hue shifting for rainbow gradient effect (beam-hue-shift)
+  - Pulse variant adds opacity animation (beam-pulse)
+  - Respects `prefers-reduced-motion` (no animation)
+  - Light mode aware (reduced glow intensity)
+
+  **Use Cases:**
+  - Highlighting today's date in the calendar
+  - Drawing attention to exceptional earnings (monster beats)
+  - Indicating "live" or "active" elements
+  - Premium hover/focus states for important cards
+
+**Impact:** Adds a premium "alive" feel to highlighted elements. The traveling light beam creates subtle attention without being distracting, making important cards stand out organically. This effect is trending in 2025/2026 premium SaaS dashboards.
+
+**Reference:**
+- Magic UI Border Beam: https://magicui.design/docs/components/border-beam
+- CSS @property animation: https://codetv.dev/blog/animated-css-gradient-border
+- Conic gradient techniques: https://freefrontend.com/css-conic-gradient/
+
+---
+
 ## 2026-03-13 — GlitchText: Cyberpunk-Style Pending State Indicator
 
 **Inspiration:** FreeFrontend's "Animated Futuristic State Button" micro-interaction and the 2025/2026 trend of "digital artifact" animations — using glitch effects to indicate waiting/loading states with a cyberpunk aesthetic.
