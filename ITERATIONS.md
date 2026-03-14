@@ -1,3 +1,68 @@
+## 2026-03-15 — ElasticNumber: Spring Physics Counter with Overshoot
+
+**Inspiration:** Orizon Design's "10 UI/UX Trends That Will Shape 2026" — specifically the "Anti-Perfect UI" trend: *"Organic motion curves, playful micro-latency, micro-delays that feel intentional"* and the insight that *"Users are beginning to trust interfaces that feel human, not sterile."*
+
+**What I built:**
+- New `ElasticNumber` component using spring physics for organic number animations:
+
+  **Core Technique:**
+  - Spring physics simulation (Hooke's law with damping)
+  - Numbers overshoot their target and bounce back
+  - Creates a more alive, hand-crafted feel vs linear animations
+  - Semi-implicit Euler integration for stable physics
+
+  **Spring Presets:**
+  - `snappy` — Quick with subtle overshoot (counts, totals)
+  - `bouncy` — Visible bounce (percentages, key metrics)
+  - `gentle` — Slow, elegant settle (large numbers)
+  - `stiff` — Fast response, minimal overshoot (quick updates)
+
+  **Component Family:**
+  - `ElasticNumber` — Base component with full customization
+  - `ElasticPercentage` — Pre-configured bouncy spring with % suffix
+  - `ElasticCount` — Pre-configured snappy spring for counts
+  - `ElasticStat` — Combined number + label display
+
+  **Configuration Options:**
+  - `spring`: Preset name or custom `{ tension, friction, mass }` config
+  - `maxDuration`: Safety cap (spring will settle by this time)
+  - `decimals`: Decimal places to display
+  - `prefix`/`suffix`: Number formatting
+  - `locale`: Locale number formatting
+  - `animateOnMount`: Whether to animate from 0 on mount
+  - `onComplete`: Callback when animation settles
+
+  **CSS Features:**
+  - `.elastic-overshoot` class applied during overshoot phase
+  - Subtle brightness boost during overshoot for visual feedback
+  - `.elastic-success` / `.elastic-warning` variants with glow
+  - Full `prefers-reduced-motion` support (snaps to final value)
+
+  **Integration:**
+  - Replaced `RollingNumber` with `ElasticNumber` in stat cards:
+    - Total Reports: snappy spring
+    - Beat Rate: bouncy spring with green glow
+    - Reported: snappy spring
+  - Pending keeps `GlitchPending` for its cyberpunk aesthetic
+
+**Technical Details:**
+- Spring config: `tension` (stiffness), `friction` (damping), `mass` (momentum)
+- Uses requestAnimationFrame for smooth 60fps animation
+- Settles when velocity and displacement both < 0.01
+- Fallback maxDuration prevents infinite animations
+- Clean state management with refs for velocity/position
+
+**Impact:** The stat counters now feel physically real — like they have momentum. When a value updates, it overshoots slightly then settles back, creating that premium "hand-crafted" feel that distinguishes polished products. This aligns with the 2026 trend of interfaces that feel human rather than sterile.
+
+**Reference:**
+- Orizon Design 2026 Trends: https://www.orizon.co/blog/10-ui-ux-trends-that-will-shape-2026
+- Anti-Perfect UI: "Not everything needs to be pristine. The future of UI has personality."
+- Spring physics: Hooke's law F = -kx, damped harmonic oscillator
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-14 — PrintStyles: Professional Print Layout
 
 **Inspiration:** Financial Times, Bloomberg terminal exports, and Google Calendar's print view — providing a clean, professional print experience for users who want to print their earnings calendar for reference.
