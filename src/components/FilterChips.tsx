@@ -47,6 +47,12 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
     filters.findIndex(f => f.key === value)
   );
   const { play: playAudio } = useAudioFeedback();
+  
+  // Elastic stretch effect state
+  const [isStretching, setIsStretching] = useState(false);
+  const [stretchDirection, setStretchDirection] = useState<'left' | 'right' | null>(null);
+  const prevLeftRef = useRef<number>(0);
+  const stretchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Measure and update pill position
   const updatePillPosition = useCallback(() => {
@@ -57,12 +63,42 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
     
     const containerRect = container.getBoundingClientRect();
     const buttonRect = activeButton.getBoundingClientRect();
+    const newLeft = buttonRect.left - containerRect.left;
+    
+    // Determine stretch direction based on movement
+    if (mounted && newLeft !== prevLeftRef.current) {
+      const direction = newLeft > prevLeftRef.current ? 'right' : 'left';
+      setStretchDirection(direction);
+      setIsStretching(true);
+      
+      // Clear any existing timeout
+      if (stretchTimeoutRef.current) {
+        clearTimeout(stretchTimeoutRef.current);
+      }
+      
+      // Remove stretch after animation completes
+      stretchTimeoutRef.current = setTimeout(() => {
+        setIsStretching(false);
+        setStretchDirection(null);
+      }, 350); // Match transition duration
+    }
+    
+    prevLeftRef.current = newLeft;
     
     setPillStyle({
-      left: buttonRect.left - containerRect.left,
+      left: newLeft,
       width: buttonRect.width,
     });
-  }, [value]);
+  }, [value, mounted]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (stretchTimeoutRef.current) {
+        clearTimeout(stretchTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Use layout effect for initial measurement (prevents flash)
   useLayoutEffect(() => {
@@ -150,12 +186,13 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
   return (
     <div className="filter-chips-liquid">
     <div className="filter-chips-container" ref={containerRef}>
-      {/* Sliding pill background */}
+      {/* Sliding pill background with elastic stretch effect */}
       <div 
-        className={`sliding-pill ${getPillColorClass()} ${mounted ? 'mounted' : ''}`}
+        className={`sliding-pill ${getPillColorClass()} ${mounted ? 'mounted' : ''} ${isStretching ? 'stretching' : ''} ${stretchDirection ? `stretch-${stretchDirection}` : ''}`}
         style={{
           transform: `translateX(${pillStyle.left}px)`,
           width: `${pillStyle.width}px`,
+          transformOrigin: stretchDirection === 'right' ? 'left center' : stretchDirection === 'left' ? 'right center' : 'center center',
         }}
         aria-hidden="true"
       />
