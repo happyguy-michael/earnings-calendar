@@ -18117,3 +18117,57 @@ html.light .print-button-full:hover {
   background: rgba(0, 0, 0, 0.08);
   border-color: rgba(0, 0, 0, 0.15);
 }
+
+/* ============================================
+   Elastic Number - Spring Physics Counter
+   ============================================
+   Anti-Perfect UI trend: Organic motion curves with
+   subtle overshoot create a more alive, crafted feel.
+*/
+
+.elastic-number {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  will-change: contents;
+}
+
+/* Subtle color shift during overshoot phase */
+.elastic-overshoot {
+  --overshoot-intensity: 0.12;
+  filter: brightness(calc(1 + var(--overshoot-intensity)));
+}
+
+/* Stat card elastic styling */
+.elastic-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.elastic-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+/* Success/Warning variants for overshoot */
+.elastic-number.elastic-success.elastic-overshoot {
+  text-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+}
+
+.elastic-number.elastic-warning.elastic-overshoot {
+  text-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+
+/* Respect reduced motion - snap to final value */
+@media (prefers-reduced-motion: reduce) {
+  .elastic-number {
+    transition: none;
+  }
+  
+  .elastic-overshoot {
+    filter: none;
+  }
+}

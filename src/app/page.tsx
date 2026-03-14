@@ -102,6 +102,7 @@ import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
 import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/CursorTrail';
 import { PrintStyles } from '@/components/PrintStyles';
 import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
+import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -962,7 +963,7 @@ export default function Home() {
                     <div className="text-3xl font-bold text-white">
                       <NumberJolt value={totalEarnings} intensity={3} duration={350}>
                         <ValueChangeHighlight value={totalEarnings} variant="default">
-                          <RollingNumber value={totalEarnings} staggerDelay={40} />
+                          <ElasticNumber value={totalEarnings} spring="snappy" animateOnMount />
                         </ValueChangeHighlight>
                       </NumberJolt>
                     </div>
@@ -998,7 +999,7 @@ export default function Home() {
                     <div className="text-2xl font-bold text-gradient-green">
                       <NumberJolt value={beatRate} intensity={4} duration={400} directional>
                         <ValueChangeHighlight value={beatRate} variant="success">
-                          <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
+                          <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
                         </ValueChangeHighlight>
                       </NumberJolt>
                     </div>
@@ -1033,7 +1034,7 @@ export default function Home() {
                     <div className="text-3xl font-bold text-white">
                       <NumberJolt value={reportedCount} intensity={3} duration={350}>
                         <ValueChangeHighlight value={reportedCount} variant="default">
-                          <RollingNumber value={reportedCount} staggerDelay={45} />
+                          <ElasticNumber value={reportedCount} spring="snappy" animateOnMount />
                         </ValueChangeHighlight>
                       </NumberJolt>
                     </div>
