@@ -320,6 +320,15 @@ html.light .card::before {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradientFlow 4s ease-in-out infinite;
+  /* Subtle luminous glow behind gradient text */
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.3))
+          drop-shadow(0 0 16px rgba(99, 102, 241, 0.15));
+  transition: filter 0.3s ease;
+}
+
+.text-gradient:hover {
+  filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.45))
+          drop-shadow(0 0 24px rgba(99, 102, 241, 0.25));
 }
 
 /* Static variant for elements that shouldn't animate */
@@ -345,7 +354,23 @@ html.light .card::before {
     animation: none;
     background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
     background-size: 100% 100%;
+    filter: none;
+    transition: none;
   }
+  .text-gradient:hover {
+    filter: none;
+  }
+}
+
+/* Light mode - softer glow that works on light backgrounds */
+html.light .text-gradient {
+  filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.2))
+          drop-shadow(0 0 12px rgba(139, 92, 246, 0.1));
+}
+
+html.light .text-gradient:hover {
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3))
+          drop-shadow(0 0 20px rgba(139, 92, 246, 0.15));
 }
 
 .text-gradient-green {
