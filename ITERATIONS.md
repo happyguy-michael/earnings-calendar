@@ -1,3 +1,62 @@
+## 2026-03-14 — PrintStyles: Professional Print Layout
+
+**Inspiration:** Financial Times, Bloomberg terminal exports, and Google Calendar's print view — providing a clean, professional print experience for users who want to print their earnings calendar for reference.
+
+**What I built:**
+- New `PrintStyles` component that provides comprehensive print stylesheet:
+
+  **Core Features:**
+  - Clean, printer-friendly layout activated on Cmd+P / Ctrl+P
+  - Hides all decorative elements (particles, animations, tooltips, glows)
+  - Converts dark mode to light colors optimized for printing
+  - Shows stats and earnings in clear, readable format
+  - Proper page breaks between weeks
+  - A4 paper size with appropriate margins
+
+  **Keyboard Shortcut:**
+  - `Cmd+Shift+P` / `Ctrl+Shift+P` for quick print dialog
+
+  **What gets hidden:**
+  - Floating particles, grain overlay, cursor trail
+  - Scroll progress, minimap, back-to-top
+  - All toggle buttons (theme, motion, haptic, audio)
+  - Command palette, keyboard shortcuts overlay
+  - Ticker ribbon, tooltips, popovers
+  - Countdown timers, live indicators
+  - All hover effects and animations
+
+  **What remains (optimized):**
+  - Page title with date range
+  - Stats grid (simplified, no icons)
+  - Week cards with day headers
+  - Earnings cards with ticker, company, result badge
+  - Beat/miss badges with proper print colors
+
+  **Technical Details:**
+  - Uses `@media print` with `!important` overrides
+  - `-webkit-print-color-adjust: exact` for consistent colors
+  - `page-break-inside: avoid` for earnings cards
+  - CSS variable overrides for light mode printing
+  - Optional `PrintButton` component for UI integration
+
+  **Accessibility:**
+  - Respects user's printer settings
+  - Removes all animations (no motion issues)
+  - High contrast text for readability
+  - Proper semantic structure maintained
+
+**Impact:** Users can now print their earnings calendar for meetings, wall displays, or offline reference. The print layout is professional enough for business use — a feature often overlooked in web apps but genuinely useful for finance professionals.
+
+**Reference:**
+- Financial Times print layouts
+- Bloomberg terminal print exports
+- Google Calendar print view
+- Apple HIG print guidelines
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-14 — DayColumnHighlight: Hover-to-Spotlight Day Columns
 
 **Inspiration:** Google Calendar's column hover highlighting, Notion's database column focus, and premium dashboard UIs (Linear, Vercel) — using contextual highlighting to help users parse information quickly.
