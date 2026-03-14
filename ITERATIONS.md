@@ -1387,3 +1387,48 @@ This adds critical context without requiring click-through to detail page.
   - Full reduced-motion support
 
 **Impact:** More fluid, app-like feel when loading and navigating. Cards cascade in with subtle blur-to-focus effect.
+
+
+---
+
+## 2026-03-14 — NumberJolt: Slot Machine Jolt on Stat Changes
+
+**Inspiration:** Ripplix UI Animation Guide 2026 (ripplix.com/blog/ui-animation-practical-guide-for-2026) - "Every action should respond within 100ms" with immediate feedback. Also 2026 "Kinetic Typography" trend where numbers have physical presence and react to changes.
+
+**What I built:**
+- New `NumberJolt` component that creates a horizontal shake + scale effect when wrapped values change
+- Mimics the satisfying feel of a slot machine settling on a number
+- Applied to all 4 stat cards: Total Reports, Beat Rate, Reported, Pending
+
+**Technical details:**
+- 3-oscillation shake with exponential decay
+- Direction-aware: shakes left for decreases, right for increases
+- Subtle scale pop (1.05x) at animation peak
+- GPU-accelerated via CSS transforms
+- 350-400ms duration with spring easing (cubic-bezier)
+- Respects `prefers-reduced-motion`
+- Optional haptic feedback via Vibration API
+- Memoized to prevent unnecessary re-renders
+
+**Component features:**
+- `intensity`: Pixel distance of shake (default 4px)
+- `oscillations`: Number of back-and-forth movements (default 3)
+- `peakScale`: Scale factor at animation peak (default 1.05)
+- `directional`: Whether to shake in direction of change
+- `haptic`: Enable vibration on jolt
+- Also exports `useNumberJolt` hook for imperative triggers
+
+**CSS output (generated per-animation):**
+```css
+@keyframes numberJolt-right {
+  0% { transform: translateX(0px) scale(1.05); }
+  33% { transform: translateX(3.5px) scale(1.02); }
+  66% { transform: translateX(-1.2px) scale(1.01); }
+  100% { transform: translateX(0) scale(1); }
+}
+```
+
+**Impact:** When switching filters (All → Beat → Miss → Pending), the stat numbers now physically react with a satisfying jolt animation. This adds energy and confirmation to user actions, making the interface feel more responsive and game-like.
+
+---
+
