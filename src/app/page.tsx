@@ -100,6 +100,7 @@ import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
 import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
 import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/CursorTrail';
+import { PrintStyles } from '@/components/PrintStyles';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -727,6 +728,9 @@ export default function Home() {
       
       {/* Dynamic favicon badge with pending count */}
       <DynamicFavicon count={pendingToday} animate={true} />
+      
+      {/* Print styles - clean layout for printing (⌘⇧P) */}
+      <PrintStyles />
       
       {/* Animated dot grid background with cursor glow */}
       <AnimatedGridBackground 
