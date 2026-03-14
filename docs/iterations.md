@@ -1,4 +1,81 @@
 
+## 2026-03-14 — ShineHighlight & SmoothHoverScale Components
+
+**Inspiration:** Premium SaaS micro-interactions from Linear, Stripe, and Apple HIG. Small details that make interfaces feel alive and responsive.
+
+### ShineHighlight
+Sweeping shine effect that draws attention to value changes.
+
+**Features:**
+- Diagonal shine sweep animation triggered by value changes
+- Configurable angle, duration, color, and intensity
+- Loop mode for persistent attention-grabbing
+- Respects `prefers-reduced-motion`
+
+**Variants:**
+- `ShineHighlight` - base component, trigger on value change
+- `ShineText` - text with periodic looping shine
+- `ShineNumber` - number that shines when value changes
+- `ShineBadge` - badge with attention-grabbing shine loop
+
+**Usage:**
+```tsx
+// Trigger shine when count changes
+<ShineHighlight trigger={count}>
+  <span>{count}</span>
+</ShineHighlight>
+
+// Looping badge
+<ShineBadge variant="green">
+  <span>NEW</span>
+</ShineBadge>
+```
+
+### SmoothHoverScale
+Physics-based hover scaling with spring animation.
+
+**Features:**
+- Spring animation with configurable stiffness/damping
+- Scale up on hover with subtle overshoot
+- Scale down on press for satisfying click feedback
+- Optional shadow lift on hover
+- Presets for different feels
+
+**Presets:**
+- `subtle` - professional (1.015x scale, high damping)
+- `standard` - balanced (1.02x scale)
+- `bouncy` - playful (1.04x scale, low damping)
+- `snappy` - responsive (1.025x scale, high stiffness)
+- `minimal` - elegant (1.01x scale)
+
+**Variants:**
+- `SmoothHoverScale` - base wrapper component
+- `SmoothHoverScaleCard` - pre-styled card with rounded corners
+- `SmoothHoverScaleButton` - button with press feedback
+
+**Usage:**
+```tsx
+<SmoothHoverScale scale={1.03} liftShadow>
+  <Card>Content</Card>
+</SmoothHoverScale>
+
+<SmoothHoverScaleCard preset="bouncy">
+  <CardContent />
+</SmoothHoverScaleCard>
+```
+
+**Technical notes:**
+- Spring timing approximated via CSS cubic-bezier
+- Will-change optimized for hover state only
+- Full accessibility: keyboard focusable, ARIA roles
+- Both components respect `prefers-reduced-motion`
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Commit:** d9d9764
+
+---
+
 ## 2026-03-13 — PushableButton Component (3D Tactile Press Effect)
 
 **Inspiration:** Josh Comeau's "Building a Magical 3D Button with HTML and CSS" tutorial. The key insight: buttons should feel physical and satisfying to press, not just flat pixels that happen to be clickable.
