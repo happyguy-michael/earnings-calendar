@@ -1,5 +1,52 @@
 # Iteration Log
 
+## 2026-03-14 — CursorTrail (Premium Cursor Particle Effect)
+**Component:** `CursorTrail.tsx`
+
+**What it does:**
+- Creates a smooth trail of fading particles following cursor movement
+- Canvas-based rendering for hardware-accelerated performance
+- Particles decay with configurable opacity falloff and count
+- Subtle glow effect around each particle for premium feel
+- Toggle button in header (off by default to respect users)
+
+**Why it matters:**
+- Adds tactile "aliveness" to the interface
+- Premium pattern seen on Stripe, Linear, and modern portfolios
+- Creates subtle visual feedback for cursor position
+- Non-intrusive enhancement that respects user preferences
+- Makes the UI feel more responsive and fluid
+
+**Technical highlights:**
+- Canvas-based rendering (not DOM) for 60fps performance
+- RequestAnimationFrame loop with proper cleanup
+- Velocity-aware: trail intensity increases with faster movement
+- Minimum distance threshold prevents particle clustering
+- Only activates on pointer devices (`pointer: fine` media query)
+- Respects `prefers-reduced-motion` preference
+- State persisted to localStorage for user preference
+- Configurable: count, size, color, glow, decay speed
+
+**Configuration:**
+- `count={15}` - Number of trail points
+- `dotSize={3}` - Size in pixels
+- `color="rgba(99, 102, 241, 0.7)"` - Brand indigo
+- `glowColor="rgba(139, 92, 246, 0.35)"` - Purple glow
+- `minDistance={10}` - Minimum cursor travel before new point
+- `opacityFalloff={2.8}` - How quickly particles fade
+
+**Inspiration:**
+- Stripe.com subtle cursor interactions
+- Linear.app premium interaction feel
+- Modern portfolio sites (awwwards)
+- Gaming UI particle effects
+
+**Files changed:**
+- `src/components/CursorTrail.tsx` (new component)
+- `src/app/page.tsx` (integration + toggle)
+
+---
+
 ## 2026-03-13 — BlurReveal (Scroll-Triggered Text Entrance)
 **Component:** `BlurReveal.tsx`
 
