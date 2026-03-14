@@ -78,6 +78,7 @@ import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
+import { NumberJolt } from '@/components/NumberJolt';
 import { GlitchPending } from '@/components/GlitchText';
 import { MarketMoodRing } from '@/components/MarketMoodRing';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
@@ -933,9 +934,11 @@ export default function Home() {
                   <AnimatedStatIcon type="total" size={28} />
                   <div>
                     <div className="text-3xl font-bold text-white">
-                      <ValueChangeHighlight value={totalEarnings} variant="default">
-                        <RollingNumber value={totalEarnings} staggerDelay={40} />
-                      </ValueChangeHighlight>
+                      <NumberJolt value={totalEarnings} intensity={3} duration={350}>
+                        <ValueChangeHighlight value={totalEarnings} variant="default">
+                          <RollingNumber value={totalEarnings} staggerDelay={40} />
+                        </ValueChangeHighlight>
+                      </NumberJolt>
                     </div>
                     <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
                   </div>
@@ -967,9 +970,11 @@ export default function Home() {
                   <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
                   <div>
                     <div className="text-2xl font-bold text-gradient-green">
-                      <ValueChangeHighlight value={beatRate} variant="success">
-                        <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
-                      </ValueChangeHighlight>
+                      <NumberJolt value={beatRate} intensity={4} duration={400} directional>
+                        <ValueChangeHighlight value={beatRate} variant="success">
+                          <RollingNumber value={beatRate} suffix="%" staggerDelay={50} />
+                        </ValueChangeHighlight>
+                      </NumberJolt>
                     </div>
                     <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
                   </div>
@@ -1000,9 +1005,11 @@ export default function Home() {
                   <AnimatedStatIcon type="reported" size={28} />
                   <div>
                     <div className="text-3xl font-bold text-white">
-                      <ValueChangeHighlight value={reportedCount} variant="default">
-                        <RollingNumber value={reportedCount} staggerDelay={45} />
-                      </ValueChangeHighlight>
+                      <NumberJolt value={reportedCount} intensity={3} duration={350}>
+                        <ValueChangeHighlight value={reportedCount} variant="default">
+                          <RollingNumber value={reportedCount} staggerDelay={45} />
+                        </ValueChangeHighlight>
+                      </NumberJolt>
                     </div>
                     <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
                   </div>
@@ -1034,9 +1041,11 @@ export default function Home() {
                   <AnimatedStatIcon type="pending" size={28} />
                   <div>
                     <div className="text-3xl font-bold text-amber-400">
-                      <ValueChangeHighlight value={pendingCount} variant="warning">
-                        <GlitchPending value={pendingCount} />
-                      </ValueChangeHighlight>
+                      <NumberJolt value={pendingCount} intensity={3} duration={350}>
+                        <ValueChangeHighlight value={pendingCount} variant="warning">
+                          <GlitchPending value={pendingCount} />
+                        </ValueChangeHighlight>
+                      </NumberJolt>
                     </div>
                     <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
                       Pending
