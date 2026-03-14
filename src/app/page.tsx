@@ -101,6 +101,7 @@ import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
 import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/CursorTrail';
 import { PrintStyles } from '@/components/PrintStyles';
+import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -742,6 +743,13 @@ export default function Home() {
         glowIntensity={0.4}
         pulse={true}
         pulseSpeed={5000}
+      />
+      
+      {/* Ambient time-of-day lighting - subtle organic color shift */}
+      <AmbientTimeGlow 
+        intensity={0.8}
+        breathing={true}
+        breathingDuration={10000}
       />
       
       {/* Floating background particles */}
