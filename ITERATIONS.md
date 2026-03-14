@@ -1491,3 +1491,59 @@ This adds critical context without requiring click-through to detail page.
 
 ---
 
+
+---
+
+## 2026-03-14 — WaveformBars: Audio Visualizer Micro-Interaction
+
+**Inspiration:** Spotify's "Now Playing" indicator, Apple Music's waveform visualizer, trading terminals' live data indicators — creating an "alive" feeling for active UI elements.
+
+**What I built:**
+- New `WaveformBars` component with pulsating vertical bars that mimic an audio equalizer:
+
+  **Core Features:**
+  - Variable bar count (2-6 bars)
+  - Four animation variants:
+    - `random`: Each bar pulses independently with varied timing (organic feel)
+    - `sync`: All bars pulse together (unified feel)
+    - `wave`: Bars pulse in sequence left-to-right (flowing feel)
+    - `bounce`: Bars pulse from edges to center (symmetric feel)
+  - Size presets: xs, sm, md, lg
+  - Color schemes: default, success, warning, danger, muted, gradient
+  - Customizable speed multiplier
+  - Pause/resume animation control
+
+  **Pre-built Variants:**
+  - `WaveformBarsInline`: For inline use within text (vertical alignment)
+  - `LiveWaveform`: Pre-configured "Live" badge with green waveform
+  - `PendingWaveform`: Pre-configured "Pending" badge with amber waveform
+
+  **Technical Details:**
+  - Pure CSS animations (no JS animation loop)
+  - GPU-accelerated transforms
+  - Pseudo-random but consistent delays/durations (seeded by index)
+  - SVG gradient support for premium color effects
+  - SSR-safe with hydration handling
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (static bars)
+  - ARIA role="img" with accessible label
+  - Semantic structure maintained
+
+**Use Cases:**
+- "Live" market session indicators (alongside existing LiveBadge)
+- Pending earnings about to be announced
+- Real-time data sync indicators
+- Active filter/search states
+- Loading/processing states with more visual interest than spinners
+
+**Impact:** Adds a premium "alive" feeling to the UI. The waveform pattern is instantly recognizable from music apps and signals "something is happening" more organically than static dots or spinners. Can be used to enhance the existing LiveBadge component or as a standalone indicator.
+
+**Reference:**
+- Spotify Now Playing indicator
+- Apple Music waveform visualizer
+- Sound wave patterns in audio editing software
+- 2024/2025 trend: Organic, kinetic UI indicators
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
