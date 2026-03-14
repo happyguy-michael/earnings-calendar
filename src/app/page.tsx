@@ -99,6 +99,7 @@ import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
 import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
+import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/CursorTrail';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -406,6 +407,7 @@ export default function Home() {
   const { showUndoToast } = useUndoToast();
   const { trigger: haptic } = useHaptic();
   const { showKeyEcho } = useKeyPressEcho();
+  const { enabled: cursorTrailEnabled, toggle: toggleCursorTrail } = useCursorTrail(false);
   const weekNavPreview = useWeekNavPreview(currentWeekStart);
   
   // Simulate data refresh (would be replaced with real API call)
@@ -750,6 +752,17 @@ export default function Home() {
       {/* Hidden Easter egg - Konami Code (↑↑↓↓←→←→BA) */}
       <KonamiEasterEgg />
       
+      {/* Cursor trail effect - premium cursor interaction */}
+      <CursorTrail 
+        enabled={cursorTrailEnabled}
+        count={15}
+        dotSize={3}
+        color="rgba(99, 102, 241, 0.7)"
+        glowColor="rgba(139, 92, 246, 0.35)"
+        minDistance={10}
+        opacityFalloff={2.8}
+      />
+      
       {/* Header - shrinks on scroll with enhanced frosted glass */}
       <FrostedHeader
         scrolled={isScrolled}
@@ -818,6 +831,7 @@ export default function Home() {
               <MotionToggle size="sm" />
               <HapticToggle size="sm" />
               <AudioToggle size="sm" />
+              <CursorTrailToggle enabled={cursorTrailEnabled} onToggle={toggleCursorTrail} size="sm" />
               <ThemeToggle />
               <TodayButton 
                 onClick={goToToday}
