@@ -98,6 +98,7 @@ import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPale
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
 import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
+import { SpinDigit, SpinInteger } from '@/components/SpinDigit';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
 import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/CursorTrail';
 import { PrintStyles } from '@/components/PrintStyles';
@@ -1040,7 +1041,7 @@ export default function Home() {
                       <div className="text-3xl font-bold text-white">
                         <NumberJolt value={reportedCount} intensity={3} duration={350}>
                           <ValueChangeHighlight value={reportedCount} variant="default">
-                            <ElasticNumber value={reportedCount} spring="snappy" animateOnMount />
+                            <SpinInteger value={reportedCount} duration={700} stagger={60} animateOnMount />
                           </ValueChangeHighlight>
                         </NumberJolt>
                       </div>
