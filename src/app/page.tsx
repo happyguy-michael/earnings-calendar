@@ -10,6 +10,7 @@ import { RollingNumber } from '@/components/NumberTicker';
 import { SkeletonCalendar } from '@/components/Skeleton';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterChips, FilterType } from '@/components/FilterChips';
+import { FilterPulse } from '@/components/FilterPulse';
 import { EarningsTooltipContent } from '@/components/Tooltip';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
@@ -938,11 +939,13 @@ export default function Home() {
           
           {/* Filter chips - collapse on scroll */}
           <div className="sticky-header-filters">
-            <FilterChips 
-              value={statusFilter}
-              onChange={handleFilterChange}
-              counts={filterCounts}
-            />
+            <FilterPulse activeFilter={statusFilter} duration={650} maxScale={3.5}>
+              <FilterChips 
+                value={statusFilter}
+                onChange={handleFilterChange}
+                counts={filterCounts}
+              />
+            </FilterPulse>
           </div>
         </div>
       </FrostedHeader>
