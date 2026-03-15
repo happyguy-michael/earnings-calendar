@@ -9,6 +9,7 @@ import { KeyPressEchoProvider } from './KeyPressEcho';
 import { CursorAmbientLight } from './CursorAmbientLight';
 import { SmoothThemeTransition } from './SmoothThemeTransition';
 import { FocusModeProvider, FocusModeIndicator } from './FocusMode';
+import { ViewportScrollSpotlight } from './ViewportScrollSpotlight';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -20,6 +21,7 @@ export function ClientProviders({ children }: { children: ReactNode }) {
               <UndoToastProvider>
                 <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
                 <SmoothThemeTransition />
+                <ViewportScrollSpotlight />
                 <FocusModeIndicator />
                 {children}
               </UndoToastProvider>

@@ -1,3 +1,68 @@
+## 2026-03-16 — ViewportScrollSpotlight: Automatic Reading Focus via Scroll
+
+**Inspiration:** FreeFrontend's 2026 collection of CSS scroll-driven animations, particularly the "Scroll-Driven Masonry Reveal" pattern that calculates individual progress for each list item as it enters the viewport. Also inspired by the "attention-aware interfaces" trend — UIs that naturally guide focus based on context.
+
+**What I built:**
+- New `ViewportScrollSpotlight` component — pure CSS scroll-driven reading focus:
+
+  **Core Technique:**
+  - Uses `animation-timeline: view()` to track each element's viewport position
+  - Elements automatically brighten at viewport center, dim at edges
+  - Creates a natural "spotlight" effect that follows the user's scroll
+  - No JavaScript scroll listeners — runs entirely off the main thread
+
+  **The Animation Journey:**
+  - **Entry (0%):** Element enters from below — dimmed (opacity 0.65), slight blur, scaled down
+  - **Rising (25%):** Approaching center — brightening, sharpening
+  - **Center (50%):** Peak spotlight — full opacity, brightness boost (1.04), slight scale-up (1.008)
+  - **Falling (75%):** Moving toward top — beginning to fade
+  - **Exit (100%):** Leaving above — dimmed again for seamless loop
+
+  **Visual Enhancements:**
+  - Subtle blur effect (1px → 0 → 0.8px) creates depth
+  - Scale micro-animation (0.985 → 1.008 → 0.99) adds physical feel
+  - Brightness modulation (0.92 → 1.04 → 0.94) for luminance focus
+  - Indigo glow accent appears on centered items
+  - Light mode gets warmer accent tones
+
+  **Element-Specific Animations:**
+  - `.earnings-row` / `.velocity-blur-card` — Full spotlight with glow accent
+  - `.card.overflow-hidden` / `.week-card` — Larger spotlight range for sections
+  - `.tilt-stat-card` / `.stat-card` — Subtle effect to keep numbers readable
+  - Monster beats / disaster misses — Exempt (have their own visual treatment)
+
+  **Smart Integration:**
+  - Automatically disabled when FocusMode is active (avoids conflict)
+  - Respects `prefers-reduced-motion` (disabled completely)
+  - Progressive enhancement (graceful fallback for unsupported browsers)
+
+  **Accessibility:**
+  - No impact on content accessibility
+  - Animation is purely decorative
+  - Full reduced-motion support
+  - Content remains fully readable at all scroll positions
+
+  **Performance:**
+  - Zero JavaScript execution during scroll
+  - GPU-accelerated via transform, opacity, filter
+  - `will-change` hints for optimal rendering
+  - No layout thrashing — only composite properties
+
+**Impact:** Users now experience a subtle, automatic "reading focus" as they scroll. Whatever is currently in the viewport center naturally stands out, while elements above and below recede. This creates an effortless visual hierarchy that helps users scan earnings cards quickly. Unlike FocusMode (which requires toggling), this effect is always on but so subtle it never distracts — just quietly guides attention.
+
+**Browser Support:**
+- Chrome 115+ / Edge 115+ (full support)
+- Safari / Firefox (graceful fallback — no animation)
+
+**Reference:**
+- https://freefrontend.com/css-scroll-driven/
+- https://scroll-driven-animations.style/
+- https://developer.chrome.com/articles/scroll-driven-animations
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — StickyStateStyle: CSS Scroll-State Container Queries
 
 **Inspiration:** The cutting-edge CSS scroll-state container queries feature (Chrome 129+, shipped January 2025) that allows pure CSS detection of sticky element state. Referenced from [nerdy.dev's "4 CSS Features Every Front-End Developer Should Know In 2026"](https://nerdy.dev/4-css-features-every-front-end-developer-should-know-in-2026) and MDN documentation. This is the future of scroll-responsive UI — no JavaScript scroll listeners needed.
