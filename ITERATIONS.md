@@ -1,3 +1,61 @@
+## 2026-03-16 — ChromeNumber: Y3K Liquid Metal Effect for Exceptional Surprises
+
+**Inspiration:** 2026 Y3K aesthetic trends (WhiteUI, AND Academy), holographic trading cards (Pokémon, sports cards), premium financial terminal displays, and the "Liquid Metal / Mirror" color trend. The Y3K aesthetic embraces futuristic metallic surfaces that reflect surrounding colors.
+
+**What I built:**
+- New `ChromeNumber` component family that creates a liquid metal/chrome effect for numbers:
+
+  **Core Technique:**
+  - Multi-stop linear gradient (7-9 color stops) creating realistic metallic sheen
+  - CSS background-clip: text for gradient application to text content
+  - Animated shine sweep using skewed pseudo-element with 90° gradient
+  - Spring-physics timing for natural deceleration
+  - Theme-aware gradients (different stops for dark/light modes)
+
+  **Metal Variants:**
+  - `chrome`: Silver/platinum metallic (default)
+  - `gold`: Warm gold/amber metallic for exceptional beats
+  - `rose-gold`: Pink-tinted metallic for disaster misses
+  - `copper`: Orange-tinted metallic
+
+  **Configuration Options:**
+  - `variant`: Metal type (chrome, gold, rose-gold, copper)
+  - `trigger`: Animation trigger (hover, auto, both, none)
+  - `interval`: Time between auto shines (default 4000ms)
+  - `duration`: Shine animation duration (default 800ms)
+  - `intensity`: Shine opacity multiplier (0-1)
+  - `emboss`: Enable 3D text shadow for depth (default true)
+
+  **Component Family:**
+  - `ChromeNumber` — Base wrapper component
+  - `ChromePercentage` — Formatted percentage with auto-variant
+  - `ChromeEPS` — EPS value with currency symbol
+  - `ChromeSurprise` — Auto-selects variant based on surprise magnitude
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (no animation)
+  - Text remains fully readable without gradient
+  - Animation is decorative enhancement only
+
+  **Integration:**
+  - Monster beats (≥15%) → Gold chrome wrapper around SurpriseScramble
+  - Disaster misses (≤-15%) → Rose-gold chrome wrapper
+  - Auto-trigger every 4s + hover activation
+  - Stacks with existing BadgeShimmer and BadgeSparkle effects
+
+**Impact:** Exceptional earnings surprises now have a premium "holographic trading card" quality. The gold metallic sheen on monster beats creates a "rare card pull" feeling, while the rose-gold on disaster misses maintains the metallic premium while signaling danger. The animated shine sweep draws attention to these exceptional values without being distracting.
+
+**Reference:**
+- 2026 Y3K Aesthetic / Liquid Metal trend (WhiteUI.Store, AND Academy)
+- Holographic trading cards (Pokémon TCG, sports cards)
+- Premium financial terminal displays
+- ibelick.com metallic CSS techniques
+- "Mashup Culture" — mixing retro metallic with modern interfaces
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-15 — AnimatedBarChart: Staggered Bar Entrance Animations
 
 **Inspiration:** Apple Health app's chart animations, Linear.app's data visualization reveals, the 2026 "Data Storytelling" trend where charts animate to reveal insights rather than appearing statically. Recharts doesn't natively support entrance animations — this wrapper adds them.
