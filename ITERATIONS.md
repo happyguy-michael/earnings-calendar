@@ -1,3 +1,57 @@
+## 2026-03-15 — AnimatedBarChart: Staggered Bar Entrance Animations
+
+**Inspiration:** Apple Health app's chart animations, Linear.app's data visualization reveals, the 2026 "Data Storytelling" trend where charts animate to reveal insights rather than appearing statically. Recharts doesn't natively support entrance animations — this wrapper adds them.
+
+**What I built:**
+- New `AnimatedBarChart` wrapper component that adds smooth entrance animations to Recharts bar charts:
+
+  **Core Technique:**
+  - Intersection Observer triggers animation when chart enters viewport
+  - Bars scale from 0 to 1 on Y-axis with staggered timing
+  - Spring physics easing (cubic-bezier overshoot) for premium bounce feel
+  - Lines draw in with stroke-dashoffset animation
+  - Labels fade in after bars complete their animation
+  - GPU-accelerated via CSS transforms
+
+  **Configuration Options:**
+  - `staggerDelay`: Time between each bar's animation start (default: 60ms)
+  - `duration`: Animation duration per bar (default: 450ms)
+  - `initialDelay`: Delay before first bar starts (default: 100ms)
+  - `direction`: Animation direction — 'up' or 'down'
+  - `threshold`: Intersection Observer threshold (default: 0.2)
+  - `once`: Animate only first time, or every time entering viewport
+
+  **Selectors Targeted:**
+  - `.recharts-bar-rectangle` — standard bar rectangles
+  - `.recharts-bar-rectangles path` — Cell-based colored bars
+  - `.recharts-label-list` — data labels above bars
+  - `.recharts-line-curve` — line chart curves (draw-in effect)
+  - `.recharts-reference-line` — reference lines fade-in
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (instant visibility, no animation)
+  - Chart remains fully functional and readable
+  - Animation is decorative enhancement only
+
+  **Integration:**
+  - Wrapped `EPSChart` and `EPSBarChart` on detail pages
+  - EPSChart: 80ms stagger, 500ms duration
+  - EPSBarChart: 70ms stagger, 450ms duration
+  - Uses project's `--spring-bouncy` CSS variable when available
+
+**Impact:** EPS charts on company detail pages now have a premium, polished feel. Instead of data appearing instantly (which can feel abrupt), bars grow up from zero in a cascading wave, drawing the eye through the data. Lines draw themselves in, and labels fade in at the end. This creates a sense of "data materializing" that feels more intentional and premium.
+
+**Reference:**
+- Apple Health chart animations
+- Linear.app data visualization reveals
+- 2026 Trend: "Data Storytelling" (Muzli, Ripplix)
+- CSS stroke-dasharray/dashoffset draw technique
+- Spring physics timing functions
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-15 — FilterPulse: Radial Pulse Wave on Filter Change
 
 **Inspiration:** Apple's "pop" feedback when liking content, iOS Control Center toggle feedback, Material Design's ripple extended as a page-wide confirmation, and the 2026 trend of "Kinetic Confirmations" — animations that confirm user actions without being intrusive.
