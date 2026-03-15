@@ -9,6 +9,7 @@ import { AmbientBackground } from "@/components/AmbientBackground";
 import { ClientProviders } from "@/components/ClientProviders";
 import { AnimatedFocusRing, SkipLink } from "@/components/AnimatedFocusRing";
 import { ScrollDrivenAnimations } from "@/components/ScrollDrivenAnimations";
+import { StickyStateStyle } from "@/components/StickyStateStyle";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -42,6 +43,8 @@ export default function RootLayout({
         <AnimatedFocusRing />
         {/* Scroll-driven animations for modern scroll effects */}
         <ScrollDrivenAnimations />
+        {/* CSS scroll-state queries for sticky element detection */}
+        <StickyStateStyle />
         {/* Skip to main content - accessibility */}
         <SkipLink targetId="main-content" />
         {/* Time-aware ambient background gradients */}

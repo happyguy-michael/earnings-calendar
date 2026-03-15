@@ -232,13 +232,27 @@ export function EnhancedFrostedGlass({
 
 /**
  * Preset for sticky headers with sensible defaults
+ * 
+ * Enhanced with CSS scroll-state container queries (2025/2026 feature)
+ * to show visual feedback when the header becomes stuck.
+ * 
+ * Features:
+ * - Gradient line appears at bottom when stuck
+ * - Subtle shadow appears when stuck
+ * - Progressive enhancement (works without support)
+ * - No JavaScript scroll listeners needed
  */
 export function FrostedHeader({
   children,
   className = '',
   scrolled = false,
+  showStuckIndicator = true,
   ...props
-}: EnhancedFrostedGlassProps & { scrolled?: boolean }) {
+}: EnhancedFrostedGlassProps & { 
+  scrolled?: boolean;
+  /** Show visual indicator when sticky header is stuck (default: true) */
+  showStuckIndicator?: boolean;
+}) {
   return (
     <EnhancedFrostedGlass
       blurRadius={scrolled ? 24 : 20}
@@ -247,9 +261,16 @@ export function FrostedHeader({
       extendDirection="bottom"
       brightness={scrolled ? 1.08 : 1.05}
       saturation={scrolled ? 1.2 : 1.15}
-      className={`frosted-header ${scrolled ? 'scrolled' : ''} ${className}`}
+      className={`frosted-header sticky-container ${scrolled ? 'scrolled' : ''} ${className}`}
       {...props}
     >
+      {/* Stuck state indicators - CSS scroll-state queries will show these */}
+      {showStuckIndicator && (
+        <>
+          <div className="sticky-shadow" aria-hidden="true" />
+          <div className="sticky-stuck-line" aria-hidden="true" />
+        </>
+      )}
       {children}
     </EnhancedFrostedGlass>
   );
