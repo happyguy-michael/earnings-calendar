@@ -1,3 +1,56 @@
+## 2026-03-15 — ScrollPerspective: Scroll-Driven 3D Depth Effect
+
+**Inspiration:** Material Design 3 Motion principles, Linear.app's subtle depth cues, Stripe's 3D dashboard effects, and the 2026 "Living Interfaces" trend — where pages respond organically to user actions like scroll, creating a sense of physical depth.
+
+**What I built:**
+- New `ScrollPerspective` component that applies subtle 3D perspective rotation based on scroll position:
+
+  **Core Technique:**
+  - As user scrolls down, content tilts forward slightly (rotateX)
+  - Creates sensation of "looking down into" the data
+  - Sin-curve easing for natural acceleration at extremes
+  - Spring-physics smoothing (0.08 factor) for butter-smooth motion
+
+  **Configuration Options:**
+  - `maxAngle`: Maximum rotation in degrees (default: 2.5, used 1.8)
+  - `scrollDistance`: Scroll pixels to reach max (default: 500px)
+  - `perspective`: CSS perspective depth (default: 1200px)
+  - `smoothing`: Interpolation factor 0-1 (default: 0.1)
+
+  **Component Family:**
+  - `ScrollPerspective` — Main wrapper for content sections
+  - `ScrollPerspectiveCard` — Individual cards with staggered depth
+  - `useScrollPerspective` — Hook for custom scroll-driven effects
+
+  **Technical Details:**
+  - GPU-accelerated via CSS transforms (perspective + rotateX)
+  - requestAnimationFrame loop with delta-based smoothing
+  - transformOrigin: center top for natural tilting
+  - transform-style: preserve-3d for depth hierarchy
+  - will-change hint for optimization
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (no transforms applied)
+  - Content remains fully accessible and readable
+  - No impact on scrolling behavior
+
+  **Integration:**
+  - Wrapped main content area with `ScrollPerspective`
+  - Settings: maxAngle=1.8°, scrollDistance=600px, perspective=1400px
+  - Subtle enough to be premium, not distracting
+
+**Impact:** The page now has a subtle sense of physical depth as users scroll. Cards appear to "recede" slightly, creating that premium "looking down at data" feel common in high-end financial dashboards. The effect is imperceptible on first glance but contributes to the overall premium sensation.
+
+**Reference:**
+- Material Design 3 Motion: Depth and elevation principles
+- Linear.app: Subtle perspective shifts on scroll
+- 2026 UI Trend: "Living Interfaces" — organic response to user actions
+- Stripe dashboard 3D card effects
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-15 — BadgeShimmer: Holographic Light Streak Effect
 
 **Inspiration:** Holographic trading cards (Pokémon, sports cards), credit card security features, Apple's Dynamic Island highlights, and premium membership badges — creating that "rare card" feeling when you pull a beat.
