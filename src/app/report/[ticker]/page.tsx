@@ -21,6 +21,10 @@ import { AnimatedBadgeIcon } from '@/components/AnimatedResultIcon';
 import { CopyTicker } from '@/components/CopyTicker';
 import { BrokerCTA, BrokerCTAGroup } from '@/components/BrokerCTA';
 import { AlsoReporting } from '@/components/AlsoReporting';
+import { GlassReflection } from '@/components/GlassReflection';
+import { CursorGlowCard } from '@/components/CursorGlowBorder';
+import { BreathingCard } from '@/components/BreathingCard';
+import { ParallaxFloat } from '@/components/ParallaxFloat';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -213,39 +217,86 @@ export default function ReportPage() {
             {/* Spacer */}
             <div className="flex-1" />
 
-            {/* Price Card */}
-            <div className="glass-card p-5 min-w-[200px]">
-              <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Stock Price</div>
-              <div className="text-3xl font-bold text-white">${mockPrice}</div>
-              <div className={`text-sm font-medium ${parseFloat(mockChange) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                {parseFloat(mockChange) >= 0 ? '+' : ''}{mockChange} ({parseFloat(mockChange) >= 0 ? '+' : ''}{(parseFloat(mockChange) / parseFloat(mockPrice) * 100).toFixed(2)}%)
-              </div>
-            </div>
+            {/* Price Card - with premium glass effects */}
+            <BreathingCard duration={5000} phase={0} amplitude={0.006} breatheShadow={true}>
+              <ParallaxFloat intensity={0.04} delay={0}>
+                <GlassReflection 
+                  mode="auto" 
+                  interval={10000} 
+                  delay={500} 
+                  duration={900}
+                  beamWidth={100}
+                  angle={-18}
+                  intensity={0.3}
+                  blur={50}
+                  borderRadius={16}
+                >
+                  <CursorGlowCard 
+                    variant="default" 
+                    borderRadius={16} 
+                    intensity={0.5} 
+                    glowRadius={180}
+                  >
+                    <div className="glass-card p-5 min-w-[200px]">
+                      <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Stock Price</div>
+                      <div className="text-3xl font-bold text-white">${mockPrice}</div>
+                      <div className={`text-sm font-medium ${parseFloat(mockChange) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {parseFloat(mockChange) >= 0 ? '+' : ''}{mockChange} ({parseFloat(mockChange) >= 0 ? '+' : ''}{(parseFloat(mockChange) / parseFloat(mockPrice) * 100).toFixed(2)}%)
+                      </div>
+                    </div>
+                  </CursorGlowCard>
+                </GlassReflection>
+              </ParallaxFloat>
+            </BreathingCard>
 
-            {/* Report Info Card */}
-            <div className="glass-card p-5 min-w-[200px]">
-              <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Report Date</div>
-              <div className="text-xl font-semibold text-white">{earning.date}</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm text-zinc-400">{earning.time === 'pre' ? '☀️ Pre-Market' : '🌙 After Hours'}</span>
-                <LiveBadge 
-                  time={earning.time} 
-                  isToday={earning.date === new Date().toISOString().split('T')[0]} 
-                  isPending={!hasResult} 
-                />
-              </div>
-              {!hasResult && countdown && (
-                <div className="mt-3 pt-3 border-t border-white/10">
-                  <div className="text-2xl font-bold text-amber-400">{countdown}</div>
-                </div>
-              )}
-              {/* Show time since for reported earnings */}
-              {hasResult && (
-                <div className="mt-3 pt-3 border-t border-white/10">
-                  <TimeSinceBadge reportedAt={new Date(earning.date)} time={earning.time} />
-                </div>
-              )}
-            </div>
+            {/* Report Info Card - with premium glass effects */}
+            <BreathingCard duration={5500} phase={0.25} amplitude={0.007} breatheShadow={true} breatheGlow={!hasResult} glowColor="rgba(251, 191, 36, 0.2)">
+              <ParallaxFloat intensity={0.045} delay={50}>
+                <GlassReflection 
+                  mode="auto" 
+                  interval={10000} 
+                  delay={2500} 
+                  duration={900}
+                  beamWidth={100}
+                  angle={-18}
+                  color={!hasResult ? "rgba(251, 191, 36, 0.4)" : "white"}
+                  intensity={0.35}
+                  blur={50}
+                  borderRadius={16}
+                >
+                  <CursorGlowCard 
+                    variant={!hasResult ? "warning" : "default"} 
+                    borderRadius={16} 
+                    intensity={0.5} 
+                    glowRadius={180}
+                  >
+                    <div className="glass-card p-5 min-w-[200px]">
+                      <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Report Date</div>
+                      <div className="text-xl font-semibold text-white">{earning.date}</div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-sm text-zinc-400">{earning.time === 'pre' ? '☀️ Pre-Market' : '🌙 After Hours'}</span>
+                        <LiveBadge 
+                          time={earning.time} 
+                          isToday={earning.date === new Date().toISOString().split('T')[0]} 
+                          isPending={!hasResult} 
+                        />
+                      </div>
+                      {!hasResult && countdown && (
+                        <div className="mt-3 pt-3 border-t border-white/10">
+                          <div className="text-2xl font-bold text-amber-400">{countdown}</div>
+                        </div>
+                      )}
+                      {/* Show time since for reported earnings */}
+                      {hasResult && (
+                        <div className="mt-3 pt-3 border-t border-white/10">
+                          <TimeSinceBadge reportedAt={new Date(earning.date)} time={earning.time} />
+                        </div>
+                      )}
+                    </div>
+                  </CursorGlowCard>
+                </GlassReflection>
+              </ParallaxFloat>
+            </BreathingCard>
           </div>
         </div>
       </div>
@@ -268,7 +319,19 @@ export default function ReportPage() {
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
-              {/* EPS Result Card */}
+              {/* EPS Result Card - with premium glass reflection */}
+              <GlassReflection 
+                mode="auto" 
+                interval={12000} 
+                delay={1000} 
+                duration={1000}
+                beamWidth={120}
+                angle={-15}
+                color={hasResult ? (earning.result === 'beat' ? "rgba(34, 197, 94, 0.5)" : "rgba(239, 68, 68, 0.5)") : "white"}
+                intensity={0.4}
+                blur={60}
+                borderRadius={24}
+              >
               <div className="glass-card p-8">
                 <h2 className="text-lg font-semibold text-white mb-6">Earnings Per Share</h2>
                 
@@ -407,6 +470,7 @@ export default function ReportPage() {
                   </div>
                 )}
               </div>
+              </GlassReflection>
 
               {/* Revenue & Guidance */}
               {analysis && (analysis.revenue || analysis.guidance) && (
