@@ -15,6 +15,7 @@ import {
   ReferenceLine,
   LabelList,
 } from 'recharts';
+import { AnimatedBarChart } from './AnimatedBarChart';
 
 interface DataPoint {
   quarter: string;
@@ -59,6 +60,7 @@ export function EPSChart({ data }: { data: DataPoint[] }) {
   }));
 
   return (
+    <AnimatedBarChart staggerDelay={80} duration={500}>
     <div className="w-full h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
@@ -118,6 +120,7 @@ export function EPSChart({ data }: { data: DataPoint[] }) {
         </BarChart>
       </ResponsiveContainer>
     </div>
+    </AnimatedBarChart>
   );
 }
 
@@ -129,6 +132,7 @@ export function EPSBarChart({ data }: { data: DataPoint[] }) {
   }));
 
   return (
+    <AnimatedBarChart staggerDelay={70} duration={450}>
     <div className="w-full h-[350px]">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
@@ -202,6 +206,7 @@ export function EPSBarChart({ data }: { data: DataPoint[] }) {
         </ComposedChart>
       </ResponsiveContainer>
     </div>
+    </AnimatedBarChart>
   );
 }
 
