@@ -1,3 +1,53 @@
+## 2026-03-15 — BadgeShimmer: Holographic Light Streak Effect
+
+**Inspiration:** Holographic trading cards (Pokémon, sports cards), credit card security features, Apple's Dynamic Island highlights, and premium membership badges — creating that "rare card" feeling when you pull a beat.
+
+**What I built:**
+- New `BadgeShimmer` component that creates a traveling holographic light streak across badges:
+
+  **Core Technique:**
+  - Diagonal gradient sweep animation using CSS transforms
+  - Configurable trigger modes: hover, auto-timer, or both
+  - Subtle blur on the streak for natural light diffusion
+  - Color-matched variants for success/danger/warning/info/rainbow
+
+  **Component Family:**
+  - `BadgeShimmer` — Main component with periodic shimmer sweeps
+  - `BadgeGlint` — Continuous subtle shimmer (always animating)
+  - `BadgeEdgeGlow` — Pulsing border glow for emphasis
+
+  **Configuration Options:**
+  - `variant`: 'success' | 'danger' | 'warning' | 'info' | 'rainbow'
+  - `trigger`: 'hover' | 'auto' | 'both' (when to activate)
+  - `interval`: Time between auto shimmers (default 4000ms)
+  - `duration`: Shimmer animation duration (default 600ms)
+  - `angle`: Streak angle in degrees (default -15°)
+  - `width`: Streak width as % of element (default 40%)
+  - `intensity`: Shimmer opacity 0-1 (default 0.7)
+  - `delay`: Initial delay before first auto shimmer
+
+  **CSS Features:**
+  - Keyframe animation `badge-shimmer-sweep` for smooth travel
+  - CSS custom properties for runtime configuration
+  - Light mode adjustments for softer appearance
+  - Full `prefers-reduced-motion` support
+
+  **Integration:**
+  - Beat badges: Shimmer on hover + auto every 5s (celebrates success)
+  - Miss badges: Shimmer on hover only (subdued feedback)
+  - Works with existing `BadgeSparkle` particles (layered effects)
+
+**Impact:** Beat badges now have that premium "holographic trading card" feel — the traveling light streak catches the eye and makes successful earnings feel special. Combined with the existing particle sparkle effect, beats feel genuinely celebratory. Miss badges get a subtle hover shimmer without the auto-trigger, keeping the focus on wins.
+
+**Reference:**
+- Holographic trading cards: Light-catching foil effects
+- Apple Dynamic Island: Subtle light animations on dark surfaces
+- Premium SaaS badges: Vercel, Linear, Stripe membership indicators
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-15 — ElasticNumber: Spring Physics Counter with Overshoot
 
 **Inspiration:** Orizon Design's "10 UI/UX Trends That Will Shape 2026" — specifically the "Anti-Perfect UI" trend: *"Organic motion curves, playful micro-latency, micro-delays that feel intentional"* and the insight that *"Users are beginning to trust interfaces that feel human, not sterile."*
