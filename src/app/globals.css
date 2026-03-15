@@ -18171,3 +18171,161 @@ html.light .print-button-full:hover {
     filter: none;
   }
 }
+
+/* ============================================
+   Badge Shimmer - Holographic Light Streak
+   ============================================
+   Premium micro-interaction inspired by holographic
+   trading cards and credit card security features.
+   Creates a traveling light streak across badges.
+*/
+
+.badge-shimmer-container {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.badge-shimmer-streak {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.badge-shimmer-streak::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: var(--shimmer-width, 40%);
+  height: 200%;
+  background: linear-gradient(
+    var(--shimmer-angle, -15deg),
+    transparent 0%,
+    var(--shimmer-secondary) 30%,
+    var(--shimmer-primary) 50%,
+    var(--shimmer-secondary) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: translateX(-100%);
+  filter: blur(2px);
+}
+
+.badge-shimmer-streak.is-active::before {
+  animation: badge-shimmer-sweep var(--shimmer-duration, 600ms) ease-out forwards;
+}
+
+@keyframes badge-shimmer-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  10% {
+    opacity: var(--shimmer-intensity, 0.7);
+  }
+  90% {
+    opacity: var(--shimmer-intensity, 0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(350%);
+  }
+}
+
+/* Badge Glint - Continuous subtle shimmer */
+.badge-glint-container {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.badge-glint-line {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.badge-glint-line::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 25%;
+  height: 200%;
+  background: linear-gradient(
+    -20deg,
+    transparent 0%,
+    var(--glint-secondary) 40%,
+    var(--glint-primary) 50%,
+    var(--glint-secondary) 60%,
+    transparent 100%
+  );
+  opacity: 0.5;
+  animation: badge-glint-travel var(--glint-speed, 3000ms) ease-in-out infinite;
+  filter: blur(1px);
+}
+
+@keyframes badge-glint-travel {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  10% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(250%);
+  }
+  60% {
+    opacity: 0;
+  }
+}
+
+/* Badge Edge Glow - Pulsing border glow */
+.badge-edge-glow-container {
+  position: relative;
+  display: inline-flex;
+  border-radius: inherit;
+}
+
+.badge-edge-glow-container::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--edge-glow-size, 3px) * -1);
+  border-radius: inherit;
+  background: var(--edge-glow-color);
+  filter: blur(var(--edge-glow-size, 3px));
+  opacity: 0.4;
+  animation: badge-edge-pulse var(--edge-glow-speed, 2000ms) ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes badge-edge-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+}
+
+/* Light mode adjustments */
+html.light .badge-shimmer-streak::before,
+html.light .badge-glint-line::before {
+  filter: blur(1px);
+  opacity: 0.6;
+}
+
+html.light .badge-edge-glow-container::before {
+  opacity: 0.25;
+}

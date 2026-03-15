@@ -30,6 +30,7 @@ import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 import { BadgeSparkle } from '@/components/BadgeSparkle';
+import { BadgeShimmer } from '@/components/BadgeShimmer';
 import { GrainOverlay } from '@/components/GrainOverlay';
 import { useToast } from '@/components/Toast';
 import { ValueChangeHighlight } from '@/components/ValueChangeHighlight';
@@ -327,39 +328,55 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
               <ExceptionalGlow surprise={surprise} delay={animationIndex * 50 + 300}>
-                <BadgeSparkle active={true} particleCount={6}>
-                  <span className="badge badge-beat">
-                    <MonsterBeatIcon surprise={surprise} />
-                    {/* Use scramble effect for monster beats (≥15%), count-up for others */}
-                    {surprise >= 15 ? (
+                <BadgeShimmer 
+                  variant="success" 
+                  trigger="both" 
+                  interval={5000} 
+                  delay={animationIndex * 100 + 800}
+                  duration={700}
+                  intensity={0.8}
+                >
+                  <BadgeSparkle active={true} particleCount={6}>
+                    <span className="badge badge-beat">
+                      <MonsterBeatIcon surprise={surprise} />
+                      {/* Use scramble effect for monster beats (≥15%), count-up for others */}
+                      {surprise >= 15 ? (
+                        <SurpriseScramble 
+                          value={surprise} 
+                          delay={animationIndex * 50 + 200} 
+                          duration={600}
+                          glowColor="#22c55e"
+                        />
+                      ) : (
+                        <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                      )}
+                    </span>
+                  </BadgeSparkle>
+                </BadgeShimmer>
+              </ExceptionalGlow>
+            ) : (
+              <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
+                <BadgeShimmer 
+                  variant="danger" 
+                  trigger="hover" 
+                  duration={600}
+                  intensity={0.7}
+                >
+                  <span className="badge badge-miss">
+                    <DisasterMissIcon surprise={surprise} />
+                    {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
+                    {surprise <= -15 ? (
                       <SurpriseScramble 
                         value={surprise} 
                         delay={animationIndex * 50 + 200} 
                         duration={600}
-                        glowColor="#22c55e"
+                        glowColor="#ef4444"
                       />
                     ) : (
                       <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
                     )}
                   </span>
-                </BadgeSparkle>
-              </ExceptionalGlow>
-            ) : (
-              <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
-                <span className="badge badge-miss">
-                  <DisasterMissIcon surprise={surprise} />
-                  {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
-                  {surprise <= -15 ? (
-                    <SurpriseScramble 
-                      value={surprise} 
-                      delay={animationIndex * 50 + 200} 
-                      duration={600}
-                      glowColor="#ef4444"
-                    />
-                  ) : (
-                    <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
-                  )}
-                </span>
+                </BadgeShimmer>
               </DisasterMiss>
             )}
           </div>
