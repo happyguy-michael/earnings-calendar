@@ -1,3 +1,65 @@
+## 2026-03-16 — StickyStateStyle: CSS Scroll-State Container Queries
+
+**Inspiration:** The cutting-edge CSS scroll-state container queries feature (Chrome 129+, shipped January 2025) that allows pure CSS detection of sticky element state. Referenced from [nerdy.dev's "4 CSS Features Every Front-End Developer Should Know In 2026"](https://nerdy.dev/4-css-features-every-front-end-developer-should-know-in-2026) and MDN documentation. This is the future of scroll-responsive UI — no JavaScript scroll listeners needed.
+
+**What I built:**
+- New `StickyStateStyle` component that enables CSS-only sticky state detection:
+
+  **Core Technique:**
+  - Uses `container-type: scroll-state` on sticky elements
+  - CSS `@container scroll-state(stuck: top)` queries detect when stuck
+  - Child elements can respond to parent's sticky state purely in CSS
+  - GPU-accelerated transitions for visual feedback
+  - Progressive enhancement (graceful fallback for unsupported browsers)
+
+  **Visual Feedback:**
+  - `.sticky-shadow` — Shadow appears when header is stuck
+  - `.sticky-stuck-line` — Gradient line animates in at bottom edge
+  - `.sticky-glow` — Optional radial glow effect
+  - All use spring physics timing for premium feel
+
+  **CSS Features:**
+  - `@container scroll-state(stuck: top)` — Detects top-stuck state
+  - `@container scroll-state(stuck: bottom)` — For sticky footers
+  - `@supports not (container-type: scroll-state)` — Fallback styles
+  - Theme-aware (light/dark mode adjustments)
+
+  **Fallback System:**
+  - `useStickyFallback` hook for unsupported browsers
+  - Uses IntersectionObserver with sentinel element
+  - Adds `.is-stuck` class for CSS targeting
+  - Seamless experience across all browsers
+
+  **Integration:**
+  - Added `StickyStateStyle` to layout.tsx (global CSS injection)
+  - `FrostedHeader` now includes `sticky-container` class
+  - Added `sticky-shadow` and `sticky-stuck-line` elements to header
+  - New `showStuckIndicator` prop (default: true)
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support
+  - All indicator elements are `aria-hidden`
+  - No impact on navigation or screen readers
+
+**Impact:** The sticky header now has visual feedback when it becomes stuck — a subtle gradient line animates in at the bottom edge, and a soft shadow appears. This helps users understand the header has attached to the viewport and will now overlay their scroll content. The effect is entirely CSS-driven in supported browsers, with zero JavaScript scroll listeners. This is the cutting edge of CSS in 2026.
+
+**Browser Support:**
+- Chrome 129+ (stable since January 2025)
+- Edge 129+
+- Opera 115+
+- Safari: Coming soon (fallback active)
+- Firefox: Coming soon (fallback active)
+
+**Reference:**
+- https://nerdy.dev/4-css-features-every-front-end-developer-should-know-in-2026
+- https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Conditional_rules/Container_scroll-state_queries
+- https://developer.chrome.com/blog/css-scroll-state-queries
+- https://blog.logrocket.com/css-container-scroll-state/
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — InkBlot: Organic Ink Spread Click Effect
 
 **Inspiration:** Watercolor paint spreading on wet paper, ink drop fluid dynamics simulations, Japanese sumi-e ink wash painting, and the "Anti-Perfect UI" trend — organic, imperfect motion that feels human rather than sterile. Instead of perfect circular ripples, this creates irregular, paint-like spread patterns.
