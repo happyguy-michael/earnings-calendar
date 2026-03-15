@@ -891,6 +891,8 @@ export default function Home() {
                     className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-l-xl"
                     intensity={0.5}
                     radius={1.6}
+                    inkEffect
+                    inkVariant="accent"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path d="M15 18l-6-6 6-6" />
@@ -917,6 +919,8 @@ export default function Home() {
                     className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-r-xl"
                     intensity={0.5}
                     radius={1.6}
+                    inkEffect
+                    inkVariant="accent"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path d="M9 18l6-6-6-6" />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useCallback, ReactNode } from 'react';
+import { InkBlot, InkVariant } from './InkBlot';
 
 interface TiltCardProps {
   children: ReactNode;
@@ -8,6 +9,8 @@ interface TiltCardProps {
   tiltIntensity?: number; // degrees of max tilt
   glareIntensity?: number; // 0-1 for glare opacity
   scale?: number; // scale on hover
+  inkEffect?: boolean; // enable ink spread click effect
+  inkVariant?: InkVariant; // ink color variant
 }
 
 export function TiltCard({
@@ -16,6 +19,8 @@ export function TiltCard({
   tiltIntensity = 8,
   glareIntensity = 0.15,
   scale = 1.02,
+  inkEffect = false,
+  inkVariant = 'default',
 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState('');
@@ -91,6 +96,9 @@ export function TiltCard({
           background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, var(--spotlight-color, rgba(59, 130, 246, 0.15)) 0%, transparent 50%)`,
         }}
       />
+      
+      {/* Ink spread click effect */}
+      {inkEffect && <InkBlot variant={inkVariant} intensity="subtle" />}
 
       {children}
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useCallback, useEffect, ReactNode } from 'react';
+import { InkBlot, InkVariant } from './InkBlot';
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -10,6 +11,8 @@ interface MagneticButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   'aria-label'?: string;
+  inkEffect?: boolean; // Enable organic ink spread click feedback
+  inkVariant?: InkVariant; // Ink color variant
 }
 
 export function MagneticButton({
@@ -20,6 +23,8 @@ export function MagneticButton({
   onClick,
   disabled,
   'aria-label': ariaLabel,
+  inkEffect = false,
+  inkVariant = 'default',
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
@@ -89,8 +94,11 @@ export function MagneticButton({
       className={`magnetic-button ${isHovering ? 'magnetic-hovering' : ''} ${className}`}
       style={{
         transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
+        position: inkEffect ? 'relative' : undefined,
+        overflow: inkEffect ? 'hidden' : undefined,
       }}
     >
+      {inkEffect && <InkBlot variant={inkVariant} intensity="subtle" />}
       {children}
     </button>
   );
