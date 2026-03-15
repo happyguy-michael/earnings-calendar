@@ -18329,3 +18329,44 @@ html.light .badge-glint-line::before {
 html.light .badge-edge-glow-container::before {
   opacity: 0.25;
 }
+
+/* ========================================
+   ScrollPerspective - Scroll-Driven 3D Depth
+   ======================================== */
+
+.scroll-perspective {
+  transform-style: preserve-3d;
+  transform-origin: center top;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.scroll-perspective-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.scroll-perspective-card.visible {
+  opacity: 1;
+}
+
+/* Subtle shadow enhancement based on perspective */
+.scroll-perspective > * {
+  transition: box-shadow 0.3s ease-out;
+}
+
+/* Light mode adjustment - less dramatic perspective */
+html.light .scroll-perspective {
+  --perspective-intensity: 0.7;
+}
+
+/* Reduced motion - no 3D transforms */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-perspective,
+  .scroll-perspective-card {
+    transform: none !important;
+    transform-style: flat !important;
+  }
+}
+

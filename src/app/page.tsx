@@ -106,6 +106,7 @@ import { PrintStyles } from '@/components/PrintStyles';
 import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
 import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
+import { ScrollPerspective } from '@/components/ScrollPerspective';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -954,6 +955,12 @@ export default function Home() {
         <SessionProgressBar showLabels={true} compact={false} />
       </div>
 
+      <ScrollPerspective 
+        maxAngle={1.8} 
+        scrollDistance={600} 
+        perspective={1400} 
+        smoothing={0.08}
+      >
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Row with Breathing Cards, Glass Reflection, Cursor Glow, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 stats-grid">
@@ -1470,6 +1477,7 @@ export default function Home() {
           ]}
         </BlurRevealGroup>
       </main>
+      </ScrollPerspective>
 
       {/* Floating back to top button */}
       <BackToTop />
