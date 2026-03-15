@@ -108,6 +108,7 @@ import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
 import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ScrollPerspective } from '@/components/ScrollPerspective';
+import { ChromeNumber } from '@/components/ChromeNumber';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -342,13 +343,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                     <span className="badge badge-beat">
                       <MonsterBeatIcon surprise={surprise} />
                       {/* Use scramble effect for monster beats (≥15%), count-up for others */}
+                      {/* Gold chrome effect for exceptional beats (Y3K liquid metal aesthetic) */}
                       {surprise >= 15 ? (
-                        <SurpriseScramble 
-                          value={surprise} 
-                          delay={animationIndex * 50 + 200} 
-                          duration={600}
-                          glowColor="#22c55e"
-                        />
+                        <ChromeNumber variant="gold" trigger="both" interval={4000} emboss>
+                          <SurpriseScramble 
+                            value={surprise} 
+                            delay={animationIndex * 50 + 200} 
+                            duration={600}
+                            glowColor="#22c55e"
+                          />
+                        </ChromeNumber>
                       ) : (
                         <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
                       )}
@@ -367,13 +371,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                   <span className="badge badge-miss">
                     <DisasterMissIcon surprise={surprise} />
                     {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
+                    {/* Rose-gold chrome effect for disaster misses (Y3K liquid metal aesthetic) */}
                     {surprise <= -15 ? (
-                      <SurpriseScramble 
-                        value={surprise} 
-                        delay={animationIndex * 50 + 200} 
-                        duration={600}
-                        glowColor="#ef4444"
-                      />
+                      <ChromeNumber variant="rose-gold" trigger="both" interval={4000} emboss>
+                        <SurpriseScramble 
+                          value={surprise} 
+                          delay={animationIndex * 50 + 200} 
+                          duration={600}
+                          glowColor="#ef4444"
+                        />
+                      </ChromeNumber>
                     ) : (
                       <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
                     )}
