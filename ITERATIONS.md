@@ -1,3 +1,65 @@
+## 2026-03-16 — InkBlot: Organic Ink Spread Click Effect
+
+**Inspiration:** Watercolor paint spreading on wet paper, ink drop fluid dynamics simulations, Japanese sumi-e ink wash painting, and the "Anti-Perfect UI" trend — organic, imperfect motion that feels human rather than sterile. Instead of perfect circular ripples, this creates irregular, paint-like spread patterns.
+
+**What I built:**
+- New `InkBlot` component that creates an organic, paint-like click effect:
+
+  **Core Technique:**
+  - Multiple overlapping blobs (default 5) with staggered timing
+  - Each blob has a unique, randomly-generated irregular border-radius
+  - Blobs spread from click point with slight position variation
+  - SVG goo filter for natural edge blur and blob merging
+  - Spring-physics timing via cubic-bezier for organic motion
+
+  **Color Variants:**
+  - `default`: Neutral ink (dark on light, light on dark)
+  - `success`: Green ink for positive actions
+  - `danger`: Red ink for destructive actions
+  - `accent`: Blue/indigo for primary actions
+  - `subtle`: Very light tint for minimal feedback
+
+  **Configuration Options:**
+  - `variant`: Color variant selection
+  - `color`: Custom color override
+  - `intensity`: 'subtle' | 'normal' | 'bold'
+  - `duration`: Animation duration (default 600ms)
+  - `blobCount`: Number of blobs (default 5)
+  - `splash`: Enable splash particles
+  - `splashCount`: Number of splash particles
+
+  **Blend Modes:**
+  - Light mode: `mix-blend-mode: multiply` (ink absorbs into surface)
+  - Dark mode: `mix-blend-mode: screen` (ink glows against dark)
+
+  **Component Family:**
+  - `InkBlot` — Main component for click areas
+  - `useInkBlot` — Hook for programmatic control
+  - `InkBlotWrapper` — Convenience wrapper with auto-setup
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (shows instant tint instead)
+  - Effect is purely decorative, doesn't affect interaction
+  - Click still works normally without animation
+
+  **Integration:**
+  - Added as optional prop to `TiltCard` (`inkEffect={true}`)
+  - Added as optional prop to `MagneticButton` (`inkEffect={true}`)
+  - Week navigation buttons use `accent` variant
+
+**Impact:** Click feedback now has an organic, hand-crafted quality. Instead of the ubiquitous Material Design ripple, clicks feel like dropping ink into water — each one slightly different, slightly imperfect, and more memorable. This aligns with the 2026 "Anti-Perfect UI" trend where interfaces feel more human and less mechanical.
+
+**Reference:**
+- Watercolor paint spreading mechanics
+- Ink drop fluid dynamics (Navier-Stokes simulation aesthetic)
+- Japanese sumi-e (墨絵) ink wash painting
+- "Anti-Perfect UI" trend (Orizon Design 2026 trends)
+- SVG goo filter technique (CSS Tricks)
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — ChromeNumber: Y3K Liquid Metal Effect for Exceptional Surprises
 
 **Inspiration:** 2026 Y3K aesthetic trends (WhiteUI, AND Academy), holographic trading cards (Pokémon, sports cards), premium financial terminal displays, and the "Liquid Metal / Mirror" color trend. The Y3K aesthetic embraces futuristic metallic surfaces that reflect surrounding colors.
