@@ -1,3 +1,57 @@
+## 2026-03-15 — FilterPulse: Radial Pulse Wave on Filter Change
+
+**Inspiration:** Apple's "pop" feedback when liking content, iOS Control Center toggle feedback, Material Design's ripple extended as a page-wide confirmation, and the 2026 trend of "Kinetic Confirmations" — animations that confirm user actions without being intrusive.
+
+**What I built:**
+- New `FilterPulse` component that creates a satisfying radial pulse wave when filters change:
+
+  **Core Technique:**
+  - Radial gradient that expands from the filter bar to full viewport
+  - Color-coded by filter type:
+    - Beat: Green pulse (rgba 34, 197, 94)
+    - Miss: Red pulse (rgba 239, 68, 68)
+    - Pending: Amber pulse (rgba 245, 158, 11)
+    - All: Indigo pulse (rgba 99, 102, 241)
+  - Leading edge ring that travels with the expansion for extra polish
+  - Multiple concurrent pulses supported for rapid filter switching
+
+  **Technical Details:**
+  - Fixed positioning for full-page coverage without layout shift
+  - CSS custom properties for dynamic color injection
+  - cubic-bezier(0.25, 0.8, 0.25, 1) easing for natural deceleration
+  - Scale from 0 to 60× viewport width (100px base × maxScale × 20)
+  - 650ms duration for noticeable but not slow feedback
+  - GPU-accelerated via CSS transforms and opacity
+  - Clean unmount handling with timeout cleanup
+
+  **Component Variants:**
+  - `FilterPulse` — Main wrapper component
+  - `FilterPulseWave` — Individual pulse element
+  - `useFilterPulse` — Hook for imperative pulse triggers
+  - `FilterPulseIndicator` — Compact pulsing dot indicator
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (no animation, instant change)
+  - pointer-events: none to avoid blocking interactions
+  - MutationObserver for theme change detection
+
+  **Integration:**
+  - Wrapped `FilterChips` in `FilterPulse` component
+  - Automatically triggers on filter state change
+  - Light/dark mode aware with adjusted opacity
+
+**Impact:** Filter changes now have satisfying visual confirmation that radiates across the page. This micro-interaction makes the interface feel more responsive and deliberate — users get immediate feedback that their action took effect, even before the filtered results appear. The animation is subtle enough to not be distracting but noticeable enough to feel premium.
+
+**Reference:**
+- Apple iOS feedback patterns
+- Material Design ripple extended concept
+- 2026 Trend: "Kinetic Confirmations" (Ripplix, Orizon Design)
+- CSS radial-gradient expansion technique
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-15 — ScrollPerspective: Scroll-Driven 3D Depth Effect
 
 **Inspiration:** Material Design 3 Motion principles, Linear.app's subtle depth cues, Stripe's 3D dashboard effects, and the 2026 "Living Interfaces" trend — where pages respond organically to user actions like scroll, creating a sense of physical depth.
