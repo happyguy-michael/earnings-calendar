@@ -115,6 +115,7 @@ import { ScrollPerspective } from '@/components/ScrollPerspective';
 import { ChromeNumber } from '@/components/ChromeNumber';
 import { GradientWipe } from '@/components/GradientWipe';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
+import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -789,6 +790,7 @@ export default function Home() {
     >
     <SnapshotProvider autoResumeSeconds={300}>
     <VelocityBlurProvider threshold={0.6} maxBlur={2.5} sensitivity={2}>
+    <MomentumTiltProvider maxTilt={3} minScale={0.985} threshold={0.4} sensitivity={1.2}>
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <div className="min-h-screen relative">
       {/* Snapshot mode indicator (when paused) */}
@@ -1486,9 +1488,11 @@ export default function Home() {
                                   {preMarket.map((e, i) => (
                                     <CascadeItem key={`${e.ticker}-${filterKey}`} index={i}>
                                       <SpotlightCard id={`pre-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
+                                      <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={i}>
                                         <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
                                       </VelocityBlurCard>
+                                      </MomentumTiltCard>
                                       </SpotlightCard>
                                     </CascadeItem>
                                   ))}
@@ -1517,9 +1521,11 @@ export default function Home() {
                                   {postMarket.map((e, i) => (
                                     <CascadeItem key={`${e.ticker}-${filterKey}`} index={i}>
                                       <SpotlightCard id={`post-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
+                                      <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={preMarket.length + i}>
                                         <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
                                       </VelocityBlurCard>
+                                      </MomentumTiltCard>
                                       </SpotlightCard>
                                     </CascadeItem>
                                   ))}
@@ -1639,6 +1645,7 @@ export default function Home() {
       />
     </div>
     </PullToRefresh>
+    </MomentumTiltProvider>
     </VelocityBlurProvider>
     </SnapshotProvider>
     </CommandPaletteProvider>
