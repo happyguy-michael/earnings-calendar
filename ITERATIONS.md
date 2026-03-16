@@ -1,3 +1,63 @@
+## 2026-03-16 — ProgressiveBlur: Apple-Style Layered Blur Depth Effect
+
+**Inspiration:** Kenneth Nym's "Progressive Blur in CSS" blog post (kennethnym.com/blog/progressive-blur-in-css). Also inspired by:
+- Apple iOS status bar blur effects (Maps app)
+- macOS Finder toolbar blur behavior
+- FreeFrontend's "CSS Sticky Progressive Blur on Scroll" pattern
+- The 2024/2025 "spatial UI" trend emphasizing depth and layers
+
+**What I built:**
+- New `ProgressiveBlur` component family — creates Apple-style layered blur beneath sticky elements:
+
+  **Core Technique:**
+  - Multiple overlapping backdrop-filter layers with increasing blur
+  - CSS mask-image gradients create smooth transitions between layers
+  - Exponential blur progression (1px → 2px → 4px → 8px → 16px → 28px)
+  - Gradient overlay hides edge "glitching" artifacts
+
+  **Component Family:**
+  - `ProgressiveBlur` — Core layered blur with full configuration
+  - `ProgressiveBlurEdge` — Simpler preset for content edges
+  - `ScrollFadeBlur` — Wrapper for scroll containers with top/bottom blur
+
+  **Configuration Options:**
+  - `direction`: Blur direction (up/down) — determines gradient orientation
+  - `height`: Height of blur zone in pixels (default: 60)
+  - `layers`: Number of blur layers (default: 7) — more = smoother
+  - `maxBlur`: Maximum blur radius (default: 32px)
+  - `showFadeGradient`: Whether to show edge artifact fix (default: true)
+  - `fadeColor`/`fadeColorLight`: Theme-aware fade colors
+  - `zIndex`: Stack ordering (default: 5)
+
+  **Visual Features:**
+  - Smooth blur transition — no harsh lines between zones
+  - Dynamic intensity based on scroll state (50px → 80px, 16px → 28px max blur)
+  - Theme-aware fade gradient (dark: rgba(10,10,15,0.85), light: rgba(248,250,252,0.9))
+  - GPU-accelerated via backdrop-filter
+
+  **Technical Details:**
+  - Uses CSS mask-image for layer blending
+  - Exponential blur progression mimics depth-of-field physics
+  - Full `prefers-reduced-motion` support (component hides completely)
+  - No JavaScript scroll listeners — pure CSS
+  - Integrates with existing FrostedHeader component
+
+  **Integration:**
+  - Added to sticky header below filter chips
+  - Blur height/intensity scales with scroll state
+  - Creates "content fades into fog" effect as you scroll
+
+**Impact:** Scrolling content now smoothly fades into blur beneath the header, creating a sophisticated depth effect. This is a subtle but premium-feeling touch that's common in Apple's iOS/macOS interfaces. The effect is especially noticeable when colorful earnings cards scroll beneath the header.
+
+**Reference:**
+- Kenneth Nym's Progressive Blur Guide: kennethnym.com/blog/progressive-blur-in-css
+- Apple HIG Materials documentation
+- FreeFrontend CSS Blur Effects collection
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — ResultPulse: Radar-Style Result Announcement Effect
 
 **Inspiration:** FreeFrontend's "76 UI Micro Interaction Examples" — specifically the radar ping pattern used for notification badges. Also inspired by:
