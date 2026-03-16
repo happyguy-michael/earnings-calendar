@@ -10,6 +10,7 @@ import { ClientProviders } from "@/components/ClientProviders";
 import { AnimatedFocusRing, SkipLink } from "@/components/AnimatedFocusRing";
 import { ScrollDrivenAnimations } from "@/components/ScrollDrivenAnimations";
 import { StickyStateStyle } from "@/components/StickyStateStyle";
+import { BalloonTooltipStyles } from "@/components/BalloonTooltip";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -45,6 +46,8 @@ export default function RootLayout({
         <ScrollDrivenAnimations />
         {/* CSS scroll-state queries for sticky element detection */}
         <StickyStateStyle />
+        {/* Balloon tooltip morph animation styles */}
+        <BalloonTooltipStyles />
         {/* Skip to main content - accessibility */}
         <SkipLink targetId="main-content" />
         {/* Time-aware ambient background gradients */}
