@@ -20,6 +20,7 @@ import { FlipCountdownBadge } from '@/components/FlipDigit';
 import { TimeSinceInline } from '@/components/TimeSince';
 import { ProgressRing } from '@/components/ProgressRing';
 import { OddsGauge } from '@/components/OddsGauge';
+import { HeartbeatBadge, HeartbeatInline } from '@/components/ConfidenceHeartbeat';
 import { BackToTop } from '@/components/BackToTop';
 import { MotionToggle } from '@/components/MotionPreferences';
 import { TiltCard } from '@/components/TiltCard';
@@ -390,11 +391,9 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             )}
           </div>
         ) : earning.beatOdds ? (
-          <OddsGauge 
-            value={earning.beatOdds} 
-            size={44} 
-            delay={animationIndex * 80} 
-            duration={800}
+          <HeartbeatBadge 
+            probability={earning.beatOdds} 
+            size="md"
           />
         ) : null}
         </Link>
