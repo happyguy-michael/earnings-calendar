@@ -1,3 +1,56 @@
+## 2026-03-17 — EchoShadowHover: Layered Afterimage Hover Effect
+
+**Inspiration:** FreeFrontend's "Tectonic Stacked Tooltip" and ghost text patterns from Dribbble. Also inspired by:
+- The 2026 "depth without 3D" UI trend — creating visual depth through layered 2D elements
+- Vertical ghost text hover effects that create spectral echoes
+- Stacked plate/slab animations that expand outward
+- Comic book motion lines that suggest movement
+
+**What I built:**
+- New `EchoShadowHover` component family — layered shadow afterimage on hover:
+
+  **Core Features:**
+  - Multiple staggered shadow layers that expand on hover
+  - Each layer has decreasing opacity for natural depth falloff
+  - Spring-based timing for organic, physical feel
+  - Direction options: down, up, outward (scale), diagonal
+  - Optional glow layer for emphasis states
+
+  **Component Family:**
+  - `EchoShadowHover` — Main wrapper component with full configuration
+  - `EchoShadowCard` — Preset for card-style echo with beat/miss/pending variants
+  - `PulsingEcho` — Continuous pulsing echo for attention-grabbing states
+
+  **Configuration Options:**
+  - `layers`: Number of echo layers (default: 3)
+  - `maxOffset`: Maximum offset in pixels (default: 8)
+  - `direction`: 'down' | 'up' | 'out' | 'diagonal'
+  - `stagger`: Delay between layer animations (default: 50ms)
+  - `duration`: Animation duration (default: 400ms)
+  - `glow`: Enable glow effect on hover
+  - `glowColor`: Custom glow color
+  - `echoColor`: Custom echo border color
+
+  **Technical Details:**
+  - CSS custom properties for dynamic layer positioning
+  - GPU-accelerated transforms (translateX/Y, scale)
+  - Isolation context prevents z-index conflicts
+  - Full `prefers-reduced-motion` support (instant opacity change)
+  - Light/dark theme aware with appropriate shadow colors
+
+  **Integration:**
+  - Pending earnings cards now wrapped with subtle diagonal echo
+  - Today's pending cards get additional blue glow layer
+  - Creates visual differentiation between pending and reported earnings
+
+**Visual Effect:** On hover, the card appears to "echo" with multiple fading outlines that expand diagonally downward, creating a sense of depth and motion without using 3D transforms. The effect is subtle but adds premium feel to interactive elements.
+
+**Impact:** Enhances the visual hierarchy by making pending earnings (the most actionable items) stand out with a distinctive hover state. The echo effect signals "something is about to happen here."
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — AutoScrollToLive: Smart Auto-Scroll to Imminent Earnings
 
 **Inspiration:** Trading terminals and live dashboards that automatically focus on the most urgent/active content. Also inspired by:
