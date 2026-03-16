@@ -1,3 +1,61 @@
+## 2026-03-17 — PriceSpike: Dramatic Price Movement Visualization
+
+**Inspiration:** Financial TV broadcasts, stock ticker animations, and the dramatic reveal moments on ESPN/Bloomberg when numbers are announced. Researched via:
+- Bloomberg Terminal price movement visualizations
+- Sports broadcast score reveal animations
+- CSS-Tricks shockwave effect patterns
+- React spring physics for particle systems
+
+**What I built:**
+- New `PriceSpike` component family — theatrical visualization of post-earnings price movement:
+
+  **Core Features:**
+  - Animated spike line that draws from calm baseline to dramatic peak/trough
+  - Dual-ring shockwave effect at impact point that expands and fades
+  - Flying particle system that shoots in the direction of price movement
+  - Color-coded visualization (emerald for gains, red for losses)
+  - Magnitude-aware scaling (bigger moves = bigger visual impact)
+  - Impact point with subtle pulsing glow
+
+  **Component Family:**
+  - `PriceSpike` — Main component with full animation (shockwave + particles)
+  - `PriceSpikeCompact` — Inline-friendly smaller variant
+  - `PriceSpikeBadge` — Badge-style with mini spike icon
+  - `PriceSpikeComparison` — Side-by-side expected vs actual move bars
+
+  **Configuration Options:**
+  - `change`: Percentage change (-50 to +50 range, visually capped)
+  - `size`: 'sm' | 'md' | 'lg' for different contexts
+  - `showLabel`: Whether to display the percentage text
+  - `delay`: Animation start delay in milliseconds
+  - `animate`: Toggle animation on/off
+
+  **Technical Details:**
+  - Pure CSS transitions + SVG for GPU acceleration
+  - Intersection Observer for scroll-triggered animation
+  - Unique gradient IDs prevent conflicts when multiple instances exist
+  - Particle angles spread around movement direction with randomized distances
+  - Cubic-bezier easing for natural, dramatic reveals
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (instant reveal, no animation)
+  - Semantic color choices (green = positive, red = negative)
+  - Percentage labels for screen readers
+
+**Use Cases:**
+- Earnings result cards showing the stock's reaction
+- Beat/miss displays with visual impact magnitude
+- Historical earnings review with price reaction data
+- Real-time earnings announcements (animate on data arrival)
+
+**Visual Effect:** When an earnings result lands, the line spikes dramatically like a seismograph detecting an earthquake. Shockwaves ripple outward from the peak while particles fly off, creating a sense of explosive price movement. The percentage label fades in with a slight delay for maximum dramatic effect.
+
+**Impact:** Transforms dry percentage numbers into visceral, memorable visualizations. Users can feel the magnitude of earnings surprises rather than just reading them.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — MomentumTilt: Scroll-Velocity-Based 3D Card Tilt
 
 **Inspiration:** Physics-based UI trends and premium app experiences. Researched via:
