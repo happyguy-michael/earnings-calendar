@@ -112,6 +112,7 @@ import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ScrollPerspective } from '@/components/ScrollPerspective';
 import { ChromeNumber } from '@/components/ChromeNumber';
+import { GradientWipe } from '@/components/GradientWipe';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -822,7 +823,15 @@ export default function Home() {
             <div className="flex-shrink-0">
               <div className="flex items-center gap-3 mb-1">
                 <h1 className="sticky-header-title">
-                  Earnings <span className="text-gradient text-shine-sweep">Calendar</span>
+                  <GradientWipe 
+                    direction="right" 
+                    duration={900} 
+                    delay={200}
+                    shimmer={true}
+                    shimmerColor="rgba(139, 92, 246, 0.4)"
+                  >
+                    Earnings <span className="text-gradient text-shine-sweep">Calendar</span>
+                  </GradientWipe>
                 </h1>
                 <MarketStatus />
                 <div className="hidden lg:flex items-center gap-2">
