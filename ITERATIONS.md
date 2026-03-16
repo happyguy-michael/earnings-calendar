@@ -1,3 +1,61 @@
+## 2026-03-17 — MomentumTilt: Scroll-Velocity-Based 3D Card Tilt
+
+**Inspiration:** Physics-based UI trends and premium app experiences. Researched via:
+- Josh Comeau's article on spring animations with CSS `linear()` function
+- Figma's blog on their two-parameter spring animation system
+- Kevin Grajeda's "Effortless UI Spring Animations" approach
+- iOS app switcher card physics behavior
+- Apple tvOS parallax icons
+
+**What I built:**
+- New `MomentumTilt` component family — physics-based tilt during scroll:
+
+  **Core Features:**
+  - Cards subtly tilt (rotateX) in direction of scroll momentum
+  - Custom spring physics engine (no Framer Motion dependency)
+  - Natural settle animation when scrolling stops
+  - Subtle scale reduction during fast scroll for depth cue
+  - Dynamic shadow shift based on tilt angle
+
+  **Component Family:**
+  - `MomentumTiltProvider` — Global scroll velocity tracking with spring physics
+  - `MomentumTiltCard` — Card wrapper with configurable intensity
+  - `MomentumTiltContent` — Parallax content shift for depth effect
+  - `MomentumDebug` — Development helper for visualizing state
+
+  **Configuration Options:**
+  - `maxTilt`: Maximum tilt angle in degrees (default: 4)
+  - `minScale`: Minimum scale during fast scroll (default: 0.98)
+  - `threshold`: Velocity threshold to start tilt (default: 0.3 px/ms)
+  - `sensitivity`: Sensitivity multiplier (default: 1.5)
+  - `spring`: Custom spring config (tension, friction, mass)
+  - `intensity`: Per-card override (0-1)
+  - `dynamicShadow`: Enable shadow shift based on tilt
+  - `perspective`: Custom perspective distance
+
+  **Technical Details:**
+  - Spring physics: F = -k*displacement - b*velocity
+  - Scroll velocity calculated via delta/time between frames
+  - Intersection Observer for viewport optimization (only animate visible)
+  - GPU-accelerated transforms (rotateX, scale)
+  - Full `prefers-reduced-motion` support
+  - CSS `will-change` optimization for active cards
+
+  **Integration:**
+  - All earnings cards wrapped with MomentumTiltCard (intensity 0.7)
+  - Dynamic shadows enabled for subtle depth shift
+  - Complements existing VelocityBlur for layered scroll effects
+
+**Visual Effect:** When scrolling, cards feel like they have physical mass — tilting slightly in the direction of momentum and settling with a satisfying spring when you stop. Creates a tactile, premium feel similar to high-end mobile apps.
+
+**Physics Model:** Based on Figma's research showing that bounce + perceptual duration is more intuitive than mass/stiffness/damping. The spring implementation uses configurable tension/friction to achieve natural, physical motion.
+
+**Impact:** Adds subtle but noticeable physicality to scrolling. The effect is understated enough to not be distracting but creates a premium, polished feel that differentiates from static calendars.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — EchoShadowHover: Layered Afterimage Hover Effect
 
 **Inspiration:** FreeFrontend's "Tectonic Stacked Tooltip" and ghost text patterns from Dribbble. Also inspired by:
