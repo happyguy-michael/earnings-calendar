@@ -98,6 +98,7 @@ import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
+import { ProgressiveBlur } from '@/components/ProgressiveBlur';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
@@ -963,6 +964,15 @@ export default function Home() {
             </FilterPulse>
           </div>
         </div>
+        
+        {/* Progressive blur creates Apple-style depth effect for scrolling content */}
+        <ProgressiveBlur 
+          direction="down"
+          height={isScrolled ? 80 : 50}
+          layers={6}
+          maxBlur={isScrolled ? 28 : 16}
+          showFadeGradient={true}
+        />
       </FrostedHeader>
 
       {/* Ticker Ribbon - scrolling earnings tape */}
