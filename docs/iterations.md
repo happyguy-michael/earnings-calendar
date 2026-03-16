@@ -1,4 +1,51 @@
 
+## 2026-03-16 — GradientWipe Component (Premium Content Reveal)
+
+**Inspiration:** Linear.app headline reveals, Stripe landing page text animations, Apple keynote presentations, and the 2024/2025 "cinematic UI" trend where content appears to be "painted in" rather than simply fading.
+
+**What was added:**
+- New `GradientWipe` component - animated gradient mask reveal for any content
+- Features:
+  - Smooth gradient mask animation that sweeps across content
+  - Multiple directions: left, right, up, down, diagonal
+  - Optional shimmer trail effect during reveal (purple accent)
+  - Configurable duration, delay, easing, and spread (edge softness)
+  - Three trigger modes: `mount` (on load), `inView` (intersection observer), `manual`
+  - `onComplete` callback when animation finishes
+  - RAF-based animation loop for smooth 60fps performance
+  - Respects `prefers-reduced-motion` (instant reveal)
+  - Uses CSS mask-image for hardware-accelerated rendering
+- Variants:
+  - `GradientWipeText` - convenience wrapper for text elements
+  - `GradientWipeNumber` - formatted number reveals
+  - `GradientWipeGroup` - staggered reveal for multiple items
+
+**Integration:**
+- Applied to main "Earnings Calendar" headline
+- 900ms reveal with 200ms initial delay
+- Purple shimmer trail matches brand accent
+- Creates premium "app-like" first impression
+
+**Technical notes:**
+- Pure CSS mask-image animation (no SVG filters)
+- RequestAnimationFrame loop with progress tracking
+- Cubic-bezier easing approximation in JS
+- Mix-blend-mode overlay for shimmer effect
+- Memo-wrapped components for React performance
+
+**Why it matters:**
+- First impression matters - headline reveal sets premium tone
+- "Painted in" effect feels more cinematic than simple fade
+- Common pattern in high-end product launches and dashboards
+- Subtle enough for everyday use, striking enough to notice
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 1ec8a7b
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-14 — ShineHighlight & SmoothHoverScale Components
 
 **Inspiration:** Premium SaaS micro-interactions from Linear, Stripe, and Apple HIG. Small details that make interfaces feel alive and responsive.
