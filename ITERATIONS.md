@@ -1,3 +1,65 @@
+## 2026-03-16 — BalloonTooltip: Morphing Dot-to-Content Tooltip Animation
+
+**Inspiration:** FreeFrontend's "Animate Tooltip" pattern — tooltips that start as a tiny dot and expand outward while morphing from circle to rounded rectangle. Also inspired by:
+- iOS message bubble animations
+- Microinteraction patterns from Dribbble
+- The 2026 "tactile UI" trend emphasizing physical metamorphosis
+- Comic book speech bubble appearance conventions
+
+**What I built:**
+- New `BalloonTooltip` component family — premium tooltip reveal with morphing animation:
+
+  **Core Technique:**
+  - Tooltip starts as a tiny glowing dot (6px)
+  - On hover, the dot expands while morphing from circle to rounded rectangle
+  - Spring physics timing (cubic-bezier overshoot) for organic motion
+  - Content fades in after the shape has expanded
+  - Optional "settle shake" at the end for playful finish
+
+  **Component Family:**
+  - `BalloonTooltip` — Main wrapper component with full configuration
+  - `BalloonTooltipText` — Simple text-only variant
+  - `BalloonTooltipStyles` — Global styles (include in layout)
+
+  **Configuration Options:**
+  - `position`: 'top' | 'bottom' — tooltip placement
+  - `size`: 'sm' | 'md' | 'lg' | 'auto' | { width, height } — preset or custom
+  - `dotSize`: Initial dot size in pixels (default: 6)
+  - `duration`: Expansion animation duration (default: 350ms)
+  - `contentDelay`: Delay before content fades in (default: 100ms)
+  - `settleShake`: Enable playful shake at animation end (default: true)
+
+  **Visual Features:**
+  - Glowing indigo dot indicator with box-shadow
+  - Multi-stage border-radius transition (50% → 14px)
+  - Staggered content and arrow reveal
+  - Spring overshoot for satisfying "pop" feel
+  - Theme-aware styling (dark/light mode)
+
+  **Technical Details:**
+  - Pure CSS animations with spring easing
+  - GPU-accelerated via transform/opacity
+  - Auto-sizing via ResizeObserver
+  - Full `prefers-reduced-motion` support (instant reveal)
+  - Proper aria-roles for accessibility
+  - Keyboard focus triggers animation
+
+  **Integration:**
+  - Added `BalloonTooltipStyles` to layout.tsx
+  - Upgraded `TodayButton` from basic tooltip to balloon tooltip
+  - Shows pending count or "Jump to current week" on hover
+
+**Impact:** The TodayButton (and any element using BalloonTooltip) now has a delightful, premium-feeling tooltip reveal. Instead of a simple fade-in, the tooltip emerges from a glowing dot and morphs into its full shape — creating that "micro-moment of delight" that distinguishes premium interfaces from basic ones.
+
+**Reference:**
+- FreeFrontend CSS Tooltips: https://freefrontend.com/css-tooltips/
+- "Animate Tooltip" pattern: balloon appearance with morphing shape
+- iOS message composition UI (bubble expansion)
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — ProgressiveBlur: Apple-Style Layered Blur Depth Effect
 
 **Inspiration:** Kenneth Nym's "Progressive Blur in CSS" blog post (kennethnym.com/blog/progressive-blur-in-css). Also inspired by:
