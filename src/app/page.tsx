@@ -33,6 +33,7 @@ import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/Ke
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 import { BadgeSparkle } from '@/components/BadgeSparkle';
 import { BadgeShimmer } from '@/components/BadgeShimmer';
+import { ResultPulseWrapper } from '@/components/ResultPulse';
 import { GrainOverlay } from '@/components/GrainOverlay';
 import { useToast } from '@/components/Toast';
 import { ValueChangeHighlight } from '@/components/ValueChangeHighlight';
@@ -331,63 +332,67 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
-              <ExceptionalGlow surprise={surprise} delay={animationIndex * 50 + 300}>
-                <BadgeShimmer 
-                  variant="success" 
-                  trigger="both" 
-                  interval={5000} 
-                  delay={animationIndex * 100 + 800}
-                  duration={700}
-                  intensity={0.8}
-                >
-                  <BadgeSparkle active={true} particleCount={6}>
-                    <span className="badge badge-beat">
-                      <MonsterBeatIcon surprise={surprise} />
-                      {/* Use scramble effect for monster beats (≥15%), count-up for others */}
-                      {/* Gold chrome effect for exceptional beats (Y3K liquid metal aesthetic) */}
-                      {surprise >= 15 ? (
-                        <ChromeNumber variant="gold" trigger="both" interval={4000} emboss>
+              <ResultPulseWrapper result="beat" surprise={surprise}>
+                <ExceptionalGlow surprise={surprise} delay={animationIndex * 50 + 300}>
+                  <BadgeShimmer 
+                    variant="success" 
+                    trigger="both" 
+                    interval={5000} 
+                    delay={animationIndex * 100 + 800}
+                    duration={700}
+                    intensity={0.8}
+                  >
+                    <BadgeSparkle active={true} particleCount={6}>
+                      <span className="badge badge-beat">
+                        <MonsterBeatIcon surprise={surprise} />
+                        {/* Use scramble effect for monster beats (≥15%), count-up for others */}
+                        {/* Gold chrome effect for exceptional beats (Y3K liquid metal aesthetic) */}
+                        {surprise >= 15 ? (
+                          <ChromeNumber variant="gold" trigger="both" interval={4000} emboss>
+                            <SurpriseScramble 
+                              value={surprise} 
+                              delay={animationIndex * 50 + 200} 
+                              duration={600}
+                              glowColor="#22c55e"
+                            />
+                          </ChromeNumber>
+                        ) : (
+                          <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
+                        )}
+                      </span>
+                    </BadgeSparkle>
+                  </BadgeShimmer>
+                </ExceptionalGlow>
+              </ResultPulseWrapper>
+            ) : (
+              <ResultPulseWrapper result="miss" surprise={surprise}>
+                <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
+                  <BadgeShimmer 
+                    variant="danger" 
+                    trigger="hover" 
+                    duration={600}
+                    intensity={0.7}
+                  >
+                    <span className="badge badge-miss">
+                      <DisasterMissIcon surprise={surprise} />
+                      {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
+                      {/* Rose-gold chrome effect for disaster misses (Y3K liquid metal aesthetic) */}
+                      {surprise <= -15 ? (
+                        <ChromeNumber variant="rose-gold" trigger="both" interval={4000} emboss>
                           <SurpriseScramble 
                             value={surprise} 
                             delay={animationIndex * 50 + 200} 
                             duration={600}
-                            glowColor="#22c55e"
+                            glowColor="#ef4444"
                           />
                         </ChromeNumber>
                       ) : (
                         <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
                       )}
                     </span>
-                  </BadgeSparkle>
-                </BadgeShimmer>
-              </ExceptionalGlow>
-            ) : (
-              <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
-                <BadgeShimmer 
-                  variant="danger" 
-                  trigger="hover" 
-                  duration={600}
-                  intensity={0.7}
-                >
-                  <span className="badge badge-miss">
-                    <DisasterMissIcon surprise={surprise} />
-                    {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
-                    {/* Rose-gold chrome effect for disaster misses (Y3K liquid metal aesthetic) */}
-                    {surprise <= -15 ? (
-                      <ChromeNumber variant="rose-gold" trigger="both" interval={4000} emboss>
-                        <SurpriseScramble 
-                          value={surprise} 
-                          delay={animationIndex * 50 + 200} 
-                          duration={600}
-                          glowColor="#ef4444"
-                        />
-                      </ChromeNumber>
-                    ) : (
-                      <SurpriseCountUp value={surprise} delay={animationIndex * 50 + 200} duration={500} />
-                    )}
-                  </span>
-                </BadgeShimmer>
-              </DisasterMiss>
+                  </BadgeShimmer>
+                </DisasterMiss>
+              </ResultPulseWrapper>
             )}
           </div>
         ) : earning.beatOdds ? (

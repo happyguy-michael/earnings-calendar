@@ -18514,3 +18514,132 @@ html:not(.light) .ink-splash {
 .ink-blot-container:hover::before {
   opacity: 1;
 }
+
+/* ============================================
+   ResultPulse - Earnings Result Announcement
+   ============================================ */
+
+/* Container - positioned over the result badge */
+.result-pulse {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+/* Wrapper for relative positioning */
+.result-pulse-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Individual pulse ring */
+.result-pulse-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--pulse-color);
+  width: 20px;
+  height: 20px;
+  box-shadow: 
+    0 0 8px var(--pulse-glow),
+    0 0 16px var(--pulse-glow),
+    inset 0 0 4px var(--pulse-glow);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: result-pulse-expand var(--pulse-duration) cubic-bezier(0.22, 1, 0.36, 1) var(--ring-delay) forwards;
+}
+
+/* Expansion animation */
+@keyframes result-pulse-expand {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: calc(0.9 - var(--ring-index) * 0.15);
+  }
+  50% {
+    opacity: calc(0.6 - var(--ring-index) * 0.15);
+  }
+  100% {
+    transform: scale(calc(1 + var(--pulse-radius) / 20));
+    opacity: 0;
+  }
+}
+
+/* Intensity variations via border width */
+.result-pulse[style*="--pulse-intensity: 1.5"] .result-pulse-ring {
+  border-width: 3px;
+}
+
+.result-pulse[style*="--pulse-intensity: 1.2"] .result-pulse-ring {
+  border-width: 2.5px;
+}
+
+/* Beat-specific enhancements */
+.result-pulse[style*="beat"] .result-pulse-ring {
+  filter: brightness(1.1);
+}
+
+/* Miss-specific - slightly more dramatic */
+.result-pulse[style*="miss"] .result-pulse-ring {
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Light mode adjustments */
+html.light .result-pulse-ring {
+  box-shadow: 
+    0 0 6px var(--pulse-glow),
+    0 0 12px var(--pulse-glow);
+}
+
+/* Center dot flash for extra impact */
+.result-pulse::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pulse-color);
+  box-shadow: 0 0 12px var(--pulse-color);
+  opacity: 0;
+  animation: result-pulse-flash calc(var(--pulse-duration) * 0.3) ease-out forwards;
+}
+
+@keyframes result-pulse-flash {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion - simple fade instead */
+@media (prefers-reduced-motion: reduce) {
+  .result-pulse-ring,
+  .result-pulse::before {
+    animation: none !important;
+  }
+  
+  .result-pulse {
+    opacity: 0;
+    animation: result-pulse-simple 500ms ease-out forwards;
+  }
+  
+  @keyframes result-pulse-simple {
+    0% { opacity: 0; }
+    30% { opacity: 0.5; }
+    100% { opacity: 0; }
+  }
+}
