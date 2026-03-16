@@ -114,6 +114,7 @@ import { BreathingCard } from '@/components/BreathingCard';
 import { ScrollPerspective } from '@/components/ScrollPerspective';
 import { ChromeNumber } from '@/components/ChromeNumber';
 import { GradientWipe } from '@/components/GradientWipe';
+import { EchoShadowHover } from '@/components/EchoShadowHover';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -217,7 +218,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   const isMonsterBeat = hasResult && earning.result === 'beat' && surprise >= 15;
   const isDisasterMiss = hasResult && earning.result === 'miss' && surprise <= -15;
 
-  // Wrapper component - either AnimatedGradientBorder or fragment
+  // Wrapper component - AnimatedGradientBorder for exceptional results, EchoShadowHover for pending
   const CardWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isMonsterBeat) {
       return (
@@ -249,6 +250,23 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         >
           {children}
         </AnimatedGradientBorder>
+      );
+    }
+    // Pending cards get subtle echo shadow effect on hover
+    if (isPending) {
+      return (
+        <EchoShadowHover
+          layers={3}
+          maxOffset={5}
+          direction="diagonal"
+          stagger={35}
+          duration={300}
+          glow={isTodayPending}
+          glowColor="rgba(59, 130, 246, 0.15)"
+          className="pending-echo-wrapper"
+        >
+          {children}
+        </EchoShadowHover>
       );
     }
     return <>{children}</>;

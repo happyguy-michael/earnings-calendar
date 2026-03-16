@@ -18643,3 +18643,163 @@ html.light .result-pulse-ring {
     100% { opacity: 0; }
   }
 }
+
+/* ============================================
+   EchoShadowHover - Layered Afterimage Effect
+   ============================================
+   
+   Creates a stacked shadow/echo effect on hover,
+   inspired by tectonic stacked tooltips and ghost text.
+   Each layer expands outward with decreasing opacity,
+   creating depth and motion without 3D transforms.
+*/
+
+.echo-shadow-hover {
+  position: relative;
+  isolation: isolate;
+}
+
+.echo-shadow-layers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.echo-shadow-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid var(--echo-color, rgba(255, 255, 255, 0.1));
+  background: transparent;
+  opacity: var(--echo-opacity, 0);
+  transform: 
+    translateX(var(--echo-x, 0)) 
+    translateY(var(--echo-y, 0)) 
+    scale(var(--echo-scale, 1));
+  transition: 
+    opacity var(--echo-duration, 400ms) var(--spring-smooth) var(--echo-delay, 0ms),
+    transform var(--echo-duration, 400ms) var(--spring-smooth) var(--echo-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+/* Staggered shadow colors - each layer slightly different */
+.echo-shadow-layer-1 {
+  box-shadow: 0 0 0 1px var(--echo-color, rgba(255, 255, 255, 0.08));
+}
+
+.echo-shadow-layer-2 {
+  box-shadow: 0 0 0 1px var(--echo-color, rgba(255, 255, 255, 0.05));
+}
+
+.echo-shadow-layer-3 {
+  box-shadow: 0 0 0 1px var(--echo-color, rgba(255, 255, 255, 0.03));
+}
+
+.echo-shadow-layer-4 {
+  box-shadow: 0 0 0 1px var(--echo-color, rgba(255, 255, 255, 0.02));
+}
+
+/* Content layer */
+.echo-shadow-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glow layer */
+.echo-shadow-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    var(--echo-glow-color, rgba(59, 130, 246, 0.2)) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 400ms var(--spring-smooth);
+  pointer-events: none;
+  z-index: -2;
+}
+
+.echo-shadow-glow.active {
+  opacity: 1;
+}
+
+/* Card preset styling */
+.echo-shadow-card {
+  border-radius: 12px;
+}
+
+/* Pulsing echo effect */
+.pulsing-echo {
+  position: relative;
+}
+
+.pulsing-echo-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1px solid var(--pulse-color, rgba(59, 130, 246, 0.3));
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+}
+
+.pulsing-echo.pulsing .pulsing-echo-ring {
+  animation: pulsing-echo-expand 600ms var(--spring-smooth) forwards;
+}
+
+.pulsing-echo-ring-2 {
+  animation-delay: 100ms !important;
+}
+
+@keyframes pulsing-echo-expand {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+/* Light mode adjustments */
+html.light .echo-shadow-layer {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+html.light .echo-shadow-layer-1 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+html.light .echo-shadow-layer-2 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+html.light .echo-shadow-layer-3 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+html.light .echo-shadow-layer-4 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .echo-shadow-layer {
+    transition: opacity 200ms ease !important;
+    transform: none !important;
+  }
+  
+  .pulsing-echo-ring {
+    animation: none !important;
+  }
+  
+  .pulsing-echo.pulsing .pulsing-echo-ring {
+    opacity: 0.3;
+    transition: opacity 200ms ease;
+  }
+}
