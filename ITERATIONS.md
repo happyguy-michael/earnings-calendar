@@ -1,3 +1,65 @@
+## 2026-03-16 — DealReveal: Casino-Style Card Dealing Animation
+
+**Inspiration:** FreeFrontend's "Scroll-Driven Masonry Reveal" pattern where content cards appear to be "dealt" onto the screen. Also inspired by:
+- Physical card-dealing motion from casino/poker games
+- iOS App Library card stacking animations
+- Trello's card drag-and-drop physics
+- 2026 "tactile UI" trend emphasizing physical metaphors
+
+**What I built:**
+- New `DealReveal` component family — cards animate in like they're being dealt from a deck:
+
+  **Core Technique:**
+  - 3D rotation (rotateX, rotateY, rotateZ) creates "thrown card" trajectory
+  - Dynamic shadows during flight enhance depth perception
+  - Spring easing for natural "landing" settle
+  - Configurable deal direction (left, right, top, bottom, center)
+
+  **Component Family:**
+  - `DealReveal` — Individual card dealing wrapper with stagger support
+  - `DealRevealContainer` — Automatically coordinates stagger timing for children
+  - `DealStack` — Visual deck pile that deals cards out one by one
+  - `useIsDealt` hook — Simple dealt state tracking for custom implementations
+
+  **Configuration Options:**
+  - `dealFrom`: Direction cards fly in from (left/right/top/bottom/center)
+  - `staggerDelay`: Time between each card (default 50ms)
+  - `rotationIntensity`: How much 3D rotation (degrees)
+  - `travelDistance`: How far cards travel before landing (px)
+  - `trigger`: Animate on scroll intersection or mount
+  - `animateShadow`: Dynamic elevation shadows during flight
+
+  **Visual Features:**
+  - Cards appear slightly elevated with dramatic shadows during flight
+  - 3D rotation gives "thrown from deck" feeling
+  - Spring overshoot on landing creates satisfying settle
+  - Stagger creates cascade "dealing" pattern
+
+  **Technical Details:**
+  - CSS Scroll-Driven Animations with IntersectionObserver fallback
+  - GPU-accelerated transforms (translate3d, rotate3d)
+  - Full `prefers-reduced-motion` support
+  - Configurable spring easing: `cubic-bezier(0.34, 1.56, 0.64, 1)`
+
+  **Use Cases:**
+  - Initial page load reveals
+  - Filter/sort result animations
+  - Notification/toast stacks
+  - Card-based UI onboarding
+  - Queue/list item reveals
+
+**Why This Pattern:**
+The card-dealing metaphor is universally understood — users instinctively know what it means when cards are "dealt" to them. It implies chance, reveals, and anticipation — perfect for an earnings calendar where results are uncertain. The physical motion creates emotional connection that static fades lack.
+
+**Reference:**
+- https://freefrontend.com/css-scroll-driven/ ("Scroll-Driven Masonry Reveal")
+- iOS App Library stacking behavior
+- Path/Tinder card physics
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — ConfidenceHeartbeat: ECG-Style Beat Probability Visualization
 
 **Inspiration:** GroovyWeb's "UI/UX Design Trends for AI-First Apps in 2026" — specifically the "Confidence Indicators" trend where UI elements communicate certainty visually, not just numerically. Also inspired by medical monitors/ECG displays, trading terminal "vital signs" indicators, and the biological metaphor where heartbeat rhythm represents system confidence.
