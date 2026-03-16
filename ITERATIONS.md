@@ -1,3 +1,86 @@
+## 2026-03-16 — RadialActionMenu: Trigonometric Circular FAB
+
+**Inspiration:** FreeFrontend's "76 UI Micro Interaction Examples" featuring "Trigonometric Radial Popover Menu" — a circular menu that uses native CSS math instead of heavy JavaScript positioning. Also inspired by the classic Path app's iconic radial menu, iOS Assistive Touch, and Telegram's attachment picker.
+
+**What I built:**
+- New `RadialActionMenu` component — orbital FAB with CSS trigonometry:
+
+  **Core Technique:**
+  - Uses CSS trigonometric functions (sin/cos) for button positioning
+  - Actions expand in a configurable arc (default 140°)
+  - Spring physics timing for organic, bouncy motion
+  - Staggered animation with calculated delays per button
+
+  **Configuration Options:**
+  - `arcSpan`: Degrees of the arc (default 140°)
+  - `startAngle`: Where the arc begins (default -70° = upper arc)
+  - `radius`: Distance from center to action buttons (default 90px)
+  - `position`: Screen position (bottom-right/left/center)
+  - `hideOnScroll`: Auto-hide when scrolling down
+  - `hideOnDesktop`: Mobile-only visibility
+
+  **Visual Features:**
+  - Semi-circular button arrangement (thumb-friendly)
+  - Labels that appear beside buttons with smart positioning
+  - Colored glow shadows matching action button colors
+  - Backdrop blur when menu is open
+  - Pulse ring on main button (idle state hint)
+  - Rotation animation on main icon (plus → X)
+
+  **Color Variants:**
+  - `blue`, `green`, `amber`, `red`, `purple`, `default`
+  - Each with matching glow and shadow colors
+
+  **Included Icons:**
+  - `RadialIcons.Share`, `RadialIcons.Filter`, `RadialIcons.Search`
+  - `RadialIcons.Calendar`, `RadialIcons.Star`, `RadialIcons.Refresh`
+
+  **Accessibility:**
+  - Full keyboard navigation (Tab to move, Enter/Space to activate)
+  - Focus trapping when open
+  - Screen reader labels on all buttons
+  - `aria-expanded` state management
+  - Escape key to close
+
+  **Motion & Performance:**
+  - Full `prefers-reduced-motion` support (instant transitions)
+  - GPU-accelerated transforms
+  - Spring easing: `cubic-bezier(0.34, 1.56, 0.64, 1)`
+  - Haptic feedback on toggle and selection
+  - Staggered entry (40ms between buttons)
+  - Reverse stagger on exit
+
+**Use Cases:**
+- Mobile quick actions (current FloatingActionMenu alternative)
+- Context menus for cards/items
+- Share/social actions
+- Settings/preferences access
+- Navigation shortcuts
+
+**Why Radial > Vertical:**
+- Better thumb reachability on mobile (arc follows natural thumb sweep)
+- More actions visible at once without scrolling
+- Feels more premium/playful
+- Classic mobile pattern (Path, iOS, Samsung OneUI)
+- Visual hierarchy through position (most important at arc peak)
+
+**Technical Notes:**
+- Pure React + CSS (no animation libraries)
+- Positions calculated with `Math.cos()`/`Math.sin()` in useMemo
+- Inline styles for dynamic positioning (more efficient than CSS variables for this pattern)
+- Labels auto-position based on angle (left/right of button)
+- Light mode adjustments via CSS selectors
+
+**Reference:**
+- https://freefrontend.com/ui-micro-interaction/ ("Trigonometric Radial Popover Menu")
+- https://css-tricks.com/using-trigonometry-in-css/
+- Path app design archive
+- iOS Human Interface Guidelines: Assistive Touch
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — ViewportScrollSpotlight: Automatic Reading Focus via Scroll
 
 **Inspiration:** FreeFrontend's 2026 collection of CSS scroll-driven animations, particularly the "Scroll-Driven Masonry Reveal" pattern that calculates individual progress for each list item as it enters the viewport. Also inspired by the "attention-aware interfaces" trend — UIs that naturally guide focus based on context.
