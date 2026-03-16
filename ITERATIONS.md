@@ -1,3 +1,62 @@
+## 2026-03-16 — ResultPulse: Radar-Style Result Announcement Effect
+
+**Inspiration:** FreeFrontend's "76 UI Micro Interaction Examples" — specifically the radar ping pattern used for notification badges. Also inspired by:
+- iOS notification ripple effects
+- Achievement unlock animations in gaming UIs
+- Medical monitor alert pulses
+- Sonar/radar ping visualizations
+
+**What I built:**
+- New `ResultPulse` component family — expanding ring animation for earnings result reveals:
+
+  **Core Technique:**
+  - Multiple concentric rings expand outward with staggered timing
+  - Color-coded for result type (green for beat, red for miss)
+  - Intensity scales with surprise magnitude (bigger beats = larger rings)
+  - Center dot flash provides initial impact point
+  - Single-burst animation (not looping) for clean UX
+
+  **Component Family:**
+  - `ResultPulse` — Core expanding ring animation with configurable intensity
+  - `ResultPulseWrapper` — Auto-triggers pulse when result changes from undefined to defined
+  - `useResultPulse` — Hook for manual pulse control in custom implementations
+
+  **Configuration Options:**
+  - `result`: Result type (beat/miss/meet) — determines color
+  - `surprise`: Surprise percentage — determines intensity multiplier
+  - `rings`: Number of concentric rings (default: 3)
+  - `duration`: Animation duration in ms (default: 1200ms)
+  - `maxRadius`: Maximum expansion radius (default: 80px)
+
+  **Visual Features:**
+  - Multi-layer ring effect with staggered delays
+  - Box-shadow glow matching result color
+  - Center point flash animation for initial impact
+  - Intensity multiplier (0.7x to 1.5x) based on surprise magnitude
+  - Light/dark mode adaptive styling
+
+  **Technical Details:**
+  - Pure CSS animations for GPU acceleration
+  - Intersection Observer not needed (triggered by state change)
+  - Single burst with auto-cleanup
+  - Full `prefers-reduced-motion` support (simple fade fallback)
+
+  **Integration:**
+  - Wrapped both beat and miss badges with ResultPulseWrapper
+  - Automatically pulses when new result data arrives
+  - Complements existing ExceptionalGlow and DisasterMiss effects
+
+**Impact:** New earnings results now have a satisfying "announcement" moment. The radar-style pulse draws attention to fresh data without being distracting on repeat views. The intensity scaling means monster beats (≥15%) get dramatic multi-ring pulses, while minor surprises get subtle single-ring feedback.
+
+**Reference:**
+- FreeFrontend UI Micro Interactions: https://freefrontend.com/ui-micro-interaction/
+- Tailwind animate-ping pattern
+- iOS notification ripple aesthetics
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — DealReveal: Casino-Style Card Dealing Animation
 
 **Inspiration:** FreeFrontend's "Scroll-Driven Masonry Reveal" pattern where content cards appear to be "dealt" onto the screen. Also inspired by:
