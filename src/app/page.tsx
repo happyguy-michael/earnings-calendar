@@ -98,6 +98,7 @@ import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
+import { AutoScrollToLive } from '@/components/AutoScrollToLive';
 import { ProgressiveBlur } from '@/components/ProgressiveBlur';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
@@ -153,10 +154,48 @@ function CircularProgress({ value, size = 40, color = '#22c55e' }: { value: numb
   );
 }
 
+// Helper to check if an earning is imminent (within threshold minutes)
+function isEarningImminent(earning: Earning, thresholdMinutes = 15): boolean {
+  if (earning.eps !== undefined && earning.eps !== null) return false; // Already reported
+  
+  const now = new Date();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  // Parse earning date
+  const earningDate = new Date(earning.date);
+  earningDate.setHours(0, 0, 0, 0);
+  
+  // Not today? Not imminent
+  if (earningDate.getTime() !== today.getTime()) return false;
+  
+  // Parse time and calculate report datetime
+  if (!earning.time) return false;
+  
+  const reportTime = new Date(earning.date);
+  if (earning.time === 'pre') {
+    // Pre-market / Before market open: ~9:30 AM ET = 9:30 AM
+    reportTime.setHours(9, 30, 0, 0);
+  } else if (earning.time === 'post') {
+    // Post-market / After market close: ~4:00 PM ET
+    reportTime.setHours(16, 0, 0, 0);
+  } else {
+    // Unknown time, assume not imminent
+    return false;
+  }
+  
+  const diffMs = reportTime.getTime() - now.getTime();
+  const diffMinutes = diffMs / (1000 * 60);
+  
+  // Imminent if within threshold and not in the past (more than 30 min ago)
+  return diffMinutes <= thresholdMinutes && diffMinutes >= -30;
+}
+
 function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earning; isToday?: boolean; animationIndex?: number }) {
   const hasResult = earning.eps !== undefined && earning.eps !== null;
   const isPending = !hasResult;
   const isTodayPending = isToday && isPending;
+  const isImminent = isEarningImminent(earning);
   const beatStreak = getBeatStreak(earning.ticker);
   
   let surprise = 0;
@@ -241,7 +280,10 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
     >
     <QuickPeek data={quickPeekData}>
       <ContextualCardActions ticker={earning.ticker} company={earning.company}>
-      <div className="earnings-card-wrapper">
+      <div 
+        className="earnings-card-wrapper"
+        data-imminent={isImminent ? 'true' : undefined}
+      >
         {/* Imminent glow for earnings reporting within 15 minutes */}
         {isTodayPending && (
           <ImminentGlow 
@@ -764,6 +806,18 @@ export default function Home() {
       
       {/* Dynamic favicon badge with pending count */}
       <DynamicFavicon count={pendingToday} animate={true} />
+      
+      {/* Auto-scroll to imminent/live earnings */}
+      <AutoScrollToLive
+        selector='[data-imminent="true"]'
+        threshold={15}
+        showButton={true}
+        cooldown={60000}
+        topOffset={140}
+        buttonPosition="bottom-right"
+        buttonLabel="Jump to Live"
+        oncePerSession={false}
+      />
       
       {/* Print styles - clean layout for printing (⌘⇧P) */}
       <PrintStyles />
