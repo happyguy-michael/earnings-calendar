@@ -1,3 +1,56 @@
+## 2026-03-16 — AutoScrollToLive: Smart Auto-Scroll to Imminent Earnings
+
+**Inspiration:** Trading terminals and live dashboards that automatically focus on the most urgent/active content. Also inspired by:
+- YouTube Live's auto-scroll to live portion
+- Bloomberg Terminal's active ticker highlighting
+- Notification center patterns (newest/most relevant at top)
+- 2024/2025 trend: "Ambient awareness" — UI that stays useful passively
+
+**What I built:**
+- New `AutoScrollToLive` component family — intelligent auto-scroll for live/imminent content:
+
+  **Core Features:**
+  - Automatically scrolls to earnings within 15 minutes of reporting
+  - Shows "Jump to Live" floating button when live content is off-screen
+  - Respects user scroll intention (won't hijack during active scrolling)
+  - Configurable cooldown (default 60s) to prevent jarring repeated scrolls
+  - `oncePerSession` option for single initial scroll
+  
+  **Component Family:**
+  - `AutoScrollToLive` — Main component with floating button
+  - `SnapToLiveBadge` — Compact header-embedded variant
+  - `isEarningImminent()` — Helper to check imminent status
+  
+  **Configuration Options:**
+  - `selector`: CSS selector for live elements (default: `[data-imminent="true"]`)
+  - `threshold`: Minutes before report to consider "imminent" (default: 15)
+  - `showButton`: Show floating button when off-screen
+  - `cooldown`: Milliseconds between auto-scrolls
+  - `topOffset`: Accounts for sticky header height
+  - `buttonPosition`: 'bottom-left' | 'bottom-right' | 'bottom-center'
+  - `buttonLabel`: Custom button text
+
+  **Technical Details:**
+  - Uses `data-imminent` attribute on earnings cards
+  - Intersection Observer for visibility detection
+  - Debounced scroll detection (150ms) for intent recognition
+  - Automatic re-check every 30s as earnings become imminent
+  - GPU-accelerated button animations
+  - Full `prefers-reduced-motion` support
+
+  **Integration:**
+  - Added `isEarningImminent()` helper function in page.tsx
+  - Earnings cards now include `data-imminent="true"` attribute when applicable
+  - AutoScrollToLive added to main page near other global components
+
+**Use Case:** Users who leave the earnings calendar open during market hours get automatic focus on the most time-sensitive earnings without manual navigation. The UI "comes alive" and guides attention to what matters most.
+
+**Impact:** Transforms the calendar from a passive reference tool into an active assistant that helps users stay on top of imminent earnings. Particularly valuable during busy earnings seasons when multiple companies report throughout the day.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — BalloonTooltip: Morphing Dot-to-Content Tooltip Animation
 
 **Inspiration:** FreeFrontend's "Animate Tooltip" pattern — tooltips that start as a tiny dot and expand outward while morphing from circle to rounded rectangle. Also inspired by:
