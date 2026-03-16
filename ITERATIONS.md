@@ -1,3 +1,60 @@
+## 2026-03-16 — ConfidenceHeartbeat: ECG-Style Beat Probability Visualization
+
+**Inspiration:** GroovyWeb's "UI/UX Design Trends for AI-First Apps in 2026" — specifically the "Confidence Indicators" trend where UI elements communicate certainty visually, not just numerically. Also inspired by medical monitors/ECG displays, trading terminal "vital signs" indicators, and the biological metaphor where heartbeat rhythm represents system confidence.
+
+**What I built:**
+- New `ConfidenceHeartbeat` component family — ECG-style heartbeat that communicates beat probability through rhythm and intensity:
+
+  **Core Technique:**
+  - SVG path-based ECG waveform that varies based on confidence level
+  - Pulse rate scales with probability (high confidence = fast, strong beats)
+  - Color gradient from red (low) → amber (medium) → green (high)
+  - Animated glow and flash effects synchronized with pulse rhythm
+
+  **Confidence Levels:**
+  - `>80%`: Strong path, fast pulse (800ms), green glow, "Strong" label
+  - `60-80%`: Strong path, normal pulse (1000ms), light green
+  - `45-60%`: Normal path, slower pulse (1200ms), amber, "Uncertain" label
+  - `30-45%`: Weak path, slow pulse (1500ms), orange, "Weak" label
+  - `<30%`: Flatline path, very slow pulse (2000ms), red, "Critical" label
+
+  **Component Family:**
+  - `ConfidenceHeartbeat` — Full visualization with grid, glow, label
+  - `HeartbeatBadge` — Badge variant with heartbeat + percentage (sm/md/lg)
+  - `HeartbeatInline` — Compact inline indicator for tables/lists
+
+  **Visual Features:**
+  - Faint ECG grid background for medical monitor aesthetic
+  - Multi-layer glow effect (main line + shadow + pulse dot)
+  - Flash overlay effect on each beat cycle
+  - Gradient line with faded edges for seamless look
+  - Color-matched border on badge variant with outer glow
+
+  **Technical Details:**
+  - Intersection Observer for viewport-triggered animation
+  - Phase-based pulse animation (3-phase cycle)
+  - Amplitude scaling based on confidence level
+  - GPU-accelerated via CSS animations
+  - Full `prefers-reduced-motion` support
+  - Light/dark mode adaptive styling
+
+  **Integration:**
+  - Replaced `OddsGauge` with `HeartbeatBadge` for pending earnings
+  - ECG rhythm provides at-a-glance confidence assessment
+  - Biological metaphor feels more intuitive than abstract gauges
+
+**Impact:** Beat probability now communicates through rhythm, not just numbers. High-confidence pending earnings have strong, confident heartbeats that feel alive and certain. Low-confidence earnings have weak, uncertain pulses that signal caution. This biological metaphor is more intuitive than abstract gauges — users instinctively understand what a strong vs weak heartbeat means.
+
+**Reference:**
+- GroovyWeb 2026 UX Trends: https://www.groovyweb.co/blog/ui-ux-design-trends-ai-apps-2026
+- Medical monitor / ECG aesthetic
+- Trading terminal vital signs indicators
+- "Confidence Indicators" pattern from AI-first design
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — RadialActionMenu: Trigonometric Circular FAB
 
 **Inspiration:** FreeFrontend's "76 UI Micro Interaction Examples" featuring "Trigonometric Radial Popover Menu" — a circular menu that uses native CSS math instead of heavy JavaScript positioning. Also inspired by the classic Path app's iconic radial menu, iOS Assistive Touch, and Telegram's attachment picker.
