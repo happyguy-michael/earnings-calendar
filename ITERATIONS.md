@@ -1,3 +1,69 @@
+## 2026-03-17 — FocusSpotlight: Premium Keyboard Focus Indicator
+
+**Inspiration:** Accessibility-first design that doesn't sacrifice aesthetics. Researched via:
+- Linear.app's subtle focus states with glow effects
+- Stripe Dashboard keyboard navigation patterns
+- Apple's focus-visible ring with spring animation
+- Vercel's accessible-but-beautiful focus indicators
+- WCAG 2.2 focus appearance requirements
+
+**What I built:**
+- New `FocusSpotlight` component family — premium keyboard focus indicator that makes tabbing through cards feel as delightful as hovering:
+
+  **Core Features:**
+  - Animated spotlight/glow that scales in when element receives keyboard focus
+  - Ring expands from center with spring physics (cubic-bezier: 0.34, 1.56, 0.64, 1)
+  - Optional pulse effect on focus arrival for extra visual feedback
+  - Works with :focus-visible (keyboard only, not triggered by mouse clicks)
+  - Theme-aware colors (indigo in dark mode, adjusted for light mode)
+
+  **Component Family:**
+  - `FocusSpotlight` — Main wrapper with animated focus ring and spotlight glow
+  - `FocusSpotlightCard` — Card variant with integrated hover scale
+  - `FocusSpotlightGlobal` — Global styles enhancing all focusable elements
+  - `useFocusSpotlightStyle` — Hook for CSS-in-JS integration
+
+  **Configuration Options:**
+  - `borderRadius`: Match element's border radius
+  - `variant`: 'default' | 'success' | 'warning' | 'danger' for contextual colors
+  - `ringWidth`: Focus ring width in pixels
+  - `glowRadius`: Spotlight glow radius
+  - `pulseOnFocus`: Enable/disable arrival pulse animation
+  - `offset`: Ring offset from element edge
+  - `ringColor` / `glowColor`: Custom color overrides
+
+  **Technical Details:**
+  - Uses native :focus-visible for keyboard-only detection
+  - Spring animation via cubic-bezier for natural movement
+  - GPU-accelerated transforms (scale, opacity)
+  - Full `prefers-reduced-motion` support (instant reveal, no animation)
+  - Injects global styles dynamically via useEffect
+
+  **Accessibility:**
+  - Focus indicator exceeds WCAG contrast requirements
+  - Visible even on busy/colorful backgrounds due to glow
+  - Reduced motion users get instant visibility without animation
+  - Makes keyboard navigation a first-class citizen
+
+**Integration:**
+- Added `FocusSpotlightGlobal` to main page for app-wide enhanced focus
+- Wrapped earnings cards with `FocusSpotlight` component
+- Variant colors match card state (success for beats, danger for misses, default for pending)
+
+**Use Cases:**
+- Keyboard-only users navigating through earnings cards
+- Screen reader users with some vision who rely on focus indicators
+- Power users who prefer keyboard over mouse
+- Accessibility compliance for enterprise users
+
+**Visual Effect:** When tabbing to an earnings card, a soft spotlight glows outward with a spring bounce, accompanied by a brief pulse ring that expands and fades. The effect is subtle but unmistakable, making keyboard navigation feel premium rather than utilitarian.
+
+**Impact:** Transforms keyboard navigation from a "fallback" experience to a first-class interaction. Users who tab through the interface now get visual feedback as polished as the cursor effects.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — PriceSpike: Dramatic Price Movement Visualization
 
 **Inspiration:** Financial TV broadcasts, stock ticker animations, and the dramatic reveal moments on ESPN/Bloomberg when numbers are announced. Researched via:
