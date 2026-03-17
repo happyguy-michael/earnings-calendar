@@ -1,3 +1,66 @@
+## 2026-03-17 — OdometerValue: Slot-Machine Rolling Digit Animation
+
+**Inspiration:** Classic mechanical counters and premium financial data visualization. Researched via:
+- Bloomberg Terminal price tickers with rolling numbers
+- FreeFrontend's "odometer.js" patterns and "neumorphic digital clock with vertical sliding"
+- Classic car odometers and mechanical counters
+- Slot machine reels settling into place with spring physics
+- Path/Apple stock app number reveals
+
+**What I built:**
+- New `OdometerValue` component family — slot-machine style digit rolling animation:
+
+  **Core Features:**
+  - Each digit rolls independently like a mechanical counter
+  - Staggered animation from right to left (rightmost digit settles first)
+  - Physics-based spring easing for natural settle
+  - Configurable spin count for dramatic reveals
+  - Direction-aware animation (rolls up for increases, down for decreases)
+
+  **Component Family:**
+  - `OdometerValue` — Base component with full configuration
+  - `OdometerCurrency` — Pre-configured for currency display (e.g., $1.23)
+  - `OdometerPercent` — Pre-configured for percentages with +/- sign
+  - `OdometerEPS` — Auto-colors based on beat/miss vs estimate
+
+  **Configuration Options:**
+  - `value`: Numeric value to display
+  - `decimals`: Number of decimal places
+  - `prefix` / `suffix`: Surrounding characters ($, %, etc.)
+  - `size`: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  - `variant`: 'default' | 'success' | 'danger' | 'muted'
+  - `duration`: Animation duration per digit (default: 800ms)
+  - `stagger`: Delay between digit animations (default: 40ms)
+  - `spins`: Full rotations before settling (default: 1)
+  - `direction`: 'up' | 'down' | 'auto'
+
+  **Technical Details:**
+  - Digit strip with all 10 digits (0-9) for seamless rolling
+  - Transform-based animation for GPU acceleration
+  - Cubic-bezier(0.22, 1, 0.36, 1) for smooth deceleration
+  - Extra spins for leftmost digits (bigger numbers feel "heavier")
+  - Intersection Observer triggers animation on viewport entry
+  - Special handling for decimal points and negative signs
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (instant display)
+  - Text remains readable without animation
+  - Animation is purely decorative enhancement
+
+**Integration:**
+- Replaced count-up animation in `EPSComparisonBadge` with `OdometerValue`
+- EPS values now roll into place with mechanical counter aesthetic
+- 650ms duration with 45ms stagger creates satisfying cascade
+- 1.2 spins gives slight "overshoot and settle" feel
+
+**Visual Effect:** When EPS values appear, each digit tumbles into place independently like a vintage gas pump or slot machine. The rightmost digits settle first, creating a natural cascade effect. The spring physics make each digit slightly overshoot and bounce back, giving a satisfying mechanical feel.
+
+**Impact:** Transforms static numbers into dynamic reveals. The premium "financial terminal" aesthetic reinforces the earnings data theme. Numbers feel more "live" and intentional rather than just appearing.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — DynamicShadow: Cursor-Aware Light Source Shadow System
 
 **Inspiration:** Physical shadow behavior where light sources affect shadow direction. Researched via:
