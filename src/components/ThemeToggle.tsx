@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useToast } from './Toast';
 import { useAudioFeedback } from './AudioFeedback';
+import { SquishPress } from './SquishPress';
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
@@ -60,6 +61,12 @@ export function ThemeToggle() {
   }
 
   return (
+    <SquishPress 
+      intensity={0.1} 
+      direction="both" 
+      spring="bouncy" 
+      hoverScale={1.05}
+    >
     <button
       onClick={toggleTheme}
       className={`theme-toggle ${isDark ? 'dark' : 'light'}`}
@@ -113,5 +120,6 @@ export function ThemeToggle() {
         </div>
       </div>
     </button>
+    </SquishPress>
   );
 }

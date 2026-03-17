@@ -1,4 +1,52 @@
 
+## 2026-03-17 — SquishPress Component (Tactile Gummy Press Effect)
+
+**Inspiration:** Elastic SVG Morphing Form Controls (Dribbble 2025), iOS button press feedback, Josh Comeau's CSS springs article, and the "gummy UI" trend where elements squish with satisfying physics when pressed.
+
+**What was added:**
+- New `SquishPress` component - tactile "gummy" press effect using native CSS spring physics
+- Features:
+  - Squishes down with elastic deformation when pressed
+  - Bounces back with physics-based spring animation via CSS `linear()`
+  - Directional squish: vertical (squishes Y), horizontal (squishes X), or both (uniform)
+  - Four spring presets: `snappy`, `bouncy`, `elastic`, `smooth`
+  - Optional subtle rotation based on press position (organic feel)
+  - Touch-friendly with proper touch events
+  - Respects `prefers-reduced-motion` preference
+  - Hardware-accelerated transforms
+- Variants:
+  - `SquishPress` - base wrapper component
+  - `SquishButton` - pre-styled button with squish effect
+  - `SquishCard` - card wrapper with subtle press feedback
+  - `SquishBadge` - chip/badge with bouncy horizontal squish
+  - `SquishIcon` - circular icon button with elastic feel
+
+**Integration:**
+- Applied to `ThemeToggle` (dark/light mode switch)
+- Applied to `MotionToggle` (animation preference toggle)
+- Applied to `HapticToggle` (haptic feedback toggle)
+- Applied to `AudioToggle` (UI sounds toggle)
+- All header toolbar buttons now have satisfying press feedback
+
+**Technical notes:**
+- Uses CSS `var(--spring-*)` timing functions (native spring physics)
+- Quick 120ms press-down, slower physics-based release
+- Transform origin at center for balanced squish
+- Will-change optimization during interaction
+- Graceful degradation on reduced-motion
+
+**Why it matters:**
+- Micro-interactions make UI feel alive and responsive
+- "Gummy" press effect is a 2025 trend (seen in Linear, iOS, Material 3)
+- Creates tactile feedback loop even without actual haptics
+- Small detail that makes the app feel premium and polished
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-16 — GradientWipe Component (Premium Content Reveal)
 
 **Inspiration:** Linear.app headline reveals, Stripe landing page text animations, Apple keynote presentations, and the 2024/2025 "cinematic UI" trend where content appears to be "painted in" rather than simply fading.

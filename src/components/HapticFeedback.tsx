@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { SquishPress } from './SquishPress';
 
 /**
  * HapticFeedback - Tactile feedback for mobile interactions
@@ -219,6 +220,7 @@ export function HapticToggle({
   };
 
   return (
+    <SquishPress intensity={0.1} direction="both" spring="snappy" hoverScale={1.08}>
     <button
       onClick={toggle}
       className={`haptic-toggle ${sizeClasses[size]} ${isEnabled ? 'active' : ''} ${className}`}
@@ -235,6 +237,7 @@ export function HapticToggle({
         </span>
       )}
     </button>
+    </SquishPress>
   );
 }
 

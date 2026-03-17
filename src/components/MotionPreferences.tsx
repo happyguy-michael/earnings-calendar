@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { SquishPress } from './SquishPress';
 
 type MotionLevel = 'full' | 'reduced' | 'none';
 
@@ -253,6 +254,7 @@ export function MotionToggle({ className = '', showLabel = false, size = 'md' }:
 
   return (
     <div className={`motion-toggle-wrapper ${className}`} style={{ position: 'relative' }}>
+      <SquishPress intensity={0.1} direction="both" spring="snappy" hoverScale={1.08}>
       <button
         onClick={cycleLevel}
         onMouseEnter={() => setShowTooltip(true)}
@@ -266,6 +268,7 @@ export function MotionToggle({ className = '', showLabel = false, size = 'md' }:
         {getIcon()}
         {showLabel && <span className="motion-toggle-label">{getLabel()}</span>}
       </button>
+      </SquishPress>
 
       {/* Tooltip */}
       {showTooltip && (

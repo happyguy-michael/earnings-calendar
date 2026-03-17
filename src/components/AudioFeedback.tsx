@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState, createContext, useContext, ReactNode } from 'react';
+import { SquishPress } from './SquishPress';
 
 /**
  * AudioFeedback - Subtle UI Sound Effects
@@ -368,6 +369,7 @@ export function AudioToggle({
   };
 
   return (
+    <SquishPress intensity={0.1} direction="both" spring="snappy" hoverScale={1.08}>
     <button
       onClick={toggle}
       className={`audio-toggle ${sizeClasses[size]} ${isEnabled ? 'active' : ''} ${className}`}
@@ -384,6 +386,7 @@ export function AudioToggle({
         </span>
       )}
     </button>
+    </SquishPress>
   );
 }
 
