@@ -1,3 +1,68 @@
+## 2026-03-17 — DynamicShadow: Cursor-Aware Light Source Shadow System
+
+**Inspiration:** Physical shadow behavior where light sources affect shadow direction. Researched via:
+- iOS Dynamic Island shadow behavior
+- Apple macOS window shadows that shift with interface state
+- Material Design's elevation system with dynamic light
+- 3D software viewport lighting concepts
+- Real-world shadow physics where shadows are cast opposite to light source
+
+**What I built:**
+- New `DynamicShadow` component family — shadows that respond to cursor position as if there's a light source following the mouse:
+
+  **Core Features:**
+  - Page-level cursor tracking as a unified "light source"
+  - Multi-layer shadows for realistic depth perception
+  - Shadow direction shifts based on light position relative to each element
+  - Smooth easing for natural shadow movement
+  - Configurable elevation levels with increasing shadow complexity
+
+  **Component Family:**
+  - `DynamicShadowProvider` — Global cursor tracking context
+  - `DynamicShadow` — Main wrapper with cursor-responsive shadows
+  - `DynamicShadowCard` — Pre-styled card variant
+  - `useDynamicShadow` — Hook for custom implementations
+  - `useLightSource` — Access global cursor/light position
+  - `DynamicShadowStyles` — Global style injection
+
+  **Configuration Options:**
+  - `elevation`: 'flat' | 'low' | 'medium' | 'high' | 'floating'
+  - `variant`: 'neutral' | 'success' | 'warning' | 'danger' | 'accent'
+  - `tintIntensity`: Color blending for variant shadows (0-1)
+  - `hoverElevation`: Elevation to transition to on hover
+  - `borderRadius`: Match element's border radius
+  - `hoverDuration`: Transition duration in ms
+
+  **Elevation Levels:**
+  - `flat`: 1 layer, 2px blur, 2px offset — subtle grounding
+  - `low`: 2 layers, 4-8px blur, 6px offset — slight elevation
+  - `medium`: 3 layers, 8-24px blur, 12px offset — standard cards
+  - `high`: 3 layers, 16-48px blur, 20px offset — prominent elements
+  - `floating`: 4 layers, 24-96px blur, 32px offset — modals/overlays
+
+  **Technical Details:**
+  - Cursor position normalized to viewport (0-1)
+  - Shadow offset calculated from light→element vector
+  - Slight downward bias for natural gravity feel
+  - GPU-accelerated via will-change: box-shadow
+  - Full prefers-reduced-motion support (static centered shadow)
+  - Smooth interpolation with configurable easing
+
+**Integration:**
+- Added `DynamicShadowProvider` to ClientProviders for app-wide light tracking
+- Wrapped reported earnings cards with DynamicShadow
+- Monster beats: high elevation + success (emerald) tinted shadows
+- Disaster misses: high elevation + danger (red) tinted shadows
+- Regular reported cards: medium elevation + subtle variant tinting
+
+**Visual Effect:** As you move the cursor across the page, all card shadows subtly shift direction as if a soft light follows your cursor. Hover over cards and they lift with shadows expanding beneath them. The effect is subtle but creates a cohesive "alive" feeling across the entire interface.
+
+**Impact:** Creates a unified lighting system that ties the entire interface together. The earnings calendar now feels more like a physical surface with consistent light behavior, making the UI feel premium and responsive.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — FocusSpotlight: Premium Keyboard Focus Indicator
 
 **Inspiration:** Accessibility-first design that doesn't sacrifice aesthetics. Researched via:
