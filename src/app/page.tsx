@@ -118,6 +118,7 @@ import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
 import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
+import { WeightShiftText } from '@/components/WeightShiftText';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1148,7 +1149,7 @@ export default function Home() {
                           </ValueChangeHighlight>
                         </NumberJolt>
                       </div>
-                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</div>
+                      <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</WeightShiftText>
                     </div>
                   </div>
                 </CursorGlowCard>
@@ -1186,7 +1187,7 @@ export default function Home() {
                           </ValueChangeHighlight>
                         </NumberJolt>
                       </div>
-                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</div>
+                      <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</WeightShiftText>
                     </div>
                   </div>
                 </CursorGlowCard>
@@ -1223,7 +1224,7 @@ export default function Home() {
                           </ValueChangeHighlight>
                         </NumberJolt>
                       </div>
-                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</div>
+                      <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</WeightShiftText>
                     </div>
                   </div>
                 </CursorGlowCard>
@@ -1262,7 +1263,7 @@ export default function Home() {
                         </NumberJolt>
                       </div>
                       <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
-                        Pending
+                        <WeightShiftText variant="subtle" trigger="hover">Pending</WeightShiftText>
                         {pendingCount > 0 && (
                           <PulseIndicator 
                             status="pending" 
