@@ -116,6 +116,7 @@ import { ChromeNumber } from '@/components/ChromeNumber';
 import { GradientWipe } from '@/components/GradientWipe';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
+import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -318,6 +319,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           duration={500}
           delay={50}
         >
+          <FocusSpotlight 
+            borderRadius={14} 
+            variant={hasResult ? (earning.result === 'beat' ? 'success' : 'danger') : 'default'}
+            glowRadius={16}
+            pulseOnFocus={true}
+          >
           <Link 
             href={`/report/${earning.ticker}`} 
             className={`earnings-row earnings-card-stagger ${isTodayPending ? 'today-pending' : ''}`}
@@ -465,6 +472,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           />
         ) : null}
         </Link>
+        </FocusSpotlight>
       </CardLightSweep>
       </CardWrapper>
         <div className="earnings-tooltip">
@@ -866,6 +874,9 @@ export default function Home() {
       
       {/* Premium grain texture overlay */}
       <GrainOverlay opacity={0.025} animate={true} blendMode="overlay" />
+      
+      {/* Premium keyboard focus styles for accessibility */}
+      <FocusSpotlightGlobal />
       
       {/* Keyboard shortcuts overlay */}
       <KeyboardShortcutsOverlay />
