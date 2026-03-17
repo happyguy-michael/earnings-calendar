@@ -117,6 +117,7 @@ import { GradientWipe } from '@/components/GradientWipe';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
+import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -221,37 +222,54 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   const isDisasterMiss = hasResult && earning.result === 'miss' && surprise <= -15;
 
   // Wrapper component - AnimatedGradientBorder for exceptional results, EchoShadowHover for pending
+  // DynamicShadow for reported results (cursor-aware shadows from light source)
   const CardWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isMonsterBeat) {
       return (
-        <AnimatedGradientBorder
-          colorPreset="beat"
-          borderWidth={2}
+        <DynamicShadow 
+          elevation="high" 
+          variant="success" 
+          tintIntensity={0.25}
+          hoverElevation="floating"
           borderRadius={14}
-          duration={4}
-          glowIntensity={0.35}
-          backgroundColor="transparent"
-          hoverOnly={false}
-          className="monster-beat-border"
         >
-          {children}
-        </AnimatedGradientBorder>
+          <AnimatedGradientBorder
+            colorPreset="beat"
+            borderWidth={2}
+            borderRadius={14}
+            duration={4}
+            glowIntensity={0.35}
+            backgroundColor="transparent"
+            hoverOnly={false}
+            className="monster-beat-border"
+          >
+            {children}
+          </AnimatedGradientBorder>
+        </DynamicShadow>
       );
     }
     if (isDisasterMiss) {
       return (
-        <AnimatedGradientBorder
-          colorPreset="miss"
-          borderWidth={2}
+        <DynamicShadow 
+          elevation="high" 
+          variant="danger" 
+          tintIntensity={0.2}
+          hoverElevation="floating"
           borderRadius={14}
-          duration={5}
-          glowIntensity={0.25}
-          backgroundColor="transparent"
-          hoverOnly={false}
-          className="disaster-miss-border"
         >
-          {children}
-        </AnimatedGradientBorder>
+          <AnimatedGradientBorder
+            colorPreset="miss"
+            borderWidth={2}
+            borderRadius={14}
+            duration={5}
+            glowIntensity={0.25}
+            backgroundColor="transparent"
+            hoverOnly={false}
+            className="disaster-miss-border"
+          >
+            {children}
+          </AnimatedGradientBorder>
+        </DynamicShadow>
       );
     }
     // Pending cards get subtle echo shadow effect on hover
@@ -269,6 +287,20 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         >
           {children}
         </EchoShadowHover>
+      );
+    }
+    // Regular reported cards get subtle dynamic shadow
+    if (hasResult) {
+      return (
+        <DynamicShadow 
+          elevation="medium" 
+          variant={earning.result === 'beat' ? 'success' : 'danger'}
+          tintIntensity={0.15}
+          hoverElevation="high"
+          borderRadius={14}
+        >
+          {children}
+        </DynamicShadow>
       );
     }
     return <>{children}</>;
