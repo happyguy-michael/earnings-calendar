@@ -1,3 +1,63 @@
+## 2026-03-18 — TextMorph: Smooth Character-Level Text Morphing
+
+**Inspiration:** Liquid text morphing animations trending in 2026 UI design. Researched via:
+- Magic UI's text morph component pattern
+- Apple's smooth interface text transitions
+- Stripe dashboard status change animations
+- Linear.app fluid typography effects
+- 2026 "Fluid Typography" trend — text that flows, not snaps
+- FLIP animation principles for character positioning
+
+**What I built:**
+- New `TextMorph` component family — smooth character-level morphing animations:
+
+  **Core Features:**
+  - FLIP-style character position animations
+  - Shared characters slide smoothly to new positions
+  - New characters fade/scale in with blur
+  - Old characters fade/scale out with blur
+  - Uses LCS-like algorithm to match characters between states
+  - Character width measurement for precise positioning
+  - Configurable stagger delay per character
+
+  **Component Family:**
+  - `TextMorph` — Base component for text-to-text morphing
+  - `TextMorphCycle` — Auto-cycles through array of texts
+  - `TextMorphStatus` — Semantic status with colors (pending/beat/miss/meet)
+
+  **Configuration Options:**
+  - `text`: Current text to display
+  - `duration`: Animation duration in ms (default: 500)
+  - `staggerDelay`: Delay between each character (default: 25ms)
+  - `easing`: Custom easing function
+  - `blur`: Enable/disable blur effect during morph
+  - `blurAmount`: Blur intensity in pixels
+  - `onMorphComplete`: Callback when animation finishes
+  - `inView`: Integration with Intersection Observer
+
+  **Technical Details:**
+  - Character mapping using closest-match algorithm
+  - Dynamic character width measurement and caching
+  - CSS keyframe animations for enter/leave/slide
+  - GPU-accelerated with will-change hints
+  - Full prefers-reduced-motion support
+  - Zero layout shift during animation
+
+**Use Cases:**
+- Status changes: "Pending" → "Reported"
+- Ticker symbol transitions
+- Result announcements: "—" → "Beat"
+- Time updates with morphing digits
+- Any text that changes dynamically
+
+**Visual Effect:** Characters that exist in both states slide smoothly to their new positions while unique characters fade in/out with a subtle blur. Creates a "liquid" flowing text feel rather than abrupt changes.
+
+**Impact:** Adds a premium polish to any text that changes dynamically — perfect for the earnings calendar's status updates and result announcements. Much more elegant than simple crossfades.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — SurgeIndicator: Directional Momentum Arrows
 
 **Inspiration:** Dynamic momentum visualization trending in 2026 financial/trading UIs. Researched via:
