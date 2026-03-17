@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { OdometerValue } from './OdometerValue';
 
 /**
  * EPSComparisonBadge
@@ -9,14 +10,15 @@ import { useState, useEffect, useRef, useMemo } from 'react';
  * Displays the actual EPS value with a mini bar showing how it compares to estimate.
  * 
  * Features:
- * - Animated value reveal with count-up effect
+ * - Animated odometer-style digit rolling reveal
  * - Mini comparison bar showing actual vs estimate
  * - Color-coded (green for beat, red for miss)
  * - Subtle glow effect on exceptional performances
  * - Tooltip with detailed breakdown on hover
  * - Respects prefers-reduced-motion
  * 
- * Inspiration: Trading app price comparisons, Dribbble earnings dashboards
+ * Inspiration: Trading app price comparisons, Dribbble earnings dashboards,
+ * Bloomberg Terminal number tickers, FreeFrontend odometer patterns
  */
 
 interface EPSComparisonBadgeProps {
@@ -43,7 +45,6 @@ export function EPSComparisonBadge({
   showBar = true,
 }: EPSComparisonBadgeProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [displayValue, setDisplayValue] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useRef(false);
@@ -85,34 +86,6 @@ export function EPSComparisonBadge({
     
     return () => observer.disconnect();
   }, [delay]);
-  
-  // Animate value count-up
-  useEffect(() => {
-    if (!isVisible || prefersReducedMotion.current) {
-      setDisplayValue(actual);
-      return;
-    }
-    
-    const duration = 600;
-    const steps = 30;
-    const stepDuration = duration / steps;
-    let currentStep = 0;
-    
-    const interval = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-      // Ease out cubic
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-      setDisplayValue(actual * easedProgress);
-      
-      if (currentStep >= steps) {
-        setDisplayValue(actual);
-        clearInterval(interval);
-      }
-    }, stepDuration);
-    
-    return () => clearInterval(interval);
-  }, [isVisible, actual]);
   
   // Size configurations
   const sizeConfig = {
@@ -167,10 +140,19 @@ export function EPSComparisonBadge({
           transitionDelay: prefersReducedMotion.current ? '0ms' : `${delay}ms`,
         }}
       >
-        {/* EPS Value */}
+        {/* EPS Value with Odometer Animation */}
         <div className={`eps-value ${config.value}`}>
-          <span className="eps-dollar">$</span>
-          <span className="eps-number">{displayValue.toFixed(2)}</span>
+          <OdometerValue
+            value={actual}
+            prefix="$"
+            decimals={2}
+            size={size === 'sm' ? 'xs' : size === 'md' ? 'sm' : 'sm'}
+            variant={isBeat ? 'success' : 'danger'}
+            delay={delay}
+            duration={650}
+            stagger={45}
+            spins={1.2}
+          />
         </div>
         
         {/* Mini comparison bar */}
@@ -293,26 +275,8 @@ export function EPSComparisonBadge({
           font-weight: 600;
           font-variant-numeric: tabular-nums;
           display: flex;
-          align-items: baseline;
+          align-items: center;
           line-height: 1;
-        }
-        
-        .eps-beat .eps-value {
-          color: rgb(74, 222, 128);
-        }
-        
-        .eps-miss .eps-value {
-          color: rgb(248, 113, 113);
-        }
-        
-        .eps-dollar {
-          opacity: 0.6;
-          font-size: 0.85em;
-          margin-right: 1px;
-        }
-        
-        .eps-number {
-          letter-spacing: -0.02em;
         }
         
         .eps-bar-container {
@@ -443,13 +407,7 @@ export function EPSComparisonBadge({
           background: rgba(220, 38, 38, 0.06);
         }
         
-        :global(html.light) .eps-beat .eps-value {
-          color: rgb(22, 163, 74);
-        }
-        
-        :global(html.light) .eps-miss .eps-value {
-          color: rgb(220, 38, 38);
-        }
+        /* OdometerValue handles its own colors now */
         
         :global(html.light) .eps-bar-bg {
           background: rgba(0, 0, 0, 0.1);
