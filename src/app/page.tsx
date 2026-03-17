@@ -118,6 +118,7 @@ import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
 import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
+import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
 import '@/components/TodayMarkerLine.css';
 

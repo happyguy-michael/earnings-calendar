@@ -1,3 +1,72 @@
+## 2026-03-17 — ClipWipeReveal: Hard-Edge Wipe Reveal Animation
+
+**Inspiration:** Premium hard-edge reveal animations trending in 2026 UI design. Researched via:
+- Apple keynote text reveals with sharp wipe transitions
+- ESPN score reveals where numbers wipe in dramatically
+- Bloomberg Terminal data updates with clean edge reveals
+- CSS-Tricks "Animating with Clip-Path" patterns (July 2019)
+- 2026 "Precision Motion" trend — sharp, intentional reveals vs soft fades
+- Medium article on clip-path text reveals with Framer Motion
+
+**What I built:**
+- New `ClipWipeReveal` component family — hard-edge wipe animations using CSS clip-path:
+
+  **Core Features:**
+  - Hard-edge wipe using `clip-path: inset()` for crisp, dramatic reveals
+  - Multiple direction options (left, right, top, bottom, center-h, center-v)
+  - Optional highlight line that follows the wipe edge
+  - GPU-accelerated with will-change hints
+  - Intersection Observer for scroll-triggered reveals
+  - Respects prefers-reduced-motion
+
+  **Component Family:**
+  - `ClipWipeReveal` — Base component with full configuration
+  - `ClipWipeRevealGroup` — Staggered reveal for multiple children
+  - `ClipWipeNumber` — Specialized variant for revealing numbers/prices
+
+  **Configuration Options:**
+  - `direction`: 'left' | 'right' | 'top' | 'bottom' | 'center-h' | 'center-v'
+  - `duration`: Animation duration in ms (default: 600)
+  - `delay`: Delay before animation starts
+  - `easing`: Custom easing function (default: easeOutQuint)
+  - `showHighlight`: Show highlight line at wipe edge
+  - `highlightColor`: Custom highlight color (theme-aware default)
+  - `highlightWidth`: Width of highlight line in pixels
+  - `triggerOnMount`: Trigger on mount vs scroll-into-view
+  - `threshold`: IntersectionObserver threshold
+  - `onRevealComplete`: Callback when animation completes
+
+  **Technical Details:**
+  - Uses clip-path inset() for crisp edge animations
+  - Manual animation loop with requestAnimationFrame
+  - easeOutCubic approximation for smooth deceleration
+  - Highlight line with box-shadow glow effect
+  - Proper cleanup of animation frames
+  - SSR-safe with typeof window checks
+
+  **ClipWipeNumber Variant:**
+  - Pre-configured for revealing numeric values
+  - Color variants: 'default' | 'success' | 'danger'
+  - Size options: 'sm' | 'md' | 'lg' | 'xl'
+  - Built-in prefix/suffix support ($, %, etc.)
+
+**Use Cases:**
+- Revealing earnings results with dramatic impact
+- Score/price reveals in financial dashboards
+- Statistics that appear on scroll
+- Award/achievement announcements
+- Any content where a "curtain reveal" effect adds drama
+
+**Visual Effect:** Content is revealed with a sharp edge that wipes across, unlike BlurReveal which uses soft blur-to-clear transitions. The optional highlight line adds a premium touch, glowing as it traces the reveal edge. Perfect for important data like EPS values or price movements where you want a crisp, intentional reveal rather than a fade.
+
+**Difference from BlurReveal:** BlurReveal creates soft, organic transitions with blur and opacity. ClipWipeReveal creates crisp, dramatic reveals with hard edges — more suited for "announcement" moments and data reveals where precision matters.
+
+**Impact:** Adds a complementary reveal pattern to the existing BlurReveal. While BlurReveal is great for ambient content entrance, ClipWipeReveal provides a sharper, more dramatic option for key data points and announcements.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — WeightShiftText: Variable Font Kinetic Typography
 
 **Inspiration:** Premium variable font animations trending in 2026 UI design. Researched via:
