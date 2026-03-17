@@ -1,3 +1,75 @@
+## 2026-03-18 — CheckmarkDraw: SVG Stroke Animation for Beat/Miss Results
+
+**Inspiration:** Premium success/error micro-interactions for earnings results. Researched via:
+- Ripplix 2026 UI Animation guide: "Success: A quick checkmark draw in 350–450 ms"
+- Dribbble micro-interaction trends
+- 2025-2026 "Tactile Feedback" UI pattern
+- SVG stroke-dashoffset animation techniques
+
+**What I built:**
+- New `CheckmarkDraw` component family — premium SVG stroke animations for success/error states:
+
+  **Core Features:**
+  - SVG stroke-dashoffset animation for smooth line drawing
+  - Intersection Observer for viewport-triggered reveals
+  - External trigger prop for programmatic control
+  - Glow effect on completion for emphasis
+  - Full prefers-reduced-motion support
+
+  **Component Family:**
+  - `CheckmarkDraw` — Animated checkmark with configurable variants
+  - `AnimatedX` — Companion component for error/miss states
+  - `CheckmarkBadge` — Pill badge with checkmark icon + label
+  - `ResultIcon` — Unified beat/miss icon component
+
+  **Configuration Options:**
+  - `size`: Icon size in pixels (default: 24)
+  - `color`: Stroke color
+  - `strokeWidth`: Line thickness (default: 2.5)
+  - `duration`: Animation duration in ms (default: 400)
+  - `delay`: Delay before animation starts
+  - `easing`: 'linear' | 'ease-out' | 'ease-in-out' | 'spring'
+  - `animateOnMount`: Trigger on component mount
+  - `animateInView`: Trigger when scrolled into viewport
+  - `glow`: Enable glow effect on completion
+  - `showCircle`: Show background circle
+  - `animateCircle`: Animate circle stroke too
+  - `trigger`: External boolean trigger
+  - `variant`: 'default' | 'success' | 'gold' | 'minimal'
+
+  **Variants:**
+  - `default`: Standard green checkmark
+  - `success`: Enhanced green with stronger glow
+  - `gold`: Amber/gold for special achievements
+  - `minimal`: Muted gray for subtle confirmations
+
+  **Technical Details:**
+  - 350-450ms duration per UI animation best practices
+  - GPU-accelerated CSS animations (transform, opacity)
+  - Stroke-dasharray/dashoffset for path drawing effect
+  - Cubic-bezier easing with spring option
+  - Zero layout shift during animation
+
+**Integration:**
+- Added CheckmarkDraw to beat badges (14px, viewport-triggered)
+- Added AnimatedX to miss badges for symmetry
+- Glow enabled for significant beats (≥10% surprise)
+- Staggered delays based on card index
+
+**Use Cases:**
+- Earnings beat/miss confirmations
+- Form submission success
+- Task completion indicators
+- Toggle on-states with flair
+
+**Visual Effect:** The checkmark draws itself stroke-by-stroke from the first point to the last, creating a satisfying "confirmed" feeling. The X draws both lines with a slight stagger for visual interest.
+
+**Impact:** Adds a premium polish to result badges — the moment you see an earnings card with a beat, the checkmark draws itself, reinforcing the positive result with tactile visual feedback.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — TextMorph: Smooth Character-Level Text Morphing
 
 **Inspiration:** Liquid text morphing animations trending in 2026 UI design. Researched via:
