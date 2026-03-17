@@ -1,3 +1,68 @@
+## 2026-03-18 — SurgeIndicator: Directional Momentum Arrows
+
+**Inspiration:** Dynamic momentum visualization trending in 2026 financial/trading UIs. Researched via:
+- Trading app surge indicators showing buy/sell pressure
+- Sports score momentum arrows (ESPN, FanDuel live)
+- Gaming damage/heal directional indicators
+- 2026 "Directional Data" trend — showing momentum, not just static values
+- Financial dashboard price movement visualizations
+
+**What I built:**
+- New `SurgeIndicator` component family — animated directional arrows showing movement intensity:
+
+  **Core Features:**
+  - Stacked chevron arrows showing intensity (1-5 levels)
+  - Direction-based coloring (green up, red down)
+  - Pulsing glow effect for strong surges (intensity ≥3)
+  - Trail particles for visual impact on big moves
+  - Staggered entrance animation per arrow
+  - Auto-calculate intensity from percentage change
+
+  **Component Family:**
+  - `SurgeIndicator` — Full-featured base component
+  - `SurgeArrow` — Compact inline version without glow/trail
+  - `SurgeBadge` — Badge variant with percentage label
+
+  **Configuration Options:**
+  - `direction`: 'up' | 'down'
+  - `intensity`: 1-5 (or auto-calculated from percent)
+  - `percent`: Percentage change (auto-calculates intensity)
+  - `size`: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  - `showTrail`: Enable/disable particle trail
+  - `showGlow`: Enable/disable pulsing glow
+  - `continuous`: Continuous bounce animation vs mount-only
+  - `label`: Optional text label beside arrows
+  - `color`: Custom color override
+
+  **Technical Details:**
+  - SVG-based chevron arrows with gradient fills
+  - CSS keyframe animations for glow and particles
+  - Intersection Observer for viewport-aware triggering
+  - Spring-like entrance with staggered timing
+  - Full prefers-reduced-motion support
+  - GPU-accelerated transforms
+
+  **Intensity Thresholds (auto from percent):**
+  - 1 arrow: < 2%
+  - 2 arrows: 2-5%
+  - 3 arrows: 5-10%
+  - 4 arrows: 10-20%
+  - 5 arrows: ≥ 20%
+
+**Use Cases:**
+- Earnings beat/miss magnitude visualization
+- Price surge/drop indicators
+- Momentum strength on stock cards
+- Performance trend arrows in stats
+
+**Visual Effect:** Stacked chevron arrows that animate in with staggered timing, with optional glow and particle effects for strong movements. Creates an immediate visual understanding of direction and magnitude.
+
+**Impact:** Adds a dynamic momentum visualization component perfect for showing earnings surprises or price movements at a glance — more expressive than static percentage numbers.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — ClipWipeReveal: Hard-Edge Wipe Reveal Animation
 
 **Inspiration:** Premium hard-edge reveal animations trending in 2026 UI design. Researched via:
