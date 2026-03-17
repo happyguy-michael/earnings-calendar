@@ -1,3 +1,50 @@
+## 2026-03-18 — PrismBorder: Holographic Chromatic Aberration Effect
+
+**Inspiration:** Premium iridescent/holographic design trends for 2025-2026. Researched via:
+- 2026 Web Design Trends (glassmorphism evolution, "liquid metal" aesthetic)
+- CD/DVD light refraction effects
+- Apple's holographic materials in visionOS
+- Chromatic aberration in camera lens effects
+- Dribbble holographic UI patterns
+
+**What I built:**
+- New `PrismBorder` component — premium holographic border effect with RGB channel separation:
+
+  **Core Features:**
+  - Cursor-reactive color angle calculation
+  - Three RGB-separated conic gradient layers (red, green, blue channels)
+  - Chromatic aberration via opposite direction offsets
+  - Specular highlight sweep for realistic light simulation
+  - Auto-animate mode for non-interactive elements
+  - Multiple intensity presets: subtle, normal, vivid, intense
+  
+  **Technical Details:**
+  - CSS `@property` for smooth angle animation in auto mode
+  - `mix-blend-mode: screen` (dark) / `multiply` (light) for natural blending
+  - Conic gradients with strategic transparency gaps
+  - GPU-accelerated via CSS transforms and opacity
+  - CSS custom properties for runtime configuration:
+    - `--prism-angle`, `--prism-offset`, `--prism-blur`
+    - `--prism-opacity`, `--prism-saturation`
+  
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (static fallback gradient)
+  - Theme-aware colors (darker for dark mode, lighter for light mode)
+  - Non-blocking animations (decorative only)
+
+  **Component Family:**
+  - `PrismBorder` — Main wrapper component
+  - `PrismCard` — Pre-styled card with glass morphism
+  - `usePrismEffect` — Hook for custom implementations
+
+**Applied to:** WeekSummaryCard with subtle cursor-reactive holographic effect
+
+**Impact:** Adds a premium "holographic material" feel to key UI elements. The chromatic aberration effect is subtle enough to not distract but adds depth and visual interest on hover, creating a modern, premium aesthetic.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — CheckmarkDraw: SVG Stroke Animation for Beat/Miss Results
 
 **Inspiration:** Premium success/error micro-interactions for earnings results. Researched via:
