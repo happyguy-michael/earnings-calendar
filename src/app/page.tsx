@@ -120,6 +120,7 @@ import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotligh
 import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
 import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
+import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -448,6 +449,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                   >
                     <BadgeSparkle active={true} particleCount={6}>
                       <span className="badge badge-beat">
+                        <CheckmarkDraw 
+                          size={14} 
+                          variant="success" 
+                          delay={animationIndex * 50 + 150}
+                          duration={350}
+                          animateInView
+                          glow={surprise >= 10}
+                        />
                         <MonsterBeatIcon surprise={surprise} />
                         {/* Use scramble effect for monster beats (≥15%), count-up for others */}
                         {/* Gold chrome effect for exceptional beats (Y3K liquid metal aesthetic) */}
@@ -478,6 +487,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                     intensity={0.7}
                   >
                     <span className="badge badge-miss">
+                      <AnimatedX 
+                        size={14} 
+                        delay={animationIndex * 50 + 150}
+                        duration={280}
+                        animateInView
+                        glow={surprise <= -10}
+                      />
                       <DisasterMissIcon surprise={surprise} />
                       {/* Use scramble effect for disaster misses (≤-15%), count-up for others */}
                       {/* Rose-gold chrome effect for disaster misses (Y3K liquid metal aesthetic) */}
