@@ -1,3 +1,56 @@
+## 2026-03-17 — WeightShiftText: Variable Font Kinetic Typography
+
+**Inspiration:** Premium variable font animations trending in 2026 UI design. Researched via:
+- Apple visionOS fluid typography — smooth weight transitions in system UI
+- Linear.app's weight shift on navigation hover — subtle but premium feel
+- Stripe's kinetic typography — interactive font-weight effects
+- 2025-2026 trend: "Living Typography" with fluid font properties
+- Reddit r/css discussions on font-variation-settings transitions
+
+**What I built:**
+- New `WeightShiftText` component family — smooth font-weight animations using variable fonts:
+
+  **Core Features:**
+  - Uses CSS `font-variation-settings` for smooth weight interpolation (Inter wght axis)
+  - Hardware-accelerated 60fps animations
+  - Respects user's reduced-motion preferences
+  - Works with any variable font supporting weight axis
+
+  **Component Family:**
+  - `WeightShiftText` — Base component with hover/focus weight transitions
+  - `WeightWave` — Staggered weight animation that ripples through characters
+  - `WeightPulse` — Continuous "breathing" effect with pulsing font weight
+  - `WeightReveal` — Reveal text with weight + opacity animation
+  - `WeightGradient` — Static or animated weight gradient across characters
+
+  **Configuration Options:**
+  - `from` / `to`: Custom weight range (100-900)
+  - `variant`: Presets ('subtle' | 'medium' | 'bold' | 'dramatic')
+  - `trigger`: 'hover' | 'focus' | 'both' | 'active' | 'always'
+  - `duration`: Animation duration in ms
+  - `easing`: Custom CSS easing function
+  - `shiftSpacing`: Also animate letter-spacing for extra effect
+  - `scale`: Optional scale transform on hover
+
+  **Technical Details:**
+  - Uses `font-variation-settings: 'wght' ${weight}` for smooth interpolation
+  - `will-change` optimization for performance
+  - Supports controlled `active` prop for programmatic triggers
+  - SSR-safe with proper hydration handling
+
+**Integration:**
+- Applied to stats grid labels (Total Reports, Beat Rate, Reported, Pending)
+- Subtle hover effect (400→500 weight) adds premium feel without being distracting
+- Works on all stat cards where cursor hovers over the entire card area
+
+**Visual Effect:** When hovering over a stat card, the label text smoothly shifts from regular (400) to medium (500) weight. The transition is subtle but adds a "fluid" feel to the UI, making labels feel responsive and alive. Combined with the existing cursor glow and breathing card effects, creates a premium multi-layered interaction.
+
+**Impact:** Adds the 2026 "kinetic typography" trend to the UI. Variable font animations are gaining popularity as they create smooth, organic text interactions without layout shifts. The subtle weight shift makes labels feel more interactive and premium.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — LiquidButton: Cursor-Following Liquid Blob Button
 
 **Inspiration:** Premium button hover effects with organic, fluid motion. Researched via:
