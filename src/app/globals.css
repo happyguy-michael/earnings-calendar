@@ -18803,3 +18803,244 @@ html.light .echo-shadow-layer-4 {
     transition: opacity 200ms ease;
   }
 }
+
+/* ============================================
+   PrismBorder - Holographic Chromatic Aberration Effect
+   Premium iridescent border with RGB channel separation
+   ============================================ */
+
+.prism-border-container {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Base border layer styles */
+.prism-border-layer {
+  position: absolute;
+  inset: calc(-1 * var(--prism-width, 1px));
+  border-radius: var(--prism-radius, 16px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms var(--spring-smooth);
+  mix-blend-mode: screen;
+  z-index: -1;
+}
+
+/* Show layers when parent has opacity > 0 */
+.prism-border-container:hover .prism-border-layer,
+.prism-border-container[style*="--prism-opacity: 0."] .prism-border-layer,
+.prism-border-container[style*="--prism-opacity: 1"] .prism-border-layer {
+  opacity: var(--prism-opacity, 0.4);
+}
+
+/* Red channel - offset in one direction */
+.prism-border-layer.prism-red {
+  background: conic-gradient(
+    from var(--prism-angle, 0deg),
+    transparent 0deg,
+    rgba(255, 60, 120, calc(0.8 * var(--prism-saturation, 1))) 60deg,
+    rgba(255, 100, 80, calc(0.9 * var(--prism-saturation, 1))) 120deg,
+    transparent 180deg,
+    rgba(255, 60, 120, calc(0.7 * var(--prism-saturation, 1))) 240deg,
+    rgba(255, 80, 100, calc(0.85 * var(--prism-saturation, 1))) 300deg,
+    transparent 360deg
+  );
+  transform: translate(
+    calc(var(--prism-offset, 3px) * cos(var(--prism-angle, 0deg))),
+    calc(var(--prism-offset, 3px) * sin(var(--prism-angle, 0deg)))
+  );
+  filter: blur(calc(var(--prism-blur, 8px) * 0.5));
+}
+
+/* Green channel - center position */
+.prism-border-layer.prism-green {
+  background: conic-gradient(
+    from calc(var(--prism-angle, 0deg) + 120deg),
+    transparent 0deg,
+    rgba(80, 255, 160, calc(0.75 * var(--prism-saturation, 1))) 60deg,
+    rgba(120, 255, 180, calc(0.85 * var(--prism-saturation, 1))) 120deg,
+    transparent 180deg,
+    rgba(80, 255, 120, calc(0.7 * var(--prism-saturation, 1))) 240deg,
+    rgba(100, 255, 200, calc(0.8 * var(--prism-saturation, 1))) 300deg,
+    transparent 360deg
+  );
+  filter: blur(calc(var(--prism-blur, 8px) * 0.4));
+}
+
+/* Blue channel - offset in opposite direction */
+.prism-border-layer.prism-blue {
+  background: conic-gradient(
+    from calc(var(--prism-angle, 0deg) + 240deg),
+    transparent 0deg,
+    rgba(80, 140, 255, calc(0.85 * var(--prism-saturation, 1))) 60deg,
+    rgba(140, 100, 255, calc(0.9 * var(--prism-saturation, 1))) 120deg,
+    transparent 180deg,
+    rgba(100, 180, 255, calc(0.75 * var(--prism-saturation, 1))) 240deg,
+    rgba(160, 120, 255, calc(0.85 * var(--prism-saturation, 1))) 300deg,
+    transparent 360deg
+  );
+  transform: translate(
+    calc(-1 * var(--prism-offset, 3px) * cos(var(--prism-angle, 0deg))),
+    calc(-1 * var(--prism-offset, 3px) * sin(var(--prism-angle, 0deg)))
+  );
+  filter: blur(calc(var(--prism-blur, 8px) * 0.5));
+}
+
+/* Specular highlight - bright white sweep */
+.prism-specular {
+  position: absolute;
+  inset: calc(-1 * var(--prism-width, 1px));
+  border-radius: var(--prism-radius, 16px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms var(--spring-smooth);
+  z-index: -1;
+  background: linear-gradient(
+    calc(var(--prism-angle, 0deg) + 90deg),
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.4) 48%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.4) 52%,
+    transparent 65%,
+    transparent 100%
+  );
+  filter: blur(2px);
+}
+
+.prism-border-container:hover .prism-specular {
+  opacity: calc(var(--prism-opacity, 0.4) * 0.5);
+}
+
+/* Auto-animate mode */
+.prism-border-layer.auto-animate {
+  animation: prism-rotate var(--prism-speed, 4s) linear infinite;
+}
+
+.prism-border-layer.auto-animate.prism-green {
+  animation-delay: calc(var(--prism-speed, 4s) * -0.33);
+}
+
+.prism-border-layer.auto-animate.prism-blue {
+  animation-delay: calc(var(--prism-speed, 4s) * -0.66);
+}
+
+.prism-specular.auto-animate {
+  animation: prism-rotate var(--prism-speed, 4s) linear infinite;
+  animation-delay: calc(var(--prism-speed, 4s) * -0.5);
+}
+
+@keyframes prism-rotate {
+  from {
+    --prism-angle: 0deg;
+  }
+  to {
+    --prism-angle: 360deg;
+  }
+}
+
+/* Register custom property for animation */
+@property --prism-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Content layer */
+.prism-border-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* PrismCard presets */
+.prism-card-inner {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+}
+
+.prism-card-inner.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Light mode adjustments */
+html.light .prism-border-layer {
+  mix-blend-mode: multiply;
+}
+
+html.light .prism-border-layer.prism-red {
+  background: conic-gradient(
+    from var(--prism-angle, 0deg),
+    transparent 0deg,
+    rgba(220, 40, 100, calc(0.5 * var(--prism-saturation, 1))) 60deg,
+    rgba(220, 80, 60, calc(0.6 * var(--prism-saturation, 1))) 120deg,
+    transparent 180deg,
+    rgba(220, 40, 100, calc(0.45 * var(--prism-saturation, 1))) 240deg,
+    rgba(220, 60, 80, calc(0.55 * var(--prism-saturation, 1))) 300deg,
+    transparent 360deg
+  );
+}
+
+html.light .prism-border-layer.prism-green {
+  background: conic-gradient(
+    from calc(var(--prism-angle, 0deg) + 120deg),
+    transparent 0deg,
+    rgba(40, 180, 100, calc(0.5 * var(--prism-saturation, 1))) 60deg,
+    rgba(80, 200, 140, calc(0.55 * var(--prism-saturation, 1))) 120deg,
+    transparent 180deg,
+    rgba(40, 180, 80, calc(0.45 * var(--prism-saturation, 1))) 240deg,
+    rgba(60, 200, 160, calc(0.5 * var(--prism-saturation, 1))) 300deg,
+    transparent 360deg
+  );
+}
+
+html.light .prism-border-layer.prism-blue {
+  background: conic-gradient(
+    from calc(var(--prism-angle, 0deg) + 240deg),
+    transparent 0deg,
+    rgba(40, 100, 220, calc(0.55 * var(--prism-saturation, 1))) 60deg,
+    rgba(100, 60, 220, calc(0.6 * var(--prism-saturation, 1))) 120deg,
+    transparent 180deg,
+    rgba(60, 140, 220, calc(0.5 * var(--prism-saturation, 1))) 240deg,
+    rgba(120, 80, 220, calc(0.55 * var(--prism-saturation, 1))) 300deg,
+    transparent 360deg
+  );
+}
+
+html.light .prism-specular {
+  background: linear-gradient(
+    calc(var(--prism-angle, 0deg) + 90deg),
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.6) 48%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.6) 52%,
+    transparent 65%,
+    transparent 100%
+  );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .prism-border-layer,
+  .prism-specular {
+    animation: none !important;
+    transition: opacity 200ms ease !important;
+    transform: none !important;
+  }
+  
+  /* Show static gradient instead */
+  .prism-border-layer.prism-red,
+  .prism-border-layer.prism-green,
+  .prism-border-layer.prism-blue {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 100, 150, 0.3) 0%,
+      rgba(100, 255, 180, 0.3) 50%,
+      rgba(100, 150, 255, 0.3) 100%
+    );
+    filter: blur(6px);
+  }
+}

@@ -98,6 +98,7 @@ import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
+import { PrismBorder } from '@/components/PrismBorder';
 import { AutoScrollToLive } from '@/components/AutoScrollToLive';
 import { ProgressiveBlur } from '@/components/ProgressiveBlur';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
@@ -1612,12 +1613,20 @@ export default function Home() {
                 })()}
               </div>
               
-              {/* Week Summary Card - celebratory end-of-week recap */}
-              <WeekSummaryCard 
-                weekStart={weekStart} 
-                earnings={filteredEarnings}
-                isCurrentWeek={weekIndex === todayWeekIndex}
-              />
+              {/* Week Summary Card - celebratory end-of-week recap with holographic border */}
+              <PrismBorder 
+                borderRadius={20} 
+                intensity="subtle" 
+                mode="cursor" 
+                hoverOnly={true}
+                blur={10}
+              >
+                <WeekSummaryCard 
+                  weekStart={weekStart} 
+                  earnings={filteredEarnings}
+                  isCurrentWeek={weekIndex === todayWeekIndex}
+                />
+              </PrismBorder>
             </div>
             </BorderGlowSpot>
             </OrbitDot>
