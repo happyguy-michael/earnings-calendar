@@ -1,3 +1,73 @@
+## 2026-03-17 — LiquidButton: Cursor-Following Liquid Blob Button
+
+**Inspiration:** Premium button hover effects with organic, fluid motion. Researched via:
+- DesignDrastic.com's "Liquid Button Effect" (Feb 2026) — cursor-following blob with morphing animation
+- FreeFrontend's "32 CSS Blob Animations" — organic border-radius morphing techniques
+- Apple's visionOS fluid interfaces — smooth, responsive cursor tracking
+- Stripe's premium button hover states — subtle lift and shadow effects
+- CSS-Tricks blob patterns using scaleX/scaleY transforms with elastic easing
+
+**What I built:**
+- New `LiquidButton` component family — buttons with a liquid blob that follows the cursor inside the button boundaries:
+
+  **Core Features:**
+  - Cursor-following liquid blob that bulges toward mouse position
+  - Organic morphing animation using animated border-radius (40%/50% variations)
+  - Shine sweep effect on hover for glossy liquid reflection
+  - Click ripple effect for tactile feedback
+  - Blob scales in smoothly on hover with spring easing
+  - Works with keyboard focus (blob centers on the button)
+
+  **Component Family:**
+  - `LiquidButton` — Main button component with cursor-tracking blob
+  - `LiquidButtonStyles` — Global CSS injection (include once in providers)
+  - `LiquidButtonGroup` — Container for grouping multiple liquid buttons
+
+  **Configuration Options:**
+  - `variant`: 'primary' | 'secondary' | 'success' | 'danger' | 'gradient' | 'ghost'
+  - `size`: 'sm' | 'md' | 'lg' — affects padding, font size, min-height
+  - `noBlob`: Disable the liquid blob effect
+  - `noShine`: Disable the shine sweep effect
+  - `blobColors`: Custom gradient colors (overrides variant)
+  - `disabled`: Standard disabled state with muted styling
+
+  **Technical Details:**
+  - CSS custom properties for dynamic cursor positioning
+  - Blob rotation animation (8s infinite) with varying border-radius
+  - Spring easing for blob scale transitions (cubic-bezier 0.33, 1, 0.68, 1)
+  - RAF-throttled cursor tracking for smooth performance
+  - GPU-accelerated transforms
+  - Full `prefers-reduced-motion` support (static styling, no animation)
+  - Keyboard-accessible with focus-visible ring
+  - SSR-safe with hydration handling
+
+  **Variant Gradients:**
+  - Primary: Indigo → Purple → Pink
+  - Secondary: Blue → Cyan → Sky
+  - Success: Emerald → Green → Light Green
+  - Danger: Red → Light Red → Pale Red
+  - Gradient: Full rainbow (Indigo → Purple → Pink → Rose)
+  - Ghost: Semi-transparent indigo/purple with outline style
+
+  **Accessibility:**
+  - Focus-visible ring for keyboard navigation (indigo outline, 2px offset)
+  - Disabled state with reduced opacity and no-pointer cursor
+  - Reduced motion users get instant state changes without animation
+  - Semantic button element with proper ARIA support
+
+**Integration:**
+- Added `LiquidButtonStyles` to ClientProviders for app-wide CSS injection
+- Available for use in navigation, CTAs, and premium action buttons
+- Complements existing MagneticButton (magnetic pull) with liquid aesthetic
+
+**Visual Effect:** When hovering over a LiquidButton, a colorful blob appears and follows your cursor position inside the button. The blob continuously morphs with organic border-radius animation, creating a fluid, alive feeling. On hover, a shine streak sweeps across the button, and clicking creates a ripple from the click point. The overall effect feels premium and responsive, like touching liquid glass.
+
+**Impact:** Adds a premium button variant with the "liquid UI" trend prominent in 2025-2026 design. Creates a distinct visual language for high-priority actions. The cursor-tracking blob creates a sense of direct manipulation and responsiveness.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — OdometerValue: Slot-Machine Rolling Digit Animation
 
 **Inspiration:** Classic mechanical counters and premium financial data visualization. Researched via:

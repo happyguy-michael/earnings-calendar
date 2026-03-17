@@ -11,6 +11,7 @@ import { SmoothThemeTransition } from './SmoothThemeTransition';
 import { FocusModeProvider, FocusModeIndicator } from './FocusMode';
 import { ViewportScrollSpotlight } from './ViewportScrollSpotlight';
 import { DynamicShadowProvider, DynamicShadowStyles } from './DynamicShadow';
+import { LiquidButtonStyles } from './LiquidButton';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -25,6 +26,7 @@ export function ClientProviders({ children }: { children: ReactNode }) {
                   <SmoothThemeTransition />
                   <ViewportScrollSpotlight />
                   <DynamicShadowStyles />
+                  <LiquidButtonStyles />
                   <FocusModeIndicator />
                   {children}
                 </UndoToastProvider>
