@@ -1,3 +1,72 @@
+## 2026-03-18 — AuroraWash: Northern Lights Background Effect
+
+**Inspiration:** Flowing aurora/northern lights effects trending in 2026 UI design. Researched via:
+- Aceternity UI's Aurora Background component (Feb 2026)
+- Apple visionOS ambient lighting effects
+- shadcn.io "Living Interfaces" pattern
+- 2026 UI trend: "Breathing backgrounds" that feel alive
+- Northern lights / aurora borealis natural light patterns
+- Premium SaaS dashboards with animated gradient accents
+
+**What I built:**
+- New `AuroraWash` component family — creates flowing aurora/northern lights effect:
+
+  **Core Features:**
+  - Multiple layered radial gradients with independent animation timing
+  - Organic movement pattern using keyframed background-position shifts
+  - Colors blend and flow like real aurora borealis
+  - GPU-accelerated CSS animations (60fps)
+  - Can be used as wrapper or absolute positioned background
+
+  **Component Family:**
+  - `AuroraWash` — Core component with full configuration
+  - `AuroraCard` — Pre-styled card wrapper with glass morphism
+  - `AuroraText` — Glowing text emphasis effect
+
+  **Color Variants:**
+  - `aurora` — Classic green/blue/purple (default)
+  - `sunset` — Orange/pink/purple warmth
+  - `ocean` — Cyan/blue/green depths
+  - `emerald` — Lush green tones
+  - `purple` — Rich violet/magenta
+  - `custom` — User-defined colors
+
+  **Configuration Options:**
+  - `variant`: Color scheme preset
+  - `intensity`: 'subtle' | 'medium' | 'vivid'
+  - `speed`: Animation speed multiplier (1 = 60s cycle)
+  - `asBackground`: Render as absolute positioned layer
+  - `colors`: Custom gradient colors (with variant="custom")
+  - `borderRadius`: Match container border radius
+
+  **Technical Details:**
+  - 4-layer radial gradient composition
+  - Keyframe animation shifts background-position in organic pattern
+  - 60-second default cycle (configurable)
+  - Opacity adjusted per intensity level
+  - Injected keyframes on mount (shared across instances)
+  - Full `prefers-reduced-motion` support (static fallback)
+  - SSR-safe with hydration handling
+
+**Integration:**
+- Added to `WeekSummaryCard` for exceptional performance weeks:
+  - **Emerald aurora** for "Hot Week" (80%+ beat rate)
+  - **Aurora** for "Strong" weeks (65%+ beat rate)
+  - **Sunset** for "Cold Week" (<35% beat rate)
+- Only activates when 3+ companies reported (prevents visual noise)
+- Visible only when card scrolls into view (performance)
+
+**Visual Effect:** When a week has exceptional performance (lots of beats), the summary card background subtly pulses with flowing aurora colors. Hot weeks glow emerald green, strong weeks shimmer with the classic aurora palette, and cold weeks have a sunset warmth. The effect is subtle but unmistakable — exceptional weeks literally glow with their results.
+
+**Why this matters:**
+"Living interfaces" are a major 2026 trend. Instead of static cards, backgrounds that breathe and respond to content create a premium, dynamic feel. The aurora effect reinforces the emotional impact of earnings results — success feels warm and energetic, disappointment feels contemplative.
+
+**Impact:** Week summary cards now have an additional visual layer that highlights performance at a glance. You can feel whether a week was good or bad before even reading the numbers.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — CSS Scroll-Driven Animations (Chrome 2024)
 
 **Inspiration:** Chrome CSS Wrapped 2024 — scroll-driven animations with `animation-timeline`. A cutting-edge progressive enhancement for modern browsers.
