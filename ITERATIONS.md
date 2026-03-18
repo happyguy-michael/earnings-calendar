@@ -1,3 +1,50 @@
+## 2026-03-18 — LiquidPill: 2026 Liquid Design Trend for Filter Chips
+
+**Inspiration:** "UI Design Trend 2026 #2: Glassmorphism and Liquid Design Make a Comeback" (Medium/Design Bootcamp, Oct 2025). The article highlights how designers are "merging glassmorphism with liquid-like interactions — crafting interfaces that are fluid, haptic, and almost alive." Also researched:
+- Design Drastic's "Liquid Button Effect" (Feb 2026) — organic blob stretch animations
+- Bookmarkify's "Top UI Design Trends & Inspiration for 2026" — liquid/morphing design elements
+- FreeFrontend's "CSS Blob Effects" collection
+
+**What I built:**
+- New `LiquidPill` component — an organic, living sliding pill indicator for filter chips:
+
+  **Core Features:**
+  - **Morphing blob layer**: Continuous organic blob rotation (40%/50%/40%/50% border-radius cycle) with subtle blur, creating a "living" background
+  - **Cursor-following bulge**: Radial gradient highlight that tracks mouse position, creating a liquid "bulge" where you hover
+  - **Shine sweep effect**: Light streak sweeps across pill on hover/transition for glossy liquid reflection
+  - **Edge glow**: Soft outer glow that intensifies on hover
+  - **Elastic stretch animation**: When transitioning between filters, pill stretches/squishes like liquid (scaleX 1.15, scaleY 0.92)
+
+  **Color Variants:**
+  - `default` (All filter) — white/neutral gradient
+  - `beat` — green gradient with green bulge/glow
+  - `miss` — red gradient with red bulge/glow
+  - `pending` — amber gradient with amber bulge/glow
+
+  **Technical Details:**
+  - Pure CSS animations (no JS animation loop)
+  - `liquid-morph` keyframe: 8s infinite loop morphing border-radius + rotation
+  - `liquid-shine` keyframe: 0.8s cubic-bezier sweep on hover
+  - `liquid-stretch-right/left`: 0.4s elastic squish animation
+  - Cursor position tracked via mouse events on pill container
+  - GPU-accelerated via CSS transforms
+  - Full light/dark mode support with adjusted opacities
+  - `prefers-reduced-motion`: disables animations, keeps static visuals
+
+- Also created standalone `LiquidBlob` component for other use cases (e.g., card backgrounds, hero sections)
+
+**Integration:**
+- Replaced existing `sliding-pill` in FilterChips with new `LiquidPill`
+- Filter chip selection now has an organic, living quality
+- The blob continuously morphs, the bulge follows your cursor, shine sweeps on transitions
+- Elastic stretch gives satisfying tactile feedback when changing filters
+
+**Impact:** The filter chips now embody the 2026 "liquid design" trend — they feel fluid, haptic, and almost alive. The organic morphing and cursor-tracking create a premium, interactive feel that goes beyond static pill indicators.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — AuroraWash: Northern Lights Background Effect
 
 **Inspiration:** Flowing aurora/northern lights effects trending in 2026 UI design. Researched via:
