@@ -25,6 +25,7 @@ import { GlassReflection } from '@/components/GlassReflection';
 import { CursorGlowCard } from '@/components/CursorGlowBorder';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
+import { SurpriseThermometer, SurpriseThermometerHorizontal, SurpriseTemperatureBadge } from '@/components/SurpriseThermometer';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -357,15 +358,34 @@ export default function ReportPage() {
                           $<CountUp end={earning.estimate} duration={1000} decimals={2} />
                         </div>
                       </div>
-                      <div className="text-center">
+                      <div className="text-center flex flex-col items-center">
                         <div className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Surprise</div>
-                        <div className={`text-5xl font-bold ${surprise >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                          <CountUp 
-                            end={surprise} 
-                            duration={1200} 
-                            decimals={1}
-                            prefix={surprise >= 0 ? '+' : ''}
-                            suffix="%" 
+                        <div className="flex items-center gap-4">
+                          <SurpriseThermometer 
+                            surprise={surprise} 
+                            height={72} 
+                            showLabel={false}
+                            delay={400}
+                            duration={1000}
+                          />
+                          <div className={`text-5xl font-bold ${surprise >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                            <CountUp 
+                              end={surprise} 
+                              duration={1200} 
+                              decimals={1}
+                              prefix={surprise >= 0 ? '+' : ''}
+                              suffix="%" 
+                            />
+                          </div>
+                          <SurpriseTemperatureBadge surprise={surprise} size={28} />
+                        </div>
+                        {/* Horizontal thermometer bar below */}
+                        <div className="mt-3 w-full max-w-[160px]">
+                          <SurpriseThermometerHorizontal 
+                            surprise={surprise} 
+                            width={160} 
+                            height={10}
+                            delay={600}
                           />
                         </div>
                       </div>

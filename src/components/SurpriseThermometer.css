@@ -1,0 +1,266 @@
+/* Surprise Thermometer - Visual temperature gauge for earnings surprise */
+
+.surprise-thermometer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: var(--thermo-height);
+}
+
+.surprise-thermometer__body {
+  position: relative;
+  height: calc(100% - 12px);
+  border-radius: 999px;
+  overflow: visible;
+}
+
+.surprise-thermometer__tube {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.surprise-thermometer__fill {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  bottom: 0;
+  height: var(--thermo-fill);
+  background: var(--thermo-gradient);
+  border-radius: 999px;
+  transition: height 0.1s ease-out;
+}
+
+.surprise-thermometer__neutral {
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: 50%;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%);
+  border-radius: 1px;
+}
+
+.surprise-thermometer__glow {
+  position: absolute;
+  inset: -4px;
+  background: var(--thermo-color);
+  filter: blur(8px);
+  opacity: 0.4;
+  border-radius: 999px;
+  animation: thermo-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes thermo-glow {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}
+
+.surprise-thermometer__ticks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.surprise-thermometer__tick {
+  position: absolute;
+  left: 100%;
+  width: 4px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-left: 2px;
+}
+
+.surprise-thermometer__tick--zero {
+  width: 6px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.surprise-thermometer__bulb {
+  position: relative;
+  background: var(--thermo-gradient);
+  border-radius: 50%;
+  margin-top: -4px;
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.surprise-thermometer__bulb-pulse {
+  position: absolute;
+  inset: -4px;
+  background: var(--thermo-color);
+  border-radius: 50%;
+  opacity: 0;
+  animation: bulb-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes bulb-pulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* Flame particles for blazing */
+.surprise-thermometer__flames {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.surprise-thermometer__flame {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  background: linear-gradient(to top, #f97316, #fbbf24, transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0.8;
+  animation: flame-flicker 0.6s ease-in-out infinite;
+  animation-delay: calc(var(--flame-index) * 0.15s);
+}
+
+.surprise-thermometer__flame:nth-child(1) {
+  left: -6px;
+  top: -6px;
+}
+
+.surprise-thermometer__flame:nth-child(2) {
+  left: 0;
+  top: -10px;
+}
+
+.surprise-thermometer__flame:nth-child(3) {
+  left: 6px;
+  top: -6px;
+}
+
+@keyframes flame-flicker {
+  0%, 100% { 
+    transform: scaleY(1) translateY(0); 
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scaleY(1.2) translateY(-2px); 
+    opacity: 1;
+  }
+}
+
+/* Ice crystals for freezing */
+.surprise-thermometer__frost {
+  position: absolute;
+  inset: -8px;
+  pointer-events: none;
+}
+
+.surprise-thermometer__crystal {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #a78bfa;
+  border-radius: 1px;
+  opacity: 0.6;
+  animation: crystal-sparkle 1.5s ease-in-out infinite;
+  animation-delay: calc(var(--crystal-index) * 0.3s);
+}
+
+.surprise-thermometer__crystal:nth-child(1) { top: 20%; left: -4px; }
+.surprise-thermometer__crystal:nth-child(2) { top: 40%; right: -4px; }
+.surprise-thermometer__crystal:nth-child(3) { top: 60%; left: -6px; }
+.surprise-thermometer__crystal:nth-child(4) { top: 80%; right: -6px; }
+
+@keyframes crystal-sparkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+.surprise-thermometer__label {
+  margin-top: 6px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Temperature level modifiers */
+.surprise-thermometer--blazing .surprise-thermometer__body {
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.5));
+}
+
+.surprise-thermometer--freezing .surprise-thermometer__body {
+  filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.5));
+}
+
+/* ===============================================
+   Horizontal variant
+   =============================================== */
+
+.surprise-thermo-h {
+  position: relative;
+  border-radius: 999px;
+  overflow: visible;
+}
+
+.surprise-thermo-h__track {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.surprise-thermo-h__center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.5px;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-50%);
+}
+
+.surprise-thermo-h__fill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 999px;
+  transition: width 0.1s ease-out, left 0.1s ease-out;
+}
+
+.surprise-thermo-h__indicator {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.1s ease-out;
+}
+
+/* Level-specific styles */
+.surprise-thermo-h--blazing {
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.4));
+}
+
+.surprise-thermo-h--freezing {
+  filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.4));
+}
+
+/* ===============================================
+   Temperature badge
+   =============================================== */
+
+.surprise-temp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: transform 0.2s ease;
+}
+
+.surprise-temp-badge:hover {
+  transform: scale(1.15);
+}
