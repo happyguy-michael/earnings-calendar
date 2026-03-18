@@ -7441,6 +7441,41 @@ html.light .floating-particle:nth-child(5n) {
 }
 
 /* ============================================
+   MOTION PATH ANIMATIONS
+   CSS offset-path for curved entrance/orbit animations
+   2026 Trend: Organic curved motion paths
+   ============================================ */
+
+.motion-path-element {
+  position: relative;
+  /* offset-path and animation set via inline styles */
+}
+
+.orbit-element {
+  /* Positioned absolutely within parent container */
+  pointer-events: auto;
+}
+
+/* Container for orbit animations - center point */
+.orbit-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reduced motion - disable path animations */
+@media (prefers-reduced-motion: reduce) {
+  .motion-path-element,
+  .orbit-element {
+    animation: none !important;
+    offset-distance: 100% !important;
+    offset-path: none !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================
    MAGNETIC BUTTON EFFECT
    Buttons that attract toward the cursor
    Premium micro-interaction (Linear.app style)

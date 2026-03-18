@@ -1,3 +1,77 @@
+## 2026-03-19 — MotionPath: CSS Motion Path Curved Animations
+
+**Inspiration:** 2026 UI trend research:
+- MDN CSS Motion Path specification — `offset-path` for curved element trajectories
+- Apple product reveal animations (curved fly-ins)
+- Modern SaaS hero sections with floating elements
+- Material Design motion principles (arc transitions over linear)
+- Josh W. Comeau's "Spring Physics" article
+- Framer Motion path animations
+
+**What I built:**
+- New `MotionPath` component family — animate elements along curved SVG paths:
+
+  **Core Component (`MotionPath`):**
+  - Animates children along any SVG path using CSS `offset-path`
+  - Pre-built path presets for common animations:
+    - `arc-in-left/right/top/bottom` — curved entrance from different directions
+    - `swoop-in` — dramatic curved sweep entrance
+    - `orbit` — circular orbit path (360°)
+    - `orbit-ellipse` — elliptical orbit (wider than tall)
+    - `wave` — sine wave path for floating animation
+    - `bounce-in` — bounce entrance with overshoot
+    - `spring-in` — spring oscillation entrance
+    - `reveal-arc` — subtle curved reveal
+    - `float-sine` — gentle ambient floating
+  - Custom SVG path support via `path` prop
+  - Configurable timing: duration, delay, easing
+  - Animation controls: iterations, reverse, alternate, fill mode
+  - Auto-rotate element to follow path tangent
+  - Scale and opacity ranges during animation
+  - Stagger support for multiple children
+
+  **Specialized Components:**
+  - `MotionPathGroup` — animate multiple children with staggered timing
+  - `OrbitElement` — element that orbits around a center point
+  - `FlyInArc` — simple arc entrance animation helper
+  - `FloatWave` — ambient floating animation along wave path
+  - `SwoopReveal` — dramatic swoop-in reveal animation
+
+  **Technical Details:**
+  - Pure CSS `offset-path` and `offset-distance` (no JS animation loop)
+  - GPU-accelerated via `will-change: offset-distance`
+  - Dynamic keyframe generation for custom start/end offsets
+  - Intersection observer compatible (animate on visibility)
+  - SSR-safe with hydration handling
+  - Full `prefers-reduced-motion` support (static fallback)
+
+  **Configuration Options:**
+  - `preset`: Pre-built path preset name
+  - `path`: Custom SVG path string
+  - `duration`: Animation duration in ms
+  - `easing`: CSS easing function
+  - `delay`: Start delay in ms
+  - `iterations`: Number of iterations (Infinity for infinite)
+  - `reverse`: Reverse direction
+  - `alternate`: Play forward then backward
+  - `autoRotate`: Rotate element to follow path tangent
+  - `rotateOffset`: Additional rotation offset in degrees
+  - `startOffset/endOffset`: Start/end position along path (0-100%)
+  - `scaleRange`: Scale factor range [start, end]
+  - `opacityRange`: Opacity range [start, end]
+  - `staggerIndex/staggerDelay`: Stagger animation timing
+
+**Why CSS Motion Path?**
+Linear transform animations (translateX, translateY) create robotic, unnatural movement. CSS Motion Path enables organic, curved trajectories that feel more natural and premium. This is especially impactful for:
+- Card entrance animations (curve in rather than slide in)
+- Decorative elements orbiting a focal point
+- Ambient floating effects with natural wave patterns
+- Dramatic reveal animations with swooping curves
+
+**Impact:** Premium motion that goes beyond linear transforms. Elements can now enter with elegant arcs, orbit focus points, and float along organic wave paths — creating a more polished, app-like experience.
+
+---
+
 ## 2026-03-18 — RadarSweep: Futuristic Scanning Animation for Loading States
 
 **Inspiration:** Researched 2026 UI loading animation trends:
