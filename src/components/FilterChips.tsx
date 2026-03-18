@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import { AnimatedFilterCount } from './AnimatedFilterCount';
 import { useAudioFeedback } from './AudioFeedback';
+import { LiquidPill } from './LiquidBlob';
 
 type FilterType = 'all' | 'beat' | 'miss' | 'pending';
 
@@ -183,18 +184,23 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
     }
   };
 
+  // Map filter type to LiquidPill variant
+  const getLiquidPillVariant = (): 'default' | 'beat' | 'miss' | 'pending' => {
+    if (value === 'all') return 'default';
+    return value;
+  };
+
   return (
     <div className="filter-chips-liquid">
     <div className="filter-chips-container" ref={containerRef}>
-      {/* Sliding pill background with elastic stretch effect */}
-      <div 
-        className={`sliding-pill ${getPillColorClass()} ${mounted ? 'mounted' : ''} ${isStretching ? 'stretching' : ''} ${stretchDirection ? `stretch-${stretchDirection}` : ''}`}
-        style={{
-          transform: `translateX(${pillStyle.left}px)`,
-          width: `${pillStyle.width}px`,
-          transformOrigin: stretchDirection === 'right' ? 'left center' : stretchDirection === 'left' ? 'right center' : 'center center',
-        }}
-        aria-hidden="true"
+      {/* Liquid pill background with organic morphing effect - 2026 UI trend */}
+      <LiquidPill
+        transform={`translateX(${pillStyle.left}px)`}
+        width={pillStyle.width}
+        variant={getLiquidPillVariant()}
+        mounted={mounted}
+        transitioning={isStretching}
+        direction={stretchDirection}
       />
       
       {/* Filter tabs - using tablist/tab ARIA pattern */}

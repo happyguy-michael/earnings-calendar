@@ -3027,6 +3027,423 @@ html.light .sliding-pill-pending {
   }
 }
 
+/* ============================================
+   LiquidPill - 2026 Liquid Design Trend
+   Organic morphing blob with cursor tracking
+   ============================================ */
+.liquid-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 100px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: 
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease;
+}
+
+.liquid-pill.mounted {
+  opacity: 1;
+}
+
+/* Base background layer */
+.liquid-pill__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--pill-gradient, rgba(255, 255, 255, 0.08));
+  border-radius: inherit;
+  border: 1px solid var(--pill-border, rgba(255, 255, 255, 0.15));
+}
+
+/* Morphing blob layer */
+.liquid-pill__blob {
+  position: absolute;
+  inset: -20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.liquid-pill__blob-inner {
+  width: 140%;
+  height: 200%;
+  background: var(--pill-gradient);
+  border-radius: 40% 50% 40% 50%;
+  filter: blur(8px);
+  animation: liquid-morph 8s ease-in-out infinite;
+}
+
+@keyframes liquid-morph {
+  0%, 100% {
+    border-radius: 40% 50% 40% 50%;
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    border-radius: 50% 40% 50% 40%;
+    transform: rotate(90deg) scale(1.05);
+  }
+  50% {
+    border-radius: 40% 50% 50% 40%;
+    transform: rotate(180deg) scale(0.95);
+  }
+  75% {
+    border-radius: 50% 40% 40% 50%;
+    transform: rotate(270deg) scale(1.02);
+  }
+}
+
+/* Cursor-following bulge highlight */
+.liquid-pill__bulge {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: blur(4px);
+}
+
+.liquid-pill:hover .liquid-pill__bulge {
+  opacity: 1;
+}
+
+/* Shine sweep effect */
+.liquid-pill__shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.liquid-pill:hover .liquid-pill__shine,
+.liquid-pill.transitioning .liquid-pill__shine {
+  animation: liquid-shine 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes liquid-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Edge glow effect */
+.liquid-pill__glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: var(--pill-glow, 0 0 20px rgba(255, 255, 255, 0.1));
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.liquid-pill:hover .liquid-pill__glow {
+  opacity: 1;
+}
+
+/* Variant-specific colors */
+.liquid-pill--default {
+  --pill-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+  --pill-border: rgba(255, 255, 255, 0.2);
+  --pill-glow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.liquid-pill--beat {
+  --pill-gradient: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(22, 163, 74, 0.12));
+  --pill-border: rgba(34, 197, 94, 0.45);
+  --pill-glow: 0 0 24px rgba(34, 197, 94, 0.3);
+}
+
+.liquid-pill--beat .liquid-pill__bulge {
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.35) 0%,
+    rgba(34, 197, 94, 0.15) 40%,
+    transparent 70%
+  );
+}
+
+.liquid-pill--miss {
+  --pill-gradient: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.12));
+  --pill-border: rgba(239, 68, 68, 0.45);
+  --pill-glow: 0 0 24px rgba(239, 68, 68, 0.3);
+}
+
+.liquid-pill--miss .liquid-pill__bulge {
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.35) 0%,
+    rgba(239, 68, 68, 0.15) 40%,
+    transparent 70%
+  );
+}
+
+.liquid-pill--pending {
+  --pill-gradient: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.12));
+  --pill-border: rgba(245, 158, 11, 0.45);
+  --pill-glow: 0 0 24px rgba(245, 158, 11, 0.3);
+}
+
+.liquid-pill--pending .liquid-pill__bulge {
+  background: radial-gradient(
+    circle,
+    rgba(245, 158, 11, 0.35) 0%,
+    rgba(245, 158, 11, 0.15) 40%,
+    transparent 70%
+  );
+}
+
+/* Elastic stretch during transition */
+.liquid-pill.transitioning {
+  transition: 
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    width 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease;
+}
+
+.liquid-pill.transitioning.direction-right {
+  animation: liquid-stretch-right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.liquid-pill.transitioning.direction-left {
+  animation: liquid-stretch-left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes liquid-stretch-right {
+  0% { transform: scaleX(1) scaleY(1); }
+  30% { transform: scaleX(1.15) scaleY(0.92); }
+  60% { transform: scaleX(0.95) scaleY(1.04); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+@keyframes liquid-stretch-left {
+  0% { transform: scaleX(1) scaleY(1); }
+  30% { transform: scaleX(1.15) scaleY(0.92); }
+  60% { transform: scaleX(0.95) scaleY(1.04); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* Light mode adjustments */
+html.light .liquid-pill--default {
+  --pill-gradient: linear-gradient(135deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.03));
+  --pill-border: rgba(0, 0, 0, 0.12);
+  --pill-glow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+html.light .liquid-pill--default .liquid-pill__bulge {
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.03) 40%,
+    transparent 70%
+  );
+}
+
+html.light .liquid-pill--beat {
+  --pill-gradient: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.08));
+  --pill-border: rgba(34, 197, 94, 0.3);
+  --pill-glow: 0 2px 16px rgba(34, 197, 94, 0.15);
+}
+
+html.light .liquid-pill--miss {
+  --pill-gradient: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.08));
+  --pill-border: rgba(239, 68, 68, 0.3);
+  --pill-glow: 0 2px 16px rgba(239, 68, 68, 0.15);
+}
+
+html.light .liquid-pill--pending {
+  --pill-gradient: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.08));
+  --pill-border: rgba(245, 158, 11, 0.3);
+  --pill-glow: 0 2px 16px rgba(245, 158, 11, 0.15);
+}
+
+html.light .liquid-pill__shine {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.4) 45%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.4) 55%,
+    transparent 60%
+  );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-pill,
+  .liquid-pill.transitioning {
+    transition: opacity 0.2s ease;
+  }
+  
+  .liquid-pill__blob-inner {
+    animation: none;
+  }
+  
+  .liquid-pill:hover .liquid-pill__shine,
+  .liquid-pill.transitioning .liquid-pill__shine {
+    animation: none;
+  }
+  
+  .liquid-pill.transitioning.direction-right,
+  .liquid-pill.transitioning.direction-left {
+    animation: none;
+  }
+}
+
+/* ============================================
+   LiquidBlob - Standalone blob container
+   ============================================ */
+.liquid-blob-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.liquid-blob-container.active .liquid-blob {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.liquid-blob {
+  position: absolute;
+  top: var(--blob-y, 50%);
+  left: var(--blob-x, 50%);
+  width: 200%;
+  height: 200%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.liquid-blob__inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--blob-c1, #3b82f6) 0%,
+    var(--blob-c2, #6366f1) 50%,
+    var(--blob-c3, #8b5cf6) 100%
+  );
+  border-radius: 40% 50% 40% 50%;
+  filter: blur(40px);
+  opacity: 0.6;
+  animation: blob-rotate var(--blob-duration, 10s) linear infinite;
+}
+
+@keyframes blob-rotate {
+  0% {
+    border-radius: 40% 50% 40% 50%;
+    transform: rotate(0deg);
+  }
+  33% {
+    border-radius: 50% 40% 50% 40%;
+    transform: rotate(120deg);
+  }
+  66% {
+    border-radius: 40% 50% 50% 40%;
+    transform: rotate(240deg);
+  }
+  100% {
+    border-radius: 40% 50% 40% 50%;
+    transform: rotate(360deg);
+  }
+}
+
+.liquid-blob__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.liquid-blob-container:hover .liquid-blob__shine {
+  animation: blob-shine 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes blob-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.liquid-blob__cursor-highlight {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+  filter: blur(4px);
+}
+
+.liquid-blob-container:hover .liquid-blob__cursor-highlight {
+  opacity: 1;
+}
+
+.liquid-blob__content {
+  position: relative;
+  z-index: 4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-blob__inner {
+    animation: none;
+  }
+  
+  .liquid-blob-container:hover .liquid-blob__shine {
+    animation: none;
+  }
+}
+
 /* Scrollbar */
 /* ============================================
    Premium gradient scrollbar
