@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { RadarSweep } from './RadarSweep';
 
 /**
  * LoadingMessages - Contextual progress messaging during skeleton loading
@@ -10,26 +11,31 @@ import { useState, useEffect, useRef } from 'react';
  * 
  * Inspired by: "6 Loading State Patterns That Feel Premium" - Medium UXWorld
  * Pattern: Contextual Progress Messaging
+ * 
+ * Enhanced with RadarSweep for a "scanning the market" visual metaphor.
  */
 
 interface LoadingMessagesProps {
   messages?: string[];
   interval?: number; // ms between message changes
   className?: string;
+  /** Use radar scanning animation instead of spinner */
+  useRadar?: boolean;
 }
 
 const defaultMessages = [
-  'Loading earnings data...',
-  'Fetching market schedules...',
-  'Preparing charts...',
+  'Scanning market data...',
+  'Fetching earnings schedules...',
   'Analyzing beat rates...',
+  'Processing reports...',
   'Almost ready...',
 ];
 
 export function LoadingMessages({ 
   messages = defaultMessages, 
   interval = 1800,
-  className = ''
+  className = '',
+  useRadar = true, // Default to radar for premium feel
 }: LoadingMessagesProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
@@ -74,30 +80,43 @@ export function LoadingMessages({
   }, [messages, interval]);
 
   return (
-    <div className={`loading-messages ${className}`}>
+    <div className={`loading-messages ${useRadar ? 'loading-messages-radar' : ''} ${className}`}>
       <div className="loading-messages-container">
-        {/* Animated loading spinner */}
-        <div className="loading-spinner">
-          <svg viewBox="0 0 24 24" className="loading-spinner-svg">
-            <circle 
-              cx="12" 
-              cy="12" 
-              r="10" 
-              fill="none" 
-              strokeWidth="2" 
-              className="loading-spinner-track"
-            />
-            <circle 
-              cx="12" 
-              cy="12" 
-              r="10" 
-              fill="none" 
-              strokeWidth="2" 
-              strokeLinecap="round"
-              className="loading-spinner-arc"
-            />
-          </svg>
-        </div>
+        {/* Radar or Spinner */}
+        {useRadar ? (
+          <RadarSweep 
+            size={48}
+            variant="cyan"
+            speed={2}
+            showRings={true}
+            ringCount={2}
+            autoBlips={true}
+            autoBlipCount={4}
+            pulseWithBeam={true}
+          />
+        ) : (
+          <div className="loading-spinner">
+            <svg viewBox="0 0 24 24" className="loading-spinner-svg">
+              <circle 
+                cx="12" 
+                cy="12" 
+                r="10" 
+                fill="none" 
+                strokeWidth="2" 
+                className="loading-spinner-track"
+              />
+              <circle 
+                cx="12" 
+                cy="12" 
+                r="10" 
+                fill="none" 
+                strokeWidth="2" 
+                strokeLinecap="round"
+                className="loading-spinner-arc"
+              />
+            </svg>
+          </div>
+        )}
         
         {/* Message text with fade animation */}
         <span 
