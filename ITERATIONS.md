@@ -1,3 +1,70 @@
+## 2026-03-18 — RadarSweep: Futuristic Scanning Animation for Loading States
+
+**Inspiration:** Researched 2026 UI loading animation trends:
+- "CSS Loading Animations: 30 Modern HTML + CSS Examples (2026 UI Loaders)" — radar scanner pattern
+- Futuristic tech UI/security interfaces with radar scanning metaphor
+- Financial "market scanning" visual concept
+- Cyberpunk/tech aesthetic with neon glows
+
+**What I built:**
+- New `RadarSweep` component family — premium radar scanning animation:
+
+  **Core Features:**
+  - Rotating beam with gradient fade trail
+  - Concentric range circles for depth
+  - Dynamic "blip" dots that pulse when the beam passes over them
+  - Customizable colors, speeds, and visual elements
+  - GPU-accelerated CSS animations (conic-gradient rotation)
+
+  **Component Family:**
+  - `RadarSweep` — Full radar scanner (configurable size, default 120px)
+  - `RadarSweepMini` — Compact 24px version for inline use (buttons, status)
+  - `RadarBar` — Horizontal scanning bar variant for progress indicators
+
+  **Configuration Options:**
+  - `size`: Pixel size of the radar
+  - `variant`: 'cyan' | 'green' | 'purple' | 'amber' | 'white'
+  - `speed`: Rotation speed in seconds (default: 2)
+  - `showRings`: Show concentric range circles (default: true)
+  - `ringCount`: Number of range rings (default: 3)
+  - `showCenter`: Show center dot (default: true)
+  - `showCrosshairs`: Show targeting crosshairs (default: false)
+  - `blips`: Array of custom blip positions
+  - `autoBlips`: Auto-generate random blips (default: false)
+  - `autoBlipCount`: Number of auto blips (default: 5)
+  - `pulseWithBeam`: Blips brighten when beam passes (default: true)
+  - `label`: Text label below radar
+  - `isActive`: Enable/disable animation
+
+  **Technical Details:**
+  - CSS `conic-gradient` for the sweep trail effect
+  - requestAnimationFrame for syncing blip pulses with beam rotation
+  - Transform-based rotation (GPU-accelerated)
+  - Layered composition: rings → crosshairs → center → beam → trail → blips → glow
+  - Full dark mode styling with neon glow effects
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (static fallback)
+  - Decorative element (no semantic meaning)
+  - Clean pause/disable via `isActive` prop
+
+**Integration:**
+- Replaced spinner in `LoadingMessages` component with RadarSweep
+- Updated loading messages to match "scanning" metaphor:
+  - "Scanning market data..."
+  - "Fetching earnings schedules..."
+  - "Analyzing beat rates..."
+- 48px radar with 4 auto-generated blips and beam-synced pulsing
+
+**Why this matters:**
+The radar scanning metaphor perfectly fits a financial data app — it evokes "scanning the market" for opportunities. The futuristic aesthetic aligns with 2026 trends toward tech-forward, sci-fi inspired UI. The blips pulsing as the beam passes creates an engaging, dynamic loading experience that feels purposeful rather than passive.
+
+**Impact:** Loading states now feel like the app is actively "scanning" for data rather than just waiting. The premium animation reduces perceived load time and reinforces the financial/tech theme.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — LiquidPill: 2026 Liquid Design Trend for Filter Chips
 
 **Inspiration:** "UI Design Trend 2026 #2: Glassmorphism and Liquid Design Make a Comeback" (Medium/Design Bootcamp, Oct 2025). The article highlights how designers are "merging glassmorphism with liquid-like interactions — crafting interfaces that are fluid, haptic, and almost alive." Also researched:
