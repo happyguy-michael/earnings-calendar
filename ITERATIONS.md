@@ -3679,3 +3679,46 @@ This adds critical context without requiring click-through to detail page.
 
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
+
+
+---
+
+## 2026-03-19 — ProcessingConfirm: Perceived Reliability Pattern
+
+**Inspiration:** Tubik Studio's UI Design Trends 2026 article — "Artificially delaying writes like form submissions can give your users more confidence that their changes went through." Also Emil Kowalski's research on UI psychology: "Perceived reliability beats actual speed."
+
+**What I built:**
+- New `ProcessingConfirm` component that adds intentional processing → confirmation states
+- Creates a brief "working..." phase before showing results
+- Animated checkmark confirmation that feels deliberate
+
+**Technical details:**
+- Three-phase state machine: processing → confirming → complete
+- Configurable timing (default: 300ms processing + 800ms confirm)
+- `useProcessingConfirm` hook for imperative control
+- `ProcessingDot` - minimal inline indicator with pulse animation
+- `ProcessingText` - phase-aware text with smooth transitions
+- Default spinner and animated checkmark indicators
+- GPU-accelerated animations with will-change hints
+- Full `prefers-reduced-motion` support (instant transitions)
+- ARIA live regions for screen reader announcements
+
+**Use cases:**
+- Filter changes (show "Filtering..." before results appear)
+- Form submissions (show processing before success)
+- Data saves ("Saving..." → "Saved!")
+- Any instant action that benefits from perceived work
+
+**Why this matters:**
+When something completes instantly, users can feel uncertain whether it actually worked. The brief processing state creates cognitive closure — the UI "showed its work" and the user trusts the result. This is especially important for critical actions.
+
+**Component exports:**
+- `ProcessingConfirm` - Wrapper component (trigger prop-based)
+- `useProcessingConfirm` - Hook for imperative control
+- `ProcessingDot` - Tiny pulsing dot indicator
+- `ProcessingText` - Text that changes per phase
+
+**Reference:** blog.tubikstudio.com/ui-design-trends-2026/
+
+---
+
