@@ -61,6 +61,10 @@
   --header-bg: rgba(10, 10, 15, 0.8);
   --shadow-color: rgba(0, 0, 0, 0.3);
   --glow-opacity: 1;
+  
+  /* Enable smooth animations to intrinsic sizes (height: auto, etc.) */
+  /* Chrome 129+, enables interpolate-size for all elements */
+  interpolate-size: allow-keywords;
 }
 
 /* Light mode overrides */
@@ -571,6 +575,116 @@ html.light .sticky-header.scrolled {
   .sticky-header-hints,
   .sticky-header-filters {
     transition: none;
+  }
+}
+
+/* ============================================
+   Scroll-Driven Animations (CSS 2024)
+   Progressive enhancement for modern browsers
+   Chrome 115+, partial Firefox support
+   ============================================ */
+
+/* Keyframes for scroll-linked header shrink */
+@keyframes headerShrink {
+  from {
+    --header-scale: 1;
+    --header-padding: 1.25rem;
+    --title-size: 1.5rem;
+    --subtitle-opacity: 1;
+    --filters-opacity: 1;
+  }
+  to {
+    --header-scale: 0.95;
+    --header-padding: 0.75rem;
+    --title-size: 1.25rem;
+    --subtitle-opacity: 0;
+    --filters-opacity: 0;
+  }
+}
+
+/* Keyframes for card entrance on scroll into view */
+@keyframes cardEnterView {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+    filter: blur(4px);
+  }
+  10% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Keyframes for stat cards entering view with bounce */
+@keyframes statEnterView {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Keyframes for week cards with stagger effect */
+@keyframes weekCardReveal {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-5deg) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) translateY(0);
+  }
+}
+
+/* Apply scroll-driven animations when supported */
+@supports (animation-timeline: scroll()) {
+  /* Earnings cards animate when scrolling into view */
+  .earnings-row {
+    animation: cardEnterView linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+  
+  /* Stat cards with view timeline animation */
+  .stats-grid > * {
+    animation: statEnterView ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+  
+  /* Week cards reveal with 3D perspective */
+  .card.week-card {
+    animation: weekCardReveal ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+  
+  /* Disable conflicting JS-based stagger animations when scroll-driven is active */
+  .earnings-card-stagger {
+    animation-delay: 0ms !important;
+  }
+}
+
+/* Respect reduced motion - disable scroll animations */
+@media (prefers-reduced-motion: reduce) {
+  @supports (animation-timeline: scroll()) {
+    .earnings-row,
+    .stats-grid > *,
+    .card.week-card {
+      animation: none;
+    }
   }
 }
 
