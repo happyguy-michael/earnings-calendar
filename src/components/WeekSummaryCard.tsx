@@ -4,6 +4,7 @@ import { useMemo, useEffect, useState, useRef } from 'react';
 import { Earning } from '@/lib/types';
 import { NumberRoller, PercentageRoller } from './NumberRoller';
 import { SplitFlapTicker } from './SplitFlapTicker';
+import { AuroraWash } from './AuroraWash';
 
 interface WeekSummaryCardProps {
   weekStart: Date;
@@ -138,11 +139,28 @@ export function WeekSummaryCard({
     return ((e.eps - e.estimate) / e.estimate) * 100;
   };
 
+  // Determine aurora variant based on performance
+  const auroraVariant = stats.beatRate >= 80 ? 'emerald' : 
+                        stats.beatRate >= 65 ? 'aurora' :
+                        stats.beatRate < 35 && stats.reported > 0 ? 'sunset' : null;
+  const showAurora = auroraVariant && isVisible && stats.reported >= 3;
+
   return (
     <div 
       ref={cardRef}
       className={`week-summary-card ${mounted ? 'mounted' : ''} ${isVisible ? 'visible' : ''} ${isCurrentWeek ? 'current' : ''} ${className}`}
     >
+      {/* Aurora wash for exceptional weeks */}
+      {showAurora && (
+        <AuroraWash
+          asBackground
+          variant={auroraVariant}
+          intensity="subtle"
+          speed={0.8}
+          borderRadius={20}
+        />
+      )}
+      
       {/* Background gradient orbs */}
       <div className="week-summary-orbs" aria-hidden="true">
         <span className="week-summary-orb orb-1" />
