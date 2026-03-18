@@ -1,3 +1,50 @@
+## 2026-03-18 — CSS Scroll-Driven Animations (Chrome 2024)
+
+**Inspiration:** Chrome CSS Wrapped 2024 — scroll-driven animations with `animation-timeline`. A cutting-edge progressive enhancement for modern browsers.
+
+**What I built:**
+- Added modern CSS scroll-driven animation support:
+
+  **Root-level Changes:**
+  - `interpolate-size: allow-keywords` on `:root` — enables smooth animations to intrinsic sizes (`height: auto`, `min-content`, etc.) without JavaScript. Future-proofs height animations throughout the app.
+
+  **Scroll-Linked Keyframe Animations:**
+  - `cardEnterView` — Earnings cards fade+blur+scale as they scroll into viewport
+  - `statEnterView` — Stat cards enter with a bouncy overshoot effect
+  - `weekCardReveal` — Week cards reveal with subtle 3D perspective rotation
+
+  **Implementation:**
+  - Uses `@supports (animation-timeline: scroll())` for feature detection
+  - `animation-timeline: view()` links animations to viewport entry
+  - `animation-range: entry 0% entry 40%` controls the trigger zone
+  - Graceful degradation — older browsers fall back to existing JS-based animations
+
+**Technical Details:**
+- Chrome 115+ support (Firefox experimental, Safari pending)
+- GPU-accelerated transforms and filters
+- Zero JavaScript overhead for animation timing
+- Scroll position directly drives animation progress (60fps butter)
+- Respects `prefers-reduced-motion` with full animation disable
+
+**Browser Support:**
+- ✅ Chrome 115+ (full support)
+- ✅ Edge 115+ (Chromium-based)
+- ⚠️ Firefox (behind flag, partial)
+- ❌ Safari (not yet, falls back gracefully)
+
+**Why this matters:**
+Scroll-driven animations are the future of performant scroll-linked effects. Instead of JavaScript scroll listeners (which can jank), the browser natively interpolates animation keyframes based on scroll position. This gives us:
+- Smoother animations (browser-optimized timing)
+- Better battery life (no JS tick)
+- Simpler code (CSS-only)
+- Automatic fallback (older browsers just don't animate)
+
+**Impact:** Cards now smoothly fade/blur/scale into view as you scroll, with zero JavaScript overhead. The effect is subtle but premium — elements feel like they're "arriving" rather than just appearing.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — SplitFlapTicker: Airport Departure Board Animation
 
 **Inspiration:** Vintage mechanical displays and the nostalgia of physical information systems. Researched via:
