@@ -1,3 +1,73 @@
+## 2026-03-18 — SplitFlapTicker: Airport Departure Board Animation
+
+**Inspiration:** Vintage mechanical displays and the nostalgia of physical information systems. Researched via:
+- Grand Central Terminal's iconic Solari departure boards
+- Airport arrival/departure displays
+- Bloomberg Terminal classic aesthetic
+- "Mechanical nostalgia" trend in 2025-2026 UI design
+- The satisfying clack of physical split-flap mechanisms
+
+**What I built:**
+- New `SplitFlapTicker` component — airport departure board style animation for stock tickers:
+
+  **Core Features:**
+  - Full alphanumeric character set (A-Z, 0-9, space, symbols like . - $ % +)
+  - Each slot flips independently with configurable stagger timing
+  - Characters cycle through the alphabet before landing on target
+  - 3D CSS transforms with realistic perspective
+  - Top/bottom half panels that flip like real mechanical displays
+  - Center divider line for authentic mechanical feel
+  - Configurable "spin cycles" — number of alphabet passes before settling
+  
+  **Visual Variants:**
+  - `default`: Dark mechanical display (black/gray gradient)
+  - `terminal`: Green Bloomberg-style terminal (#00ff88 on dark)
+  - `minimal`: Transparent background for inline text
+  - `light`: Light mode with gray gradients
+  
+  **Configuration Options:**
+  - `text`: The ticker symbol to display
+  - `maxLength`: Fixed slot count (default: 6)
+  - `spinCycles`: Alphabet passes before settling (default: 1)
+  - `flipDuration`: Individual flip animation time (default: 60ms)
+  - `stagger`: Delay between each character starting (default: 50ms)
+  - `size`: xs | sm | md | lg | xl
+  - `variant`: default | minimal | terminal | light
+  - `gap`: Spacing between character slots
+  - `onComplete`: Callback when all characters settle
+  
+  **Component Family:**
+  - `SplitFlapTicker` — Main component for short text (tickers)
+  - `SplitFlapText` — Extended version for longer text (no spin)
+  - `SplitFlapChar` — Individual character flip (internal)
+  
+  **Technical Details:**
+  - GPU-accelerated CSS transforms (rotateX for flip)
+  - Monospace font for consistent character width
+  - Backface visibility hidden for clean 3D effect
+  - Transform-origin set for realistic hinge point
+  - Staggered setTimeout chains for sequenced animation
+  - Full cleanup on unmount (no memory leaks)
+
+**Accessibility:**
+- Full `prefers-reduced-motion` support (instant display)
+- ARIA role="text" with aria-label for screen readers
+- Semantic HTML structure
+
+**Applied to:** WeekSummaryCard highlights
+- Biggest beat ticker: Terminal variant (green glow)
+- Biggest miss ticker: Default variant (dark mechanical)
+- Triggers on Intersection Observer (scroll into view)
+
+**Why this matters for Earnings Calendar:**
+The split-flap effect perfectly matches the financial/stock market theme. Vintage stock tickers used similar mechanical displays. The animation creates anticipation as characters flip through before revealing the ticker symbol — perfect for highlighting week's biggest movers.
+
+**Impact:** Adds dramatic reveal animation to the WeekSummaryCard's highlight section. The mechanical feel reinforces the financial data context while the staggered animation draws attention to the most significant earnings results.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-18 — PrismBorder: Holographic Chromatic Aberration Effect
 
 **Inspiration:** Premium iridescent/holographic design trends for 2025-2026. Researched via:
