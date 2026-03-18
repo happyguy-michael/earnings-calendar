@@ -3,6 +3,7 @@
 import { useMemo, useEffect, useState, useRef } from 'react';
 import { Earning } from '@/lib/types';
 import { NumberRoller, PercentageRoller } from './NumberRoller';
+import { SplitFlapTicker } from './SplitFlapTicker';
 
 interface WeekSummaryCardProps {
   weekStart: Date;
@@ -231,13 +232,30 @@ export function WeekSummaryCard({
         </div>
       )}
       
-      {/* Highlights - animated surprise percentages with slot-machine digits */}
+      {/* Highlights - animated surprise percentages with split-flap tickers */}
       {(stats.biggestBeat || stats.biggestMiss) && (
         <div className="week-summary-highlights">
           {stats.biggestBeat && (
             <div className="week-summary-highlight beat">
               <span className="week-summary-highlight-icon">🏆</span>
-              <span className="week-summary-highlight-ticker">{stats.biggestBeat.ticker}</span>
+              <span className="week-summary-highlight-ticker">
+                {isVisible ? (
+                  <SplitFlapTicker 
+                    text={stats.biggestBeat.ticker}
+                    maxLength={5}
+                    spinCycles={1}
+                    flipDuration={50}
+                    stagger={60}
+                    size="sm"
+                    variant="terminal"
+                    gap={1}
+                  />
+                ) : (
+                  <span style={{ fontFamily: 'monospace', letterSpacing: '0.05em' }}>
+                    {stats.biggestBeat.ticker}
+                  </span>
+                )}
+              </span>
               <span className="week-summary-highlight-value">
                 <NumberRoller 
                   value={isVisible ? getSurprisePercent(stats.biggestBeat) : 0}
@@ -252,7 +270,24 @@ export function WeekSummaryCard({
           {stats.biggestMiss && (
             <div className="week-summary-highlight miss">
               <span className="week-summary-highlight-icon">📉</span>
-              <span className="week-summary-highlight-ticker">{stats.biggestMiss.ticker}</span>
+              <span className="week-summary-highlight-ticker">
+                {isVisible ? (
+                  <SplitFlapTicker 
+                    text={stats.biggestMiss.ticker}
+                    maxLength={5}
+                    spinCycles={1}
+                    flipDuration={50}
+                    stagger={60}
+                    size="sm"
+                    variant="default"
+                    gap={1}
+                  />
+                ) : (
+                  <span style={{ fontFamily: 'monospace', letterSpacing: '0.05em' }}>
+                    {stats.biggestMiss.ticker}
+                  </span>
+                )}
+              </span>
               <span className="week-summary-highlight-value">
                 <NumberRoller 
                   value={isVisible ? getSurprisePercent(stats.biggestMiss) : 0}
