@@ -11,6 +11,7 @@ import { AnimatedFocusRing, SkipLink } from "@/components/AnimatedFocusRing";
 import { ScrollDrivenAnimations } from "@/components/ScrollDrivenAnimations";
 import { StickyStateStyle } from "@/components/StickyStateStyle";
 import { BalloonTooltipStyles } from "@/components/BalloonTooltip";
+import { NetworkStatus } from "@/components/NetworkStatus";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -61,6 +62,8 @@ export default function RootLayout({
           <main id="main-content">
             {children}
           </main>
+          {/* Network status indicator - shows when offline/reconnecting */}
+          <NetworkStatus position="bottom" />
         </ClientProviders>
       </body>
     </html>

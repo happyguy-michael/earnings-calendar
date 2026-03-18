@@ -19610,3 +19610,377 @@ html.light .prism-specular {
     filter: blur(6px);
   }
 }
+
+/* ============================================
+   NetworkStatus Component
+   Premium offline/reconnection indicator
+   ============================================ */
+
+.network-status {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.network-status-top {
+  top: 20px;
+}
+
+.network-status-bottom {
+  bottom: 20px;
+}
+
+/* Offline state - warm amber/red tones */
+.network-status-offline {
+  background: linear-gradient(135deg, 
+    rgba(180, 60, 60, 0.85) 0%, 
+    rgba(120, 40, 40, 0.9) 100%
+  );
+  color: rgba(255, 220, 200, 0.95);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+}
+
+.network-status-offline .network-status-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, 
+    rgba(255, 80, 80, 0.4) 0%, 
+    rgba(255, 120, 60, 0.3) 100%
+  );
+  filter: blur(12px);
+  z-index: -1;
+}
+
+/* Success state - fresh green */
+.network-status-success {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.85) 0%, 
+    rgba(22, 163, 74, 0.9) 100%
+  );
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(134, 239, 172, 0.3);
+}
+
+.network-status-success .network-status-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: rgba(134, 239, 172, 0.5);
+  z-index: -1;
+}
+
+/* Warning state - amber */
+.network-status-warning {
+  background: linear-gradient(135deg, 
+    rgba(245, 158, 11, 0.85) 0%, 
+    rgba(217, 119, 6, 0.9) 100%
+  );
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(253, 224, 71, 0.3);
+}
+
+/* Online state (debug mode) */
+.network-status-online {
+  background: linear-gradient(135deg, 
+    rgba(30, 30, 40, 0.85) 0%, 
+    rgba(20, 20, 30, 0.9) 100%
+  );
+  color: rgba(200, 200, 220, 0.9);
+  border: 1px solid rgba(100, 100, 140, 0.2);
+}
+
+/* Icon styling */
+.network-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.network-status-offline .network-status-icon {
+  color: rgba(255, 180, 150, 0.9);
+}
+
+.network-status-success .network-status-icon {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Content area */
+.network-status-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.network-status-text {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.network-status-subtext {
+  font-size: 12px;
+  opacity: 0.75;
+  font-weight: 400;
+}
+
+/* Retry button */
+.network-status-retry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  cursor: pointer;
+  transition: all 200ms var(--spring-snappy);
+  margin-left: 4px;
+}
+
+.network-status-retry:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg);
+}
+
+.network-status-retry:active {
+  transform: rotate(180deg) scale(0.95);
+}
+
+/* Offline overlay for wrapped content */
+.network-offline-overlay {
+  position: relative;
+}
+
+.network-offline-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 15, 15, 0.4);
+  pointer-events: none;
+  z-index: 50;
+  border-radius: inherit;
+}
+
+/* Light mode adjustments */
+html.light .network-status-offline {
+  background: linear-gradient(135deg, 
+    rgba(220, 80, 80, 0.95) 0%, 
+    rgba(180, 50, 50, 0.95) 100%
+  );
+  color: white;
+  box-shadow: 
+    0 4px 24px rgba(220, 80, 80, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+html.light .network-status-success {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.95) 0%, 
+    rgba(22, 163, 74, 0.95) 100%
+  );
+  box-shadow: 
+    0 4px 24px rgba(34, 197, 94, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+html.light .network-status-online {
+  background: linear-gradient(135deg, 
+    rgba(250, 250, 252, 0.95) 0%, 
+    rgba(240, 240, 245, 0.95) 100%
+  );
+  color: rgba(30, 30, 40, 0.9);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .network-status {
+    transition: opacity 0.1s ease;
+  }
+  
+  .network-status-glow,
+  .network-status-pulse {
+    animation: none !important;
+  }
+  
+  .network-status-retry:hover {
+    transform: none;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .network-status {
+    left: 16px;
+    right: 16px;
+    transform: none;
+    width: auto;
+    padding: 10px 16px;
+  }
+  
+  .network-status-bottom {
+    bottom: 16px;
+  }
+  
+  .network-status-top {
+    top: 16px;
+  }
+}
+
+/* NetworkStatus Animations */
+.network-status-entering {
+  animation: network-status-enter 0.3s var(--spring-snappy) forwards;
+}
+
+.network-status-exiting {
+  animation: network-status-exit 0.3s var(--spring-snappy) forwards;
+}
+
+.network-status-top.network-status-entering {
+  animation-name: network-status-enter-top;
+}
+
+.network-status-top.network-status-exiting {
+  animation-name: network-status-exit-top;
+}
+
+@keyframes network-status-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes network-status-exit {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px) scale(0.98);
+  }
+}
+
+@keyframes network-status-enter-top {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes network-status-exit-top {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px) scale(0.98);
+  }
+}
+
+/* Offline glow animation */
+.network-status-offline .network-status-glow {
+  animation: network-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes network-glow-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+}
+
+/* Success pulse animation */
+.network-status-success .network-status-pulse {
+  animation: network-success-pulse 0.6s ease-out forwards;
+}
+
+@keyframes network-success-pulse {
+  from {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Icon pulse for offline state */
+.network-status-icon-pulse {
+  animation: network-icon-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes network-icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile full-width fix */
+@media (max-width: 640px) {
+  .network-status-entering {
+    animation-name: network-status-enter-mobile;
+  }
+  
+  .network-status-exiting {
+    animation-name: network-status-exit-mobile;
+  }
+  
+  @keyframes network-status-enter-mobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @keyframes network-status-exit-mobile {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+  }
+}
