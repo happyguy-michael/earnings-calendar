@@ -3882,3 +3882,60 @@ When something completes instantly, users can feel uncertain whether it actually
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
 ---
+
+
+---
+
+## 2026-03-20 — HolographicBorder: Cursor-Angle-Tracking Iridescent Effect
+
+**Inspiration:** Holographic credit card security features, Apple's M-series chip page hover effects, 2026 "Y3K" liquid metal aesthetics, premium fintech card designs. Research from Ripplix's UI Animation Guide 2026 emphasizing "motion that responds to user input creates perceived craftsmanship."
+
+**What I built:**
+- New `HolographicBorder` component with cursor-angle-tracking conic gradient:
+
+  **How it differs from existing components:**
+  - `CursorGlowBorder`: Radial glow follows cursor POSITION
+  - `AnimatedGradientBorder`: Auto-rotating gradient (no cursor tracking)
+  - `HolographicBorder`: Conic gradient ANGLE follows cursor ANGLE relative to card center
+
+  **Core Features:**
+  - Cursor angle calculation from card center
+  - Smooth interpolation with configurable smoothing factor
+  - Velocity-based shimmer sparkle effect (faster movement = brighter sparkle)
+  - Outer glow layer that intensifies on hover
+  - Color presets: default, gold, silver, rainbow, beat, miss, pending
+
+  **Technical Details:**
+  - Conic gradients rotate based on atan2(dy, dx) angle calculation
+  - Shortest-path rotation interpolation (handles 360° wraparound smoothly)
+  - Velocity tracking for shimmer intensity
+  - GPU-accelerated with will-change hints
+  - RAF-based animation loop with delta time capping
+  - Mask composite technique for border-only gradient
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (falls back to simple border)
+  - Subtle content scale (1.002) on hover for tactile feel
+  - No impact on tab order or semantic structure
+
+  **Component exports:**
+  - `HolographicBorder`: Main wrapper component
+  - `HolographicCard`: Combines effect with glass card styling
+  - `useHolographicAngle`: Hook for custom implementations
+
+**Integration:**
+- Applied to monster beats (≥15% surprise) with `preset="beat"`, higher shimmer intensity
+- Applied to disaster misses (≤-15%) with `preset="miss"`, slightly muted effect
+- Replaces previous `AnimatedGradientBorder` on exceptional cards for interactive feel
+
+**Impact:** Exceptional earnings cards now have a premium "liquid metal" / holographic effect that responds to cursor movement. Moving your cursor around a monster beat card creates a satisfying holographic shimmer like a premium credit card, adding perceived value and tactile feedback to the most important results.
+
+**Reference:**
+- Holographic credit card effects
+- Apple M-series chip product pages
+- Y3K / liquid metal aesthetic trend 2026
+- Ripplix UI Animation Practical Guide 2026
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
