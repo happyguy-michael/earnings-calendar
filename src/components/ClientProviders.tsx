@@ -12,6 +12,7 @@ import { FocusModeProvider, FocusModeIndicator } from './FocusMode';
 import { ViewportScrollSpotlight } from './ViewportScrollSpotlight';
 import { DynamicShadowProvider, DynamicShadowStyles } from './DynamicShadow';
 import { LiquidButtonStyles } from './LiquidButton';
+import { DynamicIslandProvider } from './DynamicIsland';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -22,13 +23,15 @@ export function ClientProviders({ children }: { children: ReactNode }) {
             <FocusModeProvider dimOpacity={0.35} transitionDuration={300}>
               <ToastProvider>
                 <UndoToastProvider>
-                  <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
-                  <SmoothThemeTransition />
-                  <ViewportScrollSpotlight />
-                  <DynamicShadowStyles />
-                  <LiquidButtonStyles />
-                  <FocusModeIndicator />
-                  {children}
+                  <DynamicIslandProvider>
+                    <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
+                    <SmoothThemeTransition />
+                    <ViewportScrollSpotlight />
+                    <DynamicShadowStyles />
+                    <LiquidButtonStyles />
+                    <FocusModeIndicator />
+                    {children}
+                  </DynamicIslandProvider>
                 </UndoToastProvider>
               </ToastProvider>
             </FocusModeProvider>
