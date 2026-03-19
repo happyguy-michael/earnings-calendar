@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { RadarSweep } from './RadarSweep';
+import { PerceivedProgressBar } from './PerceivedProgressBar';
 
 /**
  * LoadingMessages - Contextual progress messaging during skeleton loading
@@ -12,7 +13,9 @@ import { RadarSweep } from './RadarSweep';
  * Inspired by: "6 Loading State Patterns That Feel Premium" - Medium UXWorld
  * Pattern: Contextual Progress Messaging
  * 
- * Enhanced with RadarSweep for a "scanning the market" visual metaphor.
+ * Enhanced with:
+ * - RadarSweep for a "scanning the market" visual metaphor
+ * - PerceivedProgressBar for trust-building fake progress (2026 UI trend)
  */
 
 interface LoadingMessagesProps {
@@ -21,6 +24,10 @@ interface LoadingMessagesProps {
   className?: string;
   /** Use radar scanning animation instead of spinner */
   useRadar?: boolean;
+  /** Show perceived progress bar below messages */
+  showProgress?: boolean;
+  /** Color for progress bar */
+  progressColor?: string;
 }
 
 const defaultMessages = [
@@ -36,6 +43,8 @@ export function LoadingMessages({
   interval = 1800,
   className = '',
   useRadar = true, // Default to radar for premium feel
+  showProgress = true, // Show perceived progress bar by default
+  progressColor = '#3b82f6',
 }: LoadingMessagesProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
@@ -136,6 +145,21 @@ export function LoadingMessages({
           />
         ))}
       </div>
+
+      {/* Perceived progress bar - builds trust through visible progress */}
+      {showProgress && (
+        <div className="loading-progress-bar-wrapper">
+          <PerceivedProgressBar 
+            loading={true}
+            color={progressColor}
+            height={3}
+            showGlow={true}
+            showShimmer={true}
+            fillDuration={messages.length * interval}
+            autoHide={false}
+          />
+        </div>
+      )}
     </div>
   );
 }

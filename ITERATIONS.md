@@ -3939,3 +3939,62 @@ When something completes instantly, users can feel uncertain whether it actually
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
 ---
+
+
+## 2026-03-20 — PerceivedProgressBar: Trust-Building Fake Progress
+
+**Inspiration:** Tubik Studio's "7 UI Design Trends of 2026" article on Purposeful Motion:
+> "Artificially delaying writes like form submissions can give users more confidence that their changes went through. Perceived reliability beats actual speed."
+
+Users trust visible progress more than instant responses. A fake-but-believable progress bar builds confidence that "something is actually happening" during loading states.
+
+**What I built:**
+- New `PerceivedProgressBar` component with psychologically-tuned timing:
+
+  **Core Psychology:**
+  - Slow start (0-30%) = "System is carefully initializing"
+  - Fast middle (30-75%) = "Good progress is being made"  
+  - Hold at ~85% = "Almost there, finishing details"
+  - Rush to 100% = "Done! Satisfying completion"
+
+  **Custom Easing Function:**
+  - Not linear, not standard ease-in-out
+  - Uses a custom curve that matches human perception of "work being done"
+  - Holds longer at the end to build anticipation
+
+  **Visual Features:**
+  - Diagonal shimmer sweep effect
+  - Pulsing glow at leading edge
+  - Completion burst animation when reaching 100%
+  - Smooth color transitions
+
+  **Technical Details:**
+  - GPU-accelerated with requestAnimationFrame
+  - Custom easeProgress() function for natural timing
+  - Separate fill phase (3s) and completion phase (300ms)
+  - Full `prefers-reduced-motion` support
+  - Auto-hide after completion with configurable delay
+  - Light mode compatible
+
+**Integration:**
+- Added to `LoadingMessages` component (enabled by default)
+- Progress bar appears below the rotating status messages
+- Duration synced to message cycle count for coherent timing
+- Fades in with subtle entrance animation
+
+**Component Exports:**
+- `PerceivedProgressBar` - Full-featured progress bar
+- `PerceivedProgressBarInline` - Compact 2px version for tight spaces
+- `usePerceivedProgress` - Hook for custom implementations
+
+**Impact:** Loading no longer feels like waiting. The progress bar creates a narrative: "We're scanning... analyzing... almost there... done!" This transforms a passive wait into an active, trustworthy experience.
+
+**Reference:**
+- Tubik Studio "7 UI Design Trends of 2026"
+- Research on perceived performance vs actual performance
+- Apple's loading indicators (fake progress is a known iOS pattern)
+- Emil Kowalski's "artificial delay" UX pattern
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
