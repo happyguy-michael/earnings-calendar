@@ -123,6 +123,7 @@ import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
 import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
+import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1502,6 +1503,13 @@ export default function Home() {
               </div>
 
               {/* Week Content */}
+              <MagneticFieldProvider
+                fieldRadius={250}
+                fieldStrength={0.08}
+                springStiffness={180}
+                springDamping={20}
+                mode="attract"
+              >
               <div className="week-content">
                 {(() => {
                   // Pre-calculate day data for heat indicator
@@ -1569,7 +1577,9 @@ export default function Home() {
                                       <SpotlightCard id={`pre-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
                                       <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={i}>
-                                        <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
+                                        <MagneticCard strength={0.1} rotate maxRotation={2} layer={1}>
+                                          <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
+                                        </MagneticCard>
                                       </VelocityBlurCard>
                                       </MomentumTiltCard>
                                       </SpotlightCard>
@@ -1602,7 +1612,9 @@ export default function Home() {
                                       <SpotlightCard id={`post-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
                                       <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={preMarket.length + i}>
-                                        <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
+                                        <MagneticCard strength={0.1} rotate maxRotation={2} layer={1}>
+                                          <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
+                                        </MagneticCard>
                                       </VelocityBlurCard>
                                       </MomentumTiltCard>
                                       </SpotlightCard>
@@ -1629,6 +1641,7 @@ export default function Home() {
                   });
                 })()}
               </div>
+              </MagneticFieldProvider>
               
               {/* Week Summary Card - celebratory end-of-week recap with holographic border */}
               <PrismBorder 
