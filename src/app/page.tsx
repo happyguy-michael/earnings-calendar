@@ -128,6 +128,7 @@ import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
+import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -416,10 +417,23 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
 
         {/* Countdown timer for today's pending earnings - flip digit style */}
         {isTodayPending && (
-          <FlipCountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
+          <ImminentPing
+            isImminent={isImminent}
+            urgency={isImminent ? 'high' : 'low'}
+            borderRadius={8}
+          >
+            <FlipCountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
+          </ImminentPing>
         )}
 
         {hasResult ? (
+          <NewResultPing
+            isNew={isToday}
+            result={earning.result}
+            count={3}
+            delay={animationIndex * 100 + 500}
+            dotSize={8}
+          >
           <div className="flex items-center gap-2">
             {/* Fresh badge for recently reported earnings */}
             {isToday && (
@@ -532,6 +546,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               />
             )}
           </div>
+          </NewResultPing>
         ) : earning.beatOdds ? (
           <HeartbeatBadge 
             probability={earning.beatOdds} 
