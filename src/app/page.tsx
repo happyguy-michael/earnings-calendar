@@ -52,6 +52,7 @@ import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ImminentGlow } from '@/components/ImminentGlow';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
+import { BlueprintOverlay } from '@/components/BlueprintOverlay';
 import { SurpriseCountUp, SurpriseScramble } from '@/components/AnimatedSurpriseBadge';
 import { ScrambleTicker } from '@/components/TextScramble';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
@@ -913,6 +914,19 @@ export default function Home() {
         glowIntensity={0.4}
         pulse={true}
         pulseSpeed={5000}
+      />
+      
+      {/* Blueprint overlay - 2026 raw aesthetics trend */}
+      <BlueprintOverlay
+        majorGrid={160}
+        minorGrid={40}
+        showTicks={true}
+        showCrosshairs={true}
+        showDimensions={false}
+        majorOpacity={0.04}
+        minorOpacity={0.015}
+        animateIn={true}
+        zIndex={1}
       />
       
       {/* Ambient time-of-day lighting - subtle organic color shift */}
