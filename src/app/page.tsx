@@ -98,6 +98,7 @@ import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/components/DayColumnHighlight';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
+import { ScrollVelocityParticlesLight } from '@/components/ScrollVelocityParticles';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
 import { PrismBorder } from '@/components/PrismBorder';
@@ -947,6 +948,9 @@ export default function Home() {
       
       {/* Floating background particles */}
       <FloatingParticles count={35} speed={0.25} maxSize={3} minSize={1} />
+      
+      {/* Scroll velocity particles - kinetic ambiance responds to scroll momentum */}
+      <ScrollVelocityParticlesLight />
       
       {/* Premium grain texture overlay */}
       <GrainOverlay opacity={0.025} animate={true} blendMode="overlay" />
