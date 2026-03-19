@@ -1,3 +1,72 @@
+## 2026-03-19 — StackedCards: 3D Stacked Card Deck Effect
+
+**Inspiration:** 2026 UI trend research:
+- Apple Wallet card stack navigation pattern
+- iOS App Library folder previews
+- Premium fintech apps (Revolut, N26) grouped card views
+- "Tangible UI" trend — physical-feeling digital interfaces
+- Linear's stacked notification groups
+- Bookmarkify's "Top UI Design Trends 2026" — depth and interactivity
+
+**What I built:**
+- New `StackedCards` component family — 3D stacked card deck with depth:
+
+  **Core Component (`StackedCards`):**
+  - Cards stack with configurable offsets (Y/X) and scale reduction per level
+  - Click/tap the front card to cycle through the stack
+  - Smooth spring-based transitions between cards
+  - Hover peek effect — next card peeks up slightly when hovering
+  - Touch gesture support — swipe left/right to navigate
+  - Keyboard navigation (← → arrow keys when focused)
+  - Navigation dots for visual position indication
+  - Auto-play option with pause-on-hover
+  - Reduced motion support (instant transitions)
+
+  **Variants:**
+  - `StackedCardsCompact` — smaller offset for inline/tight spaces
+  - `StackedCardsWide` — horizontal spread for side-by-side comparison feel
+
+  **Hook:**
+  - `useStackedCards(total, initialIndex)` — external control of stack navigation
+
+  **Configuration Options:**
+  - `maxVisible`: How many cards show in stack (default: 3)
+  - `offsetY/offsetX`: Pixel offset between stacked cards
+  - `scaleStep`: Scale reduction per level (default: 0.04 = 4%)
+  - `clickToCycle`: Enable click to advance (default: true)
+  - `keyboardNav`: Enable arrow key navigation (default: true)
+  - `showDots`: Show navigation indicator dots (default: true)
+  - `autoPlay`: Auto-cycle interval in ms (0 to disable)
+  - `pauseOnHover`: Pause auto-play when hovering (default: true)
+  - `hoverPeek`: Spread stack slightly on hover (default: true)
+  - `borderRadius`: Card corner radius (default: 16px)
+  - `onCardChange`: Callback when active card changes
+  - `initialIndex`: Starting card index
+
+  **Technical Details:**
+  - CSS transforms for GPU-accelerated positioning
+  - Spring easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`) for natural feel
+  - Blur filter on background cards for depth perception
+  - Shadow scaling per depth level
+  - WAI-ARIA tablist pattern for navigation dots
+  - Focus management for keyboard accessibility
+  - Touch event handling for swipe gestures
+  - Intersection with MotionPreferences for reduced motion
+
+**Use Cases:**
+- Historical EPS quarters (last 4 quarters stacked)
+- Related/sector earnings grouped together
+- Comparison mode for side-by-side analysis
+- Notification groups
+- Feature cards with drill-down
+
+**Why this matters:**
+The stacked card pattern creates visual intrigue and encourages exploration. Users immediately understand there's more content behind the front card. The 3D depth effect (via scale, offset, and shadow) creates a premium "tangible UI" feel aligned with 2026 trends. Combined with smooth spring transitions and touch gestures, it feels native and responsive on all devices.
+
+**Impact:** New UI pattern for grouping related content with interactive depth. Could be used for historical quarters view, related earnings, or any grouped content that benefits from a "deck of cards" metaphor.
+
+---
+
 ## 2026-03-19 — MotionPath: CSS Motion Path Curved Animations
 
 **Inspiration:** 2026 UI trend research:
