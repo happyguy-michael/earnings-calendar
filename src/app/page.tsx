@@ -118,6 +118,7 @@ import { GradientWipe } from '@/components/GradientWipe';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
+import { EdgeNavigationGlow } from '@/components/EdgeNavigationGlow';
 import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
 import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
@@ -931,6 +932,22 @@ export default function Home() {
       
       {/* Keyboard shortcuts overlay */}
       <KeyboardShortcutsOverlay />
+      
+      {/* Edge navigation glow - visual hint for week navigation on viewport edges */}
+      <EdgeNavigationGlow
+        onLeftHover={() => navigateWeek(-1)}
+        onRightHover={() => navigateWeek(1)}
+        edgeWidth={80}
+        intensity={0.35}
+        leftColor="rgba(168, 85, 247, 0.4)"
+        rightColor="rgba(59, 130, 246, 0.4)"
+        pulse={true}
+        pulseDuration={2500}
+        showArrows={true}
+        hoverDelay={1000}
+        canGoLeft={true}
+        canGoRight={true}
+      />
       
       {/* Hidden Easter egg - Konami Code (↑↑↓↓←→←→BA) */}
       <KonamiEasterEgg />
