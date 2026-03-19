@@ -118,6 +118,7 @@ import { BreathingCard } from '@/components/BreathingCard';
 import { ScrollPerspective } from '@/components/ScrollPerspective';
 import { ChromeNumber } from '@/components/ChromeNumber';
 import { GradientWipe } from '@/components/GradientWipe';
+import { HolographicBorder } from '@/components/HolographicBorder';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
@@ -242,18 +243,19 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           hoverElevation="floating"
           borderRadius={14}
         >
-          <AnimatedGradientBorder
-            colorPreset="beat"
+          <HolographicBorder
+            preset="beat"
             borderWidth={2}
             borderRadius={14}
-            duration={4}
-            glowIntensity={0.35}
-            backgroundColor="transparent"
-            hoverOnly={false}
-            className="monster-beat-border"
+            shimmer={true}
+            shimmerIntensity={0.7}
+            glowIntensity={0.4}
+            glowSpread={24}
+            sensitivity={1.2}
+            smoothing={0.15}
           >
             {children}
-          </AnimatedGradientBorder>
+          </HolographicBorder>
         </DynamicShadow>
       );
     }
@@ -266,18 +268,19 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           hoverElevation="floating"
           borderRadius={14}
         >
-          <AnimatedGradientBorder
-            colorPreset="miss"
+          <HolographicBorder
+            preset="miss"
             borderWidth={2}
             borderRadius={14}
-            duration={5}
-            glowIntensity={0.25}
-            backgroundColor="transparent"
-            hoverOnly={false}
-            className="disaster-miss-border"
+            shimmer={true}
+            shimmerIntensity={0.5}
+            glowIntensity={0.35}
+            glowSpread={20}
+            sensitivity={1.0}
+            smoothing={0.12}
           >
             {children}
-          </AnimatedGradientBorder>
+          </HolographicBorder>
         </DynamicShadow>
       );
     }
