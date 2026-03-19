@@ -1,3 +1,59 @@
+## 2026-03-19 — MagneticField: Gravitational Card Attraction Effect
+
+**Inspiration:** 2026 UI trend research:
+- Pixelmatters "7 UI design trends to watch in 2026" article
+- Dia app's "drop targets subtly gravitate toward cursor" interaction
+- Apple's subtle interface physics and spatial design
+- Linear's magnetic button interactions
+- "Motion-Driven Interfaces" trend — motion as core UI language
+
+**What I built:**
+- New `MagneticField` component family — cards subtly attract toward cursor:
+
+  **Core Component (`MagneticFieldProvider`):**
+  - Creates gravitational field around cursor position
+  - Child cards within radius subtly move toward cursor
+  - Spring-based physics for natural, organic movement
+  - Configurable field radius (default: 300px)
+  - Configurable pull strength (0-1 scale)
+  - Spring stiffness and damping controls
+  - Three modes: attract, repel, orbit
+  - Performance-optimized with RAF and throttled updates
+
+  **MagneticCard Wrapper:**
+  - Individual cards respond to parent field
+  - Optional rotation toward cursor (subtle 3D depth)
+  - Optional scale on proximity
+  - Per-card strength override
+  - Layer-based strength (closer = stronger pull)
+
+  **Pre-configured Variants:**
+  - `MagneticFieldSubtle` — gentle effect for large grids
+  - `MagneticFieldStrong` — pronounced effect for hero sections
+  - `MagneticFieldRepel` — push-away effect for interactive elements
+
+  **Technical Details:**
+  - Pure CSS transforms for GPU acceleration
+  - Spring physics simulation with velocity and damping
+  - Touch/mobile support with throttled tracking
+  - Full `prefers-reduced-motion` support (disabled)
+  - Context-based architecture for nested cards
+  - Vector2 math for proper cursor-relative positioning
+
+**Integration:**
+- Wrapped week-content grid with `MagneticFieldProvider`
+- Each `EarningsCard` wrapped with `MagneticCard`
+- Subtle 8% strength with 2° max rotation
+- 250px field radius for localized effect
+- Works alongside existing VelocityBlur and MomentumTilt effects
+
+**Why this matters:**
+The magnetic field effect creates a "living interface" feel — cards respond to cursor presence before any explicit interaction. This aligns with 2026 trends of motion-driven interfaces where motion communicates relationship and hierarchy. Users subconsciously perceive the interface as more responsive and premium.
+
+**Impact:** Adds organic, physics-based interactivity to the earnings grid. Cards feel "aware" of cursor position, creating subtle visual feedback that enhances the premium feel without being distracting.
+
+---
+
 ## 2026-03-19 — StackedCards: 3D Stacked Card Deck Effect
 
 **Inspiration:** 2026 UI trend research:
