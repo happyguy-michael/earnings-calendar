@@ -9,6 +9,7 @@ export interface Earning {
   beatOdds?: number;
   revenue?: number | null;        // Actual revenue in billions
   revenueEstimate?: number | null; // Revenue estimate in billions
+  priceMove?: number;              // Post-earnings price change % (next day open vs prev close)
 }
 
 export interface Analysis {

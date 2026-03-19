@@ -78,6 +78,7 @@ import { FlipMonth } from '@/components/FlipMonth';
 import { TodayNarrative } from '@/components/TodayNarrative';
 import { SessionProgressBar } from '@/components/SessionProgressBar';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
+import { PriceMoveBadge } from '@/components/PriceMoveBadge';
 import { SentimentPulse } from '@/components/SentimentPulse';
 import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
@@ -517,6 +518,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                   </BadgeShimmer>
                 </DisasterMiss>
               </ResultPulseWrapper>
+            )}
+            {/* Post-earnings price movement - shows how stock moved after report */}
+            {earning.priceMove !== undefined && (
+              <PriceMoveBadge 
+                priceMove={earning.priceMove} 
+                size="sm"
+                delay={animationIndex * 50 + 250}
+              />
             )}
           </div>
         ) : earning.beatOdds ? (
