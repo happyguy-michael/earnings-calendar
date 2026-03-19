@@ -3847,3 +3847,38 @@ When something completes instantly, users can feel uncertain whether it actually
 
 ---
 
+
+## 2026-03-19 — PriceMoveBadge: Post-Earnings Price Movement Indicator
+
+**Inspiration:** Trader feedback - seeing how a stock moved after earnings is crucial for understanding market reaction. Financial dashboards like Bloomberg and Seeking Alpha prominently display post-earnings price changes.
+
+**What I built:**
+- New `PriceMoveBadge` component showing stock price movement after earnings report
+- Color-coded by magnitude:
+  - Bright green/red: ±10%+ (exceptional moves)
+  - Standard green/red: ±5% to ±10% (notable moves)
+  - Muted green/red: ±2% to ±5% (moderate moves)
+  - Subtle: 0% to ±2% (minimal moves)
+- Arrow indicator shows direction (up/down)
+- Animated entrance with count-up effect
+- Glow effect on significant moves (≥5%)
+- Respects `prefers-reduced-motion`
+
+**Technical details:**
+- Added `priceMove?: number` field to `Earning` type
+- Added price move data to all reported earnings in data.ts
+- Integrated into main calendar view alongside beat/miss badges
+- Memoized color calculations for performance
+- Tabular-nums for stable number widths
+- Intersection Observer for lazy animation
+
+**Component exports:**
+- `PriceMoveBadge` - Main component with size variants (sm/md/lg)
+- `PriceMoveInline` - Compact inline version
+- `PriceMoveWithContext` - Version with "Move:" label
+
+**Impact:** Traders can now immediately see how stocks reacted to earnings at a glance. Examples: META +15.3% (monster beat), TSLA -8.6% (miss), COIN +18.7% (huge beat). This is genuine value-add for the target audience of retail traders.
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
