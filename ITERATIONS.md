@@ -48,7 +48,8 @@
 - Inline styles-jsx for component encapsulation
 
 **Build:** ✓ Passed
-**Commit:** (pending)
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Commit:** 8bd5d0a
 
 ---
 
