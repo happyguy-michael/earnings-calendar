@@ -128,6 +128,7 @@ import { EdgeNavigationGlow } from '@/components/EdgeNavigationGlow';
 import { DynamicShadow, useLightSource } from '@/components/DynamicShadow';
 import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
+import { SeasonProgress, SeasonProgressBadge } from '@/components/SeasonProgress';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
@@ -1073,6 +1074,7 @@ export default function Home() {
                 </h1>
                 <MarketStatus />
                 <div className="hidden lg:flex items-center gap-2">
+                  <SeasonProgress earnings={earnings} delay={200} />
                   <DataFreshnessIndicator
                     lastUpdated={lastDataUpdate}
                     onRefresh={handleDataRefresh}
