@@ -1,4 +1,52 @@
 
+## 2026-03-20 — ScanLine Component (Retro CRT Monitor Effect)
+
+**Inspiration:** Classic Bloomberg/Reuters terminal displays, retro sci-fi interfaces (Alien, Blade Runner, TRON), CRT monitor phosphor scan lines, and the 2026 "Neo-Retro" design trend blending modern polish with nostalgic aesthetics.
+
+**What was added:**
+- New `ScanLine` component - subtle horizontal scan line that sweeps down screen
+- Features:
+  - Four visual variants: `subtle`, `glow`, `sharp`, `intense`
+  - Six color themes: `white`, `green`, `amber`, `blue`, `cyan`, `pink`
+  - Configurable scan interval with random variance for organic feel
+  - Smooth easeInOutQuad animation for natural sweep
+  - Optional static CRT interlacing lines (horizontal scanlines)
+  - Glow/bloom effect layer for enhanced visibility
+  - GPU-accelerated via CSS transforms
+  - Full prefers-reduced-motion support
+- Convenience presets:
+  - `ScanLineOverlay` - full-page overlay mode
+  - `TerminalScanLine` - classic green terminal aesthetic
+  - `AmberTerminalScan` - amber/orange terminal style
+  - `SubtleScan` - minimal, barely-visible for modern UIs
+
+**Use cases:**
+- Full-page ambient effect for financial dashboard atmosphere
+- Data terminal aesthetic for earnings calendar
+- Sci-fi/retro UI styling
+- Visual "refresh" indicator (scan on data update)
+
+**Technical notes:**
+- Uses RAF-based animation with position tracking
+- Eased animation curve (easeInOutQuad) for smooth start/stop
+- Interval variance prevents predictable, mechanical feel
+- Fixed positioning with high z-index for overlay mode
+- Static lines use CSS repeating-linear-gradient (no JS)
+- Will-change optimization on top property
+
+**Why it matters:**
+- Financial terminals have distinct aesthetic DNA (Bloomberg, Reuters)
+- CRT scan lines evoke "serious data" atmosphere
+- Neo-retro design adds character without distraction
+- Subtle ambient animation makes interface feel "alive"
+- Different from existing effects (not hover, not scroll, just ambient)
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 3611d81
+
+---
+
 ## 2026-03-20 — StampReveal Component (Rubber Stamp Animation)
 
 **Inspiration:** Physical rubber stamps, official document seals, approval animations from freefrontend.com UI micro-interactions collection, and the satisfying "verdict delivered" moment in financial reporting.
