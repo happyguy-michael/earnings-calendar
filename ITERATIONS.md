@@ -1,3 +1,66 @@
+## 2026-03-20 — PaperUnfold: 3D Paper Fold Reveal Animation
+
+**Inspiration:** 
+- Josh W. Comeau's "Folding the DOM" tutorial - CSS 3D transforms for paper fold effects
+- 2026 UI trend: "Tangible UI" - physical-feeling digital interfaces
+- Zeka Design: "buttons expand softly, cards fold into place"
+- Medium: "Dragging a card might tilt it, hovering might cause shadows"
+- The concept of making digital UI feel like real paper/documents
+
+**What I built:**
+- New `PaperUnfold` component family — 3D paper fold reveal with depth:
+
+  **PaperUnfold (scroll-triggered reveal):**
+  - Cards unfold from folded state (90° → 0°) when entering viewport
+  - IntersectionObserver-based trigger for efficient scroll detection
+  - CSS 3D transforms with perspective for realistic depth
+  - Configurable fold direction (down/up), angle, and perspective
+  - Paper backface with subtle texture (slightly translucent white)
+  - Crease shadow effect at the fold line
+  - Spring-based easing for natural paper motion
+  - Full prefers-reduced-motion support
+
+  **FoldingCard (hover peek effect):**
+  - On hover, lifts a corner like peeking under a sheet of paper
+  - Configurable corner (top-right, bottom-right, etc.)
+  - 3D rotation with proper perspective
+  - Dynamic shadow under lifted corner
+  - Smooth spring transition
+
+  **PaperUnfoldGroup:**
+  - Staggered unfold for multiple items
+  - Cascading reveal timing
+
+  **UnfoldReveal:**
+  - Multi-segment letter-opening animation
+  - Segments fold away sequentially like unfolding a letter
+
+**Integration:**
+- WeekSummaryCard now wrapped with `PaperUnfold` for scroll reveal
+- When scrolling to a week, the summary card unfolds from folded state
+- `FoldingCard` adds paper-peek hover effect on summary cards
+- Combined with existing `PrismBorder` for holographic edge effect
+
+**Technical Details:**
+- CSS `rotateX()` with `perspective` parent for 3D depth
+- `transform-origin` controls the fold axis
+- `backface-visibility: hidden` + rotated backface for paper flip
+- Spring cubic-bezier `(0.34, 1.56, 0.64, 1)` for natural bounce
+- `rotate3d()` for diagonal corner peek effect
+- GPU-accelerated with `will-change: transform`
+
+**Why this matters:**
+The "Tangible UI" trend in 2026 emphasizes interfaces that feel physical and crafted. 
+The paper fold effect makes the WeekSummaryCard feel like a real document being revealed,
+adding a moment of delight when scrolling to see weekly results. The hover peek invites
+interaction and suggests "there's more to discover here."
+
+**Impact:** Adds a premium, tactile feel to week summaries. Cards feel like real paper
+documents rather than flat rectangles, aligning with 2026's shift toward more physical,
+crafted digital experiences.
+
+---
+
 ## 2026-03-19 — MagneticField: Gravitational Card Attraction Effect
 
 **Inspiration:** 2026 UI trend research:
