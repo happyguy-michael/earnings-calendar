@@ -4374,3 +4374,62 @@ The insight: Empty states shouldn't just say "nothing here" — they're an oppor
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
 ---
+
+## 2026-03-21 — SeasonProgress: Macro Context Indicator
+
+**Inspiration:** Landdding's "UI Design Trends 2026: 15 Patterns" article:
+> "The 'Post-Dashboard Era: Narrative Interfaces' shift is one of the strongest UI trends 2026 will bring to enterprise and analytics products."
+
+The insight: Users need **macro context** to understand where they are in the earnings cycle. Raw numbers don't tell the story of "we're in peak season" vs "season is winding down."
+
+**What I built:**
+- New `SeasonProgress` component that shows:
+
+  **Compact View:**
+  - Current quarter (Q1/Q2/Q3/Q4) and year
+  - Week number within the ~6 week earnings season
+  - Phase icon (🌅 early, 🔥 peak, 🌙 late, ✨ wrap-up)
+  - Mini animated progress arc showing % reported
+
+  **Expanded View (on hover):**
+  - Progress bar with week markers
+  - Stats row: Reported / Beats / Misses / Pending counts
+  - Beat rate with momentum indicator:
+    - 📈 Accelerating (≥75% beat rate)
+    - ➡️ Steady (50-74%)
+    - 📉 Decelerating (<50%)
+
+  **Design Details:**
+  - Glassmorphic card with subtle hover glow
+  - Rotating conic gradient border effect on hover
+  - Phase-specific gradient colors on progress bar
+  - Smooth expand/collapse animation (350ms cubic-bezier)
+  - Full `prefers-reduced-motion` support
+  - Light/dark mode aware
+
+  **Smart Season Detection:**
+  - Calculates current fiscal quarter based on earnings reporting patterns
+  - Q4 earnings: Jan-Feb (reporting Oct-Dec results)
+  - Q1 earnings: Apr-May (reporting Jan-Mar results)
+  - Q2 earnings: Jul-Aug (reporting Apr-Jun results)
+  - Q3 earnings: Oct-Nov (reporting Jul-Sep results)
+
+  **Component Variants:**
+  - `SeasonProgress` - Full expandable card
+  - `SeasonProgressBadge` - Compact inline badge
+
+**Integration:**
+- Added to header row alongside MarketStatus (desktop only)
+- Delay staggered (200ms) to cascade after other header elements
+
+**Impact:** Users now have immediate macro context about where we are in earnings season. "Q1 2026 • Week 3 • 45% reported" tells a richer story than just showing individual earnings. This aligns with the 2026 "narrative interfaces" trend of providing context over raw data.
+
+**Reference:**
+- Landdding "UI Design Trends 2026" - Post-Dashboard Era section
+- GitHub's contribution activity patterns
+- Vercel's deploy status indicators
+- UX Studio "UI Trends 2026" - Scrollytelling & contextual data
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
