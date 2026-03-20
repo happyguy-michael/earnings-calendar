@@ -1,3 +1,78 @@
+## 2026-03-20 — NativeSpringEasing: Hardware-Accelerated Spring Physics via CSS linear()
+
+**Inspiration:**
+- Josh W. Comeau's "Springs and Bounces in Native CSS" article
+- CSS Spring Easing Generator (kvin.me/css-springs)
+- Linear Easing Generator by Jake Archibald & Adam Argyle
+- 2025 UI trend: "Motion as feedback, not aesthetics" — purposeful, physics-based motion
+- Pixelmatters article on UI design trends emphasizing micro-interactions
+
+**What I built:**
+- New `NativeSpringEasing` component family — GPU-accelerated spring physics:
+
+  **Pre-computed Spring Presets (8 total):**
+  - `snappy` — Quick response, subtle overshoot (500ms) — buttons, toggles
+  - `bouncy` — Visible bounce, playful feel (833ms) — notifications, celebrations
+  - `gentle` — Slow, elegant settle (900ms) — modals, page transitions
+  - `stiff` — Fast, minimal overshoot (350ms) — instant feedback, errors
+  - `heavy` — Like moving something with mass (1100ms) — draggables, panels
+  - `elastic` — Strong bounce, cartoon-like (1000ms) — fun UI, gamification
+  - `overshoot` — Goes past then settles (600ms) — pop effects, scale
+  - `wobble` — Multiple oscillations (600ms) — error/shake states
+
+  **CSS Custom Properties:**
+  - `--spring-{preset}-easing` — The linear() timing function
+  - `--spring-{preset}-duration` — Matched duration for each spring
+
+  **Utility Classes:**
+  - `.spring-snappy`, `.spring-bouncy`, `.spring-gentle`, etc.
+  - Apply spring transitions to any element with a single class
+
+  **React Components:**
+  - `SpringEasingProvider` — Context for app-wide spring configuration
+  - `SpringTransition` — Wrapper for spring-animated children
+  - `SpringScale` — CSS-only spring hover/press scale effects
+  - `SpringEasingStyles` — Global CSS variable injection
+
+  **Hooks:**
+  - `useSpringTransition(properties, preset)` — Get transition string for any CSS property
+  - `useSpringEasing()` — Access context for dynamic spring configuration
+  - `springVars(preset)` — Get CSS custom properties for inline styles
+
+**Technical Details:**
+- Uses CSS `linear()` timing function (Chrome 113+, Firefox 112+, Safari 17.2+)
+- Spring curves pre-computed using physics simulation (stiffness, damping)
+- Falls back to cubic-bezier for older browsers via `@supports`
+- Full `prefers-reduced-motion` support (disables all springs)
+- Zero JavaScript overhead during animation — runs on compositor thread
+
+**Performance Benefits:**
+1. GPU compositor thread execution (no main thread jank)
+2. Can animate any CSS property (not just transform/opacity)
+3. Zero JavaScript animation loops needed
+4. Battery efficient on mobile devices
+5. Works with both transitions AND keyframe animations
+
+**Integration:**
+- Added `SpringEasingStyles` to `ClientProviders` for global availability
+- All spring CSS variables now available throughout the app
+- Components can use utility classes or hooks for spring physics
+
+**Browser Support:**
+- Chrome 113+ (May 2023)
+- Firefox 112+ (April 2023)
+- Safari 17.2+ (December 2023)
+- Graceful fallback to cubic-bezier easing for older browsers
+
+**Why this matters:**
+JavaScript-based spring physics (like Framer Motion, React Spring) run on the main thread and can jank during heavy rendering. CSS `linear()` spring curves run on the compositor thread, ensuring smooth 60fps animations even when the main thread is busy. This is the modern, performant way to achieve spring physics in web UIs.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Commit:** 51b2fc8
+
+---
+
 ## 2026-03-20 — DataPulseRing: Sonar-like Data Update Indicator
 
 **Inspiration:**
