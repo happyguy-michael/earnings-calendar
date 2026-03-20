@@ -19,6 +19,7 @@ import { ShareMenu } from '@/components/ShareMenu';
 import { BeatStreak } from '@/components/BeatStreak';
 import { AnimatedBadgeIcon } from '@/components/AnimatedResultIcon';
 import { CopyTicker } from '@/components/CopyTicker';
+import { StampReveal } from '@/components/StampReveal';
 import { BrokerCTA, BrokerCTAGroup } from '@/components/BrokerCTA';
 import { AlsoReporting } from '@/components/AlsoReporting';
 import { GlassReflection } from '@/components/GlassReflection';
@@ -201,14 +202,20 @@ export default function ReportPage() {
                 <div className="flex items-center gap-3 mb-1">
                   <h1 className="text-4xl font-bold text-white">{ticker}</h1>
                   <CopyTicker ticker={ticker} size="md" />
-                  <span className={`badge ${hasResult ? (earning.result === 'beat' ? 'badge-success' : 'badge-danger') : 'badge-warning'}`}>
-                    {hasResult ? (
-                      <>
+                  {hasResult ? (
+                    <StampReveal 
+                      variant={earning.result === 'beat' ? 'beat' : 'miss'} 
+                      delay={400}
+                      showParticles={true}
+                    >
+                      <span className={`badge ${earning.result === 'beat' ? 'badge-success' : 'badge-danger'}`}>
                         <AnimatedBadgeIcon result={earning.result as 'beat' | 'miss'} size="sm" />
                         {earning.result === 'beat' ? 'Beat' : 'Miss'}
-                      </>
-                    ) : '⏳ Pending'}
-                  </span>
+                      </span>
+                    </StampReveal>
+                  ) : (
+                    <span className="badge badge-warning">⏳ Pending</span>
+                  )}
                   <BeatStreak streak={getBeatStreak(ticker)} size="md" showLabel={true} />
                 </div>
                 <p className="text-zinc-400 text-lg">{earning.company}</p>
