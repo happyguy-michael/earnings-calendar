@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { EmptyStateInsight } from './EmptyStateInsight';
 
 interface AnimatedEmptyStateProps {
   variant?: 'past' | 'future' | 'today';
   className?: string;
+  /** Show rotating insights instead of static sublabel */
+  showInsights?: boolean;
 }
 
 /**
@@ -16,7 +19,7 @@ interface AnimatedEmptyStateProps {
  * - Subtle particle effects
  * - Theme-aware styling
  */
-export function AnimatedEmptyState({ variant = 'past', className = '' }: AnimatedEmptyStateProps) {
+export function AnimatedEmptyState({ variant = 'past', className = '', showInsights = true }: AnimatedEmptyStateProps) {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -102,7 +105,15 @@ export function AnimatedEmptyState({ variant = 'past', className = '' }: Animate
       {/* Text content */}
       <div className="empty-state-text">
         <span className="empty-state-label">{label}</span>
-        <span className="empty-state-sublabel">{sublabel}</span>
+        {showInsights ? (
+          <EmptyStateInsight 
+            compact 
+            rotateInterval={10000}
+            categories={variant === 'future' ? ['tip', 'quote', 'fact'] : ['fun', 'tip', 'quote']}
+          />
+        ) : (
+          <span className="empty-state-sublabel">{sublabel}</span>
+        )}
       </div>
     </div>
   );
