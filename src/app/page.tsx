@@ -118,6 +118,7 @@ import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ScrollPerspective } from '@/components/ScrollPerspective';
 import { ChromeNumber } from '@/components/ChromeNumber';
+import { FluidGradientText } from '@/components/FluidGradientText';
 import { GradientWipe } from '@/components/GradientWipe';
 import { HolographicBorder } from '@/components/HolographicBorder';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
@@ -1057,7 +1058,17 @@ export default function Home() {
                     shimmer={true}
                     shimmerColor="rgba(139, 92, 246, 0.4)"
                   >
-                    Earnings <span className="text-gradient text-shine-sweep">Calendar</span>
+                    Earnings{' '}
+                    <FluidGradientText 
+                      preset="aurora" 
+                      speed={0.5}
+                      shimmer={true}
+                      shimmerIntensity={0.25}
+                      pauseOnHover={false}
+                      hoverSpeed={2}
+                    >
+                      Calendar
+                    </FluidGradientText>
                   </GradientWipe>
                 </h1>
                 <MarketStatus />
