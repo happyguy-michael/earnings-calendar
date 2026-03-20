@@ -1080,3 +1080,30 @@ import { HoloCard, HoloBadge } from '@/components/HoloCard';
 - Respects `prefers-reduced-motion`
 - Disabled on mobile (performance)
 - Light/dark mode aware blending
+
+## 2026-03-21: CelebrationConfetti Component
+
+**Inspiration:** 2026 "Purposeful Motion" trend - animations that reward and delight, not just decorate. Inspired by Robinhood confetti, Linear achievements, Trading212 celebrations.
+
+**What was built:**
+- Canvas-based confetti particle system for exceptional earnings (≥15% surprise)
+- Physics simulation: gravity (0.4), drag (0.98+), rotation
+- Three particle shapes: squares, circles, 5-pointed stars
+- Color themes: gold for monster beats (≥25%), green for exceptional
+- Session-based deduplication via Set (won't repeat for same card)
+- IntersectionObserver triggers animation when card enters viewport
+- Respects prefers-reduced-motion (shows subtle glow fallback)
+
+**Technical details:**
+- GPU-accelerated via canvas + requestAnimationFrame
+- ~40-60 particles per burst, scaled by surprise magnitude
+- 2.5s duration with opacity fade-out
+- Three burst patterns: explosion (default), fountain, spray
+
+**Integration:**
+- Wrapped monster beat badges with `<MonsterBeatConfetti>` in page.tsx
+- Only activates for beats ≥15% surprise
+
+**Files:**
+- `src/components/CelebrationConfetti.tsx` (new)
+- `src/app/page.tsx` (updated imports + integration)
