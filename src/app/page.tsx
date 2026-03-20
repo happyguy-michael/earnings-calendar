@@ -129,6 +129,7 @@ import { WeightShiftText } from '@/components/WeightShiftText';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
+import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1688,20 +1689,39 @@ export default function Home() {
               </div>
               </MagneticFieldProvider>
               
-              {/* Week Summary Card - celebratory end-of-week recap with holographic border */}
-              <PrismBorder 
-                borderRadius={20} 
-                intensity="subtle" 
-                mode="cursor" 
-                hoverOnly={true}
-                blur={10}
+              {/* Week Summary Card - celebratory end-of-week recap with paper fold effect */}
+              <PaperUnfold
+                delay={weekIndex * 150 + 200}
+                duration={700}
+                direction="down"
+                maxAngle={75}
+                perspective={1400}
+                threshold={0.2}
+                showBackface={true}
+                backfaceOpacity={0.9}
+                creaseShadow={0.25}
               >
-                <WeekSummaryCard 
-                  weekStart={weekStart} 
-                  earnings={filteredEarnings}
-                  isCurrentWeek={weekIndex === todayWeekIndex}
-                />
-              </PrismBorder>
+                <FoldingCard
+                  corner="bottom-right"
+                  peekAngle={18}
+                  duration={350}
+                  shadow={true}
+                >
+                  <PrismBorder 
+                    borderRadius={20} 
+                    intensity="subtle" 
+                    mode="cursor" 
+                    hoverOnly={true}
+                    blur={10}
+                  >
+                    <WeekSummaryCard 
+                      weekStart={weekStart} 
+                      earnings={filteredEarnings}
+                      isCurrentWeek={weekIndex === todayWeekIndex}
+                    />
+                  </PrismBorder>
+                </FoldingCard>
+              </PaperUnfold>
             </div>
             </BorderGlowSpot>
             </OrbitDot>
