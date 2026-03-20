@@ -1,4 +1,50 @@
 
+## 2026-03-20 — StampReveal Component (Rubber Stamp Animation)
+
+**Inspiration:** Physical rubber stamps, official document seals, approval animations from freefrontend.com UI micro-interactions collection, and the satisfying "verdict delivered" moment in financial reporting.
+
+**What was added:**
+- New `StampReveal` component - rubber stamp animation effect for earnings results
+- Features:
+  - Physics-based stamp animation (scales down from 2.5x with rotation)
+  - Spring-bounce easing using cubic-bezier(0.34, 1.56, 0.64, 1)
+  - Ink splatter particles on impact for tactile feedback
+  - Four variants: beat (green), miss (red), inline (purple), neutral
+  - Configurable delay for staggered reveals
+  - Impact flash effect with radial gradient
+  - Respects `prefers-reduced-motion`
+- Variants:
+  - `StampReveal` - base wrapper component
+  - `StampBadge` - pre-styled badge with stamp effect
+  - `StampText` - stamp effect for any text
+  - `StampIcon` - circular stamp effect for icons
+
+**Integration:**
+- Applied to report detail page (`/report/[ticker]`)
+- Beat/Miss result badge now "stamps in" when viewing the report
+- 400ms delay after page load for dramatic timing
+- Creates an "official verdict" moment when viewing results
+
+**Technical notes:**
+- CSS keyframe animations for flash and ink particles
+- Transform-origin at center for balanced scale-down
+- Will-change optimization during animation
+- Graceful degradation on reduced-motion
+- Hardware-accelerated transforms
+
+**Why it matters:**
+- Earnings results are verdicts - a stamp effect reinforces this metaphor
+- Physical rubber stamp animations create satisfying feedback
+- Adds a "moment of truth" feeling to viewing results
+- Unique micro-interaction not commonly seen in financial UIs
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 03fd827
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-17 — SquishPress Component (Tactile Gummy Press Effect)
 
 **Inspiration:** Elastic SVG Morphing Form Controls (Dribbble 2025), iOS button press feedback, Josh Comeau's CSS springs article, and the "gummy UI" trend where elements squish with satisfying physics when pressed.
