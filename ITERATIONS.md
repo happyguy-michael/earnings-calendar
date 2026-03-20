@@ -4327,3 +4327,50 @@ The "kinetic lettering" and "liquid metal" aesthetics are defining 2026 UI desig
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
 ---
+
+
+## 2026-03-21 — EmptyStateInsight: Rotating Market Micro-Content
+
+**Inspiration:** Muzli's "60+ Best Dashboards 2026" article on handling empty states:
+> "Good dashboard design anticipates real conditions... handle missing data..."
+
+The insight: Empty states shouldn't just say "nothing here" — they're an opportunity for micro-learning and engagement.
+
+**What I built:**
+- New `EmptyStateInsight` component with 30+ rotating insights:
+
+  **Content Categories:**
+  - 💡 **Tips** - Practical earnings trading advice (e.g., "Guidance matters more than the beat/miss")
+  - 💬 **Quotes** - Famous investor wisdom with attribution (e.g., Buffett, Lynch, Keynes)
+  - 📈 **Facts** - Market trivia (e.g., "Big banks kick off earnings season")
+  - ✨ **Fun** - Light messages (e.g., "☕ Good time for a coffee break")
+
+  **Interaction Features:**
+  - Smooth fade transitions between insights
+  - Click to cycle through content
+  - Auto-rotate every 10 seconds
+  - Pause on hover
+  - Category icon indicator with colored labels
+  - Progress dots showing position in rotation
+
+  **Technical Details:**
+  - Compact mode for tight calendar cells
+  - Context-aware: future days show educational content, past days show lighter content
+  - Full `prefers-reduced-motion` support
+  - Accessible: proper ARIA labels, keyboard support
+
+**Integration:**
+- Integrated into `AnimatedEmptyState` component
+- Shows insights instead of static "Nothing scheduled" sublabel
+- Enabled by default via `showInsights` prop
+
+**Impact:** Empty calendar days are now micro-learning opportunities. Instead of passive "No reports" messaging, users see rotating tips, quotes, and facts that make them smarter about earnings season. This transforms dead space into engagement.
+
+**Reference:**
+- Muzli "60+ Best Dashboards 2026" - Empty state handling
+- Figma's "Smart empty states" pattern
+- Notion's tip-of-the-day approach
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
