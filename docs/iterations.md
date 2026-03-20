@@ -1,4 +1,61 @@
 
+## 2026-03-21 — TerminalCursor Component (Retro Terminal Blinking Cursor)
+
+**Inspiration:** Tubik Studio's 2026 UI Design Trends article on "raw aesthetics" — monospaced fonts, grids, wireframes, and terminal-like interfaces. Classic Bloomberg/Reuters terminals, command-line UIs, and the "neo-retro" design movement combining modern polish with nostalgic command-line aesthetics.
+
+**What was added:**
+- New `TerminalCursor` component system:
+  - `TerminalCursor` - Standalone blinking cursor (bar/underscore/block/hollow styles)
+  - `TypewriterText` - Text that types out character by character with natural variance
+  - `TerminalLine` - Terminal prompt + command + output format
+  - `TerminalBlock` - Multiple terminal lines as a block
+  - `LiveStatus` - Processing indicator with terminal aesthetic ("Fetching..." with dots)
+  - `GreenTerminalCursor` - Classic green terminal preset
+  - `AmberTerminalCursor` - Vintage amber terminal preset
+  - `FinancialCursor` - Cyan/teal financial terminal preset
+
+**Features:**
+- Four cursor styles: `bar`, `underscore`, `block`, `hollow`
+- Three blink styles: `step` (sharp on/off), `smooth` (fade), `pulse` (scale)
+- Configurable blink interval, color, and size
+- TypewriterText with random variance for natural typing feel
+- Full `prefers-reduced-motion` support (shows static cursor)
+- Hardware-accelerated CSS keyframe animations
+- SSR-safe with client-side hydration
+
+**Integration:**
+- Added to `AnimatedEmptyState` "today" variant
+- Shows smooth-blinking amber cursor after "No reports today" label
+- Creates a "waiting for data to come in" terminal feel
+- Complements existing ScanLine retro CRT effect
+
+**Use cases:**
+- Empty states with "waiting" aesthetic
+- Processing/loading indicators with terminal style
+- Typewriter text reveals for headlines
+- Command-line style UI elements
+- Financial terminal aesthetic
+
+**Technical notes:**
+- CSS @keyframes for smooth/pulse animations
+- JavaScript interval for step animation (precise control)
+- Memoized components for React performance
+- Uses CSS custom properties for runtime configuration
+
+**Why it matters:**
+- "Raw aesthetics" is a 2026 trend (Tubik Studio, UX Studio)
+- Terminal/monospace UIs evoke "serious data" professional atmosphere
+- Blinking cursor creates subconscious "system is alive" perception
+- Complements existing ScanLine for cohesive retro-modern theme
+- Small detail that adds character without distraction
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 123a8fd
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-20 — ScanLine Component (Retro CRT Monitor Effect)
 
 **Inspiration:** Classic Bloomberg/Reuters terminal displays, retro sci-fi interfaces (Alien, Blade Runner, TRON), CRT monitor phosphor scan lines, and the 2026 "Neo-Retro" design trend blending modern polish with nostalgic aesthetics.
