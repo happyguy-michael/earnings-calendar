@@ -4196,3 +4196,59 @@ Users trust visible progress more than instant responses. A fake-but-believable 
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
 ---
+
+
+## 2026-03-20 — FluidGradientText: Y3K Liquid Metal Typography
+
+**Inspiration:** Figma's "Top Web Design Trends for 2026" article on Bold Typography:
+> "Hero sections now often feature kinetic lettering, dynamic font pairings, and variable fonts that respond to interaction or context."
+
+The "kinetic lettering" and "liquid metal" aesthetics are defining 2026 UI design. Text shouldn't just sit there—it should flow, shimmer, and feel alive.
+
+**What I built:**
+- New `FluidGradientText` component with continuously flowing gradient animation:
+
+  **Core Features:**
+  - Smooth, jank-free gradient animation (RAF-based, not CSS)
+  - Multiple preset color schemes: aurora, sunset, ocean, chrome, neon, lavender, fire, mint
+  - Configurable speed, direction (horizontal/vertical/diagonal), and reverse option
+  - Hover pause or acceleration options
+  - Scroll-linked animation mode (gradient flows with scroll position)
+
+  **Premium Touches:**
+  - Optional shimmer overlay for extra sparkle
+  - Optional grain texture for Y3K aesthetic
+  - Chrome/liquid metal specialized preset (`FluidChrome`)
+  - Rainbow preset for bold statements (`FluidRainbow`)
+
+  **Technical Details:**
+  - 400% background-size for seamless looping
+  - CSS background-clip: text for the gradient-text effect
+  - RequestAnimationFrame for 60fps smooth animation
+  - GPU-accelerated via background-position transforms
+  - Full `prefers-reduced-motion` support (falls back to static)
+
+  **Component exports:**
+  - `FluidGradientText` - Main wrapper component
+  - `FluidGradientHeadline` - Convenience wrapper for h1-h6
+  - `FluidChrome` - Liquid metal chrome preset
+  - `FluidRainbow` - Rainbow gradient preset
+
+**Integration:**
+- Applied to "Calendar" in the hero title with aurora preset
+- Speed set to 0.5 for subtle, premium movement
+- Shimmer enabled for extra sparkle
+- Hover speed boost (2x) for responsive feel
+
+**Impact:** The hero title now has a premium "living" quality. The word "Calendar" flows through purple, blue, cyan, and green like liquid aurora, making the page feel modern and dynamic without being distracting. This aligns with the 2026 trend of "kinetic typography" and the Y3K "liquid metal" aesthetic.
+
+**Reference:**
+- Figma "Top Web Design Trends for 2026" - Bold Typography section
+- Linear.app's flowing gradient headlines
+- Apple's liquid metal product renders
+- 2026 Y3K/Chrome design movement
+- Bookmarkify "Top UI Design Trends 2026" - Microinteractions
+
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
