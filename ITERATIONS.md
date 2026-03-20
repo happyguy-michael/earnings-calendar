@@ -1,3 +1,57 @@
+## 2026-03-20 — DataPulseRing: Sonar-like Data Update Indicator
+
+**Inspiration:**
+- Userpilot micro-interaction examples: animated feedback when data changes
+- Radar/sonar visualization patterns — concentric rings emanating outward
+- "Data arriving" visual language seen in trading terminals and live dashboards
+- Premium fintech apps that show live updates with ripple effects
+
+**What I built:**
+- New `DataPulseRing` component — sonar-like expanding rings for data updates:
+
+  **DataPulseRing (main component):**
+  - Expanding concentric rings that fade out as they grow
+  - Triggered by value changes (pass any value to `trigger` prop)
+  - Multiple ring support (1-4 rings with stagger)
+  - Color-coded variants: `success`, `error`, `info`, `warning`, `neutral`
+  - Box-shadow glow effect trails behind each ring
+  - Configurable scale, duration, thickness
+  - Optional `pulseOnMount` and `pulseOnClick` modes
+  - Full prefers-reduced-motion support (falls back to simple glow)
+
+  **DataPulseIndicator:**
+  - Standalone pulsing dot component
+  - Continuous pulse at configurable interval
+  - Perfect for "live" or "updating" status indicators
+  - Size variants: `sm`, `md`, `lg`
+
+  **Configuration Options:**
+  - `trigger`: Pass changing value to trigger pulse
+  - `variant`: Color theme (success/error/info/warning/neutral)
+  - `ringCount`: Number of rings (1-4)
+  - `duration`: Ring expansion duration in ms
+  - `scale`: Max ring size as multiplier
+  - `stagger`: Delay between successive rings
+  - `thickness`: Ring stroke width
+
+**Integration:**
+- Added to beat/miss result badges in earnings cards
+- Green pulse rings for beats, red for misses
+- Pulses on mount to draw attention to results
+- Subtle 1.8x scale expansion, 2 rings with quick 700ms animation
+
+**Technical notes:**
+- Pure CSS animations with CSS custom properties
+- Zero runtime dependencies
+- Will-change optimization for smooth animation
+- ARIA hidden for accessibility
+- Inline styles-jsx for component encapsulation
+
+**Build:** ✓ Passed
+**Commit:** (pending)
+
+---
+
 ## 2026-03-20 — LiquidWaveProgress: Organic Liquid-Fill Loading Indicator
 
 **Inspiration:**

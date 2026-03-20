@@ -131,6 +131,7 @@ import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
 import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
+import { DataPulseRing } from '@/components/DataPulseRing';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -462,6 +463,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
+              <DataPulseRing 
+                trigger={earning.eps} 
+                variant="success" 
+                ringCount={2} 
+                duration={700}
+                pulseOnMount
+                scale={1.8}
+              >
               <ResultPulseWrapper result="beat" surprise={surprise}>
                 <ExceptionalGlow surprise={surprise} delay={animationIndex * 50 + 300}>
                   <BadgeShimmer 
@@ -502,7 +511,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                   </BadgeShimmer>
                 </ExceptionalGlow>
               </ResultPulseWrapper>
+              </DataPulseRing>
             ) : (
+              <DataPulseRing 
+                trigger={earning.eps} 
+                variant="error" 
+                ringCount={2} 
+                duration={700}
+                pulseOnMount
+                scale={1.8}
+              >
               <ResultPulseWrapper result="miss" surprise={surprise}>
                 <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
                   <BadgeShimmer 
@@ -538,6 +556,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                   </BadgeShimmer>
                 </DisasterMiss>
               </ResultPulseWrapper>
+              </DataPulseRing>
             )}
             {/* Post-earnings price movement - shows how stock moved after report */}
             {earning.priceMove !== undefined && (
