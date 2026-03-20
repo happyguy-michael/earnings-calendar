@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { EmptyStateInsight } from './EmptyStateInsight';
+import { TerminalCursor } from './TerminalCursor';
 
 interface AnimatedEmptyStateProps {
   variant?: 'past' | 'future' | 'today';
@@ -104,7 +105,18 @@ export function AnimatedEmptyState({ variant = 'past', className = '', showInsig
 
       {/* Text content */}
       <div className="empty-state-text">
-        <span className="empty-state-label">{label}</span>
+        <span className="empty-state-label">
+          {label}
+          {/* Terminal cursor for "today" variant - adds "waiting for data" feel */}
+          {variant === 'today' && (
+            <TerminalCursor 
+              style="bar" 
+              blinkStyle="smooth" 
+              color="var(--warning)" 
+              interval={600}
+            />
+          )}
+        </span>
         {showInsights ? (
           <EmptyStateInsight 
             compact 
