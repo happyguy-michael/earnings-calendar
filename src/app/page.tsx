@@ -58,6 +58,7 @@ import { ScrambleTicker } from '@/components/TextScramble';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
+import { LiquidWaveProgressCompact } from '@/components/LiquidWaveProgress';
 import { EPSComparisonBadge } from '@/components/EPSComparisonBadge';
 import { FilterGlow } from '@/components/FilterGlow';
 import { CardLightSweep } from '@/components/CardLightSweep';
@@ -889,6 +890,13 @@ export default function Home() {
       
       {/* Scroll progress indicator */}
       <ScrollProgress height={3} hideAtTop={true} showGlow={true} />
+      
+      {/* Liquid wave loading indicator - shows during data refresh */}
+      {isRefreshing && (
+        <div className="fixed top-0 left-0 right-0 z-50">
+          <LiquidWaveProgressCompact color="blue" />
+        </div>
+      )}
       
       {/* Floating week indicator - shows which week section is in view */}
       <ScrollAnchoredWeekBadge

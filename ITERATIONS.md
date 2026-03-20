@@ -1,3 +1,83 @@
+## 2026-03-20 — LiquidWaveProgress: Organic Liquid-Fill Loading Indicator
+
+**Inspiration:**
+- Medium article: "UI Design Trend 2026 #2: Glassmorphism and Liquid Design Make a Comeback"
+- DEV.to: "Liquid Glass UI 2026 — CSS @property Morphing Cards"
+- 2026 UI trend: "Liquid Design" - fluid, organic interfaces that feel alive
+- Water/fluid physics simulations in premium fintech apps
+- The concept of making digital loading feel tangible and natural
+
+**What I built:**
+- New `LiquidWaveProgress` component family — organic liquid-fill progress indicator:
+
+  **LiquidWaveProgress (main component):**
+  - SVG-based wave animation using sine curves
+  - Dual waves at different phases create "sloshing" liquid effect
+  - Rising water level animation as progress increases
+  - Gradient fill (primary to secondary) for depth and dimension
+  - Glow effect under the wave surface
+  - Animated bubbles that rise from the bottom
+  - Full prefers-reduced-motion support
+  - Light/dark mode aware
+
+  **LiquidWaveProgressCompact:**
+  - Slim variant (8px height) for inline/header use
+  - No bubbles, minimal glow
+  - Perfect for loading bars in tight spaces
+
+  **LiquidWaveCircle:**
+  - Circular variant with liquid fill
+  - SVG clipPath for perfect circle masking
+  - Animated wave motion within the circle
+  - Optional percentage label
+
+  **Color Presets:**
+  - `blue` — Primary app accent (default)
+  - `green` — Success states
+  - `purple` — Premium/special actions
+  - `amber` — Warning states
+  - `custom` — User-defined colors
+
+  **Configuration Options:**
+  - `progress`: 0-100 value (undefined = indeterminate)
+  - `waveAmplitude`: Height of wave peaks
+  - `waveFrequency`: Number of visible waves
+  - `speed`: Animation speed multiplier
+  - `showBubbles`: Toggle rising bubbles
+  - `bubbleCount`: Number of bubbles
+  - `showGlow`: Toggle glow effect
+  - `showLabel`: Display percentage text
+  - `labelPosition`: inside | outside | above
+
+**Technical Details:**
+- SVG `path` with dynamically generated wave using `Math.sin()`
+- CSS `translateX` animation for horizontal wave motion
+- Dual waves (front/back) at different phases for depth
+- Gradient fills using SVG `linearGradient`
+- Bubbles use CSS keyframe animation with randomized delay/duration
+- Smooth progress transitions with cubic easing
+- GPU-accelerated transforms (`will-change: transform`)
+- ARIA progressbar role with live value announcements
+
+**Integration:**
+- Added to main page as loading indicator during data refresh
+- Shows at top of viewport when `isRefreshing` state is true
+- Compact blue variant for minimal visual footprint
+- Automatically hidden when refresh completes
+
+**Why this matters:**
+The "Liquid Design" trend in 2026 emphasizes organic, fluid interfaces that feel alive.
+Traditional progress bars feel mechanical and cold. The liquid wave effect creates a more
+natural, premium experience that makes waiting feel less frustrating. The sloshing motion
+and rising bubbles provide visual feedback that suggests real progress is happening,
+even during indeterminate loading states.
+
+**Impact:** Adds a premium, organic loading experience that aligns with 2026's "Liquid Design"
+trend. Makes data refresh feel more tangible and satisfying compared to standard spinners
+or progress bars.
+
+---
+
 ## 2026-03-20 — PaperUnfold: 3D Paper Fold Reveal Animation
 
 **Inspiration:** 
