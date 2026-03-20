@@ -13,6 +13,7 @@ import { ViewportScrollSpotlight } from './ViewportScrollSpotlight';
 import { DynamicShadowProvider, DynamicShadowStyles } from './DynamicShadow';
 import { LiquidButtonStyles } from './LiquidButton';
 import { DynamicIslandProvider } from './DynamicIsland';
+import { SpringEasingStyles } from './NativeSpringEasing';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -29,6 +30,7 @@ export function ClientProviders({ children }: { children: ReactNode }) {
                     <ViewportScrollSpotlight />
                     <DynamicShadowStyles />
                     <LiquidButtonStyles />
+                    <SpringEasingStyles />
                     <FocusModeIndicator />
                     {children}
                   </DynamicIslandProvider>
