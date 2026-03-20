@@ -134,6 +134,7 @@ import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField'
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
 import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
 import { DataPulseRing } from '@/components/DataPulseRing';
+import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -465,6 +466,11 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
             {earning.result === 'beat' ? (
+              <MonsterBeatConfetti
+                ticker={earning.ticker}
+                surprise={surprise}
+                duration={2500}
+              >
               <DataPulseRing 
                 trigger={earning.eps} 
                 variant="success" 
@@ -514,6 +520,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                 </ExceptionalGlow>
               </ResultPulseWrapper>
               </DataPulseRing>
+              </MonsterBeatConfetti>
             ) : (
               <DataPulseRing 
                 trigger={earning.eps} 
