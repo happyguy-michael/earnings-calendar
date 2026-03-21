@@ -1,3 +1,65 @@
+## 2026-03-21 — CountdownTension: Escalating Urgency Animation for Imminent Earnings
+
+**Inspiration:**
+- Apple Watch heartbeat monitoring UI — visual tension building
+- ESPN/sports broadcast "final seconds" tension — escalating tempo
+- Trading terminal urgent alerts — color-coded urgency
+- Film scoring tension techniques — increasing tempo before climax
+- 2026 trend: "Motion as emotional communication" — animation that conveys urgency
+
+**What I built:**
+- New `CountdownTension` component family — escalating visual urgency:
+
+  **5 Urgency Levels:**
+  - `calm` (>30 min) — No effects, blue tone if any
+  - `alert` (15-30 min) — Subtle pulse, light blue glow
+  - `urgent` (5-15 min) — Faster pulse, amber glow/border
+  - `critical` (1-5 min) — Rapid pulse, orange glow, shake effect
+  - `imminent` (<1 min) — Fastest pulse, red glow, strong shake
+
+  **Escalating Effects:**
+  - Pulse speed decreases from 4000ms → 600ms as urgency increases
+  - Glow intensity increases from 0 → 0.7
+  - Color transitions: blue → amber → orange → red
+  - Border width increases from 0 → 3px
+  - Shake effect activates at critical/imminent levels
+
+  **Component Family:**
+  - `CountdownTension` — Wrapper that adds tension effects to any content
+  - `CountdownTensionBadge` — Pre-styled badge with pulsing dot
+  - `useCountdownTension` — Hook for programmatic urgency state access
+
+  **Configuration Options:**
+  - `minutesRemaining`: Drives urgency calculation
+  - `thresholds`: Custom minute thresholds for each level
+  - `enableShake`: Toggle shake effect at critical levels
+  - `enableGlow`: Toggle glow effect
+  - `enablePulseBorder`: Toggle pulsing border
+  - `onUrgencyChange`: Callback when urgency level changes
+  - `borderRadius`: Match container border radius
+
+**Technical Details:**
+- CSS keyframe animations for pulse and shake
+- GPU-accelerated via transform and opacity
+- Smooth color transitions between urgency levels
+- Intensity calculated from urgency level configuration
+- Full `prefers-reduced-motion` support (static fallback)
+
+**Integration:**
+- Wrapped `FlipCountdownBadge` with `CountdownTension` in EarningsCard
+- Added `getMinutesUntilReport` helper to calculate countdown
+- Works alongside existing `ImminentPing` for combined effect
+- Earnings approaching report time now have escalating visual urgency
+
+**Why this matters:**
+Traditional countdowns show time but don't communicate urgency emotionally. The CountdownTension pattern makes the countdown feel more intense as time runs out — the faster pulse and color shift create a subconscious sense of "something is about to happen." This is especially important for earnings where the moment of reveal is significant. The 2026 trend of "motion as emotional communication" emphasizes using animation to convey state, not just decorate.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub
+**Commit:** dc4dd73
+
+---
+
 ## 2026-03-20 — NativeSpringEasing: Hardware-Accelerated Spring Physics via CSS linear()
 
 **Inspiration:**
