@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useHaptic } from './HapticFeedback';
+import { PlusCloseIcon } from './MorphingIcon';
 
 export interface FABAction {
   id: string;
@@ -223,9 +224,21 @@ export function FloatingActionMenu({
           {!isOpen && !isAnimating && (
             <span className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-30" style={{ animationDuration: '2s' }} />
           )}
-          <span className={`transition-transform duration-250 ease-out ${isOpen ? 'rotate-[135deg]' : 'rotate-0'}`}>
-            {isOpen ? (closeIcon || <PlusIcon className="w-6 h-6" />) : (mainIcon || <PlusIcon className="w-6 h-6" />)}
-          </span>
+          {/* Use MorphingIcon for smooth plus → close path morphing */}
+          {mainIcon ? (
+            <span className={`transition-transform duration-250 ease-out ${isOpen ? 'rotate-[135deg]' : 'rotate-0'}`}>
+              {isOpen ? (closeIcon || <PlusIcon className="w-6 h-6" />) : mainIcon}
+            </span>
+          ) : (
+            <PlusCloseIcon 
+              isOpen={isOpen} 
+              size={24} 
+              strokeWidth={2.5}
+              duration={300}
+              easing="spring"
+              scalePulse
+            />
+          )}
         </button>
       </div>
     </>
