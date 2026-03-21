@@ -55,7 +55,7 @@
 Traditional countdowns show time but don't communicate urgency emotionally. The CountdownTension pattern makes the countdown feel more intense as time runs out — the faster pulse and color shift create a subconscious sense of "something is about to happen." This is especially important for earnings where the moment of reveal is significant. The 2026 trend of "motion as emotional communication" emphasizes using animation to convey state, not just decorate.
 
 **Build:** ✓ Passed
-**Deploy:** ✓ Pushed to GitHub
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
 **Commit:** dc4dd73
 
 ---
