@@ -1,4 +1,59 @@
 
+## 2026-03-21 — WavyUnderline Component (Animated Squiggly Underline)
+
+**Inspiration:** Apple's playful marketing headlines, Notion's emphasis styling, editorial/magazine design squiggly annotations, and the 2026 "expressive minimalism" trend that embraces personality and playfulness in UI design.
+
+**What was added:**
+- New `WavyUnderline` component system:
+  - `WavyUnderline` - Base component with animated wavy/squiggly underline
+  - `WavyHighlight` - Convenience wrapper for conditional emphasis
+  - `WavyLink` - Link with animated wavy underline on hover
+  - `useWavyUnderline` - Hook for applying effect to custom elements
+
+**Features:**
+- SVG-based wave rendering for crisp visuals at any size
+- Multiple animation modes: `flow`, `pulse`, `draw`, `hover`
+- Configurable wave frequency (waves per em) and amplitude
+- Color variants: default, accent, success, warning, danger, muted
+- Scroll-triggered animation option
+- Subtle glow effect matching segment color
+- Full `prefers-reduced-motion` support
+- Works with any text content
+
+**Animation modes:**
+- `flow` - Continuous horizontal wave movement
+- `pulse` - Opacity and stroke-width pulsing
+- `draw` - SVG path drawing animation (stroke-dashoffset)
+- `hover` - Activates flow animation on hover
+
+**Integration:**
+- Added to legend section at bottom of calendar
+- "Beat Estimates" with success (green) wavy underline
+- "Missed Estimates" with danger (red) wavy underline
+- "Beat Probability" with warning (amber) wavy underline
+- Hover-activated animation for interactive feel
+
+**Technical notes:**
+- SVG path generation for smooth bezier curve waves
+- ResizeObserver for responsive wave width calculation
+- IntersectionObserver for scroll-triggered animations
+- CSS keyframe animations with hardware acceleration
+- Glow effect using blurred duplicate path layer
+
+**Why it matters:**
+- "Expressive minimalism" is a 2026 trend (personality + clarity)
+- Adds playful, editorial feel to data-heavy interface
+- Wavy underlines evoke handwritten annotations
+- Differentiates legend items with subtle motion
+- Matches premium editorial/marketing site patterns
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** a327a64
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-21 — BorderDraw Component (Sequential Border Reveal)
 
 **Inspiration:** freefrontend.com "Animated Border Drawing Button" collection — UI patterns where border lines sequentially "draw" themselves around elements, creating a premium reveal effect seen in Apple product pages, Vercel deployment confirmations, and high-end fintech dashboards.
