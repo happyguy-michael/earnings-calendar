@@ -1,4 +1,57 @@
 
+## 2026-03-21 — FluidValue Component (Magnitude-Responsive Typography)
+
+**Inspiration:** Zeka Design's 2026 UI Trends article on "Fluid Typography Interfaces" — variable fonts that dynamically respond to viewport, interaction, and data magnitude. The trend emphasizes typography as a living component, not static text.
+
+**What was added:**
+- New `FluidValue` component system:
+  - `FluidValue` - Base component with magnitude-responsive sizing
+  - `FluidPercentage` - Pre-configured for signed percentage display
+  - `FluidBeatRate` - Optimized for beat rate percentages (50-100%)
+  - `FluidCount` - For integer counts with neutral sentiment
+  - `FluidSurprise` - Earnings surprise percentages with +/- signs
+  - `FluidDaysRemaining` - Urgency indicator (fewer days = bigger text)
+  - `FluidOdds` - Beat probability odds with warm colors for high odds
+
+**Features:**
+- Font size scales dynamically with value magnitude
+- Font weight increases for larger values (400→700+)
+- Warm/cool color gradients based on sentiment:
+  - Positive (beats): soft green → vibrant green → gold for extreme
+  - Negative (misses): soft red → vibrant red
+- Spring physics animation on value changes (500ms default)
+- Subtle text-shadow glow for extreme values (≥85% of range)
+- Full `prefers-reduced-motion` support
+- Tabular nums for aligned number display
+
+**Integration:**
+- Updated `WeekSummaryCard` biggest beat/miss highlights
+- Uses `FluidSurprise` instead of `NumberRoller` for surprise percentages
+- Monster beats (20%+) display dramatically larger than small beats
+- Creates visual hierarchy matching significance of results
+- Gold glow appears for exceptional surprises (25%+)
+
+**Technical notes:**
+- Pure CSS transitions with JS state management
+- Spring easing function for natural animation feel
+- Uses CSS custom properties for theming
+- Memoized components for React performance
+- Data attributes for styling hooks
+
+**Why it matters:**
+- "Fluid Typography" is a core 2026 trend (Zeka, UX Studio, Orizon)
+- Numbers communicate importance through size, not just color
+- Creates emotional response to exceptional results
+- Makes data feel alive and responsive
+- Matches premium fintech dashboard patterns
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 43016e6
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-21 — WavyUnderline Component (Animated Squiggly Underline)
 
 **Inspiration:** Apple's playful marketing headlines, Notion's emphasis styling, editorial/magazine design squiggly annotations, and the 2026 "expressive minimalism" trend that embraces personality and playfulness in UI design.
