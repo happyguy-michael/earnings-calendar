@@ -42,6 +42,7 @@ import { WeekIndicator } from '@/components/WeekIndicator';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SessionDivider } from '@/components/SessionDivider';
 import { MarketStatus } from '@/components/MarketStatus';
+import { LiveMarketClock } from '@/components/LiveMarketClock';
 import { TickerRibbon } from '@/components/TickerRibbon';
 import { GradientDivider } from '@/components/GradientDivider';
 import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
@@ -1117,6 +1118,7 @@ export default function Home() {
                   </GradientWipe>
                 </h1>
                 <MarketStatus />
+                <LiveMarketClock compact showTimezone />
                 <div className="hidden lg:flex items-center gap-2">
                   <SeasonProgress earnings={earnings} delay={200} />
                   <DataFreshnessIndicator
