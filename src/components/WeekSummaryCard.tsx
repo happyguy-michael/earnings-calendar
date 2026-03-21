@@ -5,6 +5,7 @@ import { Earning } from '@/lib/types';
 import { NumberRoller, PercentageRoller } from './NumberRoller';
 import { SplitFlapTicker } from './SplitFlapTicker';
 import { AuroraWash } from './AuroraWash';
+import { FluidSurprise } from './FluidValue';
 
 interface WeekSummaryCardProps {
   weekStart: Date;
@@ -275,12 +276,11 @@ export function WeekSummaryCard({
                 )}
               </span>
               <span className="week-summary-highlight-value">
-                <NumberRoller 
+                {/* FluidSurprise: bigger surprises = bigger text + warmer colors */}
+                <FluidSurprise 
                   value={isVisible ? getSurprisePercent(stats.biggestBeat) : 0}
-                  format={{ minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: 'always' }}
-                  suffix="%"
-                  spring={{ duration: 900 }}
-                  trend={1}
+                  animate={isVisible}
+                  animationDuration={800}
                 />
               </span>
             </div>
@@ -307,12 +307,11 @@ export function WeekSummaryCard({
                 )}
               </span>
               <span className="week-summary-highlight-value">
-                <NumberRoller 
+                {/* FluidSurprise: bigger misses = bigger text + cooler colors */}
+                <FluidSurprise 
                   value={isVisible ? getSurprisePercent(stats.biggestMiss) : 0}
-                  format={{ minimumFractionDigits: 1, maximumFractionDigits: 1 }}
-                  suffix="%"
-                  spring={{ duration: 900 }}
-                  trend={-1}
+                  animate={isVisible}
+                  animationDuration={800}
                 />
               </span>
             </div>
