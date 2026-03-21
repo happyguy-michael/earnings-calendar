@@ -4556,3 +4556,58 @@ The insight: Users need **macro context** to understand where they are in the ea
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
 ---
+
+## 2026-03-22 — MiniMonthCalendar: Heat-Mapped Month Navigation
+
+**Inspiration:** GitHub's contribution graph and Notion's mini calendar widget - compact visualization that shows density at a glance while providing quick navigation.
+
+**What I built:**
+- New `MiniMonthCalendar` component showing a full month view with earnings density heat-mapping
+
+**Core Features:**
+- Heat-mapped day cells (color intensity = earnings count)
+- Green hue for beat-heavy days, red hue for miss-heavy days
+- Today indicator with pulsing ring animation
+- Click any day to trigger navigation callback
+- Hover preview showing detailed stats (count, beats, misses, pending)
+- Month navigation with slide animations
+- Click month title to jump to today
+- Optional week number column
+
+**Design Details:**
+- Compact mode (24px cells) vs standard (32px cells)
+- Subtle scale-up on hover for interactive feel
+- Selected day ring indicator
+- Small dot indicator for days with 5+ reports
+- Glassmorphic tooltip with breakdown
+- Smooth month transition animations (fade + slide)
+- Full `prefers-reduced-motion` support
+- Dark mode automatic styling via CSS custom properties
+
+**Component Variants:**
+- `MiniMonthCalendar` - Standalone calendar component
+- `MiniMonthCalendarPopover` - Trigger + popover wrapper for header placement
+
+**Technical Details:**
+- Pure CSS styling (no external dependencies)
+- Memoized calendar grid calculation
+- Efficient earnings lookup via Map
+- Proper ARIA labels for accessibility
+- 42-cell grid (6 weeks) for consistent layout
+
+**Integration Ideas:**
+- Add to header as a popover triggered by month name
+- Use in sidebar for quick week jumping
+- Embed in filter panel for date range selection
+
+**Impact:** Users can now see at a glance which days are busy in the month and quickly navigate to specific dates. The heat-map visualization turns dense data into an intuitive visual pattern, similar to how GitHub's contribution graph makes activity visible. This supports the 2026 "data density without cognitive overload" trend.
+
+**Reference:**
+- GitHub contribution graph (heat-map pattern)
+- Notion mini calendar (compact navigation)
+- Apple Calendar month overview (density indicators)
+- Linear's activity visualization patterns
+
+**Commit:** `TBD` — feat: MiniMonthCalendar - heat-mapped month navigation widget
+
+---
