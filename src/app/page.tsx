@@ -98,6 +98,7 @@ import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/components/DayColumnHighlight';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
+import { WavyUnderline } from '@/components/WavyUnderline';
 import { DistributionBar } from '@/components/DistributionBar';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollVelocityParticlesLight } from '@/components/ScrollVelocityParticles';
@@ -1814,15 +1815,39 @@ export default function Home() {
           {[
             <div key="beat" className="flex items-center gap-2">
               <LegendIndicator type="beat" size={12} />
-              Beat Estimates
+              <WavyUnderline 
+                color="success" 
+                animated="hover" 
+                amplitude={2} 
+                frequency={4}
+                strokeWidth={1.5}
+              >
+                Beat Estimates
+              </WavyUnderline>
             </div>,
             <div key="miss" className="flex items-center gap-2">
               <LegendIndicator type="miss" size={12} />
-              Missed Estimates
+              <WavyUnderline 
+                color="danger" 
+                animated="hover" 
+                amplitude={2} 
+                frequency={4}
+                strokeWidth={1.5}
+              >
+                Missed Estimates
+              </WavyUnderline>
             </div>,
             <div key="odds" className="flex items-center gap-2">
               <LegendProgressRing value={75} size={14} color="#f59e0b" />
-              <span className="ml-1">Beat Probability</span>
+              <WavyUnderline 
+                color="warning" 
+                animated="hover" 
+                amplitude={2} 
+                frequency={4}
+                strokeWidth={1.5}
+              >
+                <span className="ml-1">Beat Probability</span>
+              </WavyUnderline>
             </div>
           ]}
         </BlurRevealGroup>
