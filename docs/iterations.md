@@ -1,4 +1,58 @@
 
+## 2026-03-21 — BorderDraw Component (Sequential Border Reveal)
+
+**Inspiration:** freefrontend.com "Animated Border Drawing Button" collection — UI patterns where border lines sequentially "draw" themselves around elements, creating a premium reveal effect seen in Apple product pages, Vercel deployment confirmations, and high-end fintech dashboards.
+
+**What was added:**
+- New `BorderDraw` component system:
+  - `BorderDraw` - Base component with four border segments that draw sequentially
+  - `BorderDrawCard` - Convenience wrapper for card elements
+  - `BorderDrawBadge` - Pill-shaped variant for badges
+  - `MonsterBeatBorder` - Pre-configured green/gold for monster beats (≥15% surprise)
+  - `DisasterMissBorder` - Pre-configured red for disaster misses (≤-15% surprise)
+  - `ThisWeekBorder` - Purple variant for current week highlights
+  - `useBorderDraw` - Hook for programmatic control
+
+**Features:**
+- Four border segments draw in sequence (top → right → bottom → left)
+- Corner dots pop in with spring physics timing
+- Optional glow effect with configurable intensity
+- Multiple trigger modes: `mount`, `hover`, `inView`, `manual`
+- Configurable draw direction (clockwise or counterclockwise)
+- Reverse animation when un-triggered (hover out)
+- GPU-accelerated via CSS scaleX/scaleY transforms
+- Full `prefers-reduced-motion` support
+- Glow intensity scales with surprise magnitude
+
+**Integration:**
+- Wrapped monster beat cards with `MonsterBeatBorder`
+- Wrapped disaster miss cards with `DisasterMissBorder`
+- Border "draws" when card first scrolls into view (inView trigger)
+- Stacks with existing HolographicBorder for layered visual effect
+- Green border for beats ≥15%, gold border for beats ≥25%
+- Corner dots only appear for extreme results (≥25% surprise)
+
+**Technical notes:**
+- CSS transitions with JS state management for timing control
+- IntersectionObserver for viewport detection
+- Segment timing calculated dynamically for smooth flow
+- Will-change optimization on animating elements
+- Isolated z-index stacking for proper layering
+
+**Why it matters:**
+- Creates a "reveal moment" when exceptional earnings come into view
+- Sequential drawing feels more intentional than instant appearance
+- Layered with HolographicBorder creates premium, multi-effect polish
+- Differentiates monster beats/disaster misses from normal results
+- Matches premium product reveal patterns (Apple, Vercel)
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 60e4be0
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-21 — TerminalCursor Component (Retro Terminal Blinking Cursor)
 
 **Inspiration:** Tubik Studio's 2026 UI Design Trends article on "raw aesthetics" — monospaced fonts, grids, wireframes, and terminal-like interfaces. Classic Bloomberg/Reuters terminals, command-line UIs, and the "neo-retro" design movement combining modern polish with nostalgic command-line aesthetics.
