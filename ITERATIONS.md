@@ -1,3 +1,64 @@
+## 2026-03-21 — GradientDivider: Animated Accent Line for Visual Separation
+
+**Inspiration:**
+- Dribbble calendar dashboard designs — subtle gradient accents between sections
+- 2026 "Liquid Design" trend — fluid, organic interfaces that feel alive
+- Glassmorphism patterns — subtle visual layers adding depth
+- Premium fintech dashboards — animated accent lines as visual polish
+
+**What I built:**
+- New `GradientDivider` component family — animated gradient line for section separation:
+
+  **GradientDivider (main component):**
+  - Horizontally shifting gradient animation (seamless loop)
+  - Multiple color presets: default, aurora, sunset, ocean, fire, success, warning, danger
+  - Optional soft glow effect with configurable intensity
+  - Faded edges for smooth blending with content
+  - Configurable height and animation speed
+
+  **VerticalGradientDivider:**
+  - Vertical variant for side-by-side content separation
+  - Same features as horizontal, rotated 90°
+
+  **SectionDivider:**
+  - Pre-configured variant with standard spacing
+  - Convenient for common section separator use cases
+
+  **Color Presets:**
+  - `default` — Blue-purple-blue gradient
+  - `aurora` — Green-blue-purple-pink (Northern Lights)
+  - `sunset` — Orange-pink-purple
+  - `ocean` — Teal-blue-cyan
+  - `fire` — Red-orange-yellow
+  - `success/warning/danger` — Status-appropriate colors
+
+  **Animation Speeds:**
+  - `slow` (8s), `normal` (4s), `fast` (2s), `none`
+
+**Technical Details:**
+- Pure CSS animation via `background-position` shifting
+- Gradient is duplicated for seamless looping (200% width)
+- CSS `mask-image` for smooth edge fade
+- GPU-accelerated with `will-change` hints
+- JSX styles for component encapsulation
+- Full `prefers-reduced-motion` support
+- Light/dark mode aware (reduced opacity in light mode)
+
+**Integration:**
+- Added below FrostedHeader as accent line separating header from content
+- Uses 'aurora' preset for colorful visual interest
+- Slow animation speed for subtle, non-distracting movement
+- Glow enabled at 35% intensity for depth
+
+**Why this matters:**
+The GradientDivider adds a subtle "alive" quality to the interface. Rather than static lines between sections, the slowly shifting gradient creates visual interest without being distracting. The aurora preset (green-blue-purple-pink) adds a premium, modern feel that aligns with 2026's "Liquid Design" trend. It's the kind of micro-detail that elevates the overall polish of the UI.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Commit:** 946ab06
+
+---
+
 ## 2026-03-21 — CountdownTension: Escalating Urgency Animation for Imminent Earnings
 
 **Inspiration:**
