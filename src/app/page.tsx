@@ -124,6 +124,7 @@ import { ScrollPerspective } from '@/components/ScrollPerspective';
 import { ChromeNumber } from '@/components/ChromeNumber';
 import { FluidGradientText } from '@/components/FluidGradientText';
 import { GradientWipe } from '@/components/GradientWipe';
+import { OrganicWaveDivider } from '@/components/OrganicWaveDivider';
 import { HolographicBorder } from '@/components/HolographicBorder';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
@@ -1490,6 +1491,17 @@ export default function Home() {
 
         {/* Next Up Queue - upcoming earnings with countdowns */}
         <NextUpQueue earnings={earnings} maxItems={6} />
+
+        {/* Organic Wave Divider - liquid transition to calendar section */}
+        <OrganicWaveDivider 
+          preset="aurora" 
+          height={50} 
+          layers={2} 
+          speed={0.8}
+          glow={true}
+          glowIntensity={0.3}
+          complexity={1.2}
+        />
 
         {/* Week Navigation Indicator */}
         {(!isFiltering || filteredEarnings.length > 0) && (
