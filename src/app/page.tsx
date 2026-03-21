@@ -138,6 +138,7 @@ import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
 import { DataPulseRing } from '@/components/DataPulseRing';
 import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
 import { MonsterBeatBorder, DisasterMissBorder } from '@/components/BorderDraw';
+import { CountdownTension, useCountdownTension } from '@/components/CountdownTension';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -213,6 +214,25 @@ function isEarningImminent(earning: Earning, thresholdMinutes = 15): boolean {
   
   // Imminent if within threshold and not in the past (more than 30 min ago)
   return diffMinutes <= thresholdMinutes && diffMinutes >= -30;
+}
+
+// Helper to calculate minutes remaining until earnings report
+function getMinutesUntilReport(earning: Earning): number {
+  if (!earning.time) return 999; // Unknown time = far future
+  
+  const now = new Date();
+  const reportTime = new Date(earning.date);
+  
+  if (earning.time === 'pre') {
+    reportTime.setHours(9, 30, 0, 0);
+  } else if (earning.time === 'post') {
+    reportTime.setHours(16, 0, 0, 0);
+  } else {
+    return 999;
+  }
+  
+  const diffMs = reportTime.getTime() - now.getTime();
+  return diffMs / (1000 * 60);
 }
 
 function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earning; isToday?: boolean; animationIndex?: number }) {
@@ -429,15 +449,23 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           </div>
         </div>
 
-        {/* Countdown timer for today's pending earnings - flip digit style */}
+        {/* Countdown timer for today's pending earnings - flip digit style with escalating tension */}
         {isTodayPending && (
-          <ImminentPing
-            isImminent={isImminent}
-            urgency={isImminent ? 'high' : 'low'}
+          <CountdownTension
+            minutesRemaining={getMinutesUntilReport(earning)}
+            enableShake={true}
+            enableGlow={true}
+            enablePulseBorder={true}
             borderRadius={8}
           >
-            <FlipCountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
-          </ImminentPing>
+            <ImminentPing
+              isImminent={isImminent}
+              urgency={isImminent ? 'high' : 'low'}
+              borderRadius={8}
+            >
+              <FlipCountdownBadge targetDate={new Date(earning.date)} time={earning.time} />
+            </ImminentPing>
+          </CountdownTension>
         )}
 
         {hasResult ? (
