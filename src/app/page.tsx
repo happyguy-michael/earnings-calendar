@@ -43,6 +43,7 @@ import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SessionDivider } from '@/components/SessionDivider';
 import { MarketStatus } from '@/components/MarketStatus';
 import { TickerRibbon } from '@/components/TickerRibbon';
+import { GradientDivider } from '@/components/GradientDivider';
 import { AnimatedStatIcon } from '@/components/AnimatedStatIcon';
 import { FreshBadge } from '@/components/FreshBadge';
 import { DynamicTitle } from '@/components/DynamicTitle';
@@ -1266,6 +1267,16 @@ export default function Home() {
           showFadeGradient={true}
         />
       </FrostedHeader>
+
+      {/* Gradient divider - animated accent line below header */}
+      <GradientDivider 
+        preset="aurora" 
+        speed="slow" 
+        glow 
+        glowIntensity={0.35}
+        height={2}
+        fadeEdges={true}
+      />
 
       {/* Ticker Ribbon - scrolling earnings tape */}
       <TickerRibbon earnings={earnings} speed={35} />
