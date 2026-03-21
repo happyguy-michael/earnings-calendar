@@ -1,3 +1,77 @@
+## 2026-03-22 — OrganicWaveDivider: Animated Liquid Wave Section Separator
+
+**Inspiration:**
+- 2026 "Liquid Design" trend — organic, flowing shapes that feel alive
+- Stripe's landing page wave transitions between sections
+- Linear's flowing gradient sections
+- "Blobitecture" and organic UI shapes trending in 2025-2026
+- Dribbble fintech dashboards with liquid separators
+- Article on 2026 aesthetics: "fluid metallic forms, neon holographic gradients"
+
+**What I built:**
+- New `OrganicWaveDivider` component family — animated SVG wave section separator:
+
+  **OrganicWaveDivider (main component):**
+  - Multi-layer parallax wave animation (1-4 configurable layers)
+  - Smooth sine-wave SVG path generation with dual frequencies
+  - Back layers move slower for depth parallax effect
+  - GPU-accelerated using requestAnimationFrame
+  - Optional scroll-linked parallax movement
+  - Configurable wave complexity, amplitude, and speed
+
+  **10 Color Presets:**
+  - `aurora` — Blue-purple-pink gradient (Northern Lights)
+  - `ocean` — Teal-blue gradient
+  - `sunset` — Orange-pink-purple gradient
+  - `forest` — Green gradient
+  - `flame` — Red-orange-yellow gradient
+  - `midnight` — Deep purple-blue
+  - `silver` — Neutral metallic
+  - `success` — Green tones
+  - `warning` — Amber tones
+  - `brand` — Brand blue
+
+  **WaveSectionBreak (convenience wrapper):**
+  - Pre-configured for section breaks
+  - Optional fade gradient into content area
+
+  **Configuration Options:**
+  - `height`: Wave section height in pixels
+  - `layers`: Number of wave layers (1-4)
+  - `speed`: Animation speed multiplier (0.1-3)
+  - `complexity`: Wave frequency/complexity
+  - `glow`: Enable soft glow effect
+  - `glowIntensity`: Glow strength (0-1)
+  - `flip`: Flip wave direction (waves go down)
+  - `parallax`: Enable scroll-linked movement
+  - `animated`: Toggle animation
+
+**Technical Details:**
+- Pure SVG paths for resolution independence
+- Dual-frequency sine wave for organic feel (main + harmonic)
+- Layer opacity/amplitude decrease for depth
+- CSS filter for optional blur glow effect
+- RAF-based animation loop with delta time
+- Proper cleanup on unmount
+- Full `prefers-reduced-motion` support
+- Light/dark mode adaptive opacity
+
+**Integration:**
+- Added between NextUpQueue and WeekIndicator sections
+- Uses 'aurora' preset for colorful visual interest
+- 2 layers at 0.8x speed for subtle, flowing motion
+- Soft glow at 30% intensity for depth
+- Creates visual "breathing room" between sections
+
+**Why this matters:**
+The OrganicWaveDivider adds organic visual flow between rigid content sections. Traditional horizontal dividers feel static and mechanical; flowing waves create a sense of continuous, living design. The multi-layer parallax adds depth without overwhelming — the back layers moving slower creates subtle dimensionality. This aligns perfectly with 2026's "Liquid Design" trend where interfaces feel fluid and responsive rather than boxed-in.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Verified at https://earnings-calendar-omega.vercel.app
+**Commit:** 9d22226
+
+---
+
 ## 2026-03-21 — GradientDivider: Animated Accent Line for Visual Separation
 
 **Inspiration:**
