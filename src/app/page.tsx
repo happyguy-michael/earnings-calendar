@@ -135,6 +135,7 @@ import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/componen
 import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
 import { DataPulseRing } from '@/components/DataPulseRing';
 import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
+import { MonsterBeatBorder, DisasterMissBorder } from '@/components/BorderDraw';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -240,55 +241,60 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
 
   // Wrapper component - AnimatedGradientBorder for exceptional results, EchoShadowHover for pending
   // DynamicShadow for reported results (cursor-aware shadows from light source)
+  // BorderDraw adds sequential "drawing" animation when exceptional cards come into view
   const CardWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isMonsterBeat) {
       return (
-        <DynamicShadow 
-          elevation="high" 
-          variant="success" 
-          tintIntensity={0.25}
-          hoverElevation="floating"
-          borderRadius={14}
-        >
-          <HolographicBorder
-            preset="beat"
-            borderWidth={2}
+        <MonsterBeatBorder surprise={surprise}>
+          <DynamicShadow 
+            elevation="high" 
+            variant="success" 
+            tintIntensity={0.25}
+            hoverElevation="floating"
             borderRadius={14}
-            shimmer={true}
-            shimmerIntensity={0.7}
-            glowIntensity={0.4}
-            glowSpread={24}
-            sensitivity={1.2}
-            smoothing={0.15}
           >
-            {children}
-          </HolographicBorder>
-        </DynamicShadow>
+            <HolographicBorder
+              preset="beat"
+              borderWidth={2}
+              borderRadius={14}
+              shimmer={true}
+              shimmerIntensity={0.7}
+              glowIntensity={0.4}
+              glowSpread={24}
+              sensitivity={1.2}
+              smoothing={0.15}
+            >
+              {children}
+            </HolographicBorder>
+          </DynamicShadow>
+        </MonsterBeatBorder>
       );
     }
     if (isDisasterMiss) {
       return (
-        <DynamicShadow 
-          elevation="high" 
-          variant="danger" 
-          tintIntensity={0.2}
-          hoverElevation="floating"
-          borderRadius={14}
-        >
-          <HolographicBorder
-            preset="miss"
-            borderWidth={2}
+        <DisasterMissBorder surprise={surprise}>
+          <DynamicShadow 
+            elevation="high" 
+            variant="danger" 
+            tintIntensity={0.2}
+            hoverElevation="floating"
             borderRadius={14}
-            shimmer={true}
-            shimmerIntensity={0.5}
-            glowIntensity={0.35}
-            glowSpread={20}
-            sensitivity={1.0}
-            smoothing={0.12}
           >
-            {children}
-          </HolographicBorder>
-        </DynamicShadow>
+            <HolographicBorder
+              preset="miss"
+              borderWidth={2}
+              borderRadius={14}
+              shimmer={true}
+              shimmerIntensity={0.5}
+              glowIntensity={0.35}
+              glowSpread={20}
+              sensitivity={1.0}
+              smoothing={0.12}
+            >
+              {children}
+            </HolographicBorder>
+          </DynamicShadow>
+        </DisasterMissBorder>
       );
     }
     // Pending cards get subtle echo shadow effect on hover
