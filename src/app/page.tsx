@@ -98,6 +98,7 @@ import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/components/DayColumnHighlight';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
+import { DistributionBar } from '@/components/DistributionBar';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollVelocityParticlesLight } from '@/components/ScrollVelocityParticles';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
@@ -1414,6 +1415,22 @@ export default function Home() {
               </GlassReflection>
             </ParallaxFloat>
           </BreathingCard>
+        </div>
+
+        {/* Distribution Bar - Visual breakdown of beats/misses/pending */}
+        <div className="mb-6 px-1">
+          <DistributionBar
+            beats={filterCounts.beat}
+            misses={filterCounts.miss}
+            pending={filterCounts.pending}
+            height={8}
+            borderRadius={4}
+            showTooltips={true}
+            animated={true}
+            delay={400}
+            duration={900}
+            onSegmentClick={(segment) => handleFilterChange(segment)}
+          />
         </div>
 
         {/* Today's Narrative Summary + Sentiment Pulse - blur reveal entrance */}
