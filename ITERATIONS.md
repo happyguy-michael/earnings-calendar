@@ -4608,6 +4608,8 @@ The insight: Users need **macro context** to understand where they are in the ea
 - Apple Calendar month overview (density indicators)
 - Linear's activity visualization patterns
 
-**Commit:** `TBD` — feat: MiniMonthCalendar - heat-mapped month navigation widget
+**Commit:** `b783bd9` — feat: MiniMonthCalendar - heat-mapped month navigation widget
+
+**Deployed:** https://earnings-calendar-omega.vercel.app ✅
 
 ---
