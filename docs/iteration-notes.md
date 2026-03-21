@@ -23,3 +23,37 @@
 - Uses CSS transforms for GPU-accelerated animation
 - Wobble path generated dynamically with sine waves
 - Respects reduced-motion preferences (could add)
+
+## 2026-03-22: MorphingIcon Component
+
+**Inspiration:** YouTube play/pause button, Material Design animated icons, iOS SF Symbols transitions
+
+**What:** Smooth SVG path morphing animation between two icon states (e.g., plus→close, play→pause)
+
+**Key Features:**
+- SVG path interpolation with customizable easing
+- Spring physics for bouncy transitions
+- Color transitions alongside path morph
+- 20+ built-in icon presets (plus-close, play-pause, check-x, menu-close, sun-moon, etc.)
+- Convenience wrapper components (PlusCloseIcon, PlayPauseIcon, ThemeToggleIcon)
+- Scale pulse effect during animation
+- Configurable rotation during transition
+- Respects prefers-reduced-motion
+
+**Integration:**
+- Updated FloatingActionMenu to use morphing plus→close icon
+- Smooth path animation replaces simple CSS rotation transform
+
+**Technical:**
+- Path command parsing and linear interpolation
+- Intelligent crossfade fallback for incompatible path structures
+- GPU-accelerated transforms via CSS
+- RequestAnimationFrame-based animation loop
+- Multiple easing options: spring, ease-out, ease-in-out, linear
+
+**Usage:**
+```tsx
+<MorphingIcon preset="plus-close" state={isOpen} />
+<PlusCloseIcon isOpen={isOpen} scalePulse duration={300} />
+<ThemeToggleIcon isDark={isDark} />
+```
