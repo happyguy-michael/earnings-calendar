@@ -1,3 +1,68 @@
+## 2026-03-22 — EarningsTimelineBar: Horizontal Timeline for Daily Earnings
+
+**Inspiration:**
+- Airport/train station departure boards
+- Apple Calendar's day timeline view
+- Bloomberg Terminal's market session bars
+- Linear's progress timeline indicators
+- Gantt chart timeline visualizations
+
+**What I built:**
+- New `EarningsTimelineBar` component family — horizontal timeline showing when earnings release throughout the day:
+
+  **Core Concept:**
+  - Horizontal bar representing trading day (6 AM - 8 PM ET)
+  - Pre-market zone (6-9:30 AM) and after-hours zone (4-8 PM) with gradient backgrounds
+  - Regular hours zone shown as neutral gap
+  - Earnings appear as colored dots at their release time
+  - Live "now" indicator moves across timeline (for today only)
+
+  **Visual Features:**
+  - Beat (green), miss (red), pending (amber) color coding
+  - Pending markers pulse gently
+  - Hover state scales up marker and shows tooltip
+  - Tooltip displays ticker, time (ET), and result
+  - Now indicator has blue glow line with "Now" label
+  - Session zone gradients (amber for pre-market, purple for after-hours)
+
+  **Configuration Options:**
+  - `earnings`: Earnings array for the day
+  - `isToday`: Shows live "now" indicator
+  - `compact`: Ultra-compact mode (4px height, no labels)
+  - `showLabels`: Toggle "Pre / Market / AH" labels
+  - `height`: Custom bar height
+
+  **Also Included - StaggeredEntrance Component:**
+  - Cascading animation for list items
+  - Multiple styles: fade, slideUp, slideDown, scale, fadeSlide, pop
+  - Direction options: forwards, backwards, center-out
+  - Hook-based API: `useStaggeredEntrance` for manual control
+  - Convenience wrappers: `StaggeredList`, `StaggeredGrid`
+  - Full intersection-based triggering
+
+**Technical Details:**
+- ET timezone handling for accurate session zones
+- Live time updates every 30 seconds (for today)
+- Efficient memoization of timeline positions
+- CSS-in-JS with JSX styling
+- Full `prefers-reduced-motion` support
+- Light/dark mode adaptive gradients and colors
+
+**Integration:**
+- Added to day columns above earnings cards
+- Uses compact mode to minimize vertical space
+- Shows timeline only when day has earnings
+- Provides at-a-glance view of when reports are expected
+
+**Why this matters:**
+Users previously had to scan through all cards to understand timing. The timeline bar provides instant visual context: "Are most earnings pre-market or after-hours? What's already reported vs pending? Where are we in the day?" This is especially useful for active traders who need to know timing at a glance.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 9ef09fb
+
+---
+
 ## 2026-03-22 — EarningsOrbit: Solar System Visualization for Upcoming Earnings
 
 **Inspiration:**
