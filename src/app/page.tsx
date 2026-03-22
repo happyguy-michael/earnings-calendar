@@ -90,6 +90,7 @@ import { QuickPeek } from '@/components/QuickPeek';
 import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
 import { NumberJolt } from '@/components/NumberJolt';
+import { AnimatedStatDelta } from '@/components/AnimatedStatDelta';
 import { GlitchPending } from '@/components/GlitchText';
 import { MarketMoodRing } from '@/components/MarketMoodRing';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
@@ -1393,11 +1394,13 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="text-3xl font-bold text-white">
-                        <NumberJolt value={totalEarnings} intensity={3} duration={350}>
-                          <ValueChangeHighlight value={totalEarnings} variant="default">
-                            <ElasticNumber value={totalEarnings} spring="snappy" animateOnMount />
-                          </ValueChangeHighlight>
-                        </NumberJolt>
+                        <AnimatedStatDelta value={totalEarnings} position="top-right" glow flyDistance={24} duration={700}>
+                          <NumberJolt value={totalEarnings} intensity={3} duration={350}>
+                            <ValueChangeHighlight value={totalEarnings} variant="default">
+                              <ElasticNumber value={totalEarnings} spring="snappy" animateOnMount />
+                            </ValueChangeHighlight>
+                          </NumberJolt>
+                        </AnimatedStatDelta>
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Total Reports</WeightShiftText>
                     </div>
@@ -1431,11 +1434,13 @@ export default function Home() {
                     <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
                     <div>
                       <div className="text-2xl font-bold text-gradient-green">
-                        <NumberJolt value={beatRate} intensity={4} duration={400} directional>
-                          <ValueChangeHighlight value={beatRate} variant="success">
-                            <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
-                          </ValueChangeHighlight>
-                        </NumberJolt>
+                        <AnimatedStatDelta value={beatRate} position="top-right" glow flyDistance={28} duration={750} suffix="%">
+                          <NumberJolt value={beatRate} intensity={4} duration={400} directional>
+                            <ValueChangeHighlight value={beatRate} variant="success">
+                              <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
+                            </ValueChangeHighlight>
+                          </NumberJolt>
+                        </AnimatedStatDelta>
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</WeightShiftText>
                     </div>
@@ -1480,11 +1485,13 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="text-3xl font-bold text-white">
-                        <NumberJolt value={reportedCount} intensity={3} duration={350}>
-                          <ValueChangeHighlight value={reportedCount} variant="default">
-                            <SpinInteger value={reportedCount} duration={700} stagger={60} animateOnMount />
-                          </ValueChangeHighlight>
-                        </NumberJolt>
+                        <AnimatedStatDelta value={reportedCount} position="top-right" glow flyDistance={24} duration={700}>
+                          <NumberJolt value={reportedCount} intensity={3} duration={350}>
+                            <ValueChangeHighlight value={reportedCount} variant="default">
+                              <SpinInteger value={reportedCount} duration={700} stagger={60} animateOnMount />
+                            </ValueChangeHighlight>
+                          </NumberJolt>
+                        </AnimatedStatDelta>
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Reported</WeightShiftText>
                     </div>
@@ -1518,11 +1525,13 @@ export default function Home() {
                     <AnimatedStatIcon type="pending" size={28} />
                     <div>
                       <div className="text-3xl font-bold text-amber-400">
-                        <NumberJolt value={pendingCount} intensity={3} duration={350}>
-                          <ValueChangeHighlight value={pendingCount} variant="warning">
-                            <GlitchPending value={pendingCount} />
-                          </ValueChangeHighlight>
-                        </NumberJolt>
+                        <AnimatedStatDelta value={pendingCount} position="top-right" glow flyDistance={24} duration={700} reverseColors>
+                          <NumberJolt value={pendingCount} intensity={3} duration={350}>
+                            <ValueChangeHighlight value={pendingCount} variant="warning">
+                              <GlitchPending value={pendingCount} />
+                            </ValueChangeHighlight>
+                          </NumberJolt>
+                        </AnimatedStatDelta>
                       </div>
                       <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium flex items-center gap-1.5">
                         <WeightShiftText variant="subtle" trigger="hover">Pending</WeightShiftText>
