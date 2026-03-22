@@ -1,3 +1,56 @@
+## 2026-03-23 — AnimatedPercentSign: Sequenced Micro-Animation for Stats
+
+**Inspiration:**
+- Linear's sequenced number animations
+- Stripe Dashboard stat reveals
+- Vercel's animated metrics
+- 2026 trend: "Sequenced micro-animations" - elements animate in sequence, not simultaneously
+
+**What I built:**
+- New `AnimatedPercentSign` component — micro-animation for percentage displays:
+
+  **Core Concept:**
+  - The % sign animates in slightly after the number finishes counting up
+  - Creates a "landing" effect that makes stats feel complete
+  - Subtle but delightful detail that adds polish
+
+  **Animation Variants:**
+  - `fadeSlide`: Fades in while sliding up (default, most subtle)
+  - `scale`: Scales up from 0 with bounce
+  - `rotate`: Spins in from 90deg rotation  
+  - `pop`: Quick scale overshoot (1.0 → 1.2 → 1.0)
+  - `typewriter`: Appears with cursor blink effect
+
+  **Configuration Options:**
+  - `delay`: Sync with number animation duration
+  - `duration`: Animation length
+  - `suffix`: Custom text (%, pts, bps, x)
+  - `size`: xs/sm/md/lg/xl variants
+  - `glowOnComplete`: Optional glow pulse on completion
+  - `color`: Custom color (inherits by default)
+
+  **Bonus Components:**
+  - `AnimatedSuffix`: Generic version for any suffix
+  - `SequencedStat`: Combines number counting + animated suffix automatically
+
+**Technical Details:**
+- GPU-accelerated transforms (will-change hints)
+- Respects prefers-reduced-motion
+- Cubic bezier easing for natural feel
+- Zero dependencies (pure CSS + React)
+- TypeScript with full prop types
+
+**Use Cases:**
+- "90% Beat Rate" → number counts up, then % slides in
+- "52 Total Reports" → could use for units too
+- Any stat display with suffix
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-22 — AnimatedErrorState: Friendly Error Recovery UI
 
 **Inspiration:**
