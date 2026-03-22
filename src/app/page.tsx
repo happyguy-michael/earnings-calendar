@@ -98,6 +98,7 @@ import { FrostedHeader } from '@/components/EnhancedFrostedGlass';
 import { VelocityBlurProvider, VelocityBlurCard } from '@/components/VelocityBlur';
 import { ContextualCardActions } from '@/components/ContextualCardActions';
 import { useUndoToast } from '@/components/UndoToast';
+import { TodayDateIndicator } from '@/components/PulsingDateRing';
 import { useKeyPressEcho, formatKeyName } from '@/components/KeyPressEcho';
 import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/components/DayColumnHighlight';
@@ -1753,7 +1754,13 @@ export default function Home() {
                           style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
                         >
                           <div className="day-name">{day}</div>
-                          <div className="day-num">{date.getDate()}</div>
+                          <TodayDateIndicator 
+                            isToday={isToday} 
+                            variant="ripple" 
+                            delay={weekIndex * 100 + dayIndex * 50}
+                          >
+                            <div className="day-num">{date.getDate()}</div>
+                          </TodayDateIndicator>
                           {/* Relative day badge - human-readable context */}
                           <RelativeDayBadge 
                             date={date} 
