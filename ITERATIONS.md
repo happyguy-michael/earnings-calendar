@@ -1,3 +1,74 @@
+## 2026-03-22 — AnimatedErrorState: Friendly Error Recovery UI
+
+**Inspiration:**
+- GitHub's friendly error pages with actionable recovery
+- Linear.app's network error states with auto-retry
+- iOS connection lost screens
+- 2026 trend: "Empathetic error design"
+
+**What I built:**
+- New `AnimatedErrorState` component — friendly error state with retry functionality:
+
+  **Core Concept:**
+  - Animated error icon with shake/pulse effect
+  - Clear messaging with title, description, and optional error code
+  - One-click retry with loading state
+  - Connection status indicator (online/offline)
+
+  **Visual Features:**
+  - Smooth entrance animation (slide + scale + fade)
+  - Error icon with pulsing ring animation
+  - Shake animation on icon for attention
+  - Loading spinner during retry
+  - Offline indicator with pulsing dot
+
+  **Smart Features:**
+  - Auto-retry when connection is restored
+  - Optional countdown timer for auto-retry
+  - Cancel auto-retry option
+  - Disabled retry when offline
+
+  **Variants:**
+  - `default`: Standard centered layout
+  - `minimal`: Compact, less padding
+  - `card`: Glass-morphism card with border
+
+  **Sizes:**
+  - `sm`: Compact for inline errors
+  - `md`: Standard (default)
+  - `lg`: Prominent for full-page errors
+
+  **Configuration Options:**
+  - `title`: Error title text
+  - `message`: Detailed error description
+  - `icon`: Custom emoji or React node
+  - `errorCode`: Technical error code to display
+  - `onRetry`: Retry callback (async supported)
+  - `showConnectionStatus`: Show online/offline indicator
+  - `autoRetryOnReconnect`: Auto-retry when connection restored
+  - `showAutoRetry`: Show countdown to auto-retry
+  - `autoRetryDelay`: Delay before auto-retry (ms)
+
+**Technical Details:**
+- Uses `useMotionPreferences` for reduced motion support
+- Custom `useOnlineStatus` hook for connection detection
+- CSS-in-JS with theme-aware styling (light/dark)
+- GPU-accelerated animations with will-change hints
+- Accessible: role="alert", aria-live="assertive"
+
+**Use Cases:**
+- Data fetch failures
+- Network errors
+- API timeouts
+- Server errors
+- Offline mode handling
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-22 — EarningsSeasonMeter: Liquid Thermometer for Season Progress
 
 **Inspiration:**
