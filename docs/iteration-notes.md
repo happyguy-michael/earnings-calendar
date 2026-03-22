@@ -1,4 +1,37 @@
 
+## 2026-03-23: PulsingDateRing Component
+
+**Inspiration:** iOS calendar today indicator, Todoist's current day pulse, Apple Watch activity rings
+
+**What:** Animated pulsing ring indicator that highlights today's date in the calendar grid with subtle, attention-drawing animation
+
+**Key Features:**
+- 4 animation variants: pulse, breathe, ripple, orbit
+- Multi-ring staggered animations for depth
+- IntersectionObserver for visibility-aware animation pausing
+- Respects prefers-reduced-motion
+- Configurable colors, timing, ring count, scale
+- Pre-built wrappers: TodayDateIndicator, LiveIndicatorRing
+
+**Variants:**
+- **pulse**: Rings expand outward and fade (like sonar)
+- **breathe**: Subtle scale oscillation (alive feeling)
+- **ripple**: Water droplet effect with thinning rings
+- **orbit**: Rotating gradient ring (continuous motion)
+
+**Integration:**
+- Wrapped today's date number in calendar day headers
+- Ripple variant chosen for subtle but noticeable effect
+- Staggered delay based on week/day index for cascade feel
+
+**Technical:**
+- CSS keyframe animations for GPU acceleration
+- Conic gradient mask for orbit variant
+- Visibility observer prevents animation when off-screen
+- Clean styled-jsx scoped CSS
+
+---
+
 ## 2026-03-21: TextHighlight Component
 
 **Inspiration:** Stripe/Linear landing pages, editorial highlighting, hand-drawn marker effects
