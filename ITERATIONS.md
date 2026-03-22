@@ -5107,3 +5107,84 @@ Added to day headers in the calendar, appearing below the day name/number with s
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 83c0f2e
 
+
+---
+
+## 2026-03-23 — BottomSheet: iOS-Style Draggable Bottom Drawer
+
+**Inspiration:**
+- iOS Maps bottom sheet interaction pattern
+- Apple Music Now Playing drawer
+- Linear mobile task details panel
+- 2026 "Mobile-First Everything" trend
+- Native app feel in web applications
+
+**What I built:**
+- New `BottomSheet` component — a native-feeling bottom drawer with physics-based interactions
+
+**Core Features:**
+- **Multiple snap points** — Define heights like `['35vh', '65vh', '90vh']` for peek, half, and full views
+- **Spring physics** — Smooth snapping with configurable tension/friction/mass
+- **Drag handle** — Visual grab indicator with active state feedback
+- **Backdrop blur** — iOS-style frosted glass overlay
+- **Velocity detection** — Fast swipe down = dismiss, fast swipe up = expand to next snap
+- **Safe area support** — Proper handling of iPhone notch/Dynamic Island
+- **Focus trap** — Accessibility-compliant keyboard navigation
+- **Escape to close** — Standard modal interaction
+
+**Physics System:**
+\`\`\`typescript
+const SPRING_CONFIG = {
+  tension: 300,   // Spring stiffness
+  friction: 25,   // Damping
+  mass: 1,        // Inertia
+};
+\`\`\`
+
+**Component Variants:**
+- `BottomSheet` — Base component with full configuration
+- `EarningsBottomSheet` — Pre-styled variant with header for ticker/company
+
+**API:**
+\`\`\`tsx
+<BottomSheet
+  isOpen={showDetails}
+  onClose={() => setShowDetails(false)}
+  snapPoints={['40vh', '90vh']}
+  defaultSnap={0}
+  showBackdrop={true}
+  backdropBlur={true}
+  closeOnBackdropClick={true}
+  showHandle={true}
+  borderRadius={20}
+>
+  <div className="p-4">Sheet content</div>
+</BottomSheet>
+\`\`\`
+
+**Technical Details:**
+- Portal-based rendering to document.body
+- CSS-in-JS for self-contained styles
+- RAF-based spring animation (no dependencies)
+- Touch + mouse event support (works on desktop too)
+- Proper scroll containment with overscroll-behavior
+- Full light/dark mode support
+- `prefers-reduced-motion` compliance
+
+**Use Cases:**
+- Quick earnings detail preview on mobile
+- Chart expansion without page navigation
+- Filter/sort options panel
+- Share/action menu on card long-press
+
+**Impact:** This component brings native app interaction quality to the web. Users can preview earnings details without navigating away, making the mobile experience feel more fluid and app-like. The physics-based animation creates a premium, tactile feel that matches user expectations set by iOS/Android native apps.
+
+**Reference:**
+- iOS Human Interface Guidelines — Sheets
+- Apple Maps bottom sheet pattern
+- Linear mobile app interactions
+- Material Design 3 — Bottom sheets
+
+**Commit:** 5e7a596
+**Deployed:** https://earnings-calendar-omega.vercel.app ✅
+
