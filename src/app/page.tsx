@@ -122,6 +122,7 @@ import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/Cur
 import { PrintStyles } from '@/components/PrintStyles';
 import { RelativeDayBadge } from '@/components/RelativeDayBadge';
 import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
+import { StatBreakdownFromEarnings } from '@/components/StatBreakdownRing';
 import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ScrollPerspective } from '@/components/ScrollPerspective';
@@ -1374,7 +1375,20 @@ export default function Home() {
                   className="stat-entrance"
                 >
                   <div className="flex items-center gap-3">
-                    <AnimatedStatIcon type="total" size={28} />
+                    {/* Status breakdown ring - shows beat/miss/pending distribution */}
+                    <div className="relative">
+                      <AnimatedStatIcon type="total" size={28} />
+                      <div className="absolute -bottom-1 -right-1">
+                        <StatBreakdownFromEarnings
+                          earnings={filteredEarnings}
+                          type="status"
+                          size={24}
+                          strokeWidth={3}
+                          delay={300}
+                          onFilter={handleFilterChange}
+                        />
+                      </div>
+                    </div>
                     <div>
                       <div className="text-3xl font-bold text-white">
                         <NumberJolt value={totalEarnings} intensity={3} duration={350}>
@@ -1449,7 +1463,19 @@ export default function Home() {
                   className="stat-entrance"
                 >
                   <div className="flex items-center gap-3">
-                    <AnimatedStatIcon type="reported" size={28} />
+                    {/* Session breakdown ring - shows pre-market vs after-hours split */}
+                    <div className="relative">
+                      <AnimatedStatIcon type="reported" size={28} />
+                      <div className="absolute -bottom-1 -right-1">
+                        <StatBreakdownFromEarnings
+                          earnings={filteredEarnings.filter(e => e.eps !== undefined && e.eps !== null)}
+                          type="session"
+                          size={24}
+                          strokeWidth={3}
+                          delay={500}
+                        />
+                      </div>
+                    </div>
                     <div>
                       <div className="text-3xl font-bold text-white">
                         <NumberJolt value={reportedCount} intensity={3} duration={350}>
