@@ -1,3 +1,70 @@
+## 2026-03-22 — EarningsOrbit: Solar System Visualization for Upcoming Earnings
+
+**Inspiration:**
+- Apple visionOS "Soft Spatial UI" patterns (2026 trend)
+- Tubik Studio's 2026 trends: "depth perception" and "spatial interfaces"
+- NASA's "Eyes on the Solar System" interactive visualization
+- The concept of making temporal proximity = spatial proximity
+- Premium fintech dashboards with novel data visualization
+
+**What I built:**
+- New `EarningsOrbit` component family — solar system metaphor for earnings data:
+
+  **Core Concept:**
+  - "Today" is the sun at the center (pulsing amber glow)
+  - Upcoming earnings orbit as planets
+  - Orbit distance = days until report (closer = sooner)
+  - Planet size = market cap/importance (normalized)
+  - Orbit speed follows physics (closer orbits = faster rotation)
+
+  **Visual Features:**
+  - Beat probability shown as progress ring around each planet
+  - Pre-market (☀️) vs after-hours (🌙) on opposite hemispheres
+  - Color-coded probability: green (>70%), yellow (50-70%), red (<50%)
+  - Dashed orbit ring guides with day labels (+1d, +2d, etc.)
+  - Interactive hover states with tooltip showing details
+  - Company logos or ticker symbols inside planets
+  - Session indicators as emoji badges
+
+  **Component Family:**
+  - `EarningsOrbit` — Full visualization with all options
+  - `EarningsOrbitCompact` — Smaller inline version for headers/cards
+  - `useEarningsOrbit` — Hook to transform earnings data
+
+  **Configuration Options:**
+  - `maxDays`: How many days out to show (affects orbit rings)
+  - `size`: Visualization diameter in pixels
+  - `showOrbits`: Toggle orbit ring guides
+  - `showDayLabels`: Toggle day labels on orbits
+  - `animated`: Enable/disable orbit animation
+  - `speed`: Orbit animation speed multiplier
+  - `interactive`: Enable hover/click interactions
+  - `onEarningClick/onEarningHover`: Callbacks
+
+  **Technical Details:**
+  - RAF-based smooth orbit animation
+  - CSS transforms for GPU-accelerated planet positioning
+  - Conic gradients for probability rings
+  - Spring easing for hover scale animations
+  - Intersection-based initial angle distribution
+  - Full `prefers-reduced-motion` support
+  - Light/dark mode adaptive styling
+
+**Why this matters:**
+Traditional earnings lists show data linearly, requiring users to parse dates and times. The solar system metaphor leverages spatial intuition — "closer to center = happening sooner." Users can glance at the visualization and immediately understand the earnings landscape: what's imminent (inner orbits), what's coming (outer orbits), and how confident the beat predictions are (planet colors). This aligns with 2026's "Soft Spatial UI" trend where depth and position convey meaning.
+
+**Use Cases:**
+- Dashboard header showing upcoming earnings at a glance
+- "What's Next" widget for quick scanning
+- Portfolio view showing when your holdings report
+- Sector analysis showing clustered reporting dates
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 19f934d
+
+---
+
 ## 2026-03-22 — OrganicWaveDivider: Animated Liquid Wave Section Separator
 
 **Inspiration:**
