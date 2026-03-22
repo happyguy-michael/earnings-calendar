@@ -78,6 +78,7 @@ import { PulseIndicator } from '@/components/PulseIndicator';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
 import { FlipMonth } from '@/components/FlipMonth';
+import { QuietWeekBanner } from '@/components/QuietWeekBanner';
 import { MiniMonthCalendarPopover } from '@/components/MiniMonthCalendar';
 import { TodayNarrative } from '@/components/TodayNarrative';
 import { SessionProgressBar } from '@/components/SessionProgressBar';
@@ -1755,6 +1756,24 @@ export default function Home() {
                     return { count: dayEarnings.length, beats, misses, pending };
                   });
                   const maxDayCount = Math.max(...weekDayData.map(d => d.count), 1);
+                  const totalWeekEarnings = weekDayData.reduce((sum, d) => sum + d.count, 0);
+                  
+                  // Show QuietWeekBanner if entire week is empty
+                  if (totalWeekEarnings === 0) {
+                    return (
+                      <div className="col-span-5">
+                        <QuietWeekBanner
+                          weekStart={weekStart}
+                          allEarnings={earnings}
+                          onJumpToWeek={(targetWeek) => {
+                            setCurrentWeekStart(targetWeek);
+                            haptic('select');
+                            showToast('Jumped to busy week', { type: 'success', icon: '📅', duration: 2000 });
+                          }}
+                        />
+                      </div>
+                    );
+                  }
                   
                   return days.map((_, dayIndex) => {
                     const date = new Date(weekStart);
