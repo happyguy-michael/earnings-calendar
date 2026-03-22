@@ -1,3 +1,63 @@
+## 2026-03-23 — AnimatedStatDelta: Flying Delta Indicator for Stats
+
+**Inspiration:**
+- Video game damage/heal numbers (RPGs, shooters)
+- Stock ticker change indicators
+- Figma's collaborative cursor labels
+- Apple's Dynamic Island value transitions
+- 2026 trend: "Kinetic Feedback" - visual confirmation of state changes
+
+**What I built:**
+- New `AnimatedStatDelta` component — flying +/- indicator when values change:
+
+  **Core Concept:**
+  - When a stat changes, a small delta indicator (+5, -3) flies up/down and fades out
+  - Direction-aware: increases fly up, decreases fly down
+  - Color-coded: green for increases, red for decreases
+  - Creates satisfying feedback when filtering/searching changes counts
+
+  **Animation Details:**
+  - Smooth fly animation with scale pop on entry
+  - Configurable fly distance (default 30px)
+  - Glowing text effect for emphasis
+  - GPU-accelerated transforms
+
+  **Smart Features:**
+  - Debounces rapid changes (combines deltas within window)
+  - Stacks multiple simultaneous particles (max 5)
+  - reverseColors option for "less is good" stats (like Pending)
+  - Position variants: top-right, top-left, top-center, inline-right, inline-left
+
+  **Configuration Options:**
+  - `flyDistance`: How far the delta flies
+  - `duration`: Animation length
+  - `suffix`/`prefix`: Custom text (%, $, pts)
+  - `showSign`: Toggle +/- sign
+  - `glow`: Enable text glow effect
+  - `reverseColors`: Flip green/red meanings
+  - `debounce`: Combine rapid changes
+
+  **Bonus Components:**
+  - `useStatDelta`: Hook for imperative delta triggers
+  - `StatDeltaBadge`: Standalone badge for manual placement
+
+**Integration:**
+- Wrapped all 4 main page stats (Total, Beat Rate, Reported, Pending)
+- Pending uses reverseColors (decrease = good)
+- Beat Rate includes % suffix
+
+**Technical Details:**
+- Pure CSS animations (no framer-motion dependency)
+- Respects prefers-reduced-motion
+- TypeScript with full prop types
+- Memoized with React.memo
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** e826a36
+
+---
+
 ## 2026-03-23 — AnimatedPercentSign: Sequenced Micro-Animation for Stats
 
 **Inspiration:**
