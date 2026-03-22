@@ -78,6 +78,7 @@ import { PulseIndicator } from '@/components/PulseIndicator';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
 import { FlipMonth } from '@/components/FlipMonth';
+import { MiniMonthCalendarPopover } from '@/components/MiniMonthCalendar';
 import { TodayNarrative } from '@/components/TodayNarrative';
 import { SessionProgressBar } from '@/components/SessionProgressBar';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
@@ -706,6 +707,32 @@ export default function Home() {
     pending: earnings.filter(e => e.eps === undefined || e.eps === null).length,
   }), []);
 
+  // Calculate earnings grouped by date for mini calendar heat-map
+  const earningsByDay = useMemo(() => {
+    const map = new Map<string, { count: number; beats: number; misses: number; pending: number }>();
+    
+    earnings.forEach(e => {
+      const existing = map.get(e.date) || { count: 0, beats: 0, misses: 0, pending: 0 };
+      existing.count++;
+      if (e.result === 'beat') existing.beats++;
+      else if (e.result === 'miss') existing.misses++;
+      else existing.pending++;
+      map.set(e.date, existing);
+    });
+    
+    return Array.from(map.entries()).map(([date, data]) => ({
+      date,
+      ...data,
+    }));
+  }, []);
+
+  // Handle mini calendar day click - navigate to that week
+  const handleCalendarDayClick = useCallback((date: Date) => {
+    setCurrentWeekStart(getWeekStart(date));
+    haptic('select');
+    showToast(`Jumped to week of ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`, { type: 'info', icon: '📅', duration: 2000 });
+  }, [haptic, showToast]);
+
   // Calculate pending earnings for TODAY (for notification indicator)
   const pendingToday = useMemo(() => {
     const todayStr = formatDate(new Date());
@@ -1134,9 +1161,34 @@ export default function Home() {
                 </div>
               </div>
               <p className="sticky-header-subtitle">
-                <FlipMonth 
-                  month={months[currentWeekStart.getMonth()]} 
-                  year={currentWeekStart.getFullYear()} 
+                <MiniMonthCalendarPopover
+                  earningsData={earningsByDay}
+                  currentDate={currentWeekStart}
+                  onDayClick={handleCalendarDayClick}
+                  compact={true}
+                  position="bottom-left"
+                  trigger={
+                    <span className="mini-calendar-trigger">
+                      <FlipMonth 
+                        month={months[currentWeekStart.getMonth()]} 
+                        year={currentWeekStart.getFullYear()} 
+                      />
+                      <svg 
+                        className="mini-calendar-icon" 
+                        width="12" 
+                        height="12" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2"
+                      >
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                    </span>
+                  }
                 />
               </p>
             </div>

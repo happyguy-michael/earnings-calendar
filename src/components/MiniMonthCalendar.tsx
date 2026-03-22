@@ -570,6 +570,7 @@ export function MiniMonthCalendar({
  * MiniMonthCalendarPopover
  * 
  * A popover wrapper for the mini calendar, useful for header placement.
+ * Features smooth animation, backdrop blur, and closes on day selection.
  */
 interface MiniMonthCalendarPopoverProps extends MiniMonthCalendarProps {
   /** Trigger element */
@@ -581,19 +582,53 @@ interface MiniMonthCalendarPopoverProps extends MiniMonthCalendarProps {
 export function MiniMonthCalendarPopover({
   trigger,
   position = 'bottom-center',
+  onDayClick,
   ...calendarProps
 }: MiniMonthCalendarPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Handle day click - close popover and call parent callback
+  const handleDayClick = useCallback((date: Date) => {
+    onDayClick?.(date);
+    setIsOpen(false);
+  }, [onDayClick]);
+
+  // Animation handling
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   const positionStyles: CSSProperties = {
     'bottom-left': { top: '100%', left: 0, marginTop: '8px' },
     'bottom-right': { top: '100%', right: 0, marginTop: '8px' },
-    'bottom-center': { top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: '8px' },
+    'bottom-center': { top: '100%', left: '50%', marginTop: '8px' },
   }[position];
+
+  const transformBase = position === 'bottom-center' ? 'translateX(-50%)' : '';
 
   return (
     <div style={{ position: 'relative', display: 'inline-block' }}>
-      <div onClick={() => setIsOpen(!isOpen)} style={{ cursor: 'pointer' }}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)} 
+        style={{ cursor: 'pointer' }}
+        role="button"
+        aria-expanded={isOpen}
+        aria-haspopup="dialog"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          } else if (e.key === 'Escape' && isOpen) {
+            setIsOpen(false);
+          }
+        }}
+      >
         {trigger}
       </div>
       
@@ -606,23 +641,65 @@ export function MiniMonthCalendarPopover({
               position: 'fixed',
               inset: 0,
               zIndex: 99,
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(2px)',
+              WebkitBackdropFilter: 'blur(2px)',
             }}
           />
           
           {/* Popover */}
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Month calendar"
             style={{
               position: 'absolute',
               ...positionStyles,
+              transform: isAnimating 
+                ? `${transformBase} translateY(-4px) scale(0.98)`
+                : `${transformBase} translateY(0) scale(1)`,
+              opacity: isAnimating ? 0.8 : 1,
               zIndex: 100,
-              backgroundColor: 'var(--popover-bg, white)',
-              borderRadius: '12px',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-              padding: '12px',
-              minWidth: '260px',
+              backgroundColor: 'var(--popover-bg, rgba(24, 24, 27, 0.98))',
+              borderRadius: '14px',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.08)',
+              padding: '14px',
+              minWidth: '280px',
+              transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
             }}
           >
-            <MiniMonthCalendar {...calendarProps} />
+            {/* Header hint */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '8px',
+              paddingBottom: '8px',
+              borderBottom: '1px solid rgba(255,255,255,0.08)',
+            }}>
+              <span style={{
+                fontSize: '11px',
+                fontWeight: 500,
+                color: 'var(--text-secondary, #888)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+              }}>
+                Quick Navigate
+              </span>
+              <span style={{
+                fontSize: '10px',
+                color: 'var(--text-tertiary, #666)',
+              }}>
+                Click a day to jump
+              </span>
+            </div>
+            
+            <MiniMonthCalendar 
+              {...calendarProps} 
+              onDayClick={handleDayClick}
+            />
           </div>
         </>
       )}

@@ -20531,3 +20531,84 @@ html.light .season-badge-progress {
     opacity: 0.1;
   }
 }
+
+/* Mini Calendar Trigger - clickable month/year with calendar icon */
+.mini-calendar-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.mini-calendar-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.mini-calendar-trigger:active {
+  transform: translateY(0);
+}
+
+.mini-calendar-icon {
+  opacity: 0.4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mini-calendar-trigger:hover .mini-calendar-icon {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+/* Light mode */
+html.light .mini-calendar-trigger:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* MiniMonthCalendar popover dark mode styles */
+.mini-month-calendar {
+  --text-primary: #f0f0f0;
+  --text-secondary: #888;
+  --text-tertiary: #666;
+  --text-disabled: #444;
+  --hover-bg: rgba(255,255,255,0.1);
+  --accent-color: #60a5fa;
+  --tooltip-bg: rgba(30,30,30,0.95);
+  --popover-bg: rgba(24, 24, 27, 0.98);
+}
+
+html.light .mini-month-calendar {
+  --text-primary: #18181b;
+  --text-secondary: #71717a;
+  --text-tertiary: #a1a1aa;
+  --text-disabled: #d4d4d8;
+  --hover-bg: rgba(0,0,0,0.05);
+  --accent-color: #3b82f6;
+  --tooltip-bg: rgba(0,0,0,0.85);
+  --popover-bg: white;
+}
+
+/* Popover animation */
+@keyframes calendar-popover-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mini-calendar-trigger {
+    transition: none;
+  }
+  .mini-calendar-icon {
+    transition: none;
+  }
+}
