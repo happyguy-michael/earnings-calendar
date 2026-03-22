@@ -20612,3 +20612,197 @@ html.light .mini-month-calendar {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   RelativeDayBadge - Human-readable date context labels
+   ========================================================================== */
+
+.relative-day-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Today pulse indicator */
+.relative-day-pulse {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+}
+
+.relative-day-pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.3);
+  animation: relative-day-pulse-ring 2s ease-out infinite;
+}
+
+.relative-day-pulse-dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+}
+
+@keyframes relative-day-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Tomorrow subtle glow */
+.relative-day-glow {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, 0.15) 0%,
+    rgba(56, 189, 248, 0) 60%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+  animation: relative-day-glow-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes relative-day-glow-shimmer {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Today badge special styling */
+.relative-day-today {
+  animation: relative-day-today-entrance 0.5s var(--spring-bouncy) forwards;
+}
+
+@keyframes relative-day-today-entrance {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Tomorrow badge hover effect */
+.relative-day-tomorrow:hover .relative-day-glow {
+  opacity: 1;
+  animation: none;
+}
+
+/* This week subtle animation */
+.relative-day-this-week {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.relative-day-this-week:hover {
+  background-color: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Light mode adjustments */
+html.light .relative-day-today {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+html.light .relative-day-tomorrow {
+  background: rgba(56, 189, 248, 0.12);
+  color: #0284c7;
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+html.light .relative-day-this-week {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
+html.light .relative-day-next-week {
+  background: rgba(113, 113, 122, 0.1);
+  color: #52525b;
+  border-color: rgba(113, 113, 122, 0.15);
+}
+
+html.light .relative-day-far {
+  background: rgba(161, 161, 170, 0.08);
+  color: #71717a;
+  border-color: rgba(161, 161, 170, 0.12);
+}
+
+html.light .relative-day-yesterday {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  border-color: rgba(245, 158, 11, 0.15);
+}
+
+html.light .relative-day-past {
+  background: rgba(113, 113, 122, 0.08);
+  color: #71717a;
+  border-color: rgba(113, 113, 122, 0.1);
+}
+
+html.light .relative-day-distant {
+  background: rgba(161, 161, 170, 0.05);
+  color: #a1a1aa;
+  border-color: rgba(161, 161, 170, 0.08);
+}
+
+html.light .relative-day-pulse-ring {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+html.light .relative-day-pulse-dot {
+  background: #059669;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+}
+
+html.light .relative-day-glow {
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.15) 0%,
+    rgba(14, 165, 233, 0) 60%
+  );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .relative-day-pulse-ring {
+    animation: none;
+    opacity: 0.4;
+  }
+  
+  .relative-day-glow {
+    animation: none;
+    opacity: 0.7;
+  }
+  
+  .relative-day-today {
+    animation: none;
+  }
+  
+  .relative-day-badge {
+    transition: none;
+  }
+}

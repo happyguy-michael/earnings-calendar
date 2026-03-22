@@ -118,6 +118,7 @@ import { SpinDigit, SpinInteger } from '@/components/SpinDigit';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
 import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/CursorTrail';
 import { PrintStyles } from '@/components/PrintStyles';
+import { RelativeDayBadge } from '@/components/RelativeDayBadge';
 import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
 import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
@@ -1707,8 +1708,16 @@ export default function Home() {
                         >
                           <div className="day-name">{day}</div>
                           <div className="day-num">{date.getDate()}</div>
+                          {/* Relative day badge - human-readable context */}
+                          <RelativeDayBadge 
+                            date={date} 
+                            size="xs" 
+                            compact={true}
+                            delay={weekIndex * 80 + dayIndex * 30}
+                            className="mt-1"
+                          />
                           {dayEarnings.length > 0 && (
-                            <div className="badge badge-neutral mt-2 text-[10px] py-1 px-2">
+                            <div className="badge badge-neutral mt-1.5 text-[10px] py-1 px-2">
                               {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
                             </div>
                           )}
