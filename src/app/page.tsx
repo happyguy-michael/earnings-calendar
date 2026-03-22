@@ -104,6 +104,7 @@ import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/componen
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { WavyUnderline } from '@/components/WavyUnderline';
 import { DistributionBar } from '@/components/DistributionBar';
+import { EarningsSeasonMeter } from '@/components/EarningsSeasonMeter';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollVelocityParticlesLight } from '@/components/ScrollVelocityParticles';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
@@ -1539,6 +1540,23 @@ export default function Home() {
               </GlassReflection>
             </ParallaxFloat>
           </BreathingCard>
+        </div>
+
+        {/* Earnings Season Meter - Progress through earnings season */}
+        <div className="mb-6 px-1">
+          <BlurReveal triggerOnMount delay={300} duration={600} blurAmount={8}>
+            <EarningsSeasonMeter
+              earnings={filteredEarnings}
+              variant="horizontal"
+              size="md"
+              showBreakdown={true}
+              showPercentage={true}
+              showCount={true}
+              liquidEffect={true}
+              glowOnSuccess={true}
+              delay={400}
+            />
+          </BlurReveal>
         </div>
 
         {/* Distribution Bar - Visual breakdown of beats/misses/pending */}
