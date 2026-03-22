@@ -1,3 +1,51 @@
+## 2026-03-22 — StatBreakdownRing: Mini Donut Charts for Value Breakdown
+
+**Inspiration:**
+- Apple Watch activity rings
+- Dashboard analytics widgets with segmented progress
+- Financial portfolio allocation pie charts
+- Modern stat cards with embedded micro-visualizations
+
+**What I built:**
+- New `StatBreakdownRing` component family — mini animated donut charts showing value distribution:
+
+  **Core Concept:**
+  - Small overlay ring (24px) positioned at bottom-right of stat icons
+  - Shows segment breakdown at a glance
+  - Interactive: hover reveals segment tooltip, click filters
+  - Staggered animation on mount
+
+  **Visual Features:**
+  - Animated segment reveal with spring physics
+  - Glow effect on hovered segment
+  - Tooltip shows segment label, value, and percentage
+  - Smooth opacity transition for non-hovered segments
+  - Theme-aware (light/dark) styling
+
+  **Integration Points:**
+  - "Total Reports" stat card: Shows beat/miss/pending breakdown
+  - "Reported" stat card: Shows pre-market vs after-hours session split
+  - Clicking segments filters to that category
+
+  **Helper Component:**
+  - `StatBreakdownFromEarnings` — auto-generates breakdown from earnings array
+  - Supports types: 'session' (pre/post), 'status' (beat/miss/pending), 'day' (Mon-Fri)
+
+**Technical Details:**
+- SVG-based ring with strokeDasharray for segments
+- CSS transitions with cubic-bezier spring easing
+- Full `prefers-reduced-motion` support
+- Type-safe filter callbacks
+
+**Why this matters:**
+The stat cards at the top of the page now provide immediate visual context without requiring hover or click. Users can instantly see the beat/miss/pending distribution and pre-market vs after-hours split. The interactive segments also provide a discovery path to filtering.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 9b24f49
+
+---
+
 ## 2026-03-22 — EarningsTimelineBar: Horizontal Timeline for Daily Earnings
 
 **Inspiration:**
