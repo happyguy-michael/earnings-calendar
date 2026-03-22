@@ -107,6 +107,7 @@ import { DistributionBar } from '@/components/DistributionBar';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
 import { ScrollVelocityParticlesLight } from '@/components/ScrollVelocityParticles';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
+import { EarningsTimelineBar } from '@/components/EarningsTimelineBar';
 import { SkeletonTransition } from '@/components/SkeletonTransition';
 import { PrismBorder } from '@/components/PrismBorder';
 import { AutoScrollToLive } from '@/components/AutoScrollToLive';
@@ -1804,6 +1805,12 @@ export default function Home() {
                           />
                         ) : (
                           <div className="space-y-5">
+                            {/* Timeline bar showing when earnings release throughout the day */}
+                            <EarningsTimelineBar 
+                              earnings={[...preMarket, ...postMarket]}
+                              isToday={isToday}
+                              compact
+                            />
                             {preMarket.length > 0 && (
                               <div>
                                 <SessionDivider variant="pre" />
