@@ -4754,3 +4754,64 @@ The insight: Users need **macro context** to understand where they are in the ea
 **Deployed:** https://earnings-calendar-omega.vercel.app ✅
 
 ---
+
+---
+
+## 2026-03-22 — RelativeDayBadge: Human-Readable Date Context Labels
+
+**Inspiration:**
+- 2026 "Data Storytelling" trend — making data conversational, not just informational
+- "Human-First Numbers" pattern from UX Collective
+- Natural language interfaces becoming standard expectation
+- Reducing cognitive load by eliminating mental date math
+- Apple Calendar's "Tomorrow" labels as baseline UX
+
+**What I built:**
+- New `RelativeDayBadge` component — transforms dates into intuitive phrases:
+
+  **Labels by Proximity:**
+  - "Today" — with animated pulse indicator (emerald)
+  - "Tomorrow" — with subtle shimmer glow (sky blue)
+  - "In 2 days" / "This Thursday" — context-aware (violet)
+  - "Next Monday" / "In 9 days" — next week context (zinc)
+  - "2 weeks out" — far future (muted zinc)
+  - "Yesterday" / "Last Friday" — past dates (amber/zinc)
+
+  **Visual Hierarchy:**
+  - Color intensity decreases with temporal distance
+  - Today gets special pulse animation (attention-grabbing)
+  - Tomorrow gets subtle glow (secondary importance)
+  - This week uses violet accent (upcoming)
+  - Future/past fade to neutral zinc
+
+  **Smart Day Names:**
+  - Shows "This Thursday" instead of "In 3 days" when clearer
+  - Shows "Next Monday" for dates 7-13 days out
+  - Falls back to "In X days" when day name is less helpful
+
+  **Technical Features:**
+  - Staggered entrance animations with configurable delay
+  - Live midnight updates (refreshes at day change)
+  - `onBecameToday` callback for notification triggers
+  - `RelativeDayBadgeInline` variant for card subtitles
+  - `useRelativeDay` hook for custom implementations
+  - Full light/dark mode support
+  - `prefers-reduced-motion` compliance
+
+  **Size Variants:**
+  - `xs` — 10px text, minimal padding (for headers)
+  - `sm` — 12px text, standard badge
+  - `md` — 14px text, prominent display
+
+**Why this matters:**
+Humans don't think in dates — they think in relative time. "March 25" requires mental calculation. "In 3 days" is instant comprehension. The calendar becomes more scannable because users can see temporal proximity at a glance without processing date numbers.
+
+This aligns with 2026's shift toward "interfaces that speak human" — conversational UX that reduces cognitive load and makes data feel natural.
+
+**Integration:**
+Added to day headers in the calendar, appearing below the day name/number with staggered reveal animation per week and day index.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 83c0f2e
+
