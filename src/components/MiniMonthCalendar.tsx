@@ -586,22 +586,12 @@ export function MiniMonthCalendarPopover({
   ...calendarProps
 }: MiniMonthCalendarPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   // Handle day click - close popover and call parent callback
   const handleDayClick = useCallback((date: Date) => {
     onDayClick?.(date);
     setIsOpen(false);
   }, [onDayClick]);
-
-  // Animation handling
-  useEffect(() => {
-    if (isOpen) {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 200);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
 
   const positionStyles: CSSProperties = {
     'bottom-left': { top: '100%', left: 0, marginTop: '8px' },
@@ -652,22 +642,20 @@ export function MiniMonthCalendarPopover({
             role="dialog"
             aria-modal="true"
             aria-label="Month calendar"
+            className="mini-calendar-popover-content"
             style={{
               position: 'absolute',
               ...positionStyles,
-              transform: isAnimating 
-                ? `${transformBase} translateY(-4px) scale(0.98)`
-                : `${transformBase} translateY(0) scale(1)`,
-              opacity: isAnimating ? 0.8 : 1,
+              transform: `${transformBase} translateY(0) scale(1)`,
               zIndex: 100,
               backgroundColor: 'var(--popover-bg, rgba(24, 24, 27, 0.98))',
               borderRadius: '14px',
               boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.08)',
               padding: '14px',
               minWidth: '280px',
-              transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
+              animation: 'calendar-popover-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             }}
           >
             {/* Header hint */}
