@@ -1,5 +1,31 @@
 # Earnings Calendar Iterations
 
+## 2026-03-23 — ActivityRings Component
+
+**What:** Added Apple Watch-inspired activity ring visualization for earnings stats
+
+**Inspiration:** Apple Watch Activity Rings - the iconic concentric ring design that makes progress tracking intuitive and visually satisfying
+
+**Features:**
+- Two animated concentric rings:
+  - Outer ring: Progress (% of earnings reported)
+  - Inner ring: Beat rate
+- CSS spring-like easing for smooth fill animations
+- Gradient strokes (green→cyan for progress, pink→orange for beat rate)
+- Glow effects when reaching milestones (100% progress, 80%+ beat rate)
+- Hover state reveals percentage values
+- Three sizes: sm, md, lg
+- Reduced motion support
+- Pulsing end cap animation when complete
+- Helper hook: `useActivityRingsData(total, reported, beats)` for easy integration
+
+**Files changed:**
+- `src/components/ActivityRings.tsx` (new)
+
+**Why:** The current stats display is plain text. Activity rings transform boring numbers into a visceral, at-a-glance indicator that communicates progress intuitively. Apple proved this pattern works.
+
+---
+
 ## 2026-03-19 — DynamicIsland Component
 
 **What:** Added iOS-inspired Dynamic Island notification component
