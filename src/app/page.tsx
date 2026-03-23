@@ -74,6 +74,7 @@ import { useAudioFeedback, AudioToggle } from '@/components/AudioFeedback';
 import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
+import { DockNavigation, DockIcons } from '@/components/DockNavigation';
 import { PulseIndicator } from '@/components/PulseIndicator';
 import { EPSTrendDots } from '@/components/EPSTrendDots';
 import { RevenueIndicator } from '@/components/RevenueIndicator';
@@ -2135,6 +2136,97 @@ export default function Home() {
         position="bottom-right"
         hideOnScroll={true}
         hideOnDesktop={true}
+      />
+      
+      {/* Desktop Dock Navigation - macOS-style dock with magnification */}
+      <DockNavigation
+        items={[
+          {
+            id: 'prev-week',
+            icon: <DockIcons.ChevronLeft />,
+            label: 'Previous Week',
+            onClick: () => navigateWeek(-1),
+            color: 'purple',
+          },
+          {
+            id: 'today',
+            icon: <DockIcons.Calendar />,
+            label: 'Jump to Today',
+            onClick: goToToday,
+            isActive: todayWeekIndex >= 0,
+            color: 'blue',
+          },
+          {
+            id: 'next-week',
+            icon: <DockIcons.ChevronRight />,
+            label: 'Next Week',
+            onClick: () => navigateWeek(1),
+            color: 'purple',
+          },
+          {
+            id: 'separator-1',
+            icon: <div className="w-px h-5 bg-white/10" />,
+            label: '',
+            onClick: () => {},
+          },
+          {
+            id: 'beat',
+            icon: <DockIcons.TrendUp />,
+            label: 'Filter: Beats',
+            onClick: () => handleFilterChange('beat'),
+            isActive: statusFilter === 'beat',
+            badge: filterCounts.beat,
+            color: 'green',
+          },
+          {
+            id: 'miss',
+            icon: <DockIcons.TrendDown />,
+            label: 'Filter: Misses',
+            onClick: () => handleFilterChange('miss'),
+            isActive: statusFilter === 'miss',
+            badge: filterCounts.miss,
+            color: 'red',
+          },
+          {
+            id: 'pending',
+            icon: <DockIcons.Clock />,
+            label: 'Filter: Pending',
+            onClick: () => handleFilterChange('pending'),
+            isActive: statusFilter === 'pending',
+            badge: pendingToday > 0 ? pendingToday : undefined,
+            color: 'amber',
+          },
+          {
+            id: 'separator-2',
+            icon: <div className="w-px h-5 bg-white/10" />,
+            label: '',
+            onClick: () => {},
+          },
+          {
+            id: 'search',
+            icon: <DockIcons.Search />,
+            label: 'Search (⌘K)',
+            onClick: () => {
+              // Focus the search input
+              const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+              searchInput?.focus();
+            },
+            color: 'default',
+          },
+          {
+            id: 'refresh',
+            icon: <DockIcons.Refresh />,
+            label: 'Refresh Data',
+            onClick: handleDataRefresh,
+            color: 'default',
+          },
+        ]}
+        maxScale={1.5}
+        baseSize={42}
+        magnetRadius={120}
+        autoHide={true}
+        autoHideThreshold={150}
+        showAfterIdle={1000}
       />
     </div>
     </PullToRefresh>
