@@ -1,3 +1,73 @@
+## 2026-03-24 — BioluminescenceGlow: Organic Living Glow Effect
+
+**Inspiration:**
+- Bioluminescent organisms (jellyfish, deep-sea plankton, fireflies)
+- 2026 "Organic Digital" trend — interfaces that feel alive and natural
+- Apple's subtle ambient lighting effects in visionOS
+- The concept of "breathing" UI elements that create emotional connection
+
+**What I built:**
+- New `BioluminescenceGlow` component family — organic pulsing glow that feels alive:
+
+  **Core Concept:**
+  - Unlike mechanical/linear pulse animations, uses multiple overlapping sine waves
+    with irrational frequency ratios (golden ratio, √5) to create non-repeating,
+    natural-feeling organic pulse patterns
+  - Creates an emotional connection to data — earnings cards feel "alive"
+  - Heartbeat mode for pending earnings builds anticipation before results
+
+  **Components:**
+  - `BioluminescenceGlow`: Main wrapper with all configuration options
+  - `PendingEarningsGlow`: Specialized for pending earnings with heartbeat mode
+  - `ResultGlow`: Glow for reported earnings (beat/miss/met) with surprise-based intensity
+  - `BioluminescenceBadge`: Compact inline badge variant
+  - `BioluminescenceCard`: Full card wrapper variant
+  - `useBioluminescence`: Hook for programmatic intensity control
+
+  **Visual Features:**
+  - Organic pulsing using 4 overlapping sine waves with prime-ish multipliers
+  - Heartbeat mode: Realistic double-pulse pattern (lub-dub) like a real heartbeat
+  - 8 color presets inspired by bioluminescent organisms:
+    - `jellyfish` (blue-cyan), `firefly` (warm yellow-green)
+    - `plankton` (cyan-green), `anglerfish` (amber-red)
+    - `success` (green), `danger` (red), `warning` (amber), `neutral` (purple)
+  - Optional color shift that cycles between preset colors
+  - Inset, outset, or both glow positions
+  - Dual-layer glow for depth (outer layer at 30% opacity)
+
+  **Heartbeat Behavior:**
+  - Double-pulse pattern mimics human heartbeat (systole/diastole)
+  - BPM increases as earnings approach (60 → 72 → 90 BPM)
+  - First beat stronger, second beat lighter (realistic)
+  - Rest period between beats with subtle baseline glow
+
+  **Technical Details:**
+  - requestAnimationFrame-based animation with proper cleanup
+  - Multiple sine waves at frequencies: 1x, 1.618x (φ), 2.236x (√5), 0.786x (1/φ)
+  - Normalized intensity with 0.3 baseline + 0.7 variation
+  - GPU-efficient box-shadow animation
+  - Full `prefers-reduced-motion` support
+
+  **Integration:**
+  - Pending earnings cards now have organic heartbeat glow
+  - Reported cards have result-colored bioluminescence
+  - Intensity/BPM scales with time remaining (more urgent = faster heartbeat)
+  - Surprise magnitude affects glow intensity and spread
+
+**Why this matters:**
+Most dashboard animations feel mechanical — linear eases, predictable patterns.
+Bioluminescence uses overlapping irrational frequencies to create a pattern that
+never exactly repeats, just like natural organisms. This subconsciously communicates
+"alive" rather than "automated." The heartbeat mode for pending earnings creates
+genuine anticipation — the faster pulse as earnings approach makes users feel the
+urgency viscerally.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 4c86520
+
+---
+
 ## 2026-03-24 — SeismicWave: Page-Wide Ripple for Exceptional Earnings
 
 **Inspiration:**
