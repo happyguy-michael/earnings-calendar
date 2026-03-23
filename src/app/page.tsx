@@ -148,6 +148,7 @@ import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
 import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
+import { PendingEarningsGlow, ResultGlow, BioluminescenceBadge } from '@/components/BioluminescenceGlow';
 import { DataPulseRing } from '@/components/DataPulseRing';
 import { IntensityGlow, IntensityText } from '@/components/IntensityGlow';
 import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
@@ -334,35 +335,43 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         </DisasterMissBorder>
       );
     }
-    // Pending cards get subtle echo shadow effect on hover
+    // Pending cards get bioluminescence glow + echo shadow effect on hover
     if (isPending) {
+      const minutesUntil = getMinutesUntilReport(earning);
       return (
-        <EchoShadowHover
-          layers={3}
-          maxOffset={5}
-          direction="diagonal"
-          stagger={35}
-          duration={300}
-          glow={isTodayPending}
-          glowColor="rgba(59, 130, 246, 0.15)"
-          className="pending-echo-wrapper"
+        <PendingEarningsGlow
+          isImminent={isImminent}
+          minutesUntil={minutesUntil}
         >
-          {children}
-        </EchoShadowHover>
+          <EchoShadowHover
+            layers={3}
+            maxOffset={5}
+            direction="diagonal"
+            stagger={35}
+            duration={300}
+            glow={isTodayPending}
+            glowColor="rgba(59, 130, 246, 0.15)"
+            className="pending-echo-wrapper"
+          >
+            {children}
+          </EchoShadowHover>
+        </PendingEarningsGlow>
       );
     }
-    // Regular reported cards get subtle dynamic shadow
+    // Regular reported cards get subtle bioluminescence glow + dynamic shadow
     if (hasResult) {
       return (
-        <DynamicShadow 
-          elevation="medium" 
-          variant={earning.result === 'beat' ? 'success' : 'danger'}
-          tintIntensity={0.15}
-          hoverElevation="high"
-          borderRadius={14}
-        >
-          {children}
-        </DynamicShadow>
+        <ResultGlow result={earning.result!} surprise={surprise}>
+          <DynamicShadow 
+            elevation="medium" 
+            variant={earning.result === 'beat' ? 'success' : 'danger'}
+            tintIntensity={0.15}
+            hoverElevation="high"
+            borderRadius={14}
+          >
+            {children}
+          </DynamicShadow>
+        </ResultGlow>
       );
     }
     return <>{children}</>;
