@@ -14,6 +14,7 @@ import { DynamicShadowProvider, DynamicShadowStyles } from './DynamicShadow';
 import { LiquidButtonStyles } from './LiquidButton';
 import { DynamicIslandProvider } from './DynamicIsland';
 import { SpringEasingStyles } from './NativeSpringEasing';
+import { SeismicWaveProvider } from './SeismicWave';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -25,14 +26,16 @@ export function ClientProviders({ children }: { children: ReactNode }) {
               <ToastProvider>
                 <UndoToastProvider>
                   <DynamicIslandProvider>
-                    <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
-                    <SmoothThemeTransition />
-                    <ViewportScrollSpotlight />
-                    <DynamicShadowStyles />
-                    <LiquidButtonStyles />
-                    <SpringEasingStyles />
-                    <FocusModeIndicator />
-                    {children}
+                    <SeismicWaveProvider maxConcurrentWaves={3}>
+                      <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
+                      <SmoothThemeTransition />
+                      <ViewportScrollSpotlight />
+                      <DynamicShadowStyles />
+                      <LiquidButtonStyles />
+                      <SpringEasingStyles />
+                      <FocusModeIndicator />
+                      {children}
+                    </SeismicWaveProvider>
                   </DynamicIslandProvider>
                 </UndoToastProvider>
               </ToastProvider>

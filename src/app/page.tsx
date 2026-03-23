@@ -153,6 +153,7 @@ import { IntensityGlow, IntensityText } from '@/components/IntensityGlow';
 import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
 import { MonsterBeatBorder, DisasterMissBorder } from '@/components/BorderDraw';
 import { CountdownTension, useCountdownTension } from '@/components/CountdownTension';
+import { SeismicEarningsWrapper } from '@/components/SeismicWave';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -381,6 +382,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
   };
 
   return (
+    <SeismicEarningsWrapper
+      surprise={surprise}
+      result={earning.result}
+      beatThreshold={15}
+      missThreshold={-15}
+    >
     <DepthHover 
       liftHeight={6} 
       hoverScale={1.015} 
@@ -669,6 +676,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
       </ContextualCardActions>
     </QuickPeek>
     </DepthHover>
+    </SeismicEarningsWrapper>
   );
 }
 
