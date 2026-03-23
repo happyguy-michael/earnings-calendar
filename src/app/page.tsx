@@ -148,6 +148,7 @@ import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField'
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
 import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
 import { DataPulseRing } from '@/components/DataPulseRing';
+import { IntensityGlow, IntensityText } from '@/components/IntensityGlow';
 import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
 import { MonsterBeatBorder, DisasterMissBorder } from '@/components/BorderDraw';
 import { CountdownTension, useCountdownTension } from '@/components/CountdownTension';
@@ -626,10 +627,24 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
           </div>
           </NewResultPing>
         ) : earning.beatOdds ? (
-          <HeartbeatBadge 
-            probability={earning.beatOdds} 
-            size="md"
-          />
+          <IntensityGlow
+            value={earning.beatOdds}
+            maxValue={100}
+            variant={earning.beatOdds >= 60 ? 'success' : earning.beatOdds >= 40 ? 'warning' : 'danger'}
+            pulse={earning.beatOdds >= 70}
+            sparkles={earning.beatOdds >= 85}
+            sparkleCount={3}
+            blurRadius={10}
+            spreadRadius={2}
+            borderRadius={9999}
+            minIntensity={0.1}
+            maxIntensity={0.7}
+          >
+            <HeartbeatBadge 
+              probability={earning.beatOdds} 
+              size="md"
+            />
+          </IntensityGlow>
         ) : null}
         </Link>
         </FocusSpotlight>
@@ -1435,13 +1450,30 @@ export default function Home() {
                     <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
                     <div>
                       <div className="text-2xl font-bold text-gradient-green">
-                        <AnimatedStatDelta value={beatRate} position="top-right" glow flyDistance={28} duration={750} suffix="%">
-                          <NumberJolt value={beatRate} intensity={4} duration={400} directional>
-                            <ValueChangeHighlight value={beatRate} variant="success">
-                              <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
-                            </ValueChangeHighlight>
-                          </NumberJolt>
-                        </AnimatedStatDelta>
+                        <IntensityGlow
+                          value={beatRate}
+                          maxValue={100}
+                          variant="success"
+                          pulse={beatRate >= 60}
+                          sparkles={beatRate >= 80}
+                          sparkleCount={4}
+                          ring={beatRate >= 90}
+                          blurRadius={16}
+                          spreadRadius={3}
+                          borderRadius={12}
+                          minIntensity={0.15}
+                          maxIntensity={0.85}
+                        >
+                          <AnimatedStatDelta value={beatRate} position="top-right" glow flyDistance={28} duration={750} suffix="%">
+                            <NumberJolt value={beatRate} intensity={4} duration={400} directional>
+                              <ValueChangeHighlight value={beatRate} variant="success">
+                                <IntensityText value={beatRate} maxValue={100} variant="success" glow>
+                                  <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
+                                </IntensityText>
+                              </ValueChangeHighlight>
+                            </NumberJolt>
+                          </AnimatedStatDelta>
+                        </IntensityGlow>
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</WeightShiftText>
                     </div>
