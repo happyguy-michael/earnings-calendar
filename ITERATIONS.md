@@ -1,3 +1,69 @@
+## 2026-03-23 — IntensityGlow: Data-Driven Visual Intensity
+
+**Inspiration:**
+- Stripe Dashboard value-driven visual treatments
+- Linear's subtle hierarchy through visual intensity
+- Financial terminals with magnitude-based styling
+- 2026 trend: "Data-Driven Aesthetics" — visual treatment reflects data significance
+
+**What I built:**
+- New `IntensityGlow` component family — visual intensity that scales with data magnitude:
+
+  **Core Concept:**
+  - Glow intensity, saturation, and animation speed adapt to value magnitude
+  - Exceptional values (high beat rate, high probability) naturally stand out
+  - Creates visual hierarchy without explicit styling decisions
+  - The data drives the aesthetics
+
+  **Components:**
+  - `IntensityGlow`: Main wrapper with configurable intensity effects
+  - `IntensityGlowBadge`: Pre-styled badge with data-driven glow
+  - `IntensityText`: Text with value-driven saturation and glow
+  - `useIntensity`: Hook for calculating intensity from values
+
+  **Visual Features:**
+  - Glow intensity scales with value (ease-out curve for better perception)
+  - Pulse animation speed increases with intensity
+  - Sparkle particles appear above threshold (e.g., >70% beat rate)
+  - Ring expansion effect for exceptional values (>90%)
+  - Saturation boost filter at high intensity
+  - Smooth transitions between intensity levels
+
+  **Configuration:**
+  - `value`/`maxValue`: The value that drives intensity
+  - `minIntensity`/`maxIntensity`: Intensity range (0-1)
+  - `variant`: Color theme (success/danger/warning/info/gradient)
+  - `pulse`: Enable pulsing (speed scales with intensity)
+  - `sparkles`/`sparkleThreshold`: Enable sparkles above threshold
+  - `ring`: Enable expanding ring effect
+  - `blurRadius`/`spreadRadius`: Glow dimensions
+
+  **Integration:**
+  - Beat Rate stat: Glows more intensely at higher rates (>80% = sparkles, >90% = ring)
+  - HeartbeatBadge: Beat probability drives glow intensity and variant
+  - High confidence predictions stand out naturally
+
+**Technical Details:**
+- Ease-out quad curve for better visual perception of value differences
+- CSS keyframe animations with dynamic duration
+- GPU-accelerated via transform and opacity
+- Full `prefers-reduced-motion` support
+- Print styles (no effects)
+- Light theme compatibility
+
+**Why this matters:**
+Traditional UI design requires explicit decisions about when to make something "stand out."
+IntensityGlow makes this automatic — the data itself determines visual prominence. A 90%
+beat rate naturally glows brighter than a 60% beat rate without any conditional logic in
+the parent component. This aligns with 2026's "Data-Driven Aesthetics" trend where the
+interface responds organically to the content it displays.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 093fe9c
+
+---
+
 ## 2026-03-23 — CrystalCard: Premium Prismatic Card with Rainbow Refractions
 
 **Inspiration:**
