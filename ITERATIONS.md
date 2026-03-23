@@ -1,3 +1,65 @@
+## 2026-03-24 — SeismicWave: Page-Wide Ripple for Exceptional Earnings
+
+**Inspiration:**
+- Apple keynote reveal animations
+- Stripe payment success celebrations
+- Linear milestone achievements
+- 2026 trend: "Environmental Feedback" — the entire UI responds to significant events
+
+**What I built:**
+- New `SeismicWave` component — page-wide concentric ripple effect for exceptional results:
+
+  **Core Concept:**
+  - When exceptional earnings (>15% beat or <-15% miss) scroll into view,
+    subtle waves ripple across the entire page background
+  - Creates an immersive "environmental" response to significant data
+  - Communicates impact at a glance without requiring focus on specific numbers
+
+  **Components:**
+  - `SeismicWaveProvider`: Context provider managing wave state and canvas
+  - `SeismicTrigger`: Wrapper that triggers waves when element enters viewport
+  - `SeismicEarningsWrapper`: Auto-triggers based on earnings surprise %
+  - `useSeismicWave` / `useSeismicTrigger`: Hooks for programmatic control
+
+  **Visual Features:**
+  - Canvas-based rendering for smooth 60fps animation
+  - Concentric expanding rings with glow effect
+  - Three intensity levels based on surprise magnitude:
+    - `mild` (15-20%): 2 waves, 400px radius
+    - `strong` (20-30%): 3 waves, 600px radius
+    - `massive` (30%+): 4 waves, 900px radius
+  - Four color variants: success (green), danger (red), gold (massive beats), neutral
+  - Staggered wave timing for natural ripple effect
+  - Smooth ease-out animation with fade
+
+  **Technical Details:**
+  - Canvas-based for performance (no DOM manipulation during animation)
+  - IntersectionObserver for efficient triggering
+  - Max concurrent waves limit to prevent visual overload
+  - Device pixel ratio support for crisp rendering on retina displays
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support (disabled when preference set)
+  - `aria-hidden` on canvas (purely decorative)
+  - Non-blocking, pointer-events: none
+
+  **Integration:**
+  - Added to ClientProviders as SeismicWaveProvider
+  - Wrapped all EarningsCard components with SeismicEarningsWrapper
+  - Automatically detects exceptional results and triggers appropriate effect
+
+**Why this matters:**
+Most dashboards treat exceptional data points the same as normal ones.
+SeismicWave makes the exceptional FEEL exceptional — when a company beats
+by 30%, the whole page briefly acknowledges it. This creates an emotional
+connection to the data that static numbers can't achieve.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** a80eb6c
+
+---
+
 ## 2026-03-24 — GhostCard: Anticipatory Placeholder for Empty States
 
 **Inspiration:**
