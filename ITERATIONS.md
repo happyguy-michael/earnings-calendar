@@ -5248,3 +5248,48 @@ const SPRING_CONFIG = {
 **Commit:** 5e7a596
 **Deployed:** https://earnings-calendar-omega.vercel.app ✅
 
+
+---
+
+## 2026-03-23 — Print Stylesheet: Ink-Friendly Calendar Printing
+
+**Inspiration:**
+- GitHub's excellent print styles
+- Stripe Dashboard print functionality
+- Financial tools that need offline reference (Bloomberg terminals → paper)
+- Accessibility best practices for diverse output formats
+
+**What I built:**
+- Comprehensive `@media print` stylesheet in globals.css
+- `PrintButton` component with keyboard shortcut support
+
+**Print Optimizations:**
+- **Hides decorative elements** — particles, glows, animations, gradients, blur effects
+- **Ink-efficient colors** — high contrast black/white with minimal color
+- **Page break control** — cards stay together, no orphan rows
+- **Badge optimization** — Beat/Miss/Pending badges with borders for legibility
+- **Clean header** — simplified with date, no interactive elements
+- **Footer with URL** — source attribution on printed pages
+
+**Technical Details:**
+- A4 portrait page size with proper margins
+- `print-color-adjust: exact` for badge colors
+- Graceful handling of empty days
+- Frosted glass/gradients flatten to white
+- Tooltips, modals, FABs all hidden
+
+**PrintButton Component:**
+\`\`\`tsx
+<PrintButton />                    // Icon only
+<PrintButton variant="text" />     // Icon + "Print"
+<PrintButton variant="full" />     // Icon + "Print Calendar" + ⌘P hint
+<PrintButton compact />            // Dense layout for print
+<PrintButton floating />           // Fixed position FAB style
+\`\`\`
+
+**Why this matters:**
+Users occasionally need offline reference — printing a week's earnings before a busy period, sharing with colleagues without screen access, or archiving. Print stylesheets are often overlooked but demonstrate attention to real-world usage patterns. This is accessibility in the broader sense: meeting users where they are, not just where screens are.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** c204449
