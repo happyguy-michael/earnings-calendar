@@ -1,3 +1,62 @@
+## 2026-03-23 — MorphDigit: Premium SVG-Based Number Morphing
+
+**Inspiration:**
+- Stripe's payment amount transitions (digits smoothly morph between values)
+- Linear's project stats with fluid number changes
+- Vercel analytics dashboard number transitions
+- Apple Health ring value animations
+- 2026 trend: "Fluid Numerics" - organic digit transformations vs counting/flipping
+
+**What I built:**
+- New `MorphDigit` component suite — SVG path-based morphing number display:
+
+  **Core Concept:**
+  - Digits visually transform from one shape to another
+  - Different from CountUp (counts), SpinDigit (rotates), FlipDigit (flips)
+  - Creates premium "liquid" feel when values change
+
+  **Components:**
+  - `MorphNumber`: Main component for any numeric display
+  - `MorphPercentage`: Auto-colored percentage with sign
+  - `MorphCurrency`: Locale-aware currency formatting
+  - `useMorphValue`: Hook for tracking value deltas
+
+  **Visual Features:**
+  - SVG paths for digits 0-9 plus symbols (-+.,%space)
+  - Spring-based cubic-bezier easing (0.34, 1.56, 0.64, 1)
+  - Subtle scale bounce during transitions
+  - Optional glow effect with configurable intensity
+  - Tabular number alignment for stable layouts
+
+  **Configuration:**
+  - `size`: Digit height in pixels
+  - `duration`: Morph animation duration
+  - `stagger`: Delay between digits for cascade effect
+  - `glow`/`glowColor`/`glowIntensity`: Optional emphasis
+  - `prefix`/`suffix`: Pre/post text
+  - `locale`/`decimals`: Number formatting
+
+  **Use Cases:**
+  - Stats displays (Total, Beat Rate, Pending counts)
+  - Price/currency displays
+  - Percentage changes
+  - Countdown timers
+  - Any numeric value that changes
+
+**Technical Details:**
+- Pure SVG paths (no external dependencies)
+- CSS transition on `d` attribute for morphing
+- GPU-accelerated transforms
+- Full `prefers-reduced-motion` support
+- Memoized components for performance
+- TypeScript with full type definitions
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** [pending]
+
+---
+
 ## 2026-03-23 — AnimatedProgressSteps: Multi-Step Process Indicator
 
 **Inspiration:**
