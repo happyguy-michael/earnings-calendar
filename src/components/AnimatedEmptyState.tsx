@@ -3,12 +3,15 @@
 import { useEffect, useState, useRef } from 'react';
 import { EmptyStateInsight } from './EmptyStateInsight';
 import { TerminalCursor } from './TerminalCursor';
+import { GhostCard } from './GhostCard';
 
 interface AnimatedEmptyStateProps {
   variant?: 'past' | 'future' | 'today';
   className?: string;
   /** Show rotating insights instead of static sublabel */
   showInsights?: boolean;
+  /** Show ghost card preview on hover (anticipatory design) */
+  showGhostPreview?: boolean;
 }
 
 /**
@@ -20,8 +23,14 @@ interface AnimatedEmptyStateProps {
  * - Subtle particle effects
  * - Theme-aware styling
  */
-export function AnimatedEmptyState({ variant = 'past', className = '', showInsights = true }: AnimatedEmptyStateProps) {
+export function AnimatedEmptyState({ 
+  variant = 'past', 
+  className = '', 
+  showInsights = true,
+  showGhostPreview = true,
+}: AnimatedEmptyStateProps) {
   const [mounted, setMounted] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,11 +63,16 @@ export function AnimatedEmptyState({ variant = 'past', className = '', showInsig
 
   const { icon, label, sublabel, iconColor, particleColor } = config[variant];
 
+  // Ghost card theme based on variant
+  const ghostTheme = variant === 'today' ? 'warning' : variant === 'future' ? 'neutral' : 'neutral';
+
   return (
     <div 
       ref={containerRef}
-      className={`empty-state-container ${mounted ? 'mounted' : ''} ${className}`}
+      className={`empty-state-container ${mounted ? 'mounted' : ''} ${isHovered ? 'hovered' : ''} ${className}`}
       data-variant={variant}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Floating particles */}
       <div className="empty-state-particles" aria-hidden="true">
@@ -127,6 +141,29 @@ export function AnimatedEmptyState({ variant = 'past', className = '', showInsig
           <span className="empty-state-sublabel">{sublabel}</span>
         )}
       </div>
+
+      {/* Ghost card preview - appears on hover for anticipatory design */}
+      {showGhostPreview && variant === 'future' && (
+        <div 
+          className="empty-state-ghost-preview"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.95)',
+            transition: 'opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            marginTop: '12px',
+            pointerEvents: isHovered ? 'auto' : 'none',
+          }}
+        >
+          <GhostCard 
+            variant="minimal"
+            theme={ghostTheme}
+            trigger="hover"
+            delay={0}
+            opacity={0.2}
+            sparkles={isHovered}
+          />
+        </div>
+      )}
     </div>
   );
 }
