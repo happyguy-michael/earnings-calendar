@@ -1,3 +1,65 @@
+## 2026-03-23 — AnimatedProgressSteps: Multi-Step Process Indicator
+
+**Inspiration:**
+- Linear's project creation flow with smooth step transitions
+- Stripe checkout progress indicator
+- Vercel deployment step visualization
+- Apple setup assistant's elegant multi-step UI
+- 2026 trend: "Progressive Disclosure" - showing users where they are reduces anxiety
+
+**What I built:**
+- New `AnimatedProgressSteps` component — polished multi-step progress indicator:
+
+  **Core Concept:**
+  - Sequential step indicators with smooth animated transitions
+  - Perfect for data loading states, form wizards, or onboarding flows
+  - Shows completion progress with visual feedback at each stage
+
+  **Visual Features:**
+  - Smooth step transitions with spring physics
+  - Animated checkmark draw effect on completion
+  - Progress line fills smoothly between steps
+  - Pulsing ring on current active step
+  - Color-coded states (pending → current → complete)
+
+  **Layout Options:**
+  - Horizontal (default) - inline stepper
+  - Vertical - stacked list style
+  - Size variants: sm, md, lg
+  - Color themes: success (green), brand (gradient), neutral
+
+  **Configuration:**
+  - `showDescriptions`: Optional subtitle text per step
+  - `showNumbers`: Display step numbers instead of dots
+  - `clickableCompleted`: Allow clicking back to completed steps
+  - `onStepClick`: Callback for interactive navigation
+  - `animated`: Toggle for reduced-motion compliance
+
+  **Bonus Hook:**
+  - `useStepProgress(totalSteps)`: State management hook
+  - Returns: `currentStep`, `next()`, `prev()`, `goToStep()`, `reset()`
+  - Computed flags: `isFirst`, `isLast`, `isComplete`
+
+**Technical Details:**
+- Pure CSS-in-JS with styled-jsx (no dependencies)
+- GPU-accelerated animations via transform/opacity
+- Full `prefers-reduced-motion` support
+- Light/dark mode aware via CSS custom properties
+- Memoized components for performance
+- Accessible with ARIA labels and focus states
+
+**Use Cases:**
+- Data loading sequence (Fetching → Processing → Ready)
+- Onboarding wizard steps
+- Multi-stage form submissions
+- Deployment/build progress visualization
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-23 — AnimatedStatDelta: Flying Delta Indicator for Stats
 
 **Inspiration:**
