@@ -1,3 +1,75 @@
+## 2026-03-23 — DockNavigation: macOS-Style Dock with Magnification
+
+**Inspiration:**
+- macOS Dock (the iconic magnification effect)
+- Vercel's command toolbar
+- Linear's floating navigation
+- 2026 trend: "Delightful Micro-interactions" — premium navigation patterns
+
+**What I built:**
+- New `DockNavigation` component — macOS-style dock with cursor-proximity magnification:
+
+  **Core Concept:**
+  - Items grow as the cursor approaches (magnification effect)
+  - Creates a premium, familiar navigation pattern
+  - Balances function with delight
+
+  **Components:**
+  - `DockNavigation`: Main dock wrapper with magnification logic
+  - `DockIcons`: Pre-built SVG icons for common actions (Calendar, ChevronLeft/Right, TrendUp/Down, Clock, Search, Refresh, etc.)
+
+  **Visual Features:**
+  - Cursor proximity-based scaling (cosine falloff for smooth magnification)
+  - Items push up/down as they scale (maintaining alignment)
+  - Frosted glass background with blur
+  - Active state indicators with subtle glow
+  - Badge support with counter-scaling (stays readable at any magnification)
+  - Tooltips on hover/focus
+  - Theme-aware styling (light/dark mode)
+
+  **Configuration:**
+  - `maxScale`: Maximum magnification (default 1.6x)
+  - `baseSize`: Item size in pixels (default 44px)
+  - `magnetRadius`: Distance at which magnification starts (default 150px)
+  - `position`: top or bottom
+  - `autoHide`: Hide on scroll, show after idle
+  - `autoHideThreshold`/`showAfterIdle`: Fine-tuning auto-hide behavior
+
+  **Accessibility:**
+  - Full keyboard navigation (arrow keys, Home/End, Enter/Space)
+  - Roving tabindex pattern
+  - ARIA toolbar role
+  - Respects `prefers-reduced-motion` (disables magnification animation)
+  - Focus-visible outlines
+
+  **Integration:**
+  - Week navigation (Previous/Next)
+  - Jump to Today
+  - Filter shortcuts (Beats, Misses, Pending) with active states
+  - Search focus trigger
+  - Data refresh
+  - Desktop only (mobile uses FloatingActionMenu)
+
+**Technical Details:**
+- Cosine falloff function for natural magnification curve
+- CSS custom properties for dynamic scaling
+- Spring physics timing via CSS variables
+- Counter-scaling for badges (stays readable)
+- Auto-hide with scroll direction detection
+- Idle timeout to re-show dock
+
+**Why this matters:**
+The macOS dock magnification is one of the most iconic UI patterns in computing history.
+It creates delight without sacrificing usability — items are easy to target because they
+grow as you approach them (Fitts's Law in action). This brings that same premium feel
+to the earnings calendar, making navigation feel playful yet professional.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 20f6442
+
+---
+
 ## 2026-03-23 — IntensityGlow: Data-Driven Visual Intensity
 
 **Inspiration:**
