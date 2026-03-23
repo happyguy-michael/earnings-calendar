@@ -1,0 +1,182 @@
+/* CrystalCard - Premium prismatic card styles */
+
+.crystal-card {
+  /* Default non-interactive state */
+  transition: transform var(--crystal-transition, 200ms) ease-out,
+              box-shadow var(--crystal-transition, 200ms) ease-out;
+}
+
+.crystal-card.mounted {
+  /* Entrance animation */
+  animation: crystal-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes crystal-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.crystal-card.hovered {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Glass layer */
+.crystal-glass-layer {
+  border: var(--crystal-border-width, 1px) solid rgba(255, 255, 255, 0.1);
+}
+
+.crystal-card.hovered .crystal-glass-layer {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Refraction beams with additive blending */
+.crystal-refraction-beam {
+  will-change: transform, opacity;
+}
+
+/* Cursor highlight follows mouse smoothly */
+.crystal-cursor-highlight {
+  will-change: left, top, opacity;
+}
+
+/* Border glow animation */
+.crystal-border-glow {
+  will-change: opacity, background;
+}
+
+/* Sparkle particles */
+.crystal-sparkle {
+  will-change: transform, opacity;
+}
+
+/* Content wrapper ensures children are above effects */
+.crystal-content {
+  background: inherit;
+}
+
+/* Badge variant styles */
+.crystal-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Theme integration */
+:root {
+  --crystal-glow-beat: rgba(34, 197, 94, 0.4);
+  --crystal-glow-miss: rgba(239, 68, 68, 0.4);
+  --crystal-glow-pending: rgba(251, 191, 36, 0.4);
+}
+
+/* Themed crystal cards */
+.crystal-card[data-theme="beat"] .crystal-border-glow {
+  background: conic-gradient(
+    from 0deg,
+    var(--crystal-glow-beat),
+    hsl(145, 90%, 50%),
+    hsl(155, 85%, 55%),
+    hsl(165, 80%, 50%),
+    var(--crystal-glow-beat)
+  ) !important;
+}
+
+.crystal-card[data-theme="miss"] .crystal-border-glow {
+  background: conic-gradient(
+    from 0deg,
+    var(--crystal-glow-miss),
+    hsl(0, 90%, 55%),
+    hsl(350, 85%, 50%),
+    hsl(10, 80%, 55%),
+    var(--crystal-glow-miss)
+  ) !important;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .crystal-card,
+.dark .crystal-card {
+  --crystal-bg-opacity: 0.9;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .crystal-card,
+.light .crystal-card {
+  --crystal-bg-opacity: 0.95;
+}
+
+.light .crystal-glass-layer,
+[data-theme="light"] .crystal-glass-layer {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.light .crystal-refraction-beam,
+[data-theme="light"] .crystal-refraction-beam {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+/* Focus state for accessibility */
+.crystal-card:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.8);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .crystal-card,
+  .crystal-card.mounted,
+  .crystal-card.hovered {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+  
+  .crystal-refraction-beam,
+  .crystal-cursor-highlight,
+  .crystal-sparkle,
+  .crystal-border-glow {
+    display: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: more) {
+  .crystal-card {
+    border: 2px solid currentColor;
+  }
+  
+  .crystal-refraction-beam,
+  .crystal-sparkle,
+  .crystal-border-glow {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .crystal-card {
+    border: 1px solid #ccc;
+    background: white !important;
+    box-shadow: none;
+  }
+  
+  .crystal-refraction-beam,
+  .crystal-cursor-highlight,
+  .crystal-sparkle,
+  .crystal-border-glow,
+  .crystal-glass-layer {
+    display: none !important;
+  }
+}

@@ -118,6 +118,7 @@ import { ProgressiveBlur } from '@/components/ProgressiveBlur';
 import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPalette';
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
+import { CrystalCard, CrystalBadge } from '@/components/CrystalCard';
 import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import { SpinDigit, SpinInteger } from '@/components/SpinDigit';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
