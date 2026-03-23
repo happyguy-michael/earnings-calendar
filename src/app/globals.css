@@ -20806,3 +20806,361 @@ html.light .relative-day-glow {
     transition: none;
   }
 }
+
+/* ============================================================================
+   PRINT STYLES
+   Optimized for printing the earnings calendar on paper
+   ============================================================================ */
+
+@media print {
+  /* Reset to print-friendly defaults */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  /* Page setup */
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm 1cm;
+  }
+  
+  @page :first {
+    margin-top: 1cm;
+  }
+  
+  /* Body - ink-friendly */
+  body {
+    background: white !important;
+    color: #1a1a1a !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Hide decorative/interactive elements */
+  .floating-particles,
+  .grain-overlay,
+  .blueprint-overlay,
+  .ambient-background,
+  .aurora-wash,
+  .mesh-gradient,
+  .cursor-spotlight,
+  .cursor-trail,
+  .cursor-glow,
+  .aura-glow,
+  .border-beam,
+  .glow-ping,
+  .exceptional-glow,
+  .floating-action-menu,
+  .back-to-top,
+  .scroll-progress,
+  .pull-to-refresh,
+  .theme-toggle,
+  .motion-toggle,
+  .haptic-toggle,
+  .audio-toggle,
+  .keyboard-shortcuts-hint,
+  .keyboard-shortcuts-overlay,
+  .command-palette,
+  .snapshot-toggle,
+  .snapshot-indicator,
+  .swipe-hint,
+  .search-bar,
+  .filter-chips,
+  .filter-pulse,
+  .filter-glow,
+  .today-button,
+  .bottom-sheet,
+  .toast-container,
+  [data-print-hide="true"],
+  button:not([data-print-show="true"]),
+  nav {
+    display: none !important;
+  }
+  
+  /* Header - simplified for print */
+  header {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    padding: 0 0 0.5cm 0 !important;
+    margin-bottom: 0.5cm !important;
+    border-bottom: 2px solid #333 !important;
+  }
+  
+  header h1 {
+    font-size: 18pt !important;
+    color: #1a1a1a !important;
+    margin: 0 !important;
+  }
+  
+  header p,
+  header .text-secondary {
+    font-size: 10pt !important;
+    color: #666 !important;
+  }
+  
+  /* Main content */
+  main {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  
+  /* Stats row - compact horizontal layout */
+  .stats-row,
+  [class*="stat-card"] {
+    background: transparent !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 8px 12px !important;
+    page-break-inside: avoid;
+  }
+  
+  .stats-row {
+    display: flex !important;
+    gap: 0.5cm !important;
+    margin-bottom: 0.5cm !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  .stats-row > * {
+    flex: 1 !important;
+  }
+  
+  /* Calendar cards */
+  .card {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    border-radius: 0 !important;
+    margin-bottom: 0.4cm !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  /* Week headers */
+  .week-header {
+    background: #f5f5f5 !important;
+    border-bottom: 1px solid #ddd !important;
+    padding: 6px 0 !important;
+  }
+  
+  .week-header > * {
+    color: #333 !important;
+    font-weight: 600 !important;
+    font-size: 9pt !important;
+  }
+  
+  /* Day columns */
+  .day-column,
+  .day-content {
+    border-right: 1px solid #eee !important;
+    padding: 8px !important;
+  }
+  
+  .day-column:last-child,
+  .day-content:last-child {
+    border-right: none !important;
+  }
+  
+  /* Earnings rows */
+  .earnings-row {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    padding: 4px 0 !important;
+    page-break-inside: avoid;
+  }
+  
+  .earnings-row:last-child {
+    border-bottom: none !important;
+  }
+  
+  /* Ticker styling */
+  .ticker,
+  [class*="ticker"] {
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    font-size: 10pt !important;
+  }
+  
+  /* Company name */
+  .company-name,
+  [class*="company"] {
+    color: #666 !important;
+    font-size: 8pt !important;
+  }
+  
+  /* Beat/Miss badges - ink efficient */
+  .beat-badge,
+  [class*="beat"] {
+    background: #e8f5e9 !important;
+    color: #2e7d32 !important;
+    border: 1px solid #4caf50 !important;
+    padding: 1px 6px !important;
+    font-size: 7pt !important;
+    font-weight: 600 !important;
+    border-radius: 2px !important;
+  }
+  
+  .miss-badge,
+  [class*="miss"] {
+    background: #ffebee !important;
+    color: #c62828 !important;
+    border: 1px solid #ef5350 !important;
+    padding: 1px 6px !important;
+    font-size: 7pt !important;
+    font-weight: 600 !important;
+    border-radius: 2px !important;
+  }
+  
+  .pending-badge,
+  [class*="pending"] {
+    background: #fff8e1 !important;
+    color: #f57c00 !important;
+    border: 1px solid #ffb74d !important;
+    padding: 1px 6px !important;
+    font-size: 7pt !important;
+    font-weight: 600 !important;
+    border-radius: 2px !important;
+  }
+  
+  /* EPS values */
+  .eps-value,
+  [class*="eps"] {
+    font-family: "SF Mono", Menlo, monospace !important;
+    font-size: 9pt !important;
+  }
+  
+  /* Legend */
+  .legend {
+    margin-top: 0.5cm !important;
+    padding-top: 0.3cm !important;
+    border-top: 1px solid #ddd !important;
+    font-size: 8pt !important;
+    color: #666 !important;
+  }
+  
+  /* Links - show URL */
+  a[href]::after {
+    content: none; /* Don't print URLs inline, keep it clean */
+  }
+  
+  a {
+    color: #1a1a1a !important;
+    text-decoration: none !important;
+  }
+  
+  /* Hide empty day messages */
+  .empty-day,
+  [class*="no-reports"],
+  [class*="empty-state"] {
+    display: none !important;
+  }
+  
+  /* Show empty indicator instead */
+  .day-content:empty::after {
+    content: "—";
+    color: #ccc;
+    font-size: 10pt;
+    display: block;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  /* Page break controls */
+  .week-card,
+  .card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  
+  /* Orphan/widow control */
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  /* Print footer with URL */
+  body::after {
+    content: "Printed from Earnings Calendar • " attr(data-print-url);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 7pt;
+    color: #999;
+    padding: 4px;
+  }
+  
+  /* Force grayscale option (user preference via print dialog) */
+  .print-grayscale {
+    filter: grayscale(100%);
+  }
+  
+  /* Compact mode for dense calendars */
+  .print-compact .earnings-row {
+    padding: 2px 0 !important;
+    font-size: 8pt !important;
+  }
+  
+  .print-compact .ticker {
+    font-size: 9pt !important;
+  }
+  
+  /* Today highlight - subtle for print */
+  .today-column,
+  [class*="today"] {
+    background: #fafafa !important;
+    border-left: 2px solid #1976d2 !important;
+  }
+  
+  /* Images - logos should be small and crisp */
+  img {
+    max-width: 20px !important;
+    max-height: 20px !important;
+    filter: grayscale(50%);
+  }
+  
+  /* Tooltips - never print */
+  [role="tooltip"],
+  .tooltip,
+  [class*="tooltip"] {
+    display: none !important;
+  }
+  
+  /* Frosted glass effects - remove */
+  .backdrop-blur,
+  [class*="backdrop"],
+  [class*="frosted"],
+  [class*="glass"] {
+    backdrop-filter: none !important;
+    background: white !important;
+  }
+  
+  /* Gradients - flatten */
+  [class*="gradient"] {
+    background: transparent !important;
+  }
+  
+  /* Focus/active states - remove */
+  :focus,
+  :active,
+  :hover {
+    outline: none !important;
+    background: inherit !important;
+  }
+}
