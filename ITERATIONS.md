@@ -1,3 +1,60 @@
+## 2026-03-24 — GhostCard: Anticipatory Placeholder for Empty States
+
+**Inspiration:**
+- iOS skeleton loading patterns
+- Stripe's anticipatory design principles
+- Linear's thoughtful empty states
+- 2026 trend: "Anticipatory Design" — showing users what to expect
+
+**What I built:**
+- New `GhostCard` component — translucent preview of earnings cards for empty days:
+
+  **Core Concept:**
+  - Empty states become opportunities for education and anticipation
+  - Ghost cards show the structure of what an earnings card looks like
+  - Creates visual interest in otherwise empty calendar days
+  - Teaches new users the data format before data arrives
+
+  **Components:**
+  - `GhostCard`: Shimmer-animated placeholder card with configurable structure
+  - `GhostCardStack`: Multiple stacked ghost cards for "deck" effect
+
+  **Visual Features:**
+  - Translucent card mimicking real earnings card structure
+  - Shimmer animation sweeping across the card
+  - Theme variants (neutral, success, warning, danger)
+  - Sparkle particles for extra polish
+  - Hover scale effect with glow
+  - Animated sparkline bars in detailed variant
+
+  **Variants:**
+  - `minimal`: Logo + ticker only
+  - `compact`: Adds single metric row
+  - `detailed`: Full structure with sparkline
+
+  **Integration:**
+  - Appears on hover over "future" empty days in AnimatedEmptyState
+  - Smooth fade + scale entrance animation
+  - Respects prefers-reduced-motion
+
+**Technical Details:**
+- CSS custom properties for theming
+- Intersection Observer support for lazy animation
+- Light/dark theme automatic adjustment
+- JSX styles for encapsulation
+
+**Why this matters:**
+Empty states are often overlooked, but they're prime real estate for UX.
+Instead of just saying "No reports", we now show users what data WILL look like,
+creating anticipation and educating them about the format. This is a subtle but
+impactful polish that separates premium apps from basic ones.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 7660228
+
+---
+
 ## 2026-03-23 — DockNavigation: macOS-Style Dock with Magnification
 
 **Inspiration:**
