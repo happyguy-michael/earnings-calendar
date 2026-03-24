@@ -155,6 +155,7 @@ import { MonsterBeatConfetti } from '@/components/CelebrationConfetti';
 import { MonsterBeatBorder, DisasterMissBorder } from '@/components/BorderDraw';
 import { CountdownTension, useCountdownTension } from '@/components/CountdownTension';
 import { SeismicEarningsWrapper } from '@/components/SeismicWave';
+import { WeekSentimentWave } from '@/components/SentimentWave';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -2010,6 +2011,21 @@ export default function Home() {
                 })()}
               </div>
               </MagneticFieldProvider>
+              
+              {/* Sentiment Wave - EKG-style visualization of week's beat/miss flow */}
+              <div className="px-3 py-2 -mt-1">
+                <WeekSentimentWave
+                  allEarnings={filteredEarnings}
+                  weekStart={weekStart}
+                  height={50}
+                  animate={true}
+                  animationDuration={1200}
+                  delay={weekIndex * 200 + 400}
+                  showGlow={true}
+                  showMarkers={true}
+                  fillOpacity={0.12}
+                />
+              </div>
               
               {/* Week Summary Card - celebratory end-of-week recap with paper fold effect */}
               <PaperUnfold
