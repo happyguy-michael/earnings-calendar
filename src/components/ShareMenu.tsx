@@ -17,12 +17,35 @@ interface ShareOption {
   action: (url: string, text: string) => void;
 }
 
+/**
+ * ShareMenu - Premium share dialog with native Web Share API support
+ * 
+ * Features:
+ * - Native share sheet on mobile (iOS/Android) via Web Share API
+ * - Graceful fallback to custom dropdown on desktop
+ * - Animated dropdown with staggered option reveals
+ * - Social sharing: X (Twitter), LinkedIn, Reddit
+ * - Copy link with animated checkmark feedback
+ * - Keyboard accessible (Escape to close)
+ * - Reduced motion support
+ * 
+ * 2026 Update: Added native share support for mobile devices,
+ * providing a more seamless experience that integrates with the
+ * user's installed apps (WhatsApp, Messages, etc.)
+ */
 export function ShareMenu({ ticker, company, result, surprise }: ShareMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [justOpened, setJustOpened] = useState(false);
+  const [canNativeShare, setCanNativeShare] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Check for native Web Share API support
+  useEffect(() => {
+    // Web Share API is available in secure contexts on mobile browsers
+    setCanNativeShare(typeof navigator !== 'undefined' && !!navigator.share);
+  }, []);
 
   // Generate share text
   const shareUrl = typeof window !== 'undefined' 
@@ -64,7 +87,35 @@ export function ShareMenu({ ticker, company, result, surprise }: ShareMenuProps)
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen]);
 
-  const handleToggle = () => {
+  // Native share using Web Share API (mobile)
+  const handleNativeShare = useCallback(async () => {
+    if (!canNativeShare) return false;
+    
+    try {
+      await navigator.share({
+        title: `${ticker} Earnings Report`,
+        text: shareText,
+        url: shareUrl,
+      });
+      return true;
+    } catch (err) {
+      // User cancelled or share failed - fall through to custom menu
+      if (err instanceof Error && err.name !== 'AbortError') {
+        console.warn('Native share failed:', err);
+      }
+      return false;
+    }
+  }, [canNativeShare, ticker, shareText, shareUrl]);
+
+  const handleToggle = async () => {
+    // On mobile with native share support, use the native share sheet
+    if (canNativeShare) {
+      const shared = await handleNativeShare();
+      if (shared) return; // Successfully shared via native UI
+      // If native share was cancelled/failed, fall through to custom menu
+    }
+    
+    // Desktop or native share fallback: show custom dropdown
     if (!isOpen) {
       setJustOpened(true);
       setTimeout(() => setJustOpened(false), 300);
