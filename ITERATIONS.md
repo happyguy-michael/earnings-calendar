@@ -1,3 +1,72 @@
+## 2026-03-25 — ScrollDepthLayers: Multi-Layer Parallax Background for Depth Perception
+
+**Inspiration:**
+- Apple's parallax wallpapers (iOS, visionOS)
+- 2026 "Spatial UI" design trend — creating sense of depth in flat interfaces
+- Video game depth-of-field effects
+- Glassmorphism with layered depth
+- visionOS environmental lighting
+
+**What I built:**
+- New `ScrollDepthLayers` component family — multi-layer parallax background system:
+
+  **Core Concept:**
+  - Multiple translucent gradient layers positioned at different "depths"
+  - Each layer moves at a different speed as user scrolls (parallax)
+  - Closer layers move faster, distant layers move slower
+  - Creates subconscious sense of 3D space without VR
+
+  **Components:**
+  - `ScrollDepthLayers`: Main component with full configuration
+  - `ScrollDepthLayersCompact`: Lighter version with fewer layers
+  - `useScrollDepth`: Hook for custom depth-responsive elements
+
+  **Visual Features:**
+  - Radial gradient layers with different colors/positions
+  - Blur increases with "distance" for atmospheric depth
+  - Scale factors to prevent edge gaps during movement
+  - Smooth spring-like damping for natural movement
+  - 5 preset themes: aurora, ocean, sunset, night, minimal
+
+  **Preset Themes:**
+  ```tsx
+  <ScrollDepthLayers preset="aurora" />   // Purple/cyan/pink aurora borealis
+  <ScrollDepthLayers preset="ocean" />    // Deep blue/teal ocean depths
+  <ScrollDepthLayers preset="sunset" />   // Warm orange/pink gradient
+  <ScrollDepthLayers preset="night" />    // Deep indigo/purple nighttime
+  <ScrollDepthLayers preset="minimal" />  // Subtle grayscale for light touch
+  ```
+
+  **Configuration Options:**
+  - `maxOffset`: Maximum parallax movement in pixels
+  - `damping`: Enable smooth spring-like following
+  - `dampingFactor`: Control smoothness (0-1)
+  - `layers`: Custom layer configuration array
+  - `debug`: Show debug overlay with scroll info
+
+  **Technical Details:**
+  - GPU-accelerated with transform + will-change
+  - requestAnimationFrame-based animation loop
+  - Efficient scroll listener with passive: true
+  - Full `prefers-reduced-motion` support (renders static)
+  - Theme-aware (reduced opacity in light mode)
+  - Print styles (hidden)
+
+**Why this matters:**
+Flat interfaces lack the depth cues our eyes naturally expect. ScrollDepthLayers
+creates a subtle sense of dimensionality — as you scroll, the background layers
+shift at different rates, mimicking how real-world scenes change with viewer
+movement. This is subconscious; users may not notice the effect directly, but
+they'll feel the interface is more "premium" and "alive." This follows 2026's
+"Spatial UI" trend where depth and layering create richer experiences without
+requiring VR/AR hardware.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 5d8fcab
+
+---
+
 ## 2026-03-24 — CornerRibbon: Diagonal Badge System for Earnings Cards
 
 **Inspiration:**
