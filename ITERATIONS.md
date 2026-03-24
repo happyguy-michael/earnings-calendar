@@ -1,3 +1,73 @@
+## 2026-03-24 — CornerRibbon: Diagonal Badge System for Earnings Cards
+
+**Inspiration:**
+- E-commerce "NEW" / "SALE" corner ribbons
+- GitHub's "Beta" corner badges
+- Product Hunt's "Featured" ribbons
+- Award/achievement badges in gaming UIs
+- 2026 trend: Skeuomorphic revival with tactile elements
+
+**What I built:**
+- New `CornerRibbon` component family — diagonal corner badges for cards:
+
+  **Core Concept:**
+  - E-commerce sites use corner ribbons to draw attention to special items
+  - Earnings calendars have similar "special status" needs: BEAT, MISS, LIVE, NEW
+  - A well-designed ribbon adds visual hierarchy and excitement
+  - The diagonal orientation creates visual tension that draws the eye
+
+  **Components:**
+  - `CornerRibbon`: Base component with full configuration
+  - `RibbonContainer`: Wrapper that handles positioning/overflow
+  - `EarningsRibbon`: Pre-configured variant for BEAT/MISS/PENDING/LIVE
+  - `NewRibbon`: "NEW" badge for recently announced results
+  - `HotRibbon`: 🔥 badge for high-interest stocks
+
+  **Visual Features:**
+  - Four corner positions (top-left, top-right, bottom-left, bottom-right)
+  - Seven color variants (beat, miss, pending, live, new, hot, info, custom)
+  - Three sizes (sm, md, lg)
+  - Gradient backgrounds with depth
+  - 3D fold effect at ribbon ends (like physical ribbon)
+  - Configurable shadow depth (0-3)
+  - Shimmer animation for emphasis
+  - Pulse animation for LIVE status
+  - Entrance animation with spring physics
+
+  **Technical Details:**
+  - Pure CSS animations (no external dependencies)
+  - `prefers-reduced-motion` support
+  - CSS custom properties for theming
+  - Full TypeScript typing
+  - Proper z-index management
+  - Works with any container size
+
+  **Preset Ribbons:**
+  ```tsx
+  // Earnings result ribbon
+  <EarningsRibbon result="beat" />  // Green "BEAT" with shimmer
+  <EarningsRibbon result="miss" />  // Red "MISS"
+  <EarningsRibbon result="live" />  // Red "LIVE" with pulse
+
+  // Discovery ribbons
+  <NewRibbon />   // Blue "NEW" with shimmer
+  <HotRibbon />   // Orange "🔥 HOT" with pulse
+  ```
+
+**Why this matters:**
+Corner ribbons are a proven UI pattern for drawing attention to important items.
+In earnings calendars, knowing which results are new, which were beats/misses, or
+which are currently reporting is critical. The diagonal ribbon creates visual tension
+that naturally draws the eye, and the 3D fold effect adds a tactile quality that
+makes the interface feel more premium. This follows 2026's skeuomorphic revival trend
+where digital interfaces incorporate subtle physical metaphors.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-24 — ColorBlindMode: Accessibility-First Color Palette System
 
 **Inspiration:**
