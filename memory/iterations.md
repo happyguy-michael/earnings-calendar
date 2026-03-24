@@ -1,5 +1,33 @@
 # Earnings Calendar Iterations
 
+## 2026-03-24 — GravitationalLens Component
+
+**What:** Added spacetime-warping visual effect for major earnings events
+
+**Inspiration:** Gravitational lensing in astrophysics - the way massive objects bend light and warp spacetime around them. A perfect metaphor for market-moving earnings that "warp" investor attention.
+
+**Features:**
+- SVG displacement filter creates realistic light-bending distortion
+- Four intensity levels: subtle, moderate, strong, massive
+- Mouse-interactive: distortion field follows cursor proximity
+- Animated pulsing effect synchronized to intensity level
+- Chromatic aberration (RGB split) on distortion edges for realism
+- Event horizon ring visualization with glow effects
+- Spacetime grid overlay shows the warping effect visually
+- Reduced motion support (degrades gracefully)
+- GPU-accelerated transforms for performance
+- Helper hook: `useGravitationalIntensity({ surprisePercent, marketCap, priceMove })`
+- Ready-to-use `GravitationalCard` wrapper for easy integration
+
+**Files changed:**
+- `src/components/GravitationalLens.tsx` (new)
+
+**Commit:** 060f066
+
+**Why:** Major earnings events deserve visual gravitas. This effect creates a visceral "wow" moment when significant results warp the visual space around them, drawing attention naturally to what matters most.
+
+---
+
 ## 2026-03-23 — ActivityRings Component
 
 **What:** Added Apple Watch-inspired activity ring visualization for earnings stats
