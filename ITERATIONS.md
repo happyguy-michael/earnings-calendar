@@ -1,3 +1,70 @@
+## 2026-03-24 — MarketPulseOverlay: Ambient Heartbeat Synced to Market Hours
+
+**Inspiration:**
+- 2026 "Living Interfaces" trend — UIs that respond to real-world context
+- Apple Watch heartbeat/health monitoring animations
+- Bloomberg Terminal's always-on market awareness
+- The concept of interfaces that "breathe" with real-world rhythms
+- Financial apps that create emotional connection to market state
+
+**What I built:**
+- New `MarketPulseOverlay` component family — ambient heartbeat effect synced to market hours:
+
+  **Core Concept:**
+  - Creates a subtle, living quality to the interface
+  - Pulses gently during market hours, dormant on weekends
+  - Users may not consciously notice it, but it creates a subconscious
+    sense of "the market is alive right now"
+
+  **Market States & Pulse Behavior:**
+  - **Open (9:30 AM - 4:00 PM ET):** Green pulse, 2s interval, full intensity
+  - **Pre-Market (4:00 AM - 9:30 AM ET):** Amber pulse, 3.5s interval (market waking)
+  - **Post-Market (4:00 PM - 8:00 PM ET):** Purple pulse, 4s interval
+  - **After Hours:** Slate pulse, 8s interval (almost dormant)
+  - **Weekend:** No pulse (static, market closed)
+
+  **Visual Features:**
+  - Heartbeat-style double pulse (like a real lub-dub)
+  - Primary radial gradient pulse
+  - Secondary expanding ring for heartbeat effect
+  - Color-coded by market state
+  - Intensity varies by time (higher at market open/close)
+  - Extremely subtle by design (opacity 0.02-0.08)
+
+  **Components:**
+  - `MarketPulseOverlay`: Main ambient effect (placed in ClientProviders)
+  - `MarketPulseProvider`: Context provider for market state
+  - `MarketPulseIndicator`: Compact pulsing dot with tooltip
+  - `useMarketPulse`: Hook for accessing market state
+  - `useMarketAwarePulse`: Hook for market-responsive animation timing
+
+  **Configuration:**
+  - `position`: center/top/bottom placement
+  - `intensityScale`: Adjust effect strength (0-2)
+  - `forceState`: Override for testing
+  - `debug`: Show debug overlay with market state info
+
+  **Technical Details:**
+  - ET timezone calculation with DST support
+  - requestAnimationFrame-based animation loop
+  - Full `prefers-reduced-motion` support
+  - Updates market state every 30 seconds
+  - Proper cleanup on unmount
+
+**Why this matters:**
+Traditional financial dashboards feel static — they display data but don't create
+emotional connection to the market's rhythm. MarketPulseOverlay makes the interface
+"breathe" with the market. During active trading hours, users subconsciously sense
+the heightened activity. On weekends, the interface rests. This aligns with 2026's
+"Living Interfaces" trend where UIs respond to real-world context, creating a sense
+that the app understands the world it's displaying, not just the data.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 49fcd4f
+
+---
+
 ## 2026-03-24 — PredictionConfidenceBand: Probabilistic Beat Rate Visualization
 
 **Inspiration:**
