@@ -1,4 +1,66 @@
 
+## 2026-03-25 — NeonText Component (Neon Sign Glow Effect)
+
+**Inspiration:** 2026 "Neo-Retro" design trend combining modern polish with nostalgic aesthetics — neon signs, synthwave visuals, and the resurgence of 80s/90s cyber-aesthetics in premium UI. Real neon signs have a distinctive multi-layer glow that creates depth and atmosphere.
+
+**What was added:**
+- New `NeonText` component system:
+  - `NeonText` - Base component with multi-layer neon glow effect
+  - `NeonBadge` - Pill-shaped badge with neon border glow
+  - `NeonSign` - Full neon sign with optional mounting brackets
+  - `NeonNumber` - Optimized for displaying numbers (monospace font)
+  - `NeonLive` - Pre-configured red "LIVE" indicator with flicker
+  - `NeonBeat` - Green percentage display for beats
+  - `NeonMiss` - Red percentage display for misses
+  - `NeonPending` - Amber breathing "PENDING" text
+
+**Features:**
+- Multi-layer glow mimicking real neon physics:
+  - Inner bright core (the gas tube)
+  - Mid glow (ionized gas diffusion)
+  - Outer ambient glow (light reflection)
+- 8 color presets: blue, purple, pink, green, amber, red, cyan, white
+- Rainbow mode with animated gradient shift
+- Custom color support (hex/rgb)
+- Flicker animation with random patterns (like real neon)
+- Breathing glow animation for subtle pulsing
+- Tube effect showing visible "glass tube" text stroke
+- Intensity multiplier for glow strength control
+- Hover-only mode for interactive reveals
+- Animate-in option with spring physics entrance
+- Full `prefers-reduced-motion` support
+- SSR-safe with client-side hydration
+
+**Integration:**
+- Legend section uses `NeonText` with hover-only glow
+- "Beat Estimates" glows green on hover
+- "Missed Estimates" glows red on hover
+- "Beat Probability" glows amber on hover
+- Live earnings counter shows as `NeonBadge` with flicker effect
+- Creates premium, atmospheric feel in footer area
+
+**Technical notes:**
+- Pure CSS text-shadow for glow layers (no SVG filters)
+- CSS keyframe animations for flicker/breathe effects
+- Random flicker patterns using JavaScript intervals
+- Spring timing functions for entrance animations
+- Will-change optimization during animations
+- Memoized components for React performance
+
+**Why it matters:**
+- "Neo-Retro" is a 2026 trend (synthwave revival, vaporwave aesthetics)
+- Neon effects add atmosphere and premium feel to data UIs
+- Creates emotional response and draws attention to key indicators
+- Different from existing glow effects (focused on text, not containers)
+- Matches gaming/entertainment UI patterns crossing into finance
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** add58e8
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-21 — FluidValue Component (Magnitude-Responsive Typography)
 
 **Inspiration:** Zeka Design's 2026 UI Trends article on "Fluid Typography Interfaces" — variable fonts that dynamically respond to viewport, interaction, and data magnitude. The trend emphasizes typography as a living component, not static text.
