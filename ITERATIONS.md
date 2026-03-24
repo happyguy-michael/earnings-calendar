@@ -6193,3 +6193,49 @@ Users occasionally need offline reference — printing a week's earnings before 
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** c204449
+
+
+---
+
+## 2026-03-24 — ShareMenu Native Web Share API Support
+
+**Inspiration:**
+- iOS/Android native share sheets provide familiar, frictionless UX
+- Modern PWA best practices (Web Share API)
+- Users increasingly expect web apps to integrate with native device features
+- 2026 "Web as native" trend — bridging the gap between web and native apps
+
+**What I built:**
+- Enhanced `ShareMenu` component with native Web Share API integration:
+
+  **Core Concept:**
+  - Mobile/tablet users get the native system share sheet when tapping "Share"
+  - This allows sharing to ANY installed app (WhatsApp, iMessage, Telegram, etc.)
+  - Desktop users retain the custom dropdown experience
+  - Graceful fallback: if native share is cancelled or fails, shows custom dropdown
+
+  **Technical Details:**
+  - Feature detection using `navigator.share` availability
+  - Async/await handling with proper error catching
+  - AbortError handling (when user cancels native share)
+  - Zero bundle size impact (uses browser built-in API)
+
+  **Share Data:**
+  - Title: "{TICKER} Earnings Report"
+  - Text: Contextual message based on beat/miss/pending status
+  - URL: Direct link to report page
+
+**Why this matters:**
+Mobile users represent a significant portion of traffic to financial apps.
+The Web Share API provides a seamless, native-feeling experience that:
+1. Removes friction by using familiar system UI
+2. Integrates with ALL the user's installed apps, not just our preset options
+3. Respects platform conventions (iOS share sheet, Android share picker)
+4. Requires no additional UI for mobile — just tap and share
+
+This aligns with 2026's trend of web applications feeling indistinguishable
+from native apps when it comes to core interactions.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 3ac9434
