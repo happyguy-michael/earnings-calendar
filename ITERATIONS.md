@@ -1,3 +1,66 @@
+## 2026-03-24 — ChromaticAberration: Cinematic RGB Split for Exceptional Earnings
+
+**Inspiration:**
+- Camera lens chromatic aberration in film photography
+- Cyberpunk 2077 UI critical state indicators
+- GMTK Game Jam 2024 award-winning UI effects
+- 2026 trend: "Analog Imperfection" — digital elements with subtle analog flaws
+
+**What I built:**
+- New `ChromaticAberration` component family — cinematic RGB channel separation:
+
+  **Core Concept:**
+  - Creates subtle color fringing that signals exceptional importance
+  - RGB channels offset slightly, creating a "holographic" visual effect
+  - Makes monster beats and disaster misses FEEL different from normal results
+  - Subconsciously communicates "this is special" without text
+
+  **Components:**
+  - `ChromaticAberration`: Main wrapper with configurable intensity and variant
+  - `ChromaticText`: Text-specific variant with inline RGB split
+  - `ChromaticBadge`: Compact badge variant with automatic threshold detection
+  - `useChromatic`: Hook for programmatic chromatic control
+
+  **Visual Features:**
+  - Two color variants:
+    - `beat`: Cyan/Magenta split (success aesthetic)
+    - `miss`: Red/Cyan split (danger aesthetic)
+  - Intensity scales with surprise magnitude (bigger beat = stronger effect)
+  - Hover amplification for interactive feel
+  - Glitch mode for disaster misses (≤-20%):
+    - Random positional jitter
+    - RGB channels shift unpredictably
+    - Creates urgency and unease
+  - Subtle pulsing animation on RGB layers
+  - Screen blend mode for proper color mixing
+
+  **Technical Details:**
+  - Dual-layer rendering (red channel left, blue channel right)
+  - Gaussian blur scales with offset distance
+  - IntersectionObserver for viewport-triggered activation
+  - requestAnimationFrame-based glitch animation
+  - Full `prefers-reduced-motion` support (disables entirely)
+  - GPU-efficient transform animations
+
+  **Integration:**
+  - Wraps exceptional earnings badges (≥15% beat or ≤-15% miss)
+  - Intensity formula: `min(0.6, (|surprise| - 15) / 40 + 0.3)`
+  - Glitch activates at ≤-20% for disaster misses
+  - Staggered animation delay based on card position
+
+**Why this matters:**
+Financial data is usually clinical — green numbers, red numbers, all the same visual weight.
+ChromaticAberration creates visceral differentiation. When a company beats by 25%, the badge
+literally splits into color channels like a glitching hologram. When a disaster miss occurs,
+the badge jitters erratically. This creates an emotional response that raw numbers can't achieve.
+It's the difference between "reading a number" and "feeling the impact."
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 761657a
+
+---
+
 ## 2026-03-24 — SentimentWave: EKG-Style Earnings Pulse Visualization
 
 **Inspiration:**
