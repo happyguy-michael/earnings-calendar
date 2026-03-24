@@ -148,6 +148,7 @@ import { WeightShiftText } from '@/components/WeightShiftText';
 import { SeasonProgress, SeasonProgressBadge } from '@/components/SeasonProgress';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
+import { MarketPulseIndicator, useMarketPulse } from '@/components/MarketPulseOverlay';
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
 import { FoldingCard, PaperUnfold } from '@/components/PaperUnfold';
 import { PendingEarningsGlow, ResultGlow, BioluminescenceBadge } from '@/components/BioluminescenceGlow';
@@ -1207,6 +1208,7 @@ export default function Home() {
                   </GradientWipe>
                 </h1>
                 <MarketStatus />
+                <MarketPulseIndicator size="md" />
                 <LiveMarketClock compact showTimezone />
                 <div className="hidden lg:flex items-center gap-2">
                   <SeasonProgress earnings={earnings} delay={200} />

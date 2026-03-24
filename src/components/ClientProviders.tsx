@@ -15,6 +15,7 @@ import { LiquidButtonStyles } from './LiquidButton';
 import { DynamicIslandProvider } from './DynamicIsland';
 import { SpringEasingStyles } from './NativeSpringEasing';
 import { SeismicWaveProvider } from './SeismicWave';
+import { MarketPulseProvider, MarketPulseOverlay } from './MarketPulseOverlay';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -27,14 +28,17 @@ export function ClientProviders({ children }: { children: ReactNode }) {
                 <UndoToastProvider>
                   <DynamicIslandProvider>
                     <SeismicWaveProvider maxConcurrentWaves={3}>
-                      <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
-                      <SmoothThemeTransition />
-                      <ViewportScrollSpotlight />
-                      <DynamicShadowStyles />
-                      <LiquidButtonStyles />
-                      <SpringEasingStyles />
-                      <FocusModeIndicator />
-                      {children}
+                      <MarketPulseProvider>
+                        <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
+                        <SmoothThemeTransition />
+                        <ViewportScrollSpotlight />
+                        <DynamicShadowStyles />
+                        <LiquidButtonStyles />
+                        <SpringEasingStyles />
+                        <FocusModeIndicator />
+                        <MarketPulseOverlay position="center" intensityScale={0.8} />
+                        {children}
+                      </MarketPulseProvider>
                     </SeismicWaveProvider>
                   </DynamicIslandProvider>
                 </UndoToastProvider>
