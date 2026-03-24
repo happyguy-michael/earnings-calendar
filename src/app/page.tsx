@@ -128,6 +128,7 @@ import { CursorTrail, CursorTrailToggle, useCursorTrail } from '@/components/Cur
 import { PrintStyles } from '@/components/PrintStyles';
 import { RelativeDayBadge } from '@/components/RelativeDayBadge';
 import { AmbientTimeGlow } from '@/components/AmbientTimeGlow';
+import { PredictionConfidenceBand } from '@/components/PredictionConfidenceBand';
 import { StatBreakdownFromEarnings } from '@/components/StatBreakdownRing';
 import { ElasticNumber, ElasticPercentage } from '@/components/ElasticNumber';
 import { BreathingCard } from '@/components/BreathingCard';
@@ -1621,6 +1622,30 @@ export default function Home() {
             </ParallaxFloat>
           </BreathingCard>
         </div>
+
+        {/* Prediction Confidence Band - Shows projected beat rate range based on pending earnings */}
+        {pendingCount > 0 && (
+          <div className="mb-6 px-1">
+            <BlurReveal triggerOnMount delay={250} duration={600} blurAmount={8}>
+              <div className="glass-card p-4 rounded-2xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  <span className="text-sm font-medium text-zinc-300">Projected Beat Rate</span>
+                </div>
+                <PredictionConfidenceBand
+                  currentBeats={beatsCount}
+                  currentTotal={reportedCount}
+                  pendingEarnings={filteredEarnings
+                    .filter(e => e.eps === undefined || e.eps === null)
+                    .map(e => ({ ticker: e.ticker, beatOdds: e.beatOdds }))}
+                  showLabels={true}
+                />
+              </div>
+            </BlurReveal>
+          </div>
+        )}
 
         {/* Earnings Season Meter - Progress through earnings season */}
         <div className="mb-6 px-1">
