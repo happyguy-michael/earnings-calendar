@@ -64,7 +64,7 @@ where digital interfaces incorporate subtle physical metaphors.
 
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
-**Commit:** (pending)
+**Commit:** 02a7001
 
 ---
 
