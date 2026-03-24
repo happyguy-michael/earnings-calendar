@@ -161,6 +161,7 @@ import { CountdownTension, useCountdownTension } from '@/components/CountdownTen
 import { SeismicEarningsWrapper } from '@/components/SeismicWave';
 import { WeekSentimentWave } from '@/components/SentimentWave';
 import { ScrollDepthLayers } from '@/components/ScrollDepthLayers';
+import { NeonText, NeonBadge, NeonLive } from '@/components/NeonText';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -2138,41 +2139,61 @@ export default function Home() {
           {[
             <div key="beat" className="flex items-center gap-2">
               <LegendIndicator type="beat" size={12} />
-              <WavyUnderline 
-                color="success" 
-                animated="hover" 
-                amplitude={2} 
-                frequency={4}
-                strokeWidth={1.5}
+              <NeonText 
+                color="green" 
+                intensity={0.6}
+                hoverOnly
+                fontSize="0.75rem"
+                fontWeight={500}
+                textTransform="none"
+                letterSpacing="0.02em"
               >
                 Beat Estimates
-              </WavyUnderline>
+              </NeonText>
             </div>,
             <div key="miss" className="flex items-center gap-2">
               <LegendIndicator type="miss" size={12} />
-              <WavyUnderline 
-                color="danger" 
-                animated="hover" 
-                amplitude={2} 
-                frequency={4}
-                strokeWidth={1.5}
+              <NeonText 
+                color="red" 
+                intensity={0.6}
+                hoverOnly
+                fontSize="0.75rem"
+                fontWeight={500}
+                textTransform="none"
+                letterSpacing="0.02em"
               >
                 Missed Estimates
-              </WavyUnderline>
+              </NeonText>
             </div>,
             <div key="odds" className="flex items-center gap-2">
               <LegendProgressRing value={75} size={14} color="#f59e0b" />
-              <WavyUnderline 
-                color="warning" 
-                animated="hover" 
-                amplitude={2} 
-                frequency={4}
-                strokeWidth={1.5}
+              <NeonText 
+                color="amber" 
+                intensity={0.6}
+                hoverOnly
+                fontSize="0.75rem"
+                fontWeight={500}
+                textTransform="none"
+                letterSpacing="0.02em"
               >
                 <span className="ml-1">Beat Probability</span>
-              </WavyUnderline>
-            </div>
-          ]}
+              </NeonText>
+            </div>,
+            pendingToday > 0 && (
+              <div key="live" className="flex items-center gap-2">
+                <NeonBadge 
+                  color="red" 
+                  size="sm"
+                  flicker
+                  intensity={0.9}
+                  breathe
+                  breatheDuration={2500}
+                >
+                  {pendingToday} LIVE
+                </NeonBadge>
+              </div>
+            )
+          ].filter(Boolean)}
         </BlurRevealGroup>
       </main>
       </ScrollPerspective>
