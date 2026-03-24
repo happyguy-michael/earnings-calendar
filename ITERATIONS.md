@@ -1,3 +1,62 @@
+## 2026-03-24 — SentimentWave: EKG-Style Earnings Pulse Visualization
+
+**Inspiration:**
+- Dribbble "SunSeek" liquid glass design — flowing organic data visualizations
+- EKG/heartbeat monitors — data as living rhythm
+- 2026 "Living Data" trend — data that breathes and flows
+- Medical monitoring interfaces — clear signal visualization
+
+**What I built:**
+- New `SentimentWave` component — EKG-style visualization of weekly earnings sentiment:
+
+  **Core Concept:**
+  - Creates a visual "pulse" of earnings performance across each week
+  - Peaks (positive Y) for beats, troughs (negative Y) for misses
+  - Amplitude scales with data intensity (more earnings = larger waves)
+  - Neutral baseline for empty days with subtle dashed placeholder
+  - Makes weekly patterns visible at a glance
+
+  **Components:**
+  - `SentimentWave`: Core SVG wave component with configurable options
+  - `WeekSentimentWave`: Wrapper that filters earnings for specific week
+
+  **Visual Features:**
+  - Catmull-Rom spline interpolation for smooth, organic curves
+  - Gradient fills based on dominant sentiment:
+    - Green gradient (top-heavy) for beat-dominant weeks
+    - Red gradient (bottom-heavy) for miss-dominant weeks
+    - Purple gradient (centered) for mixed/pending weeks
+  - Animated path drawing on scroll into view
+  - Pulsing dot markers on high-intensity data points
+  - Subtle glow effect using SVG filters
+  - Dual-layer rendering (stroke + fill) for depth
+
+  **Technical Details:**
+  - Catmull-Rom to Bezier conversion for smooth SVG paths
+  - Intersection observer for scroll-triggered animation
+  - Per-day sentiment calculation: (beats - misses) / total_reported
+  - Intensity normalization: min(count/10, 1) for wave amplitude
+  - GPU-efficient SVG animation with requestAnimationFrame
+  - Full `prefers-reduced-motion` support
+
+  **Integration:**
+  - Added to each week card between content and summary
+  - Staggered animation delay per week (weekIndex * 200ms)
+  - Graceful empty state for weeks without earnings
+
+**Why this matters:**
+Financial dashboards typically show data as isolated cards or lists. The SentimentWave
+creates visual continuity — you can see the "heartbeat" of earnings season at a glance.
+Beat-heavy weeks appear as upward waves, miss-heavy weeks as downward dips. This
+pattern recognition happens subconsciously, giving users instant insight into weekly
+sentiment without reading individual cards.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 87c5d64
+
+---
+
 ## 2026-03-24 — BioluminescenceGlow: Organic Living Glow Effect
 
 **Inspiration:**
