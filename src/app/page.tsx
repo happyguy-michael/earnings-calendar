@@ -160,6 +160,7 @@ import { MonsterBeatBorder, DisasterMissBorder } from '@/components/BorderDraw';
 import { CountdownTension, useCountdownTension } from '@/components/CountdownTension';
 import { SeismicEarningsWrapper } from '@/components/SeismicWave';
 import { WeekSentimentWave } from '@/components/SentimentWave';
+import { ScrollDepthLayers } from '@/components/ScrollDepthLayers';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1108,6 +1109,14 @@ export default function Home() {
         glowIntensity={0.4}
         pulse={true}
         pulseSpeed={5000}
+      />
+      
+      {/* Multi-layer parallax depth effect - 2026 spatial UI trend */}
+      <ScrollDepthLayers 
+        preset="aurora"
+        maxOffset={120}
+        damping
+        dampingFactor={0.06}
       />
       
       {/* Blueprint overlay - 2026 raw aesthetics trend */}
