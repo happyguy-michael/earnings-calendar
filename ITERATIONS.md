@@ -1,3 +1,73 @@
+## 2026-03-25 — MagneticCursor: Cursor Proximity Attraction Effect
+
+**Inspiration:**
+- Apple's iOS button hover states (subtle magnetic pull)
+- Stripe's magnetic card interactions
+- 2026 "Gravitational UI" trend — elements respond to cursor proximity
+- Physics-based interfaces that feel tactile and alive
+- The macOS Dock magnification effect (cursor-aware scaling)
+
+**What I built:**
+- New `MagneticCursor` component family — cursor proximity-based element attraction:
+
+  **Core Concept:**
+  - Elements subtly "lean" toward the cursor as it approaches
+  - Creates physical attraction feel before actual hover
+  - Effect is distance-based with configurable falloff curves
+  - Builds anticipation and makes interface feel alive
+
+  **Components:**
+  - `MagneticCursor`: Main wrapper with full configuration
+  - `MagneticNumber`: Pre-configured for stat numbers with scale
+  - `MagneticBadge`: Pre-configured for badges with subtle rotation
+  - `MagneticIcon`: Pre-configured for icons with stronger effect
+  - `useMagneticGroup`: Hook for coordinating multiple magnetic elements
+
+  **Visual Features:**
+  - Distance-based attraction with configurable strength
+  - Three falloff curves: linear, easeOut, easeInOut
+  - Optional scale effect when attracted (subtle zoom)
+  - Optional rotation toward cursor (like element is "looking")
+  - Spring-based damping for smooth, organic movement
+  - Returns smoothly to rest when cursor leaves radius
+
+  **Configuration Options:**
+  - `strength`: Max attraction in pixels (default: 8)
+  - `radius`: Influence radius in pixels (default: 150)
+  - `falloff`: Attraction curve type
+  - `scale`/`scaleAmount`: Enable subtle zoom effect
+  - `rotate`/`rotateAmount`: Enable rotation toward cursor
+  - `damping`: Spring damping factor (0-1)
+  - `as`: Render as different HTML element
+
+  **Technical Details:**
+  - requestAnimationFrame-based animation loop
+  - Spring physics for smooth interpolation
+  - Auto-settles when cursor leaves area
+  - Full `prefers-reduced-motion` support (disabled)
+  - Print styles (no effect)
+  - GPU-accelerated transforms
+
+**Why this matters:**
+Most dashboard elements feel static — they just sit there until clicked.
+MagneticCursor creates a subtle sense of physical presence. As your cursor
+approaches a stat or badge, the element "notices" and leans toward you,
+creating anticipation before interaction. This follows 2026's "Gravitational
+UI" trend where interfaces have simulated physics that make them feel
+tangible and responsive to user presence, not just user clicks.
+
+**Use cases:**
+- Stats numbers that feel "aware" of the cursor
+- Badges that draw attention as cursor approaches
+- Icons with premium interactive feel
+- Any element that should feel responsive
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-25 — ScrollDepthLayers: Multi-Layer Parallax Background for Depth Perception
 
 **Inspiration:**
