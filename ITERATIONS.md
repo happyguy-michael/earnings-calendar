@@ -1,3 +1,61 @@
+## 2026-03-24 — ColorBlindMode: Accessibility-First Color Palette System
+
+**Inspiration:**
+- ~8% of men have some form of color vision deficiency (CVD)
+- Traditional financial UIs use red/green — the most problematic combination
+- 2026 "Inclusive Design as Default" trend — accessibility isn't an afterthought
+- Bloomberg and TradingView accessibility standards
+- Research-backed CVD-safe color combinations
+
+**What I built:**
+- New `ColorBlindMode` component family — comprehensive color palette system for CVD users:
+
+  **Core Concept:**
+  - Red/green color blindness affects millions of users
+  - Beat/miss indicators rely heavily on these colors
+  - This system provides alternative palettes AND secondary visual cues
+  - Users can choose the palette that works best for their type of CVD
+
+  **Palette Options:**
+  - **Default:** Standard green/red colors (for users without CVD)
+  - **Deuteranopia:** Blue/orange (most common, red-green blindness)
+  - **Protanopia:** Blue/amber (red blindness)
+  - **Tritanopia:** Cyan/pink (rare, blue-yellow blindness)
+  - **Monochrome:** Grayscale with patterns (achromatopsia/total color blindness)
+
+  **Visual Features:**
+  - CSS custom properties: `--beat-color`, `--miss-color`, `--pending-color`, etc.
+  - Shape indicators added in non-default modes (▲/▼, ●/◆, ★/✕)
+  - Pattern overlays for monochrome mode (diagonal stripes)
+  - Color preview in selector showing beat/miss colors
+  - Persistent preference via localStorage
+
+  **Components:**
+  - `ColorBlindProvider`: Context provider wrapping the app
+  - `ColorBlindToggle`: Settings component with dropdown or compact button
+  - `ColorBlindIndicator`: Status badge showing active palette
+  - `useColorBlind`: Hook for programmatic access
+
+  **Technical Details:**
+  - Dynamic CSS injection based on selected palette
+  - Automatic dark/light mode adaptation
+  - MutationObserver for theme changes
+  - Data attributes for CSS selectors (`data-color-palette`)
+  - Full keyboard accessibility in selector
+
+**Why this matters:**
+Financial applications are notorious for excluding color blind users with their
+reliance on red/green color coding. This affects real people making real financial
+decisions. By providing research-backed alternative palettes AND secondary visual
+cues (shapes, patterns), we ensure everyone can use the calendar effectively.
+This is 2026's "Inclusive Design as Default" — accessibility built in, not bolted on.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** fdbc4b2
+
+---
+
 ## 2026-03-24 — MarketPulseOverlay: Ambient Heartbeat Synced to Market Hours
 
 **Inspiration:**
