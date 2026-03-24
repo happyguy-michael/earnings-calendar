@@ -59,6 +59,7 @@ import { SurpriseCountUp, SurpriseScramble } from '@/components/AnimatedSurprise
 import { ScrambleTicker } from '@/components/TextScramble';
 import { ExceptionalGlow, MonsterBeatIcon } from '@/components/ExceptionalGlow';
 import { DisasterMiss, DisasterMissIcon } from '@/components/DisasterMiss';
+import { ChromaticAberration, useChromatic } from '@/components/ChromaticAberration';
 import { SearchEmptyState } from '@/components/SearchEmptyState';
 import { LiquidWaveProgressCompact } from '@/components/LiquidWaveProgress';
 import { EPSComparisonBadge } from '@/components/EPSComparisonBadge';
@@ -548,6 +549,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               >
               <ResultPulseWrapper result="beat" surprise={surprise}>
                 <ExceptionalGlow surprise={surprise} delay={animationIndex * 50 + 300}>
+                  <ChromaticAberration 
+                    active={surprise >= 15} 
+                    variant="beat" 
+                    intensity={Math.min(0.6, (surprise - 15) / 40 + 0.3)}
+                    hoverAmplify={true}
+                    delay={animationIndex * 50 + 200}
+                  >
                   <BadgeShimmer 
                     variant="success" 
                     trigger="both" 
@@ -584,6 +592,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                       </span>
                     </BadgeSparkle>
                   </BadgeShimmer>
+                  </ChromaticAberration>
                 </ExceptionalGlow>
               </ResultPulseWrapper>
               </DataPulseRing>
@@ -599,6 +608,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               >
               <ResultPulseWrapper result="miss" surprise={surprise}>
                 <DisasterMiss surprise={surprise} delay={animationIndex * 50 + 300}>
+                  <ChromaticAberration 
+                    active={surprise <= -15} 
+                    variant="miss" 
+                    intensity={Math.min(0.7, (Math.abs(surprise) - 15) / 30 + 0.35)}
+                    glitch={surprise <= -20}
+                    hoverAmplify={true}
+                    delay={animationIndex * 50 + 200}
+                  >
                   <BadgeShimmer 
                     variant="danger" 
                     trigger="hover" 
@@ -630,6 +647,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
                       )}
                     </span>
                   </BadgeShimmer>
+                  </ChromaticAberration>
                 </DisasterMiss>
               </ResultPulseWrapper>
               </DataPulseRing>
