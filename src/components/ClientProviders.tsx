@@ -16,37 +16,40 @@ import { DynamicIslandProvider } from './DynamicIsland';
 import { SpringEasingStyles } from './NativeSpringEasing';
 import { SeismicWaveProvider } from './SeismicWave';
 import { MarketPulseProvider, MarketPulseOverlay } from './MarketPulseOverlay';
+import { ColorBlindProvider } from './ColorBlindMode';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
     <MotionPreferencesProvider>
-      <AudioFeedbackProvider>
-        <KeyPressEchoProvider position="bottom-center" maxEchoes={2}>
-          <DynamicShadowProvider smoothing={0.06}>
-            <FocusModeProvider dimOpacity={0.35} transitionDuration={300}>
-              <ToastProvider>
-                <UndoToastProvider>
-                  <DynamicIslandProvider>
-                    <SeismicWaveProvider maxConcurrentWaves={3}>
-                      <MarketPulseProvider>
-                        <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
-                        <SmoothThemeTransition />
-                        <ViewportScrollSpotlight />
-                        <DynamicShadowStyles />
-                        <LiquidButtonStyles />
-                        <SpringEasingStyles />
-                        <FocusModeIndicator />
-                        <MarketPulseOverlay position="center" intensityScale={0.8} />
-                        {children}
-                      </MarketPulseProvider>
-                    </SeismicWaveProvider>
-                  </DynamicIslandProvider>
-                </UndoToastProvider>
-              </ToastProvider>
-            </FocusModeProvider>
-          </DynamicShadowProvider>
-        </KeyPressEchoProvider>
-      </AudioFeedbackProvider>
+      <ColorBlindProvider>
+        <AudioFeedbackProvider>
+          <KeyPressEchoProvider position="bottom-center" maxEchoes={2}>
+            <DynamicShadowProvider smoothing={0.06}>
+              <FocusModeProvider dimOpacity={0.35} transitionDuration={300}>
+                <ToastProvider>
+                  <UndoToastProvider>
+                    <DynamicIslandProvider>
+                      <SeismicWaveProvider maxConcurrentWaves={3}>
+                        <MarketPulseProvider>
+                          <CursorAmbientLight intensity={0.12} radius={500} smoothing={0.06} />
+                          <SmoothThemeTransition />
+                          <ViewportScrollSpotlight />
+                          <DynamicShadowStyles />
+                          <LiquidButtonStyles />
+                          <SpringEasingStyles />
+                          <FocusModeIndicator />
+                          <MarketPulseOverlay position="center" intensityScale={0.8} />
+                          {children}
+                        </MarketPulseProvider>
+                      </SeismicWaveProvider>
+                    </DynamicIslandProvider>
+                  </UndoToastProvider>
+                </ToastProvider>
+              </FocusModeProvider>
+            </DynamicShadowProvider>
+          </KeyPressEchoProvider>
+        </AudioFeedbackProvider>
+      </ColorBlindProvider>
     </MotionPreferencesProvider>
   );
 }

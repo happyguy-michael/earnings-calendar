@@ -72,6 +72,7 @@ import { SnapshotProvider, SnapshotToggle, SnapshotIndicator, SnapshotBadge, use
 import { AnimatedGradientBorder } from '@/components/AnimatedGradientBorder';
 import { useHaptic, HapticToggle } from '@/components/HapticFeedback';
 import { useAudioFeedback, AudioToggle } from '@/components/AudioFeedback';
+import { ColorBlindToggle } from '@/components/ColorBlindMode';
 import { PullToRefresh } from '@/components/PullToRefresh';
 import { WeekSummaryCard } from '@/components/WeekSummaryCard';
 import { FloatingActionMenu, FABAction, FABIcons } from '@/components/FloatingActionMenu';
@@ -1288,6 +1289,7 @@ export default function Home() {
               <MotionToggle size="sm" />
               <HapticToggle size="sm" />
               <AudioToggle size="sm" />
+              <ColorBlindToggle compact />
               <CursorTrailToggle enabled={cursorTrailEnabled} onToggle={toggleCursorTrail} size="sm" />
               <ThemeToggle />
               <TodayButton 
