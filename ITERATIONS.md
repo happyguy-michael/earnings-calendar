@@ -1,3 +1,66 @@
+## 2026-03-24 — PredictionConfidenceBand: Probabilistic Beat Rate Visualization
+
+**Inspiration:**
+- Nate Silver's FiveThirtyEight election forecast needle
+- Weather forecast confidence bands
+- Monte Carlo simulation visualizations
+- 2026 "Probabilistic UI" trend — showing uncertainty, not just point estimates
+
+**What I built:**
+- New `PredictionConfidenceBand` component — statistical visualization of projected beat rates:
+
+  **Core Concept:**
+  - Financial dashboards typically show point estimates (90% beat rate)
+  - This ignores uncertainty from pending earnings
+  - Our component shows the RANGE of possible outcomes
+  - Users can see how confident they should be in current numbers
+
+  **Components:**
+  - `PredictionConfidenceBand`: Main visualization with animated markers
+  - `PredictionConfidenceBandCompact`: Inline version for tight spaces
+  - `usePredictionSummary`: Hook for tooltip text generation
+
+  **Statistical Features:**
+  - Calculates expected beat rate from pending earnings' individual odds
+  - Computes 90% confidence interval using binomial distribution
+  - Band width reflects uncertainty (narrows as more results come in)
+  - Status indicator: "Final result" / "High confidence" / "Moderate uncertainty" / "Wide range possible"
+
+  **Visual Features:**
+  - Current rate marker (emerald): solid line with pulsing triangle
+  - Projected rate marker (amber): appears when different from current
+  - Confidence band: gradient showing probability distribution
+  - Animated value labels with easing
+  - Tick marks at 0%, 25%, 50%, 75%, 100%
+  - Track with subtle glass-like appearance
+
+  **Technical Details:**
+  - Pure CSS animations (no framer-motion dependency)
+  - `prefers-reduced-motion` support with static fallback
+  - Smooth mount animations with staggered delays
+  - AnimatedValue component for number transitions
+  - Efficient memoization of statistical calculations
+
+  **Integration:**
+  - Appears below stats grid when pending earnings exist
+  - Auto-hides when all results are in
+  - Uses filtered earnings data for accurate calculations
+  - Wrapped in BlurReveal for entrance animation
+
+**Why this matters:**
+Traditional financial dashboards treat numbers as certainties. A "90% beat rate" looks the same
+whether 10 or 100 results are pending. PredictionConfidenceBand makes uncertainty visible.
+Users can see that the current 90% could reasonably end up anywhere from 85-92% based on
+pending reports and their individual beat odds. This is how professional forecasters
+(like FiveThirtyEight) communicate probability — not as a single number, but as a range
+of possibilities. It's honest data visualization.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** fdf2643
+
+---
+
 ## 2026-03-24 — ChromaticAberration: Cinematic RGB Split for Exceptional Earnings
 
 **Inspiration:**
