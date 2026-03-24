@@ -1,3 +1,84 @@
+## 2026-03-25 — WaveText: Character-Level Wave Animation for Kinetic Typography
+
+**Inspiration:**
+- Stadium crowd waves at sports events
+- Apple's bouncy notification text (iOS 18)
+- Slack's celebratory message animations
+- Discord's animated emoji text
+- 2026 "Kinetic Typography" trend — text that moves with personality
+- Sound waveform visualizations
+
+**What I built:**
+- New `WaveText` component family — character-level wave animations for text:
+
+  **Core Concept:**
+  - Each character animates up and down in sequence
+  - Creates a flowing "stadium wave" effect across text
+  - Perfect for celebratory moments, attention-grabbing headers
+  - Adds personality and playfulness to UI text
+
+  **Components:**
+  - `WaveText`: Main component with full configuration
+  - `CelebrationWave`: Pre-configured for celebratory beats (elastic, green)
+  - `SubtleWave`: Pre-configured for hover interactions
+  - `LoadingWave`: Pre-configured for loading messages
+
+  **Animation Modes:**
+  - `continuous`: Endless looping wave
+  - `once`: Single animation run (configurable repeat count)
+  - `hover`: Triggered on mouse hover
+  - `intersection`: Triggered when entering viewport
+
+  **Wave Directions:**
+  - `ltr`: Left to right (classic stadium wave)
+  - `rtl`: Right to left
+  - `center-out`: Radiates from center
+  - `edges-in`: Converges to center
+
+  **Easing Options:**
+  - `sine`: Smooth, natural wave
+  - `bounce`: Bouncy with overshoot
+  - `elastic`: Springy with rubber-band feel
+  - `linear`: Mechanical, consistent timing
+
+  **Visual Features:**
+  - Configurable amplitude (vertical movement)
+  - Optional scale effect at wave peak
+  - Optional rotation tilt during wave
+  - Peak color change for gradient effect
+  - Customizable stagger delay between characters
+  - Speed multiplier for faster/slower waves
+
+  **Technical Details:**
+  - Per-character CSS animations with staggered delays
+  - Dynamic keyframe generation for customization
+  - GPU-accelerated transforms for smooth 60fps
+  - Memoized components to prevent re-renders
+  - IntersectionObserver for scroll-triggered animations
+  - Full `prefers-reduced-motion` support (renders static)
+  - Print styles (static text, no animation)
+
+**Why this matters:**
+Static text is forgettable. WaveText brings text to life with personality —
+imagine "BEAT!" celebrating with a bouncy wave, or loading messages that
+feel alive rather than static. This follows 2026's "Kinetic Typography"
+trend where text becomes a form of motion design, communicating emotion
+and energy through movement. The character-level animation creates a
+premium, polished feel that elevates ordinary text into memorable moments.
+
+**Use cases:**
+- "BEAT +15%!" celebration text on exceptional earnings
+- Loading/pending message animations
+- Header text emphasis on hover
+- Achievement notifications
+- Playful CTAs that draw attention
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** PENDING
+
+---
+
 ## 2026-03-25 — MagneticCursor: Cursor Proximity Attraction Effect
 
 **Inspiration:**
