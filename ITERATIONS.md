@@ -64,7 +64,7 @@ difference between seeing a number and understanding its significance.
 
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
-**Commit:** (pending)
+**Commit:** 1a52cb3
 
 ---
 
