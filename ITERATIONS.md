@@ -1,3 +1,75 @@
+## 2026-03-25 — SVGTextDraw: Hand-Drawn Text Reveal Effect
+
+**Inspiration:**
+- Luxury brand animations (Hermès, Apple keynotes)
+- Editorial design with calligraphic reveals
+- Loading sequences in high-end web experiences
+- Neon sign flickering effects
+- Handwriting animation on digital invitations
+
+**What I built:**
+- New `SVGTextDraw` component family — text that appears as if being hand-drawn:
+
+  **Core Concept:**
+  - Uses SVG stroke-dasharray/dashoffset animation technique
+  - Each character's stroke is drawn in sequence
+  - Creates authentic "writing" or "drawing" appearance
+  - Optional fill transition after stroke completes
+
+  **Components:**
+  - `SVGTextDraw`: Main component with full configuration
+  - `DrawHeadline`: Pre-styled for hero headlines (sm/md/lg/xl sizes)
+  - `DrawNumber`: Optimized for numeric values with prefix/suffix
+  - `NeonSign`: Glowing neon light effect with filter
+
+  **Style Presets:**
+  - `pen`: Fine strokes (1.5px), clean and precise
+  - `brush`: Thicker strokes (3px), organic feel
+  - `marker`: Bold square strokes (4px), impactful
+  - `sketch`: Light strokes (1px), subtle and hand-drawn
+  - `neon`: Glowing strokes with SVG filter effect
+
+  **Configuration Options:**
+  - `fontSize`: Text size in pixels
+  - `fontFamily`: Font family to use
+  - `fontWeight`: Font weight
+  - `strokeColor`: Stroke color during draw
+  - `fillColor`: Fill color after draw completes
+  - `duration`: Total animation duration
+  - `stagger`: Delay between characters
+  - `fillAfterDraw`: Whether to fill after stroke
+  - `fillDuration`: Fill transition duration
+  - `animateOnView`: Trigger on viewport entry
+  - `animateOnChange`: Replay when value changes
+  - `lineHeight`: Line height multiplier
+  - `letterSpacing`: Letter spacing in em
+
+  **Technical Details:**
+  - Intersection observer for viewport-triggered animation
+  - Per-character staggered timing for natural flow
+  - SVG filter for neon glow effect
+  - Full `prefers-reduced-motion` support (shows instant text)
+  - Print styles show plain text fallback
+  - ARIA role="img" with accessible label
+
+**Why this matters:**
+Drawing animations create a sense of craftsmanship and attention to detail.
+Unlike typewriter effects (which reveal characters) or scramble effects
+(which randomize), stroke drawing simulates actual writing — more organic
+and memorable. For an earnings calendar, this could be used for dramatic
+reveals of key figures, hero headlines, or special event announcements.
+
+**Use cases:**
+- Hero section headlines with dramatic entrance
+- Key metric reveals (earnings surprise, beat rate)
+- Section titles with editorial flair
+- Special event/earnings season announcements
+- Neon-style attention grabbers
+
+**Commit:** d183d98
+
+---
+
 ## 2026-03-25 — DotMatrixDisplay: Retro LED/Dot-Matrix Text Display
 
 **Inspiration:**
