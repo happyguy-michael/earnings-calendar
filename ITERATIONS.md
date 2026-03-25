@@ -1,3 +1,91 @@
+## 2026-03-25 — DotMatrixDisplay: Retro LED/Dot-Matrix Text Display
+
+**Inspiration:**
+- NYSE stock ticker displays
+- Airport/train station flip-dot departure boards
+- Vintage LED scoreboards and marquees
+- Retro-futuristic UI patterns (Blade Runner, Alien terminals)
+- Bloomberg/Reuters financial terminal aesthetics
+- 1980s electronic display technology
+
+**What I built:**
+- New `DotMatrixDisplay` component family — retro LED dot-matrix style text:
+
+  **Core Concept:**
+  - Each character rendered as a 5x7 grid of individual dots
+  - Industry-standard character patterns for clear readability
+  - Individual dots can animate independently for cascading reveals
+  - Creates authentic vintage electronic display aesthetic
+
+  **Components:**
+  - `DotMatrixDisplay`: Main component with full configuration
+  - `StockTickerDisplay`: Pre-styled green LED on dark background
+  - `DepartureBoardDisplay`: Amber LED, typewriter animation
+  - `ScoreDisplay`: Red LED with intense glow
+  - `TechDisplay`: Cyan/blue LED with wave animation
+  - `EPSSurpriseDisplay`: Auto-colors green/red based on value
+  - `CountdownDisplay`: Timer-style with instant updates
+
+  **Visual Features:**
+  - 7 LED colors: green, amber, red, blue, white, cyan, pink
+  - Custom color support for any RGB values
+  - Realistic "off" dots (dim, visible) for authenticity
+  - Glow effect with 3 intensity levels
+  - Adjustable dot size, gap, and character spacing
+  - Dot shape options: none, rounded, or full circle
+
+  **Animation Modes:**
+  - `instant`: All dots appear immediately
+  - `cascade`: Dots appear one-by-one, left-to-right, top-to-bottom
+  - `typewriter`: Entire characters appear in sequence
+  - `random`: Dots appear in random order
+  - `wave`: Diagonal wave pattern across all characters
+
+  **Configuration Options:**
+  - `dotSize`: Size of each dot in pixels (default: 4)
+  - `dotGap`: Gap between dots (default: 1)
+  - `charGap`: Gap between characters in dot units (default: 2)
+  - `animation`: Animation mode (default: 'cascade')
+  - `animationSpeed`: Timing per dot/character (default: 30ms)
+  - `delay`: Initial delay before animation starts
+  - `glow`: Enable/disable glow effect (default: true)
+  - `glowIntensity`: 1-3 glow strength (default: 2)
+  - `showOffDots`: Show dim inactive dots (default: true)
+  - `background`: Custom background color
+  - `dotRadius`: 'none' | 'sm' | 'full' border radius
+
+  **Technical Details:**
+  - 5x7 binary patterns for all ASCII characters and numbers
+  - Efficient bit-flag pattern storage (7 × 5-bit rows per char)
+  - Individual dot state management for animations
+  - RAF-free CSS transitions for smooth 60fps
+  - Full `prefers-reduced-motion` support
+  - Print styles show plain text fallback
+  - ARIA role="img" with accessible label
+
+**Why this matters:**
+While modern UIs tend toward clean minimalism, there's renewed interest in
+retro-futurism and nostalgic technology aesthetics. The dot-matrix display
+evokes the golden age of electronic trading floors, airport terminals, and
+sci-fi computer interfaces. For a financial calendar, this creates a unique
+"trading floor" vibe that sets it apart from typical dashboards. The per-dot
+animation capability means data can "materialize" character by character,
+creating anticipation for earnings reveals.
+
+**Use cases:**
+- Earnings surprise reveals (number materializes dramatically)
+- Countdown timers to earnings calls
+- Stock ticker-style scrolling text
+- Hero displays for key statistics
+- Retro-themed special events or throwback features
+- Sci-fi themed dashboards
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 5f53408
+
+---
+
 ## 2026-03-25 — MagneticText: Per-Character Magnetic Cursor Attraction
 
 **Inspiration:**
