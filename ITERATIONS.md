@@ -6616,3 +6616,58 @@ from native apps when it comes to core interactions.
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 3ac9434
+
+
+---
+
+## 2026-03-25 — SkeletonSparkline - Animated Chart Skeleton Loaders
+
+**Inspiration:**
+- Dribbble "Loading Graph Skeleton State" patterns (31 likes, 5.1k views)
+- Robinhood's chart loading animations
+- Linear.app's skeleton transitions
+- Modern fintech apps that show chart placeholders that "materialize" into view
+
+**What I built:**
+New `SkeletonSparkline` component with multiple variants for chart-like loading states:
+
+**Line Variant:**
+- SVG path draw animation using stroke-dashoffset
+- Smooth bezier curves that animate from left to right
+- Shimmer gradient that travels along the line path
+- Animated dot reveal at the end of the line
+
+**Area Variant:**
+- Same line animation with gradient fill below
+- Fill reveals in sync with line draw
+- Creates depth and chart-like anticipation
+
+**Bars Variant:**
+- Individual bars that rise with staggered timing
+- Pseudo-random heights for organic feel
+- Bounce easing (cubic-bezier 0.34, 1.56, 0.64, 1)
+- Shimmer overlay on each bar
+
+**Integration:**
+- `SkeletonStatCardWithChart` - stat card with sparkline skeleton
+- `SkeletonStatCardWithBars` - stat card with bar chart skeleton
+- `SkeletonMiniChart` - compact inline chart placeholder
+- Added to main calendar skeleton (stats row)
+- Added to detail page skeleton (price card, EPS history section)
+
+**Technical Details:**
+- Pure CSS transitions + CSS-in-JSX for animations
+- No external animation library needed
+- Respects `prefers-reduced-motion` media query
+- Configurable width, height, delay, bar count
+- SVG-based for crisp rendering at any size
+
+**Why this matters:**
+Financial apps deal with charts constantly. Having skeleton loaders that
+actually resemble charts (not just rectangles) creates a stronger visual
+connection to the incoming content. The animation makes the loading state
+feel intentional and premium rather than just "waiting."
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 22ccf6f
