@@ -1,3 +1,81 @@
+## 2026-03-25 — AuroraText: Northern Lights Animated Text Effect
+
+**Inspiration:**
+- Northern lights (aurora borealis) with ethereal color bands
+- Apple's visionOS ambient lighting effects
+- 2026 "Living Interfaces" trend — UI that feels alive
+- Vercel's gradient text treatments with organic motion
+- Stripe's premium headline styling
+
+**What I built:**
+- New `AuroraText` component family — animated aurora borealis effect for text:
+
+  **Core Concept:**
+  - Multiple overlapping gradient waves that flow through text
+  - Uses irrational ratio timing (golden ratio, √2) for organic, non-repeating patterns
+  - Creates mesmerizing northern-lights style color shifts
+  - Different from existing text effects: colors flow THROUGH text, not around it
+
+  **Components:**
+  - `AuroraText`: Main component with full configuration
+  - `AuroraHeading`: Pre-configured for heading elements (h1-h6)
+  - `AuroraBadge`: Compact badge variant with glow
+  - `AuroraLink`: Link variant with hover intensification
+
+  **Color Presets:**
+  - `polar`: Classic northern lights — green/cyan with purple hints
+  - `tropical`: Rare tropical aurora — pink/orange/cyan
+  - `cosmic`: Deep space — purple/blue/magenta
+  - `sunset`: Golden hour aurora — warm tones
+  - `ocean`: Bioluminescence-inspired — deep sea colors
+  - `emerald`: Forest aurora — emerald dominant
+
+  **Visual Features:**
+  - Three independent gradient layers with different animation speeds
+  - Background-blend-mode for authentic aurora color mixing
+  - Hue-rotate animation for subtle color temperature shifts
+  - Optional glow effect behind text
+  - Intensity control for subtle or dramatic effects
+
+  **Configuration Options:**
+  - `preset`: Color theme (polar, tropical, cosmic, sunset, ocean, emerald)
+  - `colors`: Custom color array (overrides preset)
+  - `speed`: Animation speed multiplier
+  - `intensity`: Color shift intensity (0-1)
+  - `glow`: Enable soft glow behind text
+  - `glowRadius`: Glow blur radius in pixels
+  - `pauseOnHover`: Pause animation on hover
+  - `trigger`: Start on mount or viewport intersection
+
+  **Technical Details:**
+  - Multiple gradient layers with background-clip: text
+  - Irrational timing ratios (φ, √2) create non-repeating patterns
+  - GPU-accelerated via transform and opacity
+  - Full `prefers-reduced-motion` support (shows static gradient)
+  - Print styles (static gradient, no animation)
+  - CSS-in-JSX for encapsulated styling
+
+**Why this matters:**
+Text is often static and forgettable. AuroraText transforms headlines and key text
+into living, breathing elements that capture attention. The aurora effect creates an
+ethereal, premium feel that's perfect for hero sections, feature callouts, or any
+text that deserves special treatment. Unlike simple gradient text, the multi-layer
+animation with irrational timing creates organic patterns that never quite repeat,
+making it feel natural and alive rather than mechanical.
+
+**Use cases:**
+- Hero headlines on landing pages
+- Feature callouts ("Premium Features", "Pro Tier")
+- Achievement/celebration text
+- Brand name emphasis
+- Any text that needs to feel magical
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-25 — WaveText: Character-Level Wave Animation for Kinetic Typography
 
 **Inspiration:**
