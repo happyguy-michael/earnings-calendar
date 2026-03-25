@@ -1,3 +1,73 @@
+## 2026-03-26 — RankBadge: Contextual Performance Ranking Indicators
+
+**Inspiration:**
+- Sports league standings and rankings
+- Gaming leaderboards (Xbox Gamerscore, Steam achievements)
+- Spotify Wrapped year-in-review statistics
+- 2026 "Contextual Intelligence" trend — data in relative context, not isolation
+
+**What I built:**
+- New `RankBadge` component family — contextual ranking indicators for earnings performance:
+
+  **Core Concept:**
+  - Knowing that NVDA's beat was "#1 this week" is more meaningful than just "+15.7%"
+  - Adds relative context to absolute numbers
+  - Medal icons (🥇🥈🥉) for top 3 create visual hierarchy
+  - Transforms data points into achievements
+
+  **Components:**
+  - `RankBadge`: Main component with full configuration
+  - `RankBadgeFromSurprise`: Auto-calculates rank from surprise % vs peers
+  - `TopPerformerBadge`: Simplified badge for #1 performers
+
+  **Visual Features:**
+  - Medal icons for top 3 positions (🥇🥈🥉)
+  - Ordinal formatting (1st, 2nd, 3rd, 4th...)
+  - Variant-based coloring (beat=green, miss=red, neutral=gray)
+  - Glow effect for exceptional ranks (#1-3)
+  - Compact and expanded display modes
+  - Monospace font for clean number alignment
+
+  **Configuration Options:**
+  - `rank`: Position (1-based)
+  - `total`: Total items being ranked
+  - `variant`: beat | miss | overall | neutral
+  - `size`: xs | sm | md | lg
+  - `label`: Prefix (e.g., "Week's" → "Week's #1 Beat")
+  - `showOrdinal`: Show suffix (1st vs #1)
+  - `showMedal`: Show medal icons for top 3
+  - `glow`: Enable glow effect
+  - `compact`: Minimal mode (#N only)
+  - `animate`: Enable pop-in animation
+  - `delay`: Animation delay in ms
+
+  **Technical Details:**
+  - Intersection observer for viewport-triggered animation
+  - Spring physics for bounce-in effect
+  - Full `prefers-reduced-motion` support
+  - ARIA labels for accessibility
+  - Memoized rank calculation for performance
+
+**Why this matters:**
+Financial data often exists in isolation — a +15% beat looks the same whether
+it's the biggest or smallest of the week. RankBadge adds contextual intelligence,
+transforming raw numbers into achievements. "This was the #1 beat this week"
+creates an emotional connection that raw percentages can't achieve. It's the
+difference between seeing a number and understanding its significance.
+
+**Use cases:**
+- "#1 beat this week" on exceptional results
+- "Top 5 miss" indicator for disaster results
+- "Ranked #12 of 52" position context
+- Leaderboard-style comparisons
+- Achievement/milestone badges
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (pending)
+
+---
+
 ## 2026-03-26 — ShatterExit: Dramatic Fragment Explosion Animation
 
 **Inspiration:**
