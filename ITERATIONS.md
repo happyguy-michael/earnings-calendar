@@ -1,3 +1,82 @@
+## 2026-03-25 — MagneticText: Per-Character Magnetic Cursor Attraction
+
+**Inspiration:**
+- 2026 "Living Interfaces" trend — kinetic typography
+- Dia app's magnetic UI interactions
+- Linear's playful cursor effects
+- Stripe's attention to micro-interactions
+- Motion graphics kinetic typography principles
+
+**What I built:**
+- New `MagneticText` component family — per-character magnetic attraction to cursor:
+
+  **Core Concept:**
+  - Each character in text is individually attracted to cursor position
+  - Creates fluid, organic "pulled" effect as cursor moves near text
+  - Uses spring physics for natural, bouncy movement
+  - Perfect for headlines and attention-grabbing text elements
+
+  **Components:**
+  - `MagneticText`: Main component with full configuration
+  - `MagneticTextSubtle`: Pre-configured for body text (subtle effect)
+  - `MagneticTextStrong`: Pre-configured for headlines (dramatic effect)
+  - `MagneticHeadline`: Heading variant with glow effect
+  - `MagneticColorText`: Changes character color on attraction
+  - `RepellingText`: Characters push AWAY from cursor (inverse effect)
+  - `MagneticWord`: Word-level attraction for better performance on long text
+
+  **Visual Features:**
+  - Per-character position, rotation, and scale animation
+  - Spring physics with configurable stiffness/damping
+  - Optional glow effect on attracted characters
+  - Optional color change on proximity
+  - Smooth return to rest position when cursor leaves
+
+  **Configuration Options:**
+  - `fieldRadius`: Magnetic field radius in pixels (default: 150)
+  - `strength`: Pull strength 0-1 (default: 0.4, negative = repel)
+  - `rotate`: Enable rotation toward cursor (default: true)
+  - `maxRotation`: Maximum rotation degrees (default: 8)
+  - `scale`: Enable scale on proximity (default: true)
+  - `maxScale`: Maximum scale factor (default: 1.15)
+  - `stiffness`: Spring stiffness (default: 180)
+  - `damping`: Spring damping (default: 15)
+  - `maxDisplacement`: Max pixel displacement (default: 20)
+  - `glow`: Enable glow effect on attraction
+  - `glowColor`: Custom glow color
+  - `attractColor`: Color to apply when attracted
+  - `as`: Render as different HTML elements (span, h1-h6, div, p)
+
+  **Technical Details:**
+  - RequestAnimationFrame for 60fps smooth animation
+  - Spring physics for natural, organic movement
+  - Batched transforms for performance
+  - Full `prefers-reduced-motion` support (shows static text)
+  - Touch/mobile support via touch events
+  - Print styles (no animation)
+  - Accessibility: aria-label with full text, aria-hidden on chars
+
+**Why this matters:**
+Text is usually static and lifeless. MagneticText transforms any text into an
+interactive, living element that responds to user cursor movement. Each character
+independently pulls toward the cursor, creating a mesmerizing fluid effect that
+draws attention and adds personality. Unlike MagneticField (which moves entire cards),
+this works at the character level for true kinetic typography. The spring physics
+creates natural, bouncy movement that feels organic rather than mechanical.
+
+**Use cases:**
+- Hero headlines that demand attention
+- Interactive navigation menus
+- Feature callouts and CTAs
+- Brand names and logos
+- Any text that should feel alive and playful
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 4586e83
+
+---
+
 ## 2026-03-25 — AuroraText: Northern Lights Animated Text Effect
 
 **Inspiration:**
