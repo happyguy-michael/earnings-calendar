@@ -1,3 +1,77 @@
+## 2026-03-26 — BounceReveal: Physics-Based Entrance Animation
+
+**Inspiration:**
+- iOS notification banners dropping in and settling
+- Framer Motion's spring physics
+- Nintendo UI transitions (menus that bounce into place)
+- Material Design's "Aware" motion principles
+- 2026 "Kinetic Design" trend — interfaces with physical weight
+
+**What I built:**
+- New `BounceReveal` component family — viewport-triggered entrance with satisfying bounce:
+
+  **Core Concept:**
+  - Elements don't just fade in — they LAND with character
+  - True spring physics simulation creates natural, organic motion
+  - Each element has weight, momentum, and settles naturally
+  - Perfect for making UI feel physically grounded
+
+  **Components:**
+  - `BounceReveal`: Main wrapper with full configuration
+  - `BounceRevealGroup`: Automatic stagger for coordinated list entrances
+  - `BounceRevealList`: Pre-configured for common list patterns
+
+  **Intensity Presets:**
+  - `subtle`: Minimal bounce (1 overshoot) — professional
+  - `natural`: Standard bounce (2 overshoots) — default
+  - `playful`: More spring (3 overshoots) — engaging
+  - `bouncy`: High energy (4 overshoots) — fun
+  - `dramatic`: Maximum bounce (5 overshoots) — celebration
+
+  **Entrance Directions:**
+  - `up`: Rise from below (default)
+  - `down`: Drop from above
+  - `left`: Slide from right
+  - `right`: Slide from left
+  - `scale`: Scale up from smaller size
+
+  **Visual Features:**
+  - True spring physics (mass, stiffness, damping)
+  - Optional rotation wobble during bounce
+  - Shadow that lifts during overshoot (3D depth cue)
+  - Configurable settle time and bounce intensity
+  - Stagger delays for coordinated list animations
+
+  **Technical Details:**
+  - Custom spring physics engine (no animation library)
+  - GPU-accelerated CSS transforms
+  - RequestAnimationFrame-based smooth animation
+  - Intersection Observer for viewport triggering
+  - Full `prefers-reduced-motion` support
+  - Print styles show static content
+
+**Why this matters:**
+Most entrance animations are either instant (jarring) or linear/eased (boring).
+BounceReveal adds PHYSICALITY — elements feel like they have mass and settle
+with satisfying weight. This "kinetic design" approach makes interfaces feel
+alive and responsive, creating subconscious delight. The spring physics aren't
+just for show — they create the same "feels right" sensation that makes iOS
+feel premium.
+
+**Use cases:**
+- Card reveals as user scrolls
+- List item staggered entrances
+- Modal/dialog appearances
+- Toast notification drops
+- Achievement/milestone celebrations
+- Any element that should feel "weighty"
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** b70dc83
+
+---
+
 ## 2026-03-26 — WaveNumber: Stadium Wave Animation for Numbers
 
 **Inspiration:**
