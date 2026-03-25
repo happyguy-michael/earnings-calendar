@@ -64,7 +64,7 @@ motion (gravity, rotation, staggered timing) makes it feel organic and premium.
 
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
-**Commit:** (see below)
+**Commit:** d9ce655
 
 ---
 
