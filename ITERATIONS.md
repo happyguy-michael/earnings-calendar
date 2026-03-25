@@ -1,3 +1,85 @@
+## 2026-03-26 — WaveNumber: Stadium Wave Animation for Numbers
+
+**Inspiration:**
+- Sports stadium crowd waves
+- Ocean waves and fluid motion in nature
+- Sound equalizer visualizations
+- 2026 "Organic Motion" design trend — animations that feel alive
+- Celebration/excitement UX patterns
+
+**What I built:**
+- New `WaveNumber` component family — playful wave animation passing through digits:
+
+  **Core Concept:**
+  - Each digit rises and falls in sequence, like a stadium crowd doing "the wave"
+  - Creates a fluid, eye-catching motion perfect for celebration moments
+  - Different from existing number animations (flip, spin, morph, slot machine)
+
+  **Components:**
+  - `WaveNumber`: Main component with full configuration
+  - `WavePercentage`: Pre-configured for percentage values with auto-coloring
+  - `WaveCurrency`: Pre-configured for currency display
+  - `WaveEPS`: EPS display that auto-triggers wave on beats
+
+  **Wave Patterns:**
+  - `sine`: Smooth sinusoidal wave (default)
+  - `bounce`: Overshoot and settle effect
+  - `elastic`: Springy elastic bounce
+  - `ripple`: Quick ripple motion
+
+  **Direction Modes:**
+  - `left`: Wave travels left to right
+  - `right`: Wave travels right to left
+  - `center`: Wave expands from center
+
+  **Visual Features:**
+  - 5 color variants: default, success, danger, gold, neon
+  - 5 size presets: xs, sm, md, lg, xl
+  - Peak scale effect (digit grows at wave peak)
+  - Peak glow effect (subtle glow at peak)
+  - Peak color shift (color changes at peak)
+  - Configurable wave height and duration
+  - Continuous or trigger-based animation
+
+  **Configuration Options:**
+  - `waveHeight`: Max rise height in pixels
+  - `waveDuration`: Full wave duration (ms)
+  - `cycleDelay`: Delay between wave cycles
+  - `peakScale`: Scale factor at peak (1.1 = 10% larger)
+  - `glow`: Enable glow effect
+  - `colorShift`: Enable color change at peak
+  - `pauseOnHover`: Pause animation when hovered
+  - `trigger`: External trigger for one-shot waves
+  - `waveCount`: Number of waves (0 = infinite)
+
+  **Technical Details:**
+  - CSS keyframe animations for smooth performance
+  - Pattern-specific easing curves for natural motion
+  - Staggered delays based on digit position and direction
+  - Memoized components to prevent re-renders
+  - Full `prefers-reduced-motion` support
+  - Print styles show static text
+
+**Why this matters:**
+Most number animations are functional (counting up, flipping digits). WaveNumber
+is purely PLAYFUL — it adds joy and celebration to the experience. When a company
+posts a monster beat, the wave animation creates a "victory lap" moment. It's the
+difference between displaying a number and CELEBRATING it. The lateral wave motion
+is unique — no other component in the library has this stadium-style animation.
+
+**Use cases:**
+- Monster beat celebrations (trigger wave on exceptional results)
+- Hero metric displays (continuous subtle wave)
+- Key statistics that deserve attention
+- Playful loading states
+- Achievement/milestone moments
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 1272ecb
+
+---
+
 ## 2026-03-26 — RankBadge: Contextual Performance Ranking Indicators
 
 **Inspiration:**
