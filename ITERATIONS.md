@@ -1,3 +1,91 @@
+## 2026-03-25 — SlotMachine: Casino-Style Reel Spinner for Numbers
+
+**Inspiration:**
+- Las Vegas slot machine reels with satisfying "lock" moments
+- Japanese pachinko machine number displays
+- Lottery number draw animations
+- Game show prize reveals (Wheel of Fortune, The Price is Right)
+- Retro-futuristic sci-fi interfaces (Blade Runner credit terminals)
+
+**What I built:**
+- New `SlotMachine` component family — casino-style spinning reels for dramatic number reveals:
+
+  **Core Concept:**
+  - Each digit is a vertical reel that spins through 0-9 rapidly
+  - Reels lock in sequence from left to right, building anticipation
+  - Motion blur during spin clears as each reel lands
+  - "Lock flash" effect creates satisfying landing moment
+  - Perfect for dramatic earnings surprise reveals
+
+  **Components:**
+  - `SlotMachine`: Main component with full configuration
+  - `SlotMachineNumber`: Formatted decimals
+  - `SlotMachineInteger`: Whole numbers only
+  - `SlotMachinePercentage`: Earnings surprise (auto-colors green/red/gold)
+  - `SlotMachinePrice`: Currency with symbol
+  - `SlotMachineCountdown`: Timer display (HH:MM:SS)
+  - `SlotMachineEPS`: EPS value with optional surprise badge
+
+  **Visual Features:**
+  - 5 color variants: default, success, danger, gold, neon
+  - 5 sizes: xs, sm, md, lg, xl
+  - Motion blur during spin (configurable)
+  - Lock flash effect when each reel stops
+  - 3D perspective tilt on container
+  - Top/bottom gradient masks for depth
+  - Inset shadow for "recessed" reel appearance
+
+  **Animation Details:**
+  - Configurable spin count (default: 3 full rotations)
+  - Staggered locking (left to right with delay)
+  - Ease-out-quart timing for natural deceleration
+  - Reels accelerate then slow dramatically before landing
+
+  **Configuration Options:**
+  - `duration`: Base spin duration (default: 1500ms)
+  - `stagger`: Delay between reels (default: 150ms)
+  - `spins`: Number of full rotations (default: 3)
+  - `motionBlur`: Enable blur during spin
+  - `lockFlash`: Enable flash effect on landing
+  - `gap`: Gap between digits
+  - `animateOnChange`: Re-spin when value changes
+  - `trigger`: Controlled animation trigger
+  - `delay`: Initial delay
+  - `onComplete`: Callback when all reels locked
+
+  **Technical Details:**
+  - requestAnimationFrame-based animation loop
+  - Cubic bezier (ease-out-quart) for natural deceleration
+  - Per-reel state management for independent timing
+  - Full `prefers-reduced-motion` support (instant reveal)
+  - Print styles (clean text, no chrome)
+
+**Different from existing:**
+- `FlipDigit`: Horizontal flip (airport departure board style)
+- `SpinDigit`: Simple vertical scroll
+- `MorphDigit`: SVG path morphing between shapes
+- `SlotMachine`: Full casino reel spin with blur, acceleration, staggered lock
+
+**Why this matters:**
+Slot machines are designed to create anticipation and emotional investment.
+The spinning reels, the left-to-right reveal, the satisfying "lock" — these
+create a visceral experience that makes numbers feel meaningful. For an
+earnings calendar, this transforms "BEAT +15.7%" from data into an EVENT.
+It's the difference between seeing a number and EXPERIENCING a reveal.
+
+**Use cases:**
+- Monster beat announcements (+15% or more)
+- Earnings surprise reveals
+- Year-to-date performance numbers
+- Key statistic hero displays
+- Lottery/random prize selections
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 0318ddb
+
+---
+
 ## 2026-03-25 — SVGTextDraw: Hand-Drawn Text Reveal Effect
 
 **Inspiration:**
