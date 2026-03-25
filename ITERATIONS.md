@@ -1,3 +1,73 @@
+## 2026-03-26 — ShatterExit: Dramatic Fragment Explosion Animation
+
+**Inspiration:**
+- Marvel movie disintegration effects (Thanos snap)
+- iOS app deletion animations
+- Glassmorphism breaking effects
+- 2026 "Dramatic Exits" trend — memorable micro-interactions
+- Video game UI destruction effects
+
+**What I built:**
+- New `ShatterExit` component family — dramatic exit animation that breaks content into flying fragments:
+
+  **Core Concept:**
+  - Content shatters into a configurable grid of fragments
+  - Each fragment flies apart with physics-based motion
+  - Gravity, velocity, and rotation create realistic trajectories
+  - Creates a memorable moment for dismissing items or clearing actions
+
+  **Components:**
+  - `ShatterExit`: Main wrapper component with full configuration
+  - `ShatterButton`: Pre-built button that shatters when clicked
+  - `useShatterEffect`: Hook for programmatic shatter control
+
+  **Direction Modes:**
+  - `explode`: Radial explosion from center (default)
+  - `down`: Fragments fall downward with gravity
+  - `up`: Fragments blast upward
+  - `left`/`right`: Directional shatter
+  - `dissolve`: Minimal movement, fade-focused
+
+  **Configuration Options:**
+  - `fragments`: Number of pieces (4-36)
+  - `duration`: Animation duration (ms)
+  - `gravity`: Gravity strength (0-2)
+  - `velocity`: Initial explosion velocity
+  - `rotationIntensity`: Spin intensity per fragment
+  - `stagger`: Wave delay between fragments (center-out)
+  - `glow`: Optional glow effect on fragments
+  - `glowColor`: Custom glow color
+  - `onComplete`: Callback when animation finishes
+
+  **Technical Details:**
+  - CSS clip-path technique for fragment isolation
+  - RequestAnimationFrame physics loop
+  - GPU-accelerated transforms (translate, rotate, scale)
+  - Wave-based stagger timing (fragments near center start first)
+  - Full `prefers-reduced-motion` support (falls back to simple fade)
+  - Memoized components to prevent re-renders
+
+**Why this matters:**
+Most UI exits are boring — elements just fade or slide away. ShatterExit makes
+dismissals MEMORABLE. When users clear a filter, dismiss a toast, or remove a
+watchlist item, the dramatic shattering effect provides satisfying feedback.
+It transforms mundane actions into micro-moments of delight. The physics-based
+motion (gravity, rotation, staggered timing) makes it feel organic and premium.
+
+**Use cases:**
+- Dismissing notification toasts with flair
+- Clearing active filter chips
+- Removing items from watchlist
+- Dramatic "reset all" actions
+- Error state dismissals
+- Game-style UI interactions
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** (see below)
+
+---
+
 ## 2026-03-25 — SlotMachine: Casino-Style Reel Spinner for Numbers
 
 **Inspiration:**
