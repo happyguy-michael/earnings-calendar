@@ -1,6 +1,7 @@
 'use client';
 
 import { LoadingMessages } from './LoadingMessages';
+import { SkeletonSparkline, SkeletonBarChart, SkeletonMiniChart, SkeletonAreaChart } from './SkeletonSparkline';
 
 /**
  * Skeleton Loading Components
@@ -14,6 +15,39 @@ export function SkeletonStatCard({ delay = 0 }: { delay?: number }) {
     <div className="skeleton-stat-card">
       <div className={`skeleton skeleton-text-lg ${delayClass}`} />
       <div className={`skeleton skeleton-text-sm ${delayClass}`} />
+    </div>
+  );
+}
+
+/** Stat card with animated sparkline skeleton - for chart-like stat displays */
+export function SkeletonStatCardWithChart({ delay = 0 }: { delay?: number }) {
+  const delayClass = delay > 0 ? `skeleton-delay-${Math.min(delay, 5)}` : '';
+  
+  return (
+    <div className="skeleton-stat-card">
+      <div className={`skeleton skeleton-text-sm ${delayClass}`} style={{ width: 60, marginBottom: 8 }} />
+      <div className="flex items-end justify-between gap-4">
+        <div className={`skeleton skeleton-text-lg ${delayClass}`} style={{ width: 50 }} />
+        <SkeletonSparkline width={80} height={30} delay={delay * 100} variant="line" />
+      </div>
+    </div>
+  );
+}
+
+/** Stat card with animated bar chart skeleton */
+export function SkeletonStatCardWithBars({ delay = 0 }: { delay?: number }) {
+  const delayClass = delay > 0 ? `skeleton-delay-${Math.min(delay, 5)}` : '';
+  
+  return (
+    <div className="skeleton-stat-card">
+      <div className={`skeleton skeleton-text-sm ${delayClass}`} style={{ width: 80, marginBottom: 8 }} />
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <div className={`skeleton skeleton-text-lg ${delayClass}`} style={{ width: 40 }} />
+          <div className={`skeleton skeleton-text-sm ${delayClass}`} style={{ marginTop: 4 }} />
+        </div>
+        <SkeletonBarChart width={70} height={40} bars={5} delay={delay * 100} />
+      </div>
     </div>
   );
 }
@@ -127,12 +161,12 @@ export function SkeletonCalendar() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Row Skeleton */}
+        {/* Stats Row Skeleton - mix of chart and standard cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <SkeletonStatCard delay={1} />
-          <SkeletonStatCardWithCircle delay={2} />
-          <SkeletonStatCard delay={3} />
-          <SkeletonStatCard delay={4} />
+          <SkeletonStatCardWithChart delay={2} />
+          <SkeletonStatCardWithBars delay={3} />
+          <SkeletonStatCardWithCircle delay={4} />
         </div>
 
         {/* Contextual Loading Messages */}
@@ -186,11 +220,14 @@ export function SkeletonDetailPage() {
               </div>
             </div>
             <div className="flex-1" />
-            {/* Price Card */}
+            {/* Price Card with Sparkline */}
             <div className="skeleton-stat-card p-5 min-w-[200px]">
               <div className="skeleton h-3 w-20 mb-3" />
-              <div className="skeleton h-9 w-24 mb-2" />
-              <div className="skeleton h-4 w-32" />
+              <div className="flex items-end justify-between">
+                <div className="skeleton h-9 w-24" />
+                <SkeletonMiniChart width={60} height={24} delay={200} />
+              </div>
+              <div className="skeleton h-4 w-32 mt-2" />
             </div>
             {/* Report Info */}
             <div className="skeleton-stat-card p-5 min-w-[200px]">
@@ -231,6 +268,13 @@ export function SkeletonDetailPage() {
                   <div className="skeleton h-3 w-16 mx-auto mb-3" />
                   <div className="skeleton h-12 w-20 mx-auto" />
                 </div>
+              </div>
+            </div>
+            {/* EPS History Chart Card */}
+            <div className="skeleton-stat-card p-8">
+              <div className="skeleton h-5 w-32 mb-6" />
+              <div className="flex justify-center">
+                <SkeletonAreaChart width={400} height={120} delay={300} />
               </div>
             </div>
           </div>
