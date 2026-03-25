@@ -72,7 +72,7 @@ making it feel natural and alive rather than mechanical.
 
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
-**Commit:** (pending)
+**Commit:** 0074f7e
 
 ---
 
