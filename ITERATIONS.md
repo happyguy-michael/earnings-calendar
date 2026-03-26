@@ -1,3 +1,90 @@
+## 2026-03-26 — BeatRateGrade: Letter Grade System for Performance Context
+
+**Inspiration:**
+- Academic grading systems — intuitive performance indicators
+- Gaming leaderboards (S-tier, A+, etc.)
+- Morningstar fund ratings (stars)
+- 2026 "Interpretive Data" trend — raw numbers need context
+- Report cards that instantly communicate quality
+
+**What I built:**
+- New `BeatRateGrade` component family — letter grades for beat rate percentages:
+
+  **Core Concept:**
+  - Users see "90% beat rate" but don't know if that's good or not
+  - A letter grade (A+, B, C, etc.) instantly communicates performance
+  - This is interpretive context for raw numbers
+  - The grade creates an emotional response that percentages can't achieve
+  - Getting an "A+" feels like an achievement; a "C" signals concern
+
+  **Components:**
+  - `BeatRateGrade`: Main badge with grade letter, label, and visual effects
+  - `BeatRateGradeInline`: Compact inline version for text contexts
+  - `BeatRateGradeBadge`: Tooltip-style badge with optional historical comparison
+
+  **Grade Scale:**
+  - `S` (95%+): "Legendary" — gold with sparkles and pulse
+  - `A+` (90%+): "Exceptional" — emerald with sparkles
+  - `A` (85%+): "Excellent" — light green
+  - `A-` (80%+): "Very Good" — pale green
+  - `B+` (75%+): "Good" — lime
+  - `B` (70%+): "Solid" — yellow
+  - `B-` (65%+): "Fair" — amber
+  - `C+` (60%+): "Below Average" — orange
+  - `C` (55%+): "Weak" — dark orange
+  - `C-` (50%+): "Poor" — darker orange
+  - `D` (<50%): "Struggling" — red with warning pulse
+
+  **Visual Features:**
+  - Color-coded by tier (success → warning → danger)
+  - Sparkle effects for exceptional grades (S, A+)
+  - Pulse animation for legendary (S) and poor (D) tiers
+  - Glowing text shadow that intensifies on hover
+  - Background gradient matching tier color
+  - Spring entrance animation with viewport triggering
+
+  **Size Options:**
+  - `sm`: Compact for tight spaces
+  - `md`: Default balanced size
+  - `lg`: Prominent display
+  - `xl`: Hero-sized for feature areas
+
+  **Configuration Options:**
+  - `beatRate`: Beat rate percentage (0-100)
+  - `size`: sm | md | lg | xl
+  - `showLabel`: Show text label ("Exceptional", etc.)
+  - `compact`: Grade letter only, no wrapper
+  - `glow`: Enable text glow effect
+  - `delay`: Animation delay in ms
+
+  **Technical Details:**
+  - Intersection Observer for entrance animation
+  - CSS-in-JSX for encapsulated styling
+  - Full `prefers-reduced-motion` support
+  - Print styles (clean, no glow)
+  - Memoized grade calculation
+
+**Why this matters:**
+Raw percentages lack emotional impact. Seeing "90%" vs "A+ Exceptional" triggers
+completely different responses. The grade system transforms data into achievement
+— users instantly know they're looking at an exceptional week without mental math.
+This is the difference between "displaying data" and "communicating meaning."
+Finance apps are often clinical; grades add human context and make the experience
+more engaging.
+
+**Use cases:**
+- Stats header beat rate indicator
+- Weekly performance summaries
+- Historical comparison badges
+- Tooltip enrichment
+- Achievement-style notifications
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 717bb53
+
+---
+
 ## 2026-03-26 — BounceReveal: Physics-Based Entrance Animation
 
 **Inspiration:**
