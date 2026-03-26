@@ -7409,3 +7409,59 @@ with no account required - zero friction personalization.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 7989f05
 
+
+---
+
+## 2026-03-26 — PopularityBadge: Trending/Hot Stock Indicator
+
+**Inspiration:**
+- Reddit/HackerNews trending indicators
+- TikTok "For You" flame badges
+- GitHub trending repositories
+- Robinhood "Most Popular" lists
+- 2026 "Social Proof" UX trend — showing what others are watching
+
+**What I built:**
+- New `PopularityBadge` component showing social proof indicators for high-interest stocks:
+
+  **Tier System:**
+  - 🔥 **Viral (90%+)**: Mega cap tech (NVDA, TSLA, AAPL) — animated glow + flame pulse
+  - 🔥 **Hot (75%+)**: High volatility stocks, meme favorites — animated glow
+  - 📈 **Trending (60%+)**: AI plays, crypto exposure, popular sectors
+  - 👀 **Watched (40%+)**: Consumer favorites, fintech, semiconductors
+
+  **Predefined High-Interest Tickers:**
+  - Mega caps: NVDA (95), TSLA (94), AAPL (92), MSFT (90), GOOGL (88)
+  - Meme/volatility: GME (85), ARM (85), COIN (82)
+  - AI plays: SMCI (82), AMD (80), MRVL (70)
+  - Consumer: NFLX (78), DIS (75), SHOP (70)
+
+  **Visual Features:**
+  - Animated flame icon for viral/hot stocks
+  - Pulsing glow effect synchronized with tier
+  - Color-coded by tier (orange → red → yellow → indigo)
+  - Smooth entrance animation with spring easing
+  - Size variants: xs, sm, md
+
+  **Component Exports:**
+  - `PopularityBadge` - Main badge component
+  - `PopularityDot` - Compact inline dot indicator
+  - `useIsPopular` - Hook for programmatic checks
+
+  **Accessibility:**
+  - Full `prefers-reduced-motion` support
+  - Descriptive title tooltips
+  - ARIA labels for screen readers
+
+**Integration:**
+- Added to earnings cards between LiveDot and WatchlistIndicator
+- Staggered entrance animation per card index
+- Only renders for stocks with score >= 40
+
+**Why this matters:**
+Some earnings are more "interesting" than others — NVDA earnings move the entire market, while smaller stocks get less attention. The PopularityBadge provides visual social proof showing which earnings are "hot" and worth paying attention to. This creates a subtle FOMO effect and helps users prioritize their attention during busy earnings weeks.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** a58622c
+**Deployed:** https://earnings-calendar-omega.vercel.app
