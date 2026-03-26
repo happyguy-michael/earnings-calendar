@@ -167,6 +167,7 @@ import { WatchlistIndicator } from '@/components/Watchlist';
 import { PopularityBadge } from '@/components/PopularityBadge';
 import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
 import { AddToCalendar } from '@/components/AddToCalendar';
+import { QuickLinksMenu } from '@/components/QuickLinksMenu';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -420,6 +421,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
       standalone
     >
     <QuickPeek data={quickPeekData}>
+      <QuickLinksMenu ticker={earning.ticker} company={earning.company}>
       <ContextualCardActions ticker={earning.ticker} company={earning.company}>
       <div 
         className="earnings-card-wrapper"
@@ -726,6 +728,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
         </div>
       </div>
       </ContextualCardActions>
+      </QuickLinksMenu>
     </QuickPeek>
     </DepthHover>
     </SeismicEarningsWrapper>
