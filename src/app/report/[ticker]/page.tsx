@@ -27,6 +27,7 @@ import { CursorGlowCard } from '@/components/CursorGlowBorder';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SurpriseThermometer, SurpriseThermometerHorizontal, SurpriseTemperatureBadge } from '@/components/SurpriseThermometer';
+import { SurpriseGrade } from '@/components/SurpriseGrade';
 import { WatchlistButton } from '@/components/Watchlist';
 
 // Progress Ring Component
@@ -221,6 +222,14 @@ export default function ReportPage() {
                     <span className="badge badge-warning">⏳ Pending</span>
                   )}
                   <BeatStreak streak={getBeatStreak(ticker)} size="md" showLabel={true} />
+                  {hasResult && (
+                    <SurpriseGrade 
+                      surprise={surprise} 
+                      size="md" 
+                      showLabel={true}
+                      delay={500}
+                    />
+                  )}
                 </div>
                 <p className="text-zinc-400 text-lg">{earning.company}</p>
               </div>

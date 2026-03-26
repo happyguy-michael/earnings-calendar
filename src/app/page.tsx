@@ -164,6 +164,7 @@ import { WeekSentimentWave } from '@/components/SentimentWave';
 import { ScrollDepthLayers } from '@/components/ScrollDepthLayers';
 import { NeonText, NeonBadge, NeonLive } from '@/components/NeonText';
 import { BeatRateGrade, BeatRateGradeBadge } from '@/components/BeatRateGrade';
+import { SurpriseGrade } from '@/components/SurpriseGrade';
 import { WatchlistIndicator } from '@/components/Watchlist';
 import { PopularityBadge } from '@/components/PopularityBadge';
 import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
@@ -677,6 +678,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               </ResultPulseWrapper>
               </DataPulseRing>
             )}
+            {/* Letter grade for surprise - instant context on performance quality */}
+            <SurpriseGrade 
+              surprise={surprise} 
+              size="xs" 
+              delay={animationIndex * 50 + 300}
+              animate={true}
+            />
             {/* Post-earnings price movement - shows how stock moved after report */}
             {earning.priceMove !== undefined && (
               <PriceMoveBadge 
