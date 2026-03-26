@@ -169,6 +169,7 @@ import { PopularityBadge } from '@/components/PopularityBadge';
 import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
 import { AddToCalendar } from '@/components/AddToCalendar';
 import { QuickLinksMenu } from '@/components/QuickLinksMenu';
+import { SelectionProvider, SelectionHighlight, SelectionHint } from '@/components/SelectionMode';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1079,9 +1080,13 @@ export default function Home() {
     <VelocityBlurProvider threshold={0.6} maxBlur={2.5} sensitivity={2}>
     <MomentumTiltProvider maxTilt={3} minScale={0.985} threshold={0.4} sensitivity={1.2}>
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
+    <SelectionProvider maxSelections={5}>
     <div className="min-h-screen relative">
       {/* Snapshot mode indicator (when paused) */}
       <SnapshotIndicator />
+      
+      {/* Selection mode hint */}
+      <SelectionHint />
       
       {/* Scroll progress indicator */}
       <ScrollProgress height={3} hideAtTop={true} showGlow={true} />
@@ -2081,6 +2086,7 @@ export default function Home() {
                                       <SpotlightCard id={`pre-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
                                       <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={i}>
+                                        <SelectionHighlight ticker={e.ticker} company={e.company}>
                                         <MagneticCard strength={0.1} rotate maxRotation={2} layer={1}>
                                           <EarningsCard 
                                             earning={e} 
@@ -2095,6 +2101,7 @@ export default function Home() {
                                             }
                                           />
                                         </MagneticCard>
+                                        </SelectionHighlight>
                                       </VelocityBlurCard>
                                       </MomentumTiltCard>
                                       </SpotlightCard>
@@ -2127,6 +2134,7 @@ export default function Home() {
                                       <SpotlightCard id={`post-${dateStr}-${e.ticker}`} dimOpacity={0.5} dimScale={0.985}>
                                       <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={preMarket.length + i}>
+                                        <SelectionHighlight ticker={e.ticker} company={e.company}>
                                         <MagneticCard strength={0.1} rotate maxRotation={2} layer={1}>
                                           <EarningsCard 
                                             earning={e} 
@@ -2141,6 +2149,7 @@ export default function Home() {
                                             }
                                           />
                                         </MagneticCard>
+                                        </SelectionHighlight>
                                       </VelocityBlurCard>
                                       </MomentumTiltCard>
                                       </SpotlightCard>
@@ -2439,6 +2448,7 @@ export default function Home() {
         showAfterIdle={1000}
       />
     </div>
+    </SelectionProvider>
     </PullToRefresh>
     </MomentumTiltProvider>
     </VelocityBlurProvider>
