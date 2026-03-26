@@ -1,3 +1,85 @@
+## 2026-03-26 — CoachMark: Animated Feature Discovery Hints
+
+**Inspiration:**
+- Notion's feature hints — subtle, contextual guidance
+- Linear's onboarding tooltips — elegant entrance animations
+- Figma's tips system — non-intrusive education
+- 2026 "Guided Discovery" trend — helping users find value without tutorials
+
+**What I built:**
+- New `CoachMark` component system — animated tooltips for user onboarding:
+
+  **Core Concept:**
+  - New users don't discover features like keyboard shortcuts, filters, or gestures
+  - Coach marks are contextual hints that appear near features
+  - They guide without interrupting, educate without lecturing
+  - Show once per feature, then never again (localStorage persistence)
+
+  **Components:**
+  - `CoachMarkProvider`: Context provider managing hint state and persistence
+  - `CoachMark`: Individual animated tooltip with pointer and pulse
+  - `CoachMarkTarget`: Wrapper that attaches hints to any element
+  - `CoachMarkResetButton`: Debug/settings control to reset all hints
+  - `useCoachMark`: Hook for programmatic control
+  - `useShowCoachMark`: Hook to trigger specific hints
+
+  **Visual Features:**
+  - Blue→purple gradient glassmorphic tooltip
+  - Animated entrance with spring physics (scale + fade)
+  - Directional pointer arrow matching position
+  - Pulsing attention ring animation
+  - Smooth exit animation on dismiss
+  - "Got it" dismiss button with hover micro-interaction
+
+  **Position Options:**
+  - 8 positions: top, bottom, left, right, and all corners
+  - Auto-positioning pointer that follows position
+
+  **Configuration Options:**
+  - `id`: Unique identifier for persistence
+  - `title`: Hint title
+  - `position`: Tooltip position relative to target
+  - `priority`: Lower numbers shown first (sequential hints)
+  - `autoDismiss`: Auto-hide after ms (optional)
+  - `icon`: Custom emoji or React node
+  - `forceShow`: Show even if dismissed (for demos)
+
+  **Smart Features:**
+  - Sequential hint system — only one hint visible at a time
+  - Priority-based ordering — important hints first
+  - LocalStorage persistence — show each hint only once
+  - Provider-level `newUsersOnly` option
+  - `resetAllMarks()` for settings/debug
+  - Auto-hides provider for N ms on mount (avoids flash)
+
+  **Technical Details:**
+  - Context-based state management
+  - CSS-in-JSX for encapsulated styling
+  - Full `prefers-reduced-motion` support
+  - Mobile-responsive sizing
+  - Light/dark mode support
+  - ARIA live region for accessibility
+
+**Why this matters:**
+Feature discovery is a real UX problem. Users miss keyboard shortcuts, filters,
+gestures — features that would make them power users. Coach marks solve this
+by providing just-in-time education. Show "/" for search when they first load,
+show swipe hint on mobile, show filter tip after a few visits. This transforms
+passive visitors into engaged users who know the product's capabilities.
+
+**Use cases:**
+- Keyboard shortcut hints (/, ←→, Esc)
+- Filter chip discovery
+- Swipe gesture hints on mobile
+- New feature announcements
+- Watchlist onboarding
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 353efe7
+
+---
+
 ## 2026-03-26 — BeatRateGrade: Letter Grade System for Performance Context
 
 **Inspiration:**
