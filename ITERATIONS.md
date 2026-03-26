@@ -1,3 +1,70 @@
+## 2026-03-26 — AddToCalendar: Export Pending Earnings to External Calendars
+
+**Inspiration:**
+- AddEvent.com calendar export patterns
+- Calendly's "Add to Calendar" dropdown
+- Eventbrite event export buttons
+- 2026 "One-click utility" trend — features that bridge digital experiences
+
+**What I built:**
+- New `AddToCalendar` component — premium dropdown to export pending earnings to calendars:
+
+  **Core Concept:**
+  - Traders want to track earnings dates in their personal calendars
+  - "Add to Calendar" is a standard feature in event apps, but missing from finance dashboards
+  - One-click export to Google Calendar, Apple Calendar, or Outlook
+  - ICS file download as universal fallback
+
+  **Supported Calendars:**
+  - **Google Calendar**: Opens in new tab with pre-filled event details
+  - **Apple Calendar**: Downloads .ics file that opens in Calendar.app
+  - **Outlook Web**: Opens Outlook.com with pre-filled compose view
+  - **Generic .ics**: Downloads ICS file for any calendar app
+
+  **Event Details Generated:**
+  - 📊 Title: "{TICKER} Earnings Report" with emoji
+  - Time: Pre-market (9:30 AM) or After Hours (4:00 PM) based on report time
+  - Duration: 1 hour
+  - Description: Company name, session info, link to analysis page
+  - Location: Session type (Pre-Market/After Hours)
+  - Reminder: 30-minute advance alert
+
+  **Visual Features:**
+  - Compact calendar icon button (matches card scale)
+  - Animated dropdown with staggered item reveals
+  - Color-coded icons per calendar provider
+  - Hover arrows indicating actions
+  - Glassmorphic dropdown with blur backdrop
+  - Click outside or Escape to dismiss
+
+  **Technical Details:**
+  - ICS file generation following RFC 5545 spec
+  - Google Calendar URL API integration
+  - Outlook Web deep-link compose URLs
+  - Blob download pattern for ICS files
+  - Haptic feedback on interactions
+  - Full keyboard accessibility
+  - Reduced motion support
+  - Light mode theming
+
+**Why this matters:**
+Traders who follow earnings don't want to manually enter dates into their
+calendars. This bridges the gap between the earnings calendar app and the
+user's personal productivity tools. The export feature was in the ROADMAP
+but not implemented — now pending earnings cards have a subtle calendar
+button that provides this utility with zero friction.
+
+**Integration:**
+- Added to EarningsCard for ALL pending earnings (not just those with beatOdds)
+- Appears between the countdown timer and the probability badge
+- Small footprint (24px button) to not clutter the card
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 1487d11
+
+---
+
 ## 2026-03-26 — RadialBeatChart: Animated Donut/Radial Chart for Beat Visualization
 
 **Inspiration:**

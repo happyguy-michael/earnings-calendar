@@ -31,7 +31,7 @@ Premium earnings calendar with AI-powered analysis, targeting retail traders who
 - [x] Dark/light mode toggle ✓
 - [x] Mobile swipe navigation ✓
 - [ ] Watchlist functionality
-- [ ] Calendar export (Google/Apple)
+- [x] Calendar export (Google/Apple) ✓
 
 ## Backlog - Features
 - [ ] Real earnings data API (Financial Modeling Prep / Alpha Vantage)
