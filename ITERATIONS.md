@@ -1,3 +1,91 @@
+## 2026-03-26 — RadialBeatChart: Animated Donut/Radial Chart for Beat Visualization
+
+**Inspiration:**
+- Apple Fitness rings — circular progress visualization
+- Vercel analytics donut charts — clean, animated data viz
+- Financial dashboard pie/donut charts
+- 2026 "Data Visualization as Art" trend — charts that delight
+
+**What I built:**
+- New `RadialBeatChart` component family — animated circular charts for beat/miss/pending:
+
+  **Core Concept:**
+  - Traditional bar/line charts show trends; donut charts show composition
+  - At-a-glance visualization of beat/miss/pending breakdown
+  - The circular form is compact, mobile-friendly, and visually distinct
+  - Smooth arc animations create a satisfying reveal
+
+  **Components:**
+  - `RadialBeatChart`: Main donut chart with full configuration
+  - `RadialBeatChartCompact`: Inline mini variant (48px default)
+  - `StackedRingsChart`: Apple Fitness-style stacked rings (each segment separate ring)
+  - `SemicircleGauge`: Half-circle gauge for beat rate display
+
+  **Visual Features:**
+  - Smooth easeOutExpo arc animation from start angle
+  - Interactive hover states with segment highlighting
+  - Non-hovered segments fade to 50% opacity
+  - Glow effects using SVG filters
+  - Configurable segment gap and start angle
+  - Three color scheme: beats (emerald), misses (red), pending (zinc)
+
+  **Center Display Options:**
+  - `beatRate`: Shows animated percentage with glow
+  - `total`: Shows total count
+  - `custom`: Any React node
+
+  **Configuration Options:**
+  - `size`: Chart size in pixels
+  - `strokeWidth`: Arc thickness
+  - `innerRadiusRatio`: Controls donut hole size
+  - `duration`: Animation duration
+  - `segmentGap`: Gap between arcs in degrees
+  - `startAngle`: Where the chart starts (0 = top)
+  - `glow`: Enable segment glow effects
+  - `interactive`: Enable hover interactions
+  - `showLegend`: Show/hide legend below
+  - `showCenter`: Show/hide center content
+  - `animateOnView`: Trigger on viewport entry
+
+  **Variants:**
+  - **StackedRingsChart**: Three concentric rings (like Apple Fitness)
+    - Each category gets its own ring at different radius
+    - Progress fill shows value vs total
+    - Great for comparing individual metrics
+  
+  - **SemicircleGauge**: 180-degree arc gauge
+    - Perfect for single-metric beat rate display
+    - Auto-colors green/red based on 50% threshold
+    - Compact vertical footprint
+
+  **Technical Details:**
+  - Custom SVG arc path calculation (no chart library)
+  - GPU-accelerated with transforms
+  - IntersectionObserver for viewport-triggered animation
+  - requestAnimationFrame-based smooth animation
+  - Full `prefers-reduced-motion` support
+  - Print styles (no filters/glow)
+
+**Why this matters:**
+Bar charts show trends, but donut charts show composition at a glance.
+"How did this week break down?" is answered instantly by the radial chart.
+The smooth arc animation creates a satisfying reveal, and the Apple Fitness-
+style ring variant feels premium and familiar. This adds visual variety
+to the dashboard while providing genuine utility for understanding
+weekly earnings distribution.
+
+**Use cases:**
+- Week summary card beat/miss/pending breakdown
+- Stats header visual indicator
+- Report page earnings history composition
+- Any context needing proportional visualization
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 88310e5
+
+---
+
 ## 2026-03-26 — CoachMark Integration: Guided Onboarding for Power Features
 
 **Inspiration:**
