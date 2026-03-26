@@ -1,3 +1,66 @@
+## 2026-03-27 — SelectionMode: Multi-Select for Earnings Comparison
+
+**Inspiration:**
+- Figma multi-select with Shift+Click
+- macOS Finder selection
+- Gmail checkbox selection with floating action bar
+- Linear.app bulk actions
+- 2026 "Power User Patterns" — deep interactions for productivity
+
+**What I built:**
+- New `SelectionMode` component system — Shift+Click to select multiple earnings cards:
+
+  **Core Concept:**
+  - Enable selecting multiple earnings cards for comparison
+  - Shift+Click adds cards to selection
+  - A floating bar appears with actions
+  - Transforms the calendar from read-only to interactive workspace
+  
+  **Components:**
+  - **SelectionProvider**: Context provider managing selection state
+  - **SelectionHighlight**: Wrapper that shows visual selection state on cards
+  - **SelectionBar**: Floating action bar with selection count and actions
+  - **SelectionHint**: Shows hint about Shift+Click when Shift is held
+
+  **Features:**
+  - Shift+Click to select/deselect cards
+  - Visual highlight on selected cards with pulsing glow
+  - Checkbox indicator on selected items
+  - Floating selection bar with count (X/5 selected)
+  - Preview of selected tickers
+  - Compare button (UI preview, feature coming soon)
+  - Clear all selection with Escape key
+  - Maximum 5 selections to prevent overwhelming comparisons
+  - Haptic feedback on mobile
+  - Full keyboard accessibility
+
+  **Technical Details:**
+  - React context for global selection state
+  - Event propagation handling (Shift+Click only)
+  - Toast notifications for max selection warning
+  - Spring-based animations for bar entrance
+  - Respects prefers-reduced-motion
+
+**Why this matters:**
+Traders often want to compare multiple earnings side-by-side. Before, you'd need to:
+1. Open multiple browser tabs
+2. Manually navigate to each report
+3. Switch back and forth to compare
+
+With SelectionMode: Shift+Click the stocks you want → Compare button → Done.
+This sets the foundation for a full comparison view feature.
+
+**Light/Dark Mode:**
+Full support with appropriate colors, shadows, and contrast adjustments.
+
+**Accessibility:**
+- ARIA toolbar role on selection bar
+- Keyboard navigation (Escape to clear)
+- Focus management
+- Reduced motion support
+
+---
+
 ## 2026-03-26 — QuickLinksMenu: Right-Click Research Links
 
 **Inspiration:**
