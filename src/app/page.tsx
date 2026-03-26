@@ -148,6 +148,7 @@ import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
 import { SeasonProgress, SeasonProgressBadge } from '@/components/SeasonProgress';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
+import { TopPerformerBadge, useTopPerformers } from '@/components/TopPerformerBadge';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import { MarketPulseIndicator, useMarketPulse } from '@/components/MarketPulseOverlay';
 import { GlowPing, NewResultPing, FreshDataPing, ImminentPing } from '@/components/GlowPing';
@@ -264,7 +265,7 @@ function getMinutesUntilReport(earning: Earning): number {
   return diffMs / (1000 * 60);
 }
 
-function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earning; isToday?: boolean; animationIndex?: number }) {
+function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { earning: Earning; isToday?: boolean; animationIndex?: number; topPerformer?: { type: 'beat' | 'miss'; rank: number; surprise: number } }) {
   const hasResult = earning.eps !== undefined && earning.eps !== null;
   const isPending = !hasResult;
   const isTodayPending = isToday && isPending;
@@ -485,6 +486,15 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             <LiveDot isToday={!!isToday} isPending={isPending} time={earning.time} />
             <PopularityBadge ticker={earning.ticker} size="xs" delay={animationIndex * 50 + 150} />
             <WatchlistIndicator ticker={earning.ticker} size="xs" />
+            {topPerformer && (
+              <TopPerformerBadge
+                type={topPerformer.type}
+                surprise={topPerformer.surprise}
+                rank={topPerformer.rank}
+                size="sm"
+                delay={animationIndex * 50 + 200}
+              />
+            )}
           </div>
           <div className="text-xs text-zinc-500 truncate flex items-center gap-2">
             {earning.company}
@@ -854,6 +864,9 @@ export default function Home() {
     
     return result;
   }, [searchQuery, statusFilter]);
+
+  // Calculate top performers from filtered earnings (top 3 beats and misses)
+  const topPerformers = useTopPerformers(filteredEarnings, 3);
 
   const navigateWeek = useCallback((delta: number, fromSwipe = false) => {
     // Haptic feedback for swipe/navigation
@@ -2069,7 +2082,18 @@ export default function Home() {
                                       <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={i}>
                                         <MagneticCard strength={0.1} rotate maxRotation={2} layer={1}>
-                                          <EarningsCard earning={e} isToday={isToday} animationIndex={i} />
+                                          <EarningsCard 
+                                            earning={e} 
+                                            isToday={isToday} 
+                                            animationIndex={i}
+                                            topPerformer={
+                                              topPerformers.isTopBeat(e.ticker) 
+                                                ? { type: 'beat', ...topPerformers.isTopBeat(e.ticker)! }
+                                                : topPerformers.isTopMiss(e.ticker)
+                                                ? { type: 'miss', ...topPerformers.isTopMiss(e.ticker)! }
+                                                : undefined
+                                            }
+                                          />
                                         </MagneticCard>
                                       </VelocityBlurCard>
                                       </MomentumTiltCard>
@@ -2104,7 +2128,18 @@ export default function Home() {
                                       <MomentumTiltCard intensity={0.7} dynamicShadow>
                                       <VelocityBlurCard staggerIndex={preMarket.length + i}>
                                         <MagneticCard strength={0.1} rotate maxRotation={2} layer={1}>
-                                          <EarningsCard earning={e} isToday={isToday} animationIndex={preMarket.length + i} />
+                                          <EarningsCard 
+                                            earning={e} 
+                                            isToday={isToday} 
+                                            animationIndex={preMarket.length + i}
+                                            topPerformer={
+                                              topPerformers.isTopBeat(e.ticker) 
+                                                ? { type: 'beat', ...topPerformers.isTopBeat(e.ticker)! }
+                                                : topPerformers.isTopMiss(e.ticker)
+                                                ? { type: 'miss', ...topPerformers.isTopMiss(e.ticker)! }
+                                                : undefined
+                                            }
+                                          />
                                         </MagneticCard>
                                       </VelocityBlurCard>
                                       </MomentumTiltCard>
