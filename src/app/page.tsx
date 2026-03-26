@@ -162,6 +162,7 @@ import { SeismicEarningsWrapper } from '@/components/SeismicWave';
 import { WeekSentimentWave } from '@/components/SentimentWave';
 import { ScrollDepthLayers } from '@/components/ScrollDepthLayers';
 import { NeonText, NeonBadge, NeonLive } from '@/components/NeonText';
+import { BeatRateGrade, BeatRateGradeBadge } from '@/components/BeatRateGrade';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1500,32 +1501,35 @@ export default function Home() {
                 >
                   <div className="flex items-center gap-3">
                     <ProgressRing value={beatRate} size={48} color="#22c55e" delay={200} duration={1400} />
-                    <div>
-                      <div className="text-2xl font-bold text-gradient-green">
-                        <IntensityGlow
-                          value={beatRate}
-                          maxValue={100}
-                          variant="success"
-                          pulse={beatRate >= 60}
-                          sparkles={beatRate >= 80}
-                          sparkleCount={4}
-                          ring={beatRate >= 90}
-                          blurRadius={16}
-                          spreadRadius={3}
-                          borderRadius={12}
-                          minIntensity={0.15}
-                          maxIntensity={0.85}
-                        >
-                          <AnimatedStatDelta value={beatRate} position="top-right" glow flyDistance={28} duration={750} suffix="%">
-                            <NumberJolt value={beatRate} intensity={4} duration={400} directional>
-                              <ValueChangeHighlight value={beatRate} variant="success">
-                                <IntensityText value={beatRate} maxValue={100} variant="success" glow>
-                                  <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
-                                </IntensityText>
-                              </ValueChangeHighlight>
-                            </NumberJolt>
-                          </AnimatedStatDelta>
-                        </IntensityGlow>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <div className="text-2xl font-bold text-gradient-green">
+                          <IntensityGlow
+                            value={beatRate}
+                            maxValue={100}
+                            variant="success"
+                            pulse={beatRate >= 60}
+                            sparkles={beatRate >= 80}
+                            sparkleCount={4}
+                            ring={beatRate >= 90}
+                            blurRadius={16}
+                            spreadRadius={3}
+                            borderRadius={12}
+                            minIntensity={0.15}
+                            maxIntensity={0.85}
+                          >
+                            <AnimatedStatDelta value={beatRate} position="top-right" glow flyDistance={28} duration={750} suffix="%">
+                              <NumberJolt value={beatRate} intensity={4} duration={400} directional>
+                                <ValueChangeHighlight value={beatRate} variant="success">
+                                  <IntensityText value={beatRate} maxValue={100} variant="success" glow>
+                                    <ElasticPercentage value={beatRate} animateOnMount className="elastic-success" />
+                                  </IntensityText>
+                                </ValueChangeHighlight>
+                              </NumberJolt>
+                            </AnimatedStatDelta>
+                          </IntensityGlow>
+                        </div>
+                        <BeatRateGrade beatRate={beatRate} size="sm" showLabel={false} delay={400} />
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</WeightShiftText>
                     </div>
