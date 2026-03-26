@@ -1,3 +1,62 @@
+## 2026-03-26 — QuickLinksMenu: Right-Click Research Links
+
+**Inspiration:**
+- Linear.app right-click contextual actions
+- macOS/Windows native context menus
+- Bloomberg Terminal quick research shortcuts
+- Robinhood stock info modals
+- 2026 "Contextual Intelligence" trend — actions surfaced exactly where needed
+
+**What I built:**
+- New `QuickLinksMenu` component — right-click any earnings card for instant research access:
+
+  **Core Concept:**
+  - Traders frequently need to jump to external research tools
+  - Right-click is a power-user pattern that feels native
+  - Eliminates copy-paste friction → direct links to relevant pages
+  - Long-press support for mobile/touch devices
+
+  **Quick Links Included:**
+  - **Yahoo Finance**: Quotes, charts, financials
+  - **TradingView**: Advanced charts & technical analysis
+  - **Stocktwits**: Social sentiment & retail chatter
+  - **SEC EDGAR**: Official SEC filings (10-K, 10-Q, 8-K)
+  - **Seeking Alpha**: Analysis & earnings call transcripts
+  - **Finviz**: Visual stock screener with fundamentals
+
+  **Features:**
+  - Spring-animated menu entrance with glassmorphism
+  - Full keyboard navigation (↑↓ navigate, Enter open, Esc close)
+  - Auto-positioning to stay within viewport bounds
+  - Touch device support via long-press (500ms)
+  - Haptic feedback on mobile
+  - External link arrows animate on hover
+  - Keyboard hints in footer
+
+  **Technical Details:**
+  - Portal-based rendering to escape stacking contexts
+  - Smart viewport boundary detection
+  - Event propagation handling (doesn't interfere with card click)
+  - Close on scroll/outside click
+  - Respects prefers-reduced-motion
+
+**Why this matters:**
+Research workflow is critical for traders. Before, you'd:
+1. See interesting earnings → 2. Copy ticker → 3. Open new tab → 4. Go to Yahoo/TradingView → 5. Paste ticker
+
+Now: Right-click → Click link → Done. One-click research access from any card.
+
+**Light/Dark Mode:**
+Full support with appropriate contrast and shadow adjustments.
+
+**Accessibility:**
+- ARIA roles (menu, menuitem)
+- Keyboard navigable
+- Focus management
+- Reduced motion support
+
+---
+
 ## 2026-03-26 — AddToCalendar: Export Pending Earnings to External Calendars
 
 **Inspiration:**
