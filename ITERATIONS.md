@@ -1,3 +1,71 @@
+## 2026-03-26 — CoachMark Integration: Guided Onboarding for Power Features
+
+**Inspiration:**
+- App onboarding best practices — progressive disclosure of features
+- Slack's "first run" experience — contextual hints as users explore
+- Figma's feature tips — right information at the right time
+- The principle that features users don't discover are features that don't exist
+
+**What I built:**
+- Connected the CoachMark system to the main page with 4 strategic hints:
+
+  **Hint 1: Command Palette (Priority 0)**
+  - Target: Search bar
+  - Message: "Press ⌘K (or Ctrl+K) to open the command palette. Search tickers, jump to dates, and more!"
+  - Icon: 🚀
+  - Position: bottom (below search bar)
+
+  **Hint 2: Week Navigation (Priority 1)**
+  - Target: Navigation arrows
+  - Message: "Use ← → arrow keys to quickly navigate between weeks. No clicking required!"
+  - Icon: ⌨️
+  - Position: bottom-left (below nav buttons)
+
+  **Hint 3: Quick Filters (Priority 2)**
+  - Target: Filter chips
+  - Message: "Press B for beats, M for misses, P for pending, or A for all. Filter at the speed of thought!"
+  - Icon: ⚡
+  - Position: bottom (below filters)
+
+  **Hint 4: Today Button (Priority 3)**
+  - Target: Today button
+  - Message: "Press T anytime to instantly jump back to the current week."
+  - Icon: 📅
+  - Position: bottom (below button)
+
+  **Reset Button:**
+  - Added 💡 button in header toolbar
+  - Allows users to reset and see hints again
+  - Hidden on mobile to save space
+
+  **Integration Details:**
+  - `CoachMarkProvider` wraps the entire app with 3s initial delay
+  - Each target wrapped with `CoachMarkTarget` component
+  - Priority system ensures hints appear sequentially
+  - All hints persist via localStorage after dismissal
+
+**Why this matters:**
+The earnings calendar has dozens of powerful features (keyboard shortcuts, 
+command palette, quick filters) that users never discover. CoachMarks transform
+passive visitors into power users by teaching features at the moment they're
+most useful. Studies show 70% of features go undiscovered — this fixes that.
+The 3-second delay ensures the page loads first, then guides begin.
+
+**User journey:**
+1. User lands → page loads → 3s passes
+2. First hint appears on search bar (⌘K for power search)
+3. User dismisses → next hint on nav arrows (←→ shortcuts)
+4. User dismisses → next hint on filters (B/M/P keys)
+5. User dismisses → final hint on Today button (T key)
+6. Future visits: no hints (localStorage remembers)
+7. User clicks 💡 → hints reset for demo or re-learning
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** e97aac5
+
+---
+
 ## 2026-03-26 — CoachMark: Animated Feature Discovery Hints
 
 **Inspiration:**
