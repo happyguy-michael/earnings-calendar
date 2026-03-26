@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useToast } from './Toast';
 import { useHaptic } from './HapticFeedback';
+import { useWatchlist } from './Watchlist';
 
 interface ContextualCardActionsProps {
   ticker: string;
@@ -53,6 +54,8 @@ export function ContextualCardActions({
   const containerRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
   const { trigger: haptic } = useHaptic();
+  const { isInWatchlist, toggleWatchlist } = useWatchlist();
+  const isWatched = isInWatchlist(ticker);
 
   // Clear timeout on unmount
   useEffect(() => {
@@ -119,13 +122,17 @@ export function ContextualCardActions({
     setTimeout(() => setActiveAction(null), 300);
   }, [ticker, company, showToast, haptic]);
 
-  // Add to watchlist (placeholder)
+  // Toggle watchlist
   const handleWatchlist = useCallback(() => {
-    haptic('light');
-    showToast(`${ticker} added to watchlist`, { type: 'info', icon: '⭐', duration: 2000 });
+    const { added } = toggleWatchlist(ticker, company);
+    haptic(added ? 'success' : 'light');
+    showToast(
+      added ? `${ticker} added to watchlist` : `${ticker} removed from watchlist`, 
+      { type: added ? 'success' : 'info', icon: added ? '⭐' : '✓', duration: 2000 }
+    );
     setActiveAction('watchlist');
     setTimeout(() => setActiveAction(null), 300);
-  }, [ticker, showToast, haptic]);
+  }, [ticker, company, toggleWatchlist, showToast, haptic]);
 
   const actions: Action[] = [
     {
@@ -154,11 +161,11 @@ export function ContextualCardActions({
     {
       id: 'watchlist',
       icon: (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill={isWatched ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       ),
-      label: 'Watch',
+      label: isWatched ? 'Unwatch' : 'Watch',
       onClick: handleWatchlist,
       color: '#fbbf24',
     },

@@ -163,6 +163,7 @@ import { WeekSentimentWave } from '@/components/SentimentWave';
 import { ScrollDepthLayers } from '@/components/ScrollDepthLayers';
 import { NeonText, NeonBadge, NeonLive } from '@/components/NeonText';
 import { BeatRateGrade, BeatRateGradeBadge } from '@/components/BeatRateGrade';
+import { WatchlistIndicator } from '@/components/Watchlist';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -477,6 +478,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
               size="sm"
             />
             <LiveDot isToday={!!isToday} isPending={isPending} time={earning.time} />
+            <WatchlistIndicator ticker={earning.ticker} size="xs" />
           </div>
           <div className="text-xs text-zinc-500 truncate flex items-center gap-2">
             {earning.company}

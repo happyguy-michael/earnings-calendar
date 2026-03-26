@@ -27,6 +27,7 @@ import { CursorGlowCard } from '@/components/CursorGlowBorder';
 import { BreathingCard } from '@/components/BreathingCard';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SurpriseThermometer, SurpriseThermometerHorizontal, SurpriseTemperatureBadge } from '@/components/SurpriseThermometer';
+import { WatchlistButton } from '@/components/Watchlist';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -174,9 +175,12 @@ export default function ReportPage() {
             Calendar
           </Link>
           <div className="flex items-center gap-2">
-            <button className="badge badge-neutral hover:bg-white/10 transition-smooth cursor-pointer">
-              ♡ Watchlist
-            </button>
+            <WatchlistButton 
+              ticker={ticker} 
+              company={earning.company} 
+              variant="pill" 
+              size="sm"
+            />
             <ShareMenu 
               ticker={ticker}
               company={earning.company}
