@@ -7356,3 +7356,56 @@ New `RetroCRTNumber` component with authentic vintage terminal aesthetics:
 **Build:** ✓ Passed
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 2228171
+
+
+---
+
+## 2026-03-26 — Persistent Watchlist Feature
+
+**Inspiration:**
+- Robinhood/Webull watchlist functionality
+- Apple Stocks app "My Stocks" feature
+- Premium fintech apps with persistent user preferences
+- 2026 trend: "Personalized by default" - apps that remember your choices
+
+**What I built:**
+New `Watchlist` module with full persistence and micro-interactions:
+
+**Core Components:**
+- `WatchlistProvider` - Global context with localStorage persistence
+- `WatchlistButton` - Animated toggle with star fill effect
+- `WatchlistIndicator` - Small badge showing watched status on cards
+- `WatchlistCount` - Badge showing number of items in watchlist
+
+**Features:**
+- **localStorage persistence** - Watchlist survives page refresh and browser restart
+- **Star fill animation** - Smooth fill animation when adding to watchlist
+- **Sparkle burst** - Particle effect on add action
+- **Real toggle behavior** - Add/remove with proper state management
+- **Haptic feedback** - Vibration on mobile devices
+- **Toast notifications** - Confirmation on add/remove
+- **SSR-safe** - Graceful hydration handling
+
+**Integration:**
+- Calendar cards show gold star indicator for watched items
+- Report page has functional "Watch" button in header
+- ContextualCardActions hover menu uses real watchlist
+- All actions properly toggle between add/remove states
+
+**Technical Details:**
+- React Context API for global state
+- useCallback/useMemo for performance
+- CSS keyframe animations for sparkles and bounce
+- prefers-reduced-motion respect
+- ARIA labels for accessibility
+
+**Why this matters:**
+Users want to track specific stocks they care about. A persistent watchlist
+is a fundamental feature that transforms the app from "browse only" to
+"personalized tool." The localStorage approach means it works immediately
+with no account required - zero friction personalization.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 7989f05
+
