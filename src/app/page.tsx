@@ -166,6 +166,7 @@ import { BeatRateGrade, BeatRateGradeBadge } from '@/components/BeatRateGrade';
 import { WatchlistIndicator } from '@/components/Watchlist';
 import { PopularityBadge } from '@/components/PopularityBadge';
 import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
+import { AddToCalendar } from '@/components/AddToCalendar';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -673,26 +674,38 @@ function EarningsCard({ earning, isToday, animationIndex = 0 }: { earning: Earni
             )}
           </div>
           </NewResultPing>
-        ) : earning.beatOdds ? (
-          <IntensityGlow
-            value={earning.beatOdds}
-            maxValue={100}
-            variant={earning.beatOdds >= 60 ? 'success' : earning.beatOdds >= 40 ? 'warning' : 'danger'}
-            pulse={earning.beatOdds >= 70}
-            sparkles={earning.beatOdds >= 85}
-            sparkleCount={3}
-            blurRadius={10}
-            spreadRadius={2}
-            borderRadius={9999}
-            minIntensity={0.1}
-            maxIntensity={0.7}
-          >
-            <HeartbeatBadge 
-              probability={earning.beatOdds} 
-              size="md"
+        ) : (
+          <div className="flex items-center gap-2">
+            {/* Add to Calendar button for pending earnings */}
+            <AddToCalendar
+              ticker={earning.ticker}
+              company={earning.company}
+              date={earning.date}
+              time={earning.time}
+              size="sm"
             />
-          </IntensityGlow>
-        ) : null}
+            {earning.beatOdds ? (
+              <IntensityGlow
+                value={earning.beatOdds}
+                maxValue={100}
+                variant={earning.beatOdds >= 60 ? 'success' : earning.beatOdds >= 40 ? 'warning' : 'danger'}
+                pulse={earning.beatOdds >= 70}
+                sparkles={earning.beatOdds >= 85}
+                sparkleCount={3}
+                blurRadius={10}
+                spreadRadius={2}
+                borderRadius={9999}
+                minIntensity={0.1}
+                maxIntensity={0.7}
+              >
+                <HeartbeatBadge 
+                  probability={earning.beatOdds} 
+                  size="md"
+                />
+              </IntensityGlow>
+            ) : null}
+          </div>
+        )}
         </Link>
         </FocusSpotlight>
       </CardLightSweep>
