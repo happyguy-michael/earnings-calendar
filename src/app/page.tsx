@@ -165,6 +165,7 @@ import { NeonText, NeonBadge, NeonLive } from '@/components/NeonText';
 import { BeatRateGrade, BeatRateGradeBadge } from '@/components/BeatRateGrade';
 import { WatchlistIndicator } from '@/components/Watchlist';
 import { PopularityBadge } from '@/components/PopularityBadge';
+import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1044,6 +1045,7 @@ export default function Home() {
       onToggleTheme={toggleTheme}
       onRefresh={handleDataRefresh}
     >
+    <CoachMarkProvider initialDelay={3000}>
     <SnapshotProvider autoResumeSeconds={300}>
     <VelocityBlurProvider threshold={0.6} maxBlur={2.5} sensitivity={2}>
     <MomentumTiltProvider maxTilt={3} minScale={0.985} threshold={0.4} sensitivity={1.2}>
@@ -1274,12 +1276,21 @@ export default function Home() {
             
             {/* Search Bar - centered */}
             <div className="hidden md:flex flex-1 justify-center max-w-md mx-4">
-              <SearchBar 
-                value={searchQuery} 
-                onChange={setSearchQuery}
-                resultCount={filteredEarnings.length}
-                totalCount={earnings.length}
-              />
+              <CoachMarkTarget
+                markId="command-palette"
+                title="Command Palette"
+                description="Press ⌘K (or Ctrl+K) to open the command palette. Search tickers, jump to dates, and more!"
+                position="bottom"
+                icon="🚀"
+                priority={0}
+              >
+                <SearchBar 
+                  value={searchQuery} 
+                  onChange={setSearchQuery}
+                  resultCount={filteredEarnings.length}
+                  totalCount={earnings.length}
+                />
+              </CoachMarkTarget>
             </div>
             
             <div className="flex items-center gap-3 flex-shrink-0">
@@ -1306,12 +1317,32 @@ export default function Home() {
               <AudioToggle size="sm" />
               <ColorBlindToggle compact />
               <CursorTrailToggle enabled={cursorTrailEnabled} onToggle={toggleCursorTrail} size="sm" />
+              <CoachMarkResetButton className="toggle-btn hidden lg:flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-colors text-xs">
+                💡
+              </CoachMarkResetButton>
               <ThemeToggle />
-              <TodayButton 
-                onClick={goToToday}
-                pendingToday={pendingToday}
-              />
-              <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-visible relative">
+              <CoachMarkTarget
+                markId="today-shortcut"
+                title="Jump to Today"
+                description="Press T anytime to instantly jump back to the current week."
+                position="bottom"
+                icon="📅"
+                priority={3}
+              >
+                <TodayButton 
+                  onClick={goToToday}
+                  pendingToday={pendingToday}
+                />
+              </CoachMarkTarget>
+              <CoachMarkTarget
+                markId="week-navigation"
+                title="Week Navigation"
+                description="Use ← → arrow keys to quickly navigate between weeks. No clicking required!"
+                position="bottom-left"
+                icon="⌨️"
+                priority={1}
+              >
+                <div className="flex bg-white/5 rounded-xl border border-white/10 overflow-visible relative">
                 {/* Previous Week Button */}
                 <div 
                   className="relative"
@@ -1368,6 +1399,7 @@ export default function Home() {
                   )}
                 </div>
               </div>
+              </CoachMarkTarget>
             </div>
           </div>
           
@@ -1383,13 +1415,22 @@ export default function Home() {
           
           {/* Filter chips - collapse on scroll */}
           <div className="sticky-header-filters">
-            <FilterPulse activeFilter={statusFilter} duration={650} maxScale={3.5}>
-              <FilterChips 
-                value={statusFilter}
-                onChange={handleFilterChange}
-                counts={filterCounts}
-              />
-            </FilterPulse>
+            <CoachMarkTarget
+              markId="filter-shortcuts"
+              title="Quick Filters"
+              description="Press B for beats, M for misses, P for pending, or A for all. Filter at the speed of thought!"
+              position="bottom"
+              icon="⚡"
+              priority={2}
+            >
+              <FilterPulse activeFilter={statusFilter} duration={650} maxScale={3.5}>
+                <FilterChips 
+                  value={statusFilter}
+                  onChange={handleFilterChange}
+                  counts={filterCounts}
+                />
+              </FilterPulse>
+            </CoachMarkTarget>
           </div>
         </div>
         
@@ -2351,6 +2392,7 @@ export default function Home() {
     </MomentumTiltProvider>
     </VelocityBlurProvider>
     </SnapshotProvider>
+    </CoachMarkProvider>
     </CommandPaletteProvider>
     </SkeletonTransition>
   );
