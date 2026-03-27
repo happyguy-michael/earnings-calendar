@@ -172,6 +172,7 @@ import { AddToCalendar } from '@/components/AddToCalendar';
 import { QuickLinksMenu } from '@/components/QuickLinksMenu';
 import { SelectionProvider, SelectionHighlight, SelectionHint } from '@/components/SelectionMode';
 import { FiscalQuarterBadge } from '@/components/FiscalQuarterBadge';
+import { SkipLink } from '@/components/SkipLink';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1092,6 +1093,9 @@ export default function Home() {
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <SelectionProvider maxSelections={5}>
     <div className="min-h-screen relative">
+      {/* Skip link for keyboard accessibility - first focusable element */}
+      <SkipLink targetId="main-content" offsetTop={140} />
+      
       {/* Snapshot mode indicator (when paused) */}
       <SnapshotIndicator />
       
@@ -1512,7 +1516,7 @@ export default function Home() {
         perspective={1400} 
         smoothing={0.08}
       >
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main id="main-content" className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Row with Breathing Cards, Glass Reflection, Cursor Glow, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 stats-grid">
           <BreathingCard duration={5000} phase={0} amplitude={0.006} breatheShadow={true}>
