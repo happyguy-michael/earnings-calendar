@@ -62,7 +62,7 @@ export function WeekProgressBar({
     return () => clearTimeout(timer);
   }, [isCurrentWeek, delay]);
 
-  // Don't render if not current week
+  // Parent now handles conditional rendering, but keep as fallback
   if (!isCurrentWeek) return null;
 
   const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];

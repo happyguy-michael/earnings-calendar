@@ -1945,16 +1945,26 @@ export default function Home() {
               })()}
 
               {/* Week Progress Bar - shows progress through current week */}
-              <WeekProgressBar
-                currentDayIndex={(() => {
-                  const day = today.getDay();
-                  if (day === 0 || day === 6) return 4; // Weekend -> Friday
-                  return day - 1; // Mon=0, Tue=1, etc.
-                })()}
-                isCurrentWeek={weekIndex === todayWeekIndex}
-                delay={weekIndex * 100}
-                variant="gradient"
-              />
+              {(() => {
+                // Check if today falls within this week (more robust than exact date match)
+                const weekEnd = new Date(weekStart);
+                weekEnd.setDate(weekEnd.getDate() + 6);
+                weekEnd.setHours(23, 59, 59, 999);
+                const isThisWeek = today >= weekStart && today <= weekEnd;
+                
+                return isThisWeek ? (
+                  <WeekProgressBar
+                    currentDayIndex={(() => {
+                      const day = today.getDay();
+                      if (day === 0 || day === 6) return 4; // Weekend -> Friday
+                      return day - 1; // Mon=0, Tue=1, etc.
+                    })()}
+                    isCurrentWeek={true}
+                    delay={weekIndex * 100}
+                    variant="gradient"
+                  />
+                ) : null;
+              })()}
 
               {/* Week Header */}
               <div className="week-header">
