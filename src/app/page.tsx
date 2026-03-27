@@ -176,6 +176,7 @@ import { FiscalQuarterBadge } from '@/components/FiscalQuarterBadge';
 import { SkipLink } from '@/components/SkipLink';
 import { WeekProgressBar, useWeekProgress } from '@/components/WeekProgressBar';
 import { WeekCompletionRing } from '@/components/WeekCompletionRing';
+import { EarningsDensityBadge, useWeekDensity } from '@/components/EarningsDensityBadge';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1987,60 +1988,82 @@ export default function Home() {
 
               {/* Week Header */}
               <div className="week-header">
-                {days.map((day, dayIndex) => {
-                  const date = new Date(weekStart);
-                  date.setDate(date.getDate() + dayIndex);
-                  const isToday = date.getTime() === today.getTime();
-                  const isPast = date < today;
-                  const dateStr = formatDate(date);
-                  const dayEarnings = filteredEarnings.filter(e => e.date === dateStr);
+                {(() => {
+                  // Pre-calculate earnings counts per day for density calculation
+                  const dayCounts = days.map((_, idx) => {
+                    const d = new Date(weekStart);
+                    d.setDate(d.getDate() + idx);
+                    return filteredEarnings.filter(e => e.date === formatDate(d)).length;
+                  });
+                  const nonZeroDays = dayCounts.filter(c => c > 0);
+                  const weekAverage = nonZeroDays.length > 0 
+                    ? nonZeroDays.reduce((a, b) => a + b, 0) / nonZeroDays.length 
+                    : 0;
                   
-                  // Wave animation delay: cascade from left (50ms between each day)
-                  const waveDelay = slideDirection ? dayIndex * 50 : 0;
-                  
-                  return (
-                    <DayStatsPopover
-                      key={dayIndex}
-                      earnings={dayEarnings}
-                      date={date}
-                      isToday={isToday}
-                    >
-                      <DayHeaderHighlight dayIndex={dayIndex}>
-                        <div 
-                          className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
-                          style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
-                        >
-                          <div className="day-name">{day}</div>
-                          <TodayDateIndicator 
-                            isToday={isToday} 
-                            variant="ripple" 
-                            delay={weekIndex * 100 + dayIndex * 50}
+                  return days.map((day, dayIndex) => {
+                    const date = new Date(weekStart);
+                    date.setDate(date.getDate() + dayIndex);
+                    const isToday = date.getTime() === today.getTime();
+                    const isPast = date < today;
+                    const dateStr = formatDate(date);
+                    const dayEarnings = filteredEarnings.filter(e => e.date === dateStr);
+                    
+                    // Wave animation delay: cascade from left (50ms between each day)
+                    const waveDelay = slideDirection ? dayIndex * 50 : 0;
+                    
+                    return (
+                      <DayStatsPopover
+                        key={dayIndex}
+                        earnings={dayEarnings}
+                        date={date}
+                        isToday={isToday}
+                      >
+                        <DayHeaderHighlight dayIndex={dayIndex}>
+                          <div 
+                            className={`day-header ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${slideDirection ? 'day-header-wave' : ''}`}
+                            style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
                           >
-                            <div className="day-num">{date.getDate()}</div>
-                          </TodayDateIndicator>
-                          {/* Relative day badge - human-readable context */}
-                          <RelativeDayBadge 
-                            date={date} 
-                            size="xs" 
-                            compact={true}
-                            delay={weekIndex * 80 + dayIndex * 30}
-                            className="mt-1"
-                          />
-                          {dayEarnings.length > 0 && (
-                            <div className="badge badge-neutral mt-1.5 text-[10px] py-1 px-2">
-                              {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
-                            </div>
-                          )}
-                          {/* Today marker line - animated "you are here" indicator */}
-                          <TodayMarkerLine 
-                            isToday={isToday} 
-                            delay={weekIndex * 100 + 300}
-                          />
-                        </div>
-                      </DayHeaderHighlight>
-                    </DayStatsPopover>
-                  );
-                })}
+                            <div className="day-name">{day}</div>
+                            <TodayDateIndicator 
+                              isToday={isToday} 
+                              variant="ripple" 
+                              delay={weekIndex * 100 + dayIndex * 50}
+                            >
+                              <div className="day-num">{date.getDate()}</div>
+                            </TodayDateIndicator>
+                            {/* Relative day badge - human-readable context */}
+                            <RelativeDayBadge 
+                              date={date} 
+                              size="xs" 
+                              compact={true}
+                              delay={weekIndex * 80 + dayIndex * 30}
+                              className="mt-1"
+                            />
+                            {dayEarnings.length > 0 && (
+                              <div className="badge badge-neutral mt-1.5 text-[10px] py-1 px-2">
+                                {dayEarnings.length} {dayEarnings.length === 1 ? 'report' : 'reports'}
+                              </div>
+                            )}
+                            {/* Density badge - shows if day is busier/lighter than average */}
+                            <EarningsDensityBadge
+                              count={dayEarnings.length}
+                              weekAverage={weekAverage}
+                              isToday={isToday}
+                              size="sm"
+                              showCount={false}
+                              className="mt-1"
+                            />
+                            {/* Today marker line - animated "you are here" indicator */}
+                            <TodayMarkerLine 
+                              isToday={isToday} 
+                              delay={weekIndex * 100 + 300}
+                            />
+                          </div>
+                        </DayHeaderHighlight>
+                      </DayStatsPopover>
+                    );
+                  });
+                })()}
               </div>
 
               {/* Week Content */}
