@@ -169,8 +169,9 @@ export function FlipCountdownBadge({ targetDate, time }: FlipCountdownBadgeProps
     minutes: number; 
     seconds: number; 
     urgent: boolean;
+    imminent: boolean;
     isNow: boolean;
-  }>({ hours: 0, minutes: 0, seconds: 0, urgent: false, isNow: false });
+  }>({ hours: 0, minutes: 0, seconds: 0, urgent: false, imminent: false, isNow: false });
 
   useEffect(() => {
     const target = getTargetTime(targetDate, time);
@@ -180,7 +181,7 @@ export function FlipCountdownBadge({ targetDate, time }: FlipCountdownBadgeProps
       const diff = target.getTime() - now;
       
       if (diff <= 0) {
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0, urgent: true, isNow: true });
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0, urgent: true, imminent: true, isNow: true });
         return;
       }
       
@@ -190,8 +191,10 @@ export function FlipCountdownBadge({ targetDate, time }: FlipCountdownBadgeProps
       
       // Urgent if under 5 minutes
       const urgent = diff < 5 * 60 * 1000;
+      // Imminent if under 2 minutes - triggers nervous tremor animation
+      const imminent = diff < 2 * 60 * 1000;
       
-      setTimeLeft({ hours, minutes, seconds, urgent, isNow: false });
+      setTimeLeft({ hours, minutes, seconds, urgent, imminent, isNow: false });
     };
     
     updateCountdown();
@@ -210,7 +213,7 @@ export function FlipCountdownBadge({ targetDate, time }: FlipCountdownBadgeProps
   }
 
   return (
-    <div className={`flip-countdown-badge ${timeLeft.urgent ? 'flip-countdown-urgent' : ''}`}>
+    <div className={`flip-countdown-badge ${timeLeft.urgent ? 'flip-countdown-urgent' : ''} ${timeLeft.imminent ? 'flip-countdown-imminent' : ''}`}>
       <div className="flip-countdown-header">
         <span className="flip-countdown-icon">⏱</span>
         <span className="flip-countdown-label">Reports in</span>

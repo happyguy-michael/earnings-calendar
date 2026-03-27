@@ -12698,6 +12698,71 @@ html.light .fresh-dot-pulse {
   }
 }
 
+/* Imminent state - under 2 minutes until report */
+/* Adds a subtle "nervous tremor" animation creating anticipation */
+.flip-countdown-imminent {
+  animation: 
+    flip-countdown-urgent-pulse 2s ease-in-out infinite,
+    flip-countdown-tremor 0.15s ease-in-out infinite;
+}
+
+@keyframes flip-countdown-tremor {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-0.5px) rotate(-0.2deg);
+  }
+  50% {
+    transform: translateX(0.5px) rotate(0.2deg);
+  }
+  75% {
+    transform: translateX(-0.3px) rotate(-0.1deg);
+  }
+}
+
+/* Intensify glow when imminent */
+.flip-countdown-imminent.flip-countdown-urgent {
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(239, 68, 68, 0.35),
+    0 0 50px rgba(239, 68, 68, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Pulsing border for extra urgency */
+.flip-countdown-imminent::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  animation: flip-imminent-border-pulse 1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes flip-imminent-border-pulse {
+  0%, 100% {
+    border-color: rgba(239, 68, 68, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    border-color: rgba(239, 68, 68, 0.6);
+    transform: scale(1.01);
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .flip-countdown-imminent {
+    animation: flip-countdown-urgent-pulse 2s ease-in-out infinite;
+  }
+  .flip-countdown-imminent::after {
+    animation: none;
+    border-color: rgba(239, 68, 68, 0.4);
+  }
+}
+
 /* ============================================ */
 /* Light mode support                          */
 /* ============================================ */
