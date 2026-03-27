@@ -177,6 +177,7 @@ import { SkipLink } from '@/components/SkipLink';
 import { WeekProgressBar, useWeekProgress } from '@/components/WeekProgressBar';
 import { WeekCompletionRing } from '@/components/WeekCompletionRing';
 import { EarningsDensityBadge, useWeekDensity } from '@/components/EarningsDensityBadge';
+import { AnimatedTrendArrow, TrendArrowInline } from '@/components/AnimatedTrendArrow';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -566,6 +567,15 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
             )}
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
             <SurpriseMagnitudeCompact surprise={surprise} delay={animationIndex * 50} />
+            {/* Animated trend arrow - directional indicator with spring animation */}
+            <AnimatedTrendArrow
+              direction={earning.result === 'beat' ? 'up' : 'down'}
+              magnitude={surprise}
+              delay={animationIndex * 50 + 25}
+              size="sm"
+              glow={Math.abs(surprise) >= 10}
+              particles={Math.abs(surprise) >= 20}
+            />
             {earning.result === 'beat' ? (
               <MonsterBeatConfetti
                 ticker={earning.ticker}
