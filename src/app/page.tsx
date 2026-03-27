@@ -175,6 +175,7 @@ import { SelectionProvider, SelectionHighlight, SelectionHint } from '@/componen
 import { FiscalQuarterBadge } from '@/components/FiscalQuarterBadge';
 import { SkipLink } from '@/components/SkipLink';
 import { WeekProgressBar, useWeekProgress } from '@/components/WeekProgressBar';
+import { WeekCompletionRing } from '@/components/WeekCompletionRing';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1928,7 +1929,10 @@ export default function Home() {
                 weekEndDate.setDate(weekEndDate.getDate() + 4);
                 const weekEndStr = weekEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                 
-                return (weekBeats + weekMisses + weekPending > 0) ? (
+                const weekTotal = weekBeats + weekMisses + weekPending;
+                const weekReported = weekBeats + weekMisses;
+                
+                return (weekTotal > 0) ? (
                   <div className="week-mood-header">
                     <div className="week-mood-header-left">
                       <span className="week-mood-header-dates">{weekStartStr} – {weekEndStr}</span>
@@ -1936,15 +1940,25 @@ export default function Home() {
                         <span className="week-mood-header-current">This Week</span>
                       )}
                     </div>
-                    <MarketMoodRing
-                      beats={weekBeats}
-                      misses={weekMisses}
-                      pending={weekPending}
-                      size={44}
-                      delay={weekIndex * 150}
-                      compact={false}
-                      showLabel={true}
-                    />
+                    <div className="flex items-center gap-3">
+                      {/* Week Completion Ring - shows reporting progress */}
+                      <WeekCompletionRing
+                        total={weekTotal}
+                        reported={weekReported}
+                        size={36}
+                        delay={weekIndex * 150 + 100}
+                        compact
+                      />
+                      <MarketMoodRing
+                        beats={weekBeats}
+                        misses={weekMisses}
+                        pending={weekPending}
+                        size={44}
+                        delay={weekIndex * 150}
+                        compact={false}
+                        showLabel={true}
+                      />
+                    </div>
                   </div>
                 ) : null;
               })()}
