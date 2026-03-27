@@ -108,6 +108,7 @@ import { WeekNavPreview, useWeekNavPreview } from '@/components/WeekNavPreview';
 import { DayColumnProvider, DayHeaderHighlight, DayColumnCard } from '@/components/DayColumnHighlight';
 import { TodayMarkerLine } from '@/components/TodayMarkerLine';
 import { WavyUnderline } from '@/components/WavyUnderline';
+import { ExportMenu } from '@/components/ExportMenu';
 import { DistributionBar } from '@/components/DistributionBar';
 import { EarningsSeasonMeter } from '@/components/EarningsSeasonMeter';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
@@ -1365,6 +1366,10 @@ export default function Home() {
               <HapticToggle size="sm" />
               <AudioToggle size="sm" />
               <ColorBlindToggle compact />
+              <ExportMenu 
+                earnings={filteredEarnings} 
+                weekStart={currentWeekStart}
+              />
               <CursorTrailToggle enabled={cursorTrailEnabled} onToggle={toggleCursorTrail} size="sm" />
               <CoachMarkResetButton className="toggle-btn hidden lg:flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white transition-colors text-xs">
                 💡
