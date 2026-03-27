@@ -128,23 +128,26 @@ export function WeekProgressBar({
         .week-progress-bar {
           position: relative;
           width: 100%;
-          height: 4px;
-          margin-bottom: 8px;
+          height: 6px;
+          margin-bottom: 12px;
+          margin-top: 4px;
           cursor: pointer;
           transition: height 0.2s ease;
+          border-radius: 3px;
         }
 
         .week-progress-bar:hover {
-          height: 6px;
+          height: 8px;
         }
 
         .week-progress-track {
           position: relative;
           width: 100%;
           height: 100%;
-          background: rgba(255, 255, 255, 0.06);
-          border-radius: 4px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 6px;
           overflow: hidden;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .week-progress-markers {
@@ -180,14 +183,15 @@ export function WeekProgressBar({
           height: 100%;
           width: var(--progress);
           background: linear-gradient(90deg, 
-            rgba(34, 197, 94, 0.7) 0%,
-            rgba(34, 197, 94, 0.9) 50%,
+            rgba(59, 130, 246, 0.9) 0%,
+            rgba(34, 197, 94, 0.95) 50%,
             rgba(74, 222, 128, 1) 100%
           );
-          border-radius: 4px;
+          border-radius: 6px;
           transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
           transition-delay: var(--delay);
           overflow: hidden;
+          box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
         }
 
         .week-progress-bar:not(.visible) .week-progress-fill {
