@@ -171,6 +171,7 @@ import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/comp
 import { AddToCalendar } from '@/components/AddToCalendar';
 import { QuickLinksMenu } from '@/components/QuickLinksMenu';
 import { SelectionProvider, SelectionHighlight, SelectionHint } from '@/components/SelectionMode';
+import { FiscalQuarterBadge } from '@/components/FiscalQuarterBadge';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -485,6 +486,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               delay={animationIndex * 50 + 100}
               size="sm"
             />
+            <FiscalQuarterBadge date={earning.date} size="xs" glow={false} />
             <LiveDot isToday={!!isToday} isPending={isPending} time={earning.time} />
             <PopularityBadge ticker={earning.ticker} size="xs" delay={animationIndex * 50 + 150} />
             <WatchlistIndicator ticker={earning.ticker} size="xs" />
