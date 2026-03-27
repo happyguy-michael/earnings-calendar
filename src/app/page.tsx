@@ -173,6 +173,7 @@ import { QuickLinksMenu } from '@/components/QuickLinksMenu';
 import { SelectionProvider, SelectionHighlight, SelectionHint } from '@/components/SelectionMode';
 import { FiscalQuarterBadge } from '@/components/FiscalQuarterBadge';
 import { SkipLink } from '@/components/SkipLink';
+import { WeekProgressBar, useWeekProgress } from '@/components/WeekProgressBar';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1942,6 +1943,18 @@ export default function Home() {
                   </div>
                 ) : null;
               })()}
+
+              {/* Week Progress Bar - shows progress through current week */}
+              <WeekProgressBar
+                currentDayIndex={(() => {
+                  const day = today.getDay();
+                  if (day === 0 || day === 6) return 4; // Weekend -> Friday
+                  return day - 1; // Mon=0, Tue=1, etc.
+                })()}
+                isCurrentWeek={weekIndex === todayWeekIndex}
+                delay={weekIndex * 100}
+                variant="gradient"
+              />
 
               {/* Week Header */}
               <div className="week-header">
