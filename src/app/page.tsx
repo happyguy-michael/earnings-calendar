@@ -178,6 +178,7 @@ import { WeekProgressBar, useWeekProgress } from '@/components/WeekProgressBar';
 import { WeekCompletionRing } from '@/components/WeekCompletionRing';
 import { EarningsDensityBadge, useWeekDensity } from '@/components/EarningsDensityBadge';
 import { AnimatedTrendArrow, TrendArrowInline } from '@/components/AnimatedTrendArrow';
+import { RecentResultsStrip } from '@/components/RecentResultsStrip';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1807,6 +1808,21 @@ export default function Home() {
             duration={900}
             onSegmentClick={(segment) => handleFilterChange(segment)}
           />
+        </div>
+
+        {/* Recent Results Strip - Quick pulse view of latest earnings outcomes */}
+        <div className="mb-6 px-1 flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Recent Results</span>
+            <RecentResultsStrip
+              earnings={filteredEarnings}
+              count={12}
+              size="sm"
+              showTrend={true}
+              showLabels={true}
+              delay={500}
+            />
+          </div>
         </div>
 
         {/* Today's Narrative Summary + Sentiment Pulse - blur reveal entrance */}
