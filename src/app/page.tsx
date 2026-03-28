@@ -87,6 +87,7 @@ import { TodayNarrative } from '@/components/TodayNarrative';
 import { SessionProgressBar } from '@/components/SessionProgressBar';
 import { DayStatsPopover } from '@/components/DayStatsPopover';
 import { PriceMoveBadge } from '@/components/PriceMoveBadge';
+import { ReactionAnalysisBadge } from '@/components/ReactionAnalysis';
 import { SentimentPulse } from '@/components/SentimentPulse';
 import { DayHeatIndicator } from '@/components/DayHeatIndicator';
 import { QuickPeek } from '@/components/QuickPeek';
@@ -730,6 +731,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
                 priceMove={earning.priceMove} 
                 size="sm"
                 delay={animationIndex * 50 + 250}
+              />
+            )}
+            {/* Market reaction analysis - compares surprise vs price move for insight */}
+            {earning.priceMove !== undefined && earning.result && (
+              <ReactionAnalysisBadge
+                surprise={surprise}
+                priceMove={earning.priceMove}
+                result={earning.result}
+                size="xs"
+                delay={animationIndex * 50 + 300}
               />
             )}
           </div>
