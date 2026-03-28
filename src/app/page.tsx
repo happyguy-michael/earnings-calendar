@@ -179,6 +179,7 @@ import { WeekCompletionRing } from '@/components/WeekCompletionRing';
 import { EarningsDensityBadge, useWeekDensity } from '@/components/EarningsDensityBadge';
 import { AnimatedTrendArrow, TrendArrowInline } from '@/components/AnimatedTrendArrow';
 import { RecentResultsStrip } from '@/components/RecentResultsStrip';
+import { PerimeterGlowCard } from '@/components/PerimeterGlow';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1538,6 +1539,7 @@ export default function Home() {
       <main id="main-content" className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Row with Breathing Cards, Glass Reflection, Cursor Glow, Parallax Float, Rolling Numbers, Animated Icons, and Change Highlights */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 stats-grid">
+          <PerimeterGlowCard variant="default" delay={0} duration={10000} dual={false}>
           <BreathingCard duration={5000} phase={0} amplitude={0.006} breatheShadow={true}>
             <ParallaxFloat intensity={0.04} delay={0}>
               <GlassReflection 
@@ -1590,6 +1592,8 @@ export default function Home() {
               </GlassReflection>
             </ParallaxFloat>
           </BreathingCard>
+          </PerimeterGlowCard>
+          <PerimeterGlowCard variant="success" delay={500} duration={9000} dual={false}>
           <BreathingCard duration={5500} phase={0.25} amplitude={0.007} breatheShadow={true} breatheGlow={true} glowColor="rgba(34, 197, 94, 0.25)">
             <ParallaxFloat intensity={0.05} delay={50}>
               <GlassReflection 
@@ -1650,6 +1654,8 @@ export default function Home() {
               </GlassReflection>
             </ParallaxFloat>
           </BreathingCard>
+          </PerimeterGlowCard>
+          <PerimeterGlowCard variant="premium" delay={1000} duration={11000} dual={false}>
           <BreathingCard duration={4800} phase={0.5} amplitude={0.006} breatheShadow={true}>
             <ParallaxFloat intensity={0.035} delay={100}>
               <GlassReflection 
@@ -1701,6 +1707,8 @@ export default function Home() {
               </GlassReflection>
             </ParallaxFloat>
           </BreathingCard>
+          </PerimeterGlowCard>
+          <PerimeterGlowCard variant="warning" delay={1500} duration={8000} dual={false}>
           <BreathingCard duration={5200} phase={0.75} amplitude={0.007} breatheShadow={true} breatheGlow={true} glowColor="rgba(251, 191, 36, 0.2)">
             <ParallaxFloat intensity={0.045} delay={150}>
               <GlassReflection 
@@ -1751,6 +1759,7 @@ export default function Home() {
               </GlassReflection>
             </ParallaxFloat>
           </BreathingCard>
+          </PerimeterGlowCard>
         </div>
 
         {/* Prediction Confidence Band - Shows projected beat rate range based on pending earnings */}
