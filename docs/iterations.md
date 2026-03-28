@@ -1331,3 +1331,48 @@ import { HoloCard, HoloBadge } from '@/components/HoloCard';
 **Files:**
 - `src/components/CelebrationConfetti.tsx` (new)
 - `src/app/page.tsx` (updated imports + integration)
+
+---
+
+## 2026-03-29 — RevenueEPSAlignment Component (Earnings Quality Indicator)
+
+**Inspiration:** Institutional trader workflows where earnings quality matters as much as the headline beat/miss. When EPS beats but revenue misses (or vice versa), there's a story behind the numbers that affects how the market interprets results.
+
+**What was added:**
+- New `RevenueEPSAlignment` component system:
+  - `RevenueEPSAlignment` - Badge showing alignment between revenue and EPS results
+  - `RevenueEPSAlignmentCompact` - Icon-only version for tight spaces
+  - `RevenueEPSAlignmentExplainer` - Full explanation block with data
+  - `useRevenueEPSAlignment` - Hook for programmatic access
+
+**Alignment Types:**
+- **Clean Beat (💪)** - Both EPS and revenue beat estimates - strong quarter
+- **Clean Miss (📉)** - Both EPS and revenue missed estimates - weak quarter
+- **Margin Focus (✂️)** - EPS beat but revenue miss - cost cutting/efficiency play
+- **Growth Mode (📈)** - Revenue beat but EPS miss - investing in growth
+
+**Features:**
+- Color-coded badges for quick recognition
+- Tooltip explanations for each alignment type
+- Compact mode for inline use in cards
+- `divergenceOnly` prop to only show interesting cases (margin/growth focus)
+- Animated entrance with spring physics
+- Full `prefers-reduced-motion` support
+- Light/dark mode adaptive colors
+
+**Why it matters:**
+- Headline beat/miss doesn't tell the full story
+- "EPS beat + Revenue miss" signals cost cutting - different than "both beat"
+- Traders care about earnings quality, not just direction
+- Provides instant context without reading through reports
+- Differentiates this calendar from basic earnings trackers
+
+**Technical notes:**
+- Pure CSS animations, no animation library
+- Memoized components for React performance
+- Uses existing color system variables
+- SSR-safe with client-side hydration
+
+**Build:** ✓ Passed
+**Commit:** (pending)
+**Deploy:** Vercel auto-deploy triggered
