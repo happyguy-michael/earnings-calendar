@@ -1,3 +1,56 @@
+## 2026-03-29 — BeatRatioTint: Sentiment-Aware Ambient Background
+
+**Inspiration:**
+- Bloomberg Terminal's mood-aware color schemes
+- Trading floor ambient lighting systems that shift with market sentiment
+- Apple's adaptive UI that responds to content
+- 2026 "Living Interfaces" trend — UIs that breathe with data
+- Color psychology in financial dashboards
+
+**What I built:**
+- New `BeatRatioTint` component — subtle ambient background tint based on beat/miss ratio:
+
+  **Core Concept:**
+  - Color creates emotional context subconsciously
+  - When viewing a bullish week (>70% beats), a subtle green tint emerges
+  - When viewing a bearish week (<40% beats), a subtle red tint appears
+  - Neutral weeks have no tint (40-70% range)
+  - The effect is extremely subtle — felt, not seen
+
+  **Features:**
+  - Smooth 2-second transitions between sentiment states
+  - Intensity scales with how bullish/bearish (80% = mild green, 95% = stronger green)
+  - Animated gradient orbs that drift organically for premium feel
+  - Only activates when 3+ earnings are reported (avoids noise)
+  - Full light/dark mode support with adaptive opacity
+  - Respects prefers-reduced-motion
+
+  **Technical Details:**
+  - Fixed positioned overlay with pointer-events: none
+  - Uses blurred gradient orbs for organic, non-uniform tint
+  - Smooth CSS transitions for sentiment changes
+  - Minimal z-index (-1) to stay behind all content
+  - `useBeatRatioSentiment` hook for reusable sentiment calculation
+
+  **Integration:**
+  - Added to main calendar page at the base layer
+  - Uses existing `beatsCount` and `reportedCount` from stats
+  - Very low intensity (0.035) for subtle effect
+
+**Why this matters:**
+Color psychology is powerful — we respond emotionally to color before we consciously process data. A bullish week with 90% beat rate "feels" different than a bearish week with 30% beats. This component makes that feeling visible (or rather, subtly perceptible) through ambient color.
+
+The effect is intentionally extremely subtle. You don't notice "oh there's a green tint" — you just subconsciously feel that it's a good earnings week.
+
+**Light/Dark Mode:** Reduced opacity in light mode for subtlety.
+
+**Accessibility:**
+- aria-hidden (purely decorative)
+- Respects prefers-reduced-motion
+- Does not interfere with content contrast
+
+---
+
 ## 2026-03-28 — TrendComparison: Beat Rate vs Baseline Indicator
 
 **Inspiration:**
