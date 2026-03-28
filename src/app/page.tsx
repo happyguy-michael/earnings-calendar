@@ -186,6 +186,7 @@ import { SectorBadge } from '@/components/SectorBadge';
 import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/SurpriseDistribution';
 import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
 import { BeatRatioTint } from '@/components/BeatRatioTint';
+import { AnalystDispersion, AnalystDispersionInline } from '@/components/AnalystDispersion';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -755,6 +756,14 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               date={earning.date}
               time={earning.time}
               size="sm"
+            />
+            {/* Analyst dispersion - shows estimate spread/uncertainty */}
+            <AnalystDispersion
+              estimate={earning.estimate}
+              size="xs"
+              showLabel={true}
+              showRange={true}
+              delay={animationIndex * 50 + 50}
             />
             {earning.beatOdds ? (
               <IntensityGlow

@@ -30,6 +30,7 @@ import { SurpriseThermometer, SurpriseThermometerHorizontal, SurpriseTemperature
 import { SurpriseGrade } from '@/components/SurpriseGrade';
 import { SurpriseRank } from '@/components/SurpriseRank';
 import { WatchlistButton } from '@/components/Watchlist';
+import { AnalystDispersion } from '@/components/AnalystDispersion';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -444,6 +445,16 @@ export default function ReportPage() {
                           earning.beatOdds >= 70 ? 'text-emerald-400' : earning.beatOdds >= 50 ? 'text-amber-400' : 'text-red-400'
                         }`}>
                           <CountUp end={earning.beatOdds} duration={1000} suffix="%" />
+                        </div>
+                        {/* Analyst dispersion indicator */}
+                        <div className="mt-4 flex justify-center">
+                          <AnalystDispersion
+                            estimate={earning.estimate}
+                            size="sm"
+                            showLabel={true}
+                            showRange={true}
+                            delay={500}
+                          />
                         </div>
                       </div>
                     </>
