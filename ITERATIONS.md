@@ -1,3 +1,56 @@
+## 2026-03-28 — TrendComparison: Beat Rate vs Baseline Indicator
+
+**Inspiration:**
+- Bloomberg Terminal's delta indicators (↑↓ with percentages)
+- Robinhood's percent change badges
+- Linear.app's subtle metric comparisons
+- 2026 "Contextual Data" trend — stats that tell a story, not just numbers
+
+**What I built:**
+- New `TrendComparison` component — inline badge showing how current beat rate compares to historical average:
+
+  **Core Concept:**
+  - Raw stats without context are less useful
+  - "90% beat rate" → Is that good? How does it compare?
+  - Adding "↑5% vs avg" instantly tells the user this week is exceptional
+  - Creates narrative from numbers
+
+  **Features:**
+  - Direction icon (↑↓≈) based on delta from baseline
+  - Color-coded variants (green/red/gray)
+  - Animated entrance with spring physics
+  - Sparkle effect on strong positive deltas
+  - Tooltip with detailed explanation
+  - Neutral threshold to avoid "↑0%" noise
+  - Light/dark mode support
+
+  **Technical Details:**
+  - `useTrendBaseline` hook calculates average from all earnings
+  - Respects prefers-reduced-motion
+  - Only shows when 3+ reported (avoids misleading small samples)
+  - Sparkle triggers when delta exceeds +5%
+
+  **Integration:**
+  - Added next to BeatRateGrade in stats row
+  - Subtle "xs" size to not overwhelm existing UI
+  - 500ms delay for cascading entrance after other stats
+
+**Why this matters:**
+Stats without context are just numbers. Adding a comparison gives immediate insight:
+- "Beat Rate: 92%" → "That's pretty good I guess"
+- "Beat Rate: 92% ↑8% vs avg" → "Wow, this week is exceptional!"
+
+This follows the 2026 "Contextual Intelligence" trend — surfaces shouldn't just show data, they should tell you what it means.
+
+**Light/Dark Mode:** Full support with appropriate color adjustments.
+
+**Accessibility:**
+- Title attribute with full explanation
+- Color is not the only indicator (icons present)
+- Reduced motion support
+
+---
+
 ## 2026-03-27 — SelectionMode: Multi-Select for Earnings Comparison
 
 **Inspiration:**

@@ -21928,3 +21928,115 @@ html.light .tooltip-quarter {
     background: inherit !important;
   }
 }
+
+/* ============================================
+   TrendComparison Component
+   ============================================ */
+
+.trend-comparison {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Entrance animation */
+@keyframes trend-comparison-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-trend-entrance {
+  animation: trend-comparison-entrance 0.4s var(--spring-bouncy) forwards;
+  animation-delay: var(--trend-delay, 0ms);
+}
+
+/* Direction icon bounce */
+@keyframes trend-icon-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}
+
+.animate-trend-bounce {
+  animation: trend-icon-bounce 0.6s var(--spring-snappy) 0.3s;
+}
+
+/* Sparkle dots */
+.trend-sparkle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.trend-sparkle .sparkle-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  animation: trend-sparkle-pop 0.8s ease-out forwards;
+  animation-delay: calc(0.4s + var(--i) * 0.1s);
+}
+
+.trend-sparkle .sparkle-dot:nth-child(1) {
+  top: 20%;
+  right: 15%;
+}
+
+.trend-sparkle .sparkle-dot:nth-child(2) {
+  top: 60%;
+  right: 25%;
+}
+
+.trend-sparkle .sparkle-dot:nth-child(3) {
+  bottom: 20%;
+  right: 10%;
+}
+
+@keyframes trend-sparkle-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(-8px);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .trend-comparison,
+  .animate-trend-entrance,
+  .animate-trend-bounce {
+    animation: none;
+  }
+  
+  .trend-sparkle {
+    display: none;
+  }
+}

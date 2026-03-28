@@ -183,6 +183,7 @@ import { PerimeterGlowCard } from '@/components/PerimeterGlow';
 import { QuarterlyResultStrip } from '@/components/QuarterlyResultStrip';
 import { SectorBadge } from '@/components/SectorBadge';
 import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/SurpriseDistribution';
+import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1052,6 +1053,9 @@ export default function Home() {
   const beatRate = reportedCount > 0 ? Math.round((beatsCount / reportedCount) * 100) : 0;
   const pendingCount = totalEarnings - reportedCount;
   const isFiltering = searchQuery.trim().length > 0 || statusFilter !== 'all';
+  
+  // Baseline beat rate from ALL earnings (for trend comparison)
+  const baselineBeatRate = useTrendBaseline(earnings);
 
   // Calculate which week (0-2) contains today for the week indicator
   const todayWeekStart = getWeekStart(new Date());
@@ -1665,6 +1669,19 @@ export default function Home() {
                           </IntensityGlow>
                         </div>
                         <BeatRateGrade beatRate={beatRate} size="sm" showLabel={false} delay={400} />
+                        {/* Trend comparison vs baseline average */}
+                        {reportedCount >= 3 && (
+                          <TrendComparison
+                            value={beatRate}
+                            baseline={baselineBeatRate}
+                            type="rate"
+                            size="xs"
+                            label="vs avg"
+                            neutralThreshold={3}
+                            delay={500}
+                            sparkle={beatRate > baselineBeatRate + 5}
+                          />
+                        )}
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</WeightShiftText>
                     </div>
