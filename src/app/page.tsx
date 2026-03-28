@@ -185,6 +185,7 @@ import { QuarterlyResultStrip } from '@/components/QuarterlyResultStrip';
 import { SectorBadge } from '@/components/SectorBadge';
 import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/SurpriseDistribution';
 import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
+import { BeatRatioTint } from '@/components/BeatRatioTint';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1145,6 +1146,9 @@ export default function Home() {
     <div className="min-h-screen relative">
       {/* Skip link for keyboard accessibility - first focusable element */}
       <SkipLink targetId="main-content" offsetTop={140} />
+      
+      {/* Beat ratio tint - subtle ambient background based on beat/miss sentiment */}
+      <BeatRatioTint beats={beatsCount} total={reportedCount} intensity={0.035} />
       
       {/* Snapshot mode indicator (when paused) */}
       <SnapshotIndicator />
