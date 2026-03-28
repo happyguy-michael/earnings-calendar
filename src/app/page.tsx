@@ -180,6 +180,7 @@ import { EarningsDensityBadge, useWeekDensity } from '@/components/EarningsDensi
 import { AnimatedTrendArrow, TrendArrowInline } from '@/components/AnimatedTrendArrow';
 import { RecentResultsStrip } from '@/components/RecentResultsStrip';
 import { PerimeterGlowCard } from '@/components/PerimeterGlow';
+import { QuarterlyResultStrip } from '@/components/QuarterlyResultStrip';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -510,6 +511,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
           </div>
           <div className="text-xs text-zinc-500 truncate flex items-center gap-2">
             {earning.company}
+            {/* Quarterly result history - visual strip of last 4 quarters */}
+            <QuarterlyResultStrip
+              ticker={earning.ticker}
+              quarters={4}
+              size="xs"
+              showLabels={true}
+              showTrend={false}
+              glow={true}
+              delay={animationIndex * 40 + 80}
+            />
             {/* Show time since for recently reported earnings */}
             {hasResult && isToday && (
               <TimeSinceInline reportedAt={new Date(earning.date)} time={earning.time} />
