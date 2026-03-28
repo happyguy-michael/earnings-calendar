@@ -1,5 +1,40 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-28 — SurpriseDistribution Histogram
+**Inspiration:** Finance dashboards showing distribution of returns/surprises visually, not just numerically
+
+**What was added:**
+- `SurpriseDistribution` component - animated histogram showing distribution of earnings surprises
+- Visual buckets from ≤-15% (disaster miss) to ≥+15% (monster beat)
+- Mean indicator line with triangle marker showing average surprise
+- Summary stats showing beats/misses count and average surprise percentage
+- `SurpriseDistributionCompact` - inline bar showing beat/miss ratio
+- `SurpriseSparkline` - mini sparkline variant for tight spaces
+
+**Technical details:**
+- 8 buckets with logarithmic-ish ranges for better visualization of extremes
+- Animated bar growth using viewport-triggered IntersectionObserver
+- Spring-based cubic-bezier easing (0.34, 1.56, 0.64, 1) for premium bounce
+- Gradient fills (emerald for beats, red for misses) with glow effect
+- Hover tooltips showing exact counts per bucket
+- Mean position calculated and clamped to [-30%, +30%] range
+- Full `prefers-reduced-motion` support
+- Dark/light mode compatible
+
+**Integration:**
+- Added after Distribution Bar in page.tsx
+- Shows only when reportedCount > 0
+- Uses BlurReveal entrance animation
+- Calculates surprises from filteredEarnings with eps and estimate
+
+**Files changed:**
+- `src/components/SurpriseDistribution.tsx` — new component with 3 variants
+- `src/app/page.tsx` — integrated SurpriseDistribution
+
+**Commit:** `b51030e`
+
+---
+
 ## 2026-03-09 — Leading Edge Glow Effect for Progress Bar
 **Inspiration:** Dribbble/devsnap gradient glow progress bars - animated glow effects that make UI feel alive
 
