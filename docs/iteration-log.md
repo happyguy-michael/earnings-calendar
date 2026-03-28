@@ -1,5 +1,41 @@
 # Earnings Calendar - Iteration Log
 
+## 2026-03-29 — ReactionAnalysis Insight Badge
+**Inspiration:** Trader alpha - understanding if market reactions match, exceed, or contradict earnings surprises
+
+**What was added:**
+- `ReactionAnalysisBadge` component - shows market sentiment patterns:
+  - "Sell the News" - beat estimates but stock dropped (classic contrarian)
+  - "Buy the Dip" - missed estimates but stock rose (market sees opportunity)
+  - "Overreaction" - price moved more than surprise justified
+  - "Priced In" - price moved less (expectations already baked in)
+  - "Contrarian" - stock moved opposite to surprise direction
+- `ReactionAnalysisCompact` - icon-only variant with tooltip
+- `ReactionAnalysisTooltip` - full explanation card
+- `useReactionAnalysis` hook for programmatic use
+
+**Technical details:**
+- Analyzes ratio of price move to surprise magnitude
+- Detects contrary reactions (beat + drop, miss + rise)
+- Threshold-based classification with human-readable labels
+- Each pattern has unique icon, color scheme, and description
+- Animated entrance with staggered delay support
+- Full `prefers-reduced-motion` support
+- Light/dark mode compatible
+
+**Integration:**
+- Added next to PriceMoveBadge in earnings cards
+- Only shows for non-"in-line" reactions (meaningful insights only)
+- Uses xs size for compact display alongside other badges
+
+**Files changed:**
+- `src/components/ReactionAnalysis.tsx` — new component with 3 variants
+- `src/app/page.tsx` — integrated ReactionAnalysisBadge
+
+**Commit:** `53d1da2`
+
+---
+
 ## 2026-03-28 — SurpriseDistribution Histogram
 **Inspiration:** Finance dashboards showing distribution of returns/surprises visually, not just numerically
 
