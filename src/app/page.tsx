@@ -181,6 +181,7 @@ import { AnimatedTrendArrow, TrendArrowInline } from '@/components/AnimatedTrend
 import { RecentResultsStrip } from '@/components/RecentResultsStrip';
 import { PerimeterGlowCard } from '@/components/PerimeterGlow';
 import { QuarterlyResultStrip } from '@/components/QuarterlyResultStrip';
+import { SectorBadge } from '@/components/SectorBadge';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -488,6 +489,12 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               />
             </span>
             <BeatStreakBadge streak={beatStreak} />
+            <SectorBadge 
+              ticker={earning.ticker} 
+              size="xs" 
+              variant="badge"
+              delay={animationIndex * 40 + 60}
+            />
             <EPSTrendDots 
               estimate={earning.estimate}
               currentBeat={earning.result === 'beat'}
