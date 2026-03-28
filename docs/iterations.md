@@ -1374,5 +1374,6 @@ import { HoloCard, HoloBadge } from '@/components/HoloCard';
 - SSR-safe with client-side hydration
 
 **Build:** ✓ Passed
-**Commit:** (pending)
-**Deploy:** Vercel auto-deploy triggered
+**Commit:** 55d6a33
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Verified:** https://earnings-calendar-omega.vercel.app
