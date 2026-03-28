@@ -284,4 +284,34 @@ export function getBeatStreak(ticker: string): number {
 export function getEarningsByDate(date: string): Earning[] {
   return earnings.filter(e => e.date === date);
 }
+
+/**
+ * Get historical surprise percentages for a ticker
+ * Returns an array of surprise values (most recent first)
+ */
+export function getHistoricalSurprises(ticker: string): { surprises: number[]; dates: string[] } {
+  const tickerUpper = ticker.toUpperCase();
+  
+  // Filter to reported earnings for this ticker (those with eps and result)
+  const historicalEarnings = earnings
+    .filter(e => 
+      e.ticker.toUpperCase() === tickerUpper && 
+      e.eps !== undefined && 
+      e.result !== undefined
+    )
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  
+  const surprises: number[] = [];
+  const dates: string[] = [];
+  
+  for (const earning of historicalEarnings) {
+    if (earning.eps != null && earning.estimate !== undefined && earning.estimate !== 0) {
+      const surprise = ((earning.eps - earning.estimate) / Math.abs(earning.estimate)) * 100;
+      surprises.push(surprise);
+      dates.push(earning.date);
+    }
+  }
+  
+  return { surprises, dates };
+}
 // trigger deploy 1773177994

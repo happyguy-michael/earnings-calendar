@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { getEarning, getAnalysis, getBeatStreak, earnings } from '@/lib/data';
+import { getEarning, getAnalysis, getBeatStreak, getHistoricalSurprises, earnings } from '@/lib/data';
 import { EPSChart, EPSBarChart } from '@/components/EPSChart';
 import { EPSTrendSparkline } from '@/components/AnimatedSparkline';
 import { CountUp } from '@/components/CountUp';
@@ -28,6 +28,7 @@ import { BreathingCard } from '@/components/BreathingCard';
 import { ParallaxFloat } from '@/components/ParallaxFloat';
 import { SurpriseThermometer, SurpriseThermometerHorizontal, SurpriseTemperatureBadge } from '@/components/SurpriseThermometer';
 import { SurpriseGrade } from '@/components/SurpriseGrade';
+import { SurpriseRank } from '@/components/SurpriseRank';
 import { WatchlistButton } from '@/components/Watchlist';
 
 // Progress Ring Component
@@ -153,6 +154,10 @@ export default function ReportPage() {
   const surprise = hasResult ? ((earning.eps! - earning.estimate) / Math.abs(earning.estimate)) * 100 : 0;
   const mockPrice = (earning.estimate * 45 + Math.random() * 20).toFixed(2);
   const mockChange = (Math.random() * 6 - 2).toFixed(2);
+  
+  // Get historical surprises for this ticker (exclude current result)
+  const { surprises: allHistoricalSurprises, dates: historicalDates } = getHistoricalSurprises(ticker);
+  const historicalSurprises = hasResult ? allHistoricalSurprises.slice(1) : allHistoricalSurprises; // Exclude current if reported
 
   const tabs: Tab[] = [
     { id: 'overview', label: 'Overview', icon: '📊' },
@@ -408,6 +413,19 @@ export default function ReportPage() {
                             delay={600}
                           />
                         </div>
+                        {/* Historical context badge */}
+                        {historicalSurprises.length > 0 && (
+                          <div className="mt-3">
+                            <SurpriseRank
+                              currentSurprise={surprise}
+                              historicalSurprises={historicalSurprises}
+                              currentDate={earning.date}
+                              historicalDates={historicalDates.slice(1)}
+                              size="sm"
+                              delay={800}
+                            />
+                          </div>
+                        )}
                       </div>
                     </>
                   ) : earning.beatOdds && (
