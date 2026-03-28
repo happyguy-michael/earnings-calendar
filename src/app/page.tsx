@@ -182,6 +182,7 @@ import { RecentResultsStrip } from '@/components/RecentResultsStrip';
 import { PerimeterGlowCard } from '@/components/PerimeterGlow';
 import { QuarterlyResultStrip } from '@/components/QuarterlyResultStrip';
 import { SectorBadge } from '@/components/SectorBadge';
+import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/SurpriseDistribution';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -1836,6 +1837,35 @@ export default function Home() {
             onSegmentClick={(segment) => handleFilterChange(segment)}
           />
         </div>
+
+        {/* Surprise Distribution - Histogram showing magnitude of earnings surprises */}
+        {reportedCount > 0 && (
+          <div className="mb-6 px-1">
+            <BlurReveal triggerOnMount delay={450} duration={600} blurAmount={8}>
+              <div className="glass-card p-4 rounded-2xl">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span className="text-sm font-medium text-zinc-300">Surprise Distribution</span>
+                  </div>
+                </div>
+                <SurpriseDistribution
+                  surprises={filteredEarnings
+                    .filter(e => e.eps !== undefined && e.eps !== null && e.estimate)
+                    .map(e => ((e.eps! - e.estimate) / Math.abs(e.estimate)) * 100)
+                  }
+                  size="md"
+                  animated={true}
+                  delay={500}
+                  showLabels={true}
+                  showMean={true}
+                />
+              </div>
+            </BlurReveal>
+          </div>
+        )}
 
         {/* Recent Results Strip - Quick pulse view of latest earnings outcomes */}
         <div className="mb-6 px-1 flex items-center justify-between flex-wrap gap-3">
