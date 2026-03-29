@@ -187,6 +187,7 @@ import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/
 import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
 import { BeatRatioTint } from '@/components/BeatRatioTint';
 import { AnalystDispersion, AnalystDispersionInline } from '@/components/AnalystDispersion';
+import { EstimateMomentum } from '@/components/EstimateMomentum';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -764,6 +765,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               showLabel={true}
               showRange={true}
               delay={animationIndex * 50 + 50}
+            />
+            {/* Estimate momentum - shows if estimates trending up/down */}
+            <EstimateMomentum
+              currentEstimate={earning.estimate}
+              size="xs"
+              showChange={true}
+              delay={animationIndex * 50 + 75}
             />
             {earning.beatOdds ? (
               <IntensityGlow
