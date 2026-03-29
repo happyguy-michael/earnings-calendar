@@ -8304,3 +8304,76 @@ framing so traders can calibrate their expectations.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 457b5fa
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+---
+
+## 2026-03-30 — LocalTimeIndicator: International User Timezone Support
+
+**Inspiration:**
+- Google Calendar's timezone conversion display
+- Flight booking sites showing local arrival times
+- Trading platforms with multi-timezone support
+- 2026 "Global by default" trend — respecting international users
+
+**What I built:**
+New `LocalTimeIndicator` component showing earnings time in the user's local
+timezone. US earnings happen at inconvenient hours for most of the world:
+- 4pm ET (after-hours) = 4am Singapore, 9pm London, 5am Tokyo
+- 9:30am ET (pre-market) = 9:30pm Singapore, 2:30pm London, 10:30pm Tokyo
+
+International users need this context to decide whether to stay up or check tomorrow.
+
+**Core Concept:**
+The component auto-detects the user's browser timezone and only shows if:
+1. User is NOT in Eastern Time zone
+2. The earning has a defined time (pre/post)
+
+When displayed, it shows the local equivalent time with proper DST handling.
+
+**Features:**
+- Globe icon for visual timezone context
+- Shows time in user's local timezone
+- "+1d" badge when earning spans midnight locally (critical for planning!)
+- Hover tooltip with full conversion details
+- Handles DST correctly for both ET and local zones
+- Animated entrance with spring physics
+- Compact 'xs' size for badge density
+- Badge and inline variants
+- Full light/dark mode support
+- Respects prefers-reduced-motion
+
+**Component Exports:**
+- `LocalTimeIndicator` - Main badge showing local time
+- `LocalTimeTooltip` - Wrapper that adds local time tooltip on hover
+
+**Technical Details:**
+- Pure client-side (no server timezone detection)
+- Uses Intl.DateTimeFormat for timezone abbreviations
+- Calculates ET offset with proper DST rules (US: 2nd Sunday March to 1st Sunday November)
+- Zero external dependencies
+- SSR-safe (mounted state check for hydration)
+
+**Integration:**
+- Added to pending earnings cards in company info line
+- Shows after QuarterlyResultStrip, before TimeSinceInline
+- Only appears for pending earnings with defined time
+- Staggered animation delay cascades with other badges
+
+**Why this matters:**
+We talk about "global by default" but most US-centric finance apps ignore
+timezone context. A Singapore-based trader looking at a 4pm ET after-hours
+report needs to know that's 4am their time — a completely different planning
+scenario than someone in New York. This small addition makes the app
+genuinely useful for international users without cluttering the UI for US users.
+
+**Accessibility:**
+- Screen reader announces full time conversion
+- Tooltip provides detailed context on hover
+- Respects reduced motion preferences
+- High contrast badge styling
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 9da2f7d
+**Deployed:** https://earnings-calendar-omega.vercel.app
+

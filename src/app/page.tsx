@@ -193,6 +193,7 @@ import { BeatRatioTint } from '@/components/BeatRatioTint';
 import { AnalystDispersion, AnalystDispersionInline } from '@/components/AnalystDispersion';
 import { EstimateMomentum } from '@/components/EstimateMomentum';
 import { VolatilityIndicator } from '@/components/VolatilityIndicator';
+import { ResultStreakIndicator } from '@/components/ResultStreakIndicator';
 import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 
@@ -2336,6 +2337,13 @@ export default function Home() {
                                 <div className="session-header pre-market">
                                   <MarketSessionIcon session="pre" size={18} />
                                   <span className="session-header-label">Pre-Market</span>
+                                  {/* Result streak indicator for pre-market session */}
+                                  <ResultStreakIndicator
+                                    earnings={preMarket}
+                                    minStreak={2}
+                                    size="xs"
+                                    delay={weekIndex * 80 + 200}
+                                  />
                                 </div>
                                 <SpotlightContainer>
                                 <CascadeReveal
@@ -2384,6 +2392,13 @@ export default function Home() {
                                 <div className="session-header after-hours">
                                   <MarketSessionIcon session="post" size={18} />
                                   <span className="session-header-label">After Hours</span>
+                                  {/* Result streak indicator for post-market session */}
+                                  <ResultStreakIndicator
+                                    earnings={postMarket}
+                                    minStreak={2}
+                                    size="xs"
+                                    delay={weekIndex * 80 + 350}
+                                  />
                                 </div>
                                 <SpotlightContainer>
                                 <CascadeReveal
