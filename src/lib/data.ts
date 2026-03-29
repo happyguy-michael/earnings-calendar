@@ -83,6 +83,29 @@ export const earnings: Earning[] = [
   { ticker: 'MU', company: 'Micron Technology', date: '2026-03-18', time: 'post', estimate: 1.42, beatOdds: 85, revenueEstimate: 8.6 },
   { ticker: 'NKE', company: 'Nike', date: '2026-03-19', time: 'post', estimate: 0.55, beatOdds: 58, revenueEstimate: 11.2 },
   { ticker: 'LULU', company: 'Lululemon', date: '2026-03-20', time: 'post', estimate: 5.85, beatOdds: 74, revenueEstimate: 3.15 },
+  
+  // Week of Mar 23 (recently reported)
+  { ticker: 'GME', company: 'GameStop', date: '2026-03-23', time: 'post', eps: 0.08, estimate: 0.03, result: 'beat', revenue: 1.28, revenueEstimate: 1.22, priceMove: 12.4 },
+  { ticker: 'CHWY', company: 'Chewy', date: '2026-03-24', time: 'pre', eps: 0.18, estimate: 0.12, result: 'beat', revenue: 2.95, revenueEstimate: 2.88, priceMove: 8.7 },
+  { ticker: 'KBH', company: 'KB Home', date: '2026-03-24', time: 'post', eps: 2.15, estimate: 2.08, result: 'beat', revenue: 1.72, revenueEstimate: 1.68, priceMove: 3.2 },
+  { ticker: 'PAYX', company: 'Paychex', date: '2026-03-25', time: 'pre', eps: 1.38, estimate: 1.35, result: 'beat', revenue: 1.52, revenueEstimate: 1.50, priceMove: 2.1 },
+  { ticker: 'CTAS', company: 'Cintas', date: '2026-03-25', time: 'pre', eps: 4.12, estimate: 3.98, result: 'beat', revenue: 2.54, revenueEstimate: 2.48, priceMove: 4.5 },
+  { ticker: 'WBA', company: 'Walgreens Boots Alliance', date: '2026-03-25', time: 'pre', eps: 0.62, estimate: 0.68, result: 'miss', revenue: 36.5, revenueEstimate: 37.1, priceMove: -6.8 },
+  { ticker: 'MKC', company: 'McCormick', date: '2026-03-26', time: 'pre', eps: 0.72, estimate: 0.70, result: 'beat', revenue: 1.68, revenueEstimate: 1.65, priceMove: 1.9 },
+  { ticker: 'DLTR', company: 'Dollar Tree', date: '2026-03-26', time: 'pre', eps: 2.18, estimate: 2.25, result: 'miss', revenue: 8.65, revenueEstimate: 8.72, priceMove: -4.3 },
+  { ticker: 'PVH', company: 'PVH Corp', date: '2026-03-26', time: 'post', eps: 3.45, estimate: 3.28, result: 'beat', revenue: 2.42, revenueEstimate: 2.38, priceMove: 5.8 },
+  { ticker: 'JEF', company: 'Jefferies Financial', date: '2026-03-27', time: 'pre', eps: 0.95, estimate: 0.88, result: 'beat', revenue: 1.85, revenueEstimate: 1.78, priceMove: 3.4 },
+  
+  // Week of Mar 30 (upcoming - pending)
+  { ticker: 'CCL', company: 'Carnival Corp', date: '2026-03-30', time: 'pre', estimate: 0.18, beatOdds: 72, revenueEstimate: 5.85 },
+  { ticker: 'CALM', company: 'Cal-Maine Foods', date: '2026-03-30', time: 'pre', estimate: 4.82, beatOdds: 68, revenueEstimate: 0.92 },
+  { ticker: 'RH', company: 'RH (Restoration Hardware)', date: '2026-03-31', time: 'post', estimate: 2.85, beatOdds: 55, revenueEstimate: 0.78 },
+  { ticker: 'PEP', company: 'PepsiCo', date: '2026-04-01', time: 'pre', estimate: 1.52, beatOdds: 78, revenueEstimate: 18.2 },
+  { ticker: 'APLD', company: 'Applied Digital', date: '2026-04-01', time: 'post', estimate: -0.12, beatOdds: 45, revenueEstimate: 0.085 },
+  { ticker: 'CAG', company: 'Conagra Brands', date: '2026-04-02', time: 'pre', estimate: 0.62, beatOdds: 65, revenueEstimate: 3.05 },
+  { ticker: 'LEVI', company: 'Levi Strauss', date: '2026-04-02', time: 'post', estimate: 0.32, beatOdds: 58, revenueEstimate: 1.55 },
+  { ticker: 'LW', company: 'Lamb Weston', date: '2026-04-03', time: 'pre', estimate: 1.28, beatOdds: 62, revenueEstimate: 1.72 },
+  { ticker: 'STZ', company: 'Constellation Brands', date: '2026-04-03', time: 'pre', estimate: 2.95, beatOdds: 75, revenueEstimate: 2.48 },
 ];
 
 export const analyses: Record<string, Analysis> = {
