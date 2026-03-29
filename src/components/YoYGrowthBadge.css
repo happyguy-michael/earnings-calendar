@@ -1,0 +1,478 @@
+/**
+ * YoYGrowthBadge Styles
+ * 
+ * Year-over-Year growth indicator with semantic colors and animations.
+ * Uses CSS custom properties for theming.
+ */
+
+/* Base badge */
+.yoy-growth-badge {
+  --yoy-bg: oklch(0.96 0 0);
+  --yoy-text: oklch(0.4 0 0);
+  --yoy-border: oklch(0.9 0 0);
+  --yoy-glow: transparent;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--yoy-bg);
+  border: 1px solid var(--yoy-border);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateY(4px) scale(0.95);
+}
+
+.yoy-growth-badge.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Dark mode */
+:root.dark .yoy-growth-badge,
+[data-theme="dark"] .yoy-growth-badge {
+  --yoy-bg: oklch(0.22 0 0);
+  --yoy-text: oklch(0.7 0 0);
+  --yoy-border: oklch(0.3 0 0);
+}
+
+/* Size variants */
+.yoy-growth-badge--xs {
+  padding: 2px 5px;
+  gap: 2px;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
+.yoy-growth-badge--sm {
+  font-size: 11px;
+}
+
+.yoy-growth-badge--md {
+  padding: 4px 10px;
+  gap: 5px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* Growth type variants */
+.yoy-growth-badge--strong-growth,
+.yoy-growth-badge--turnaround {
+  --yoy-bg: oklch(0.96 0.04 145);
+  --yoy-text: oklch(0.35 0.15 145);
+  --yoy-border: oklch(0.85 0.08 145);
+  --yoy-glow: oklch(0.6 0.2 145 / 0.4);
+}
+
+.yoy-growth-badge--growth {
+  --yoy-bg: oklch(0.96 0.03 145);
+  --yoy-text: oklch(0.4 0.12 145);
+  --yoy-border: oklch(0.88 0.06 145);
+}
+
+.yoy-growth-badge--flat {
+  --yoy-bg: oklch(0.96 0.01 250);
+  --yoy-text: oklch(0.45 0.05 250);
+  --yoy-border: oklch(0.88 0.02 250);
+}
+
+.yoy-growth-badge--decline {
+  --yoy-bg: oklch(0.96 0.03 25);
+  --yoy-text: oklch(0.45 0.12 25);
+  --yoy-border: oklch(0.88 0.06 25);
+}
+
+.yoy-growth-badge--strong-decline {
+  --yoy-bg: oklch(0.96 0.04 25);
+  --yoy-text: oklch(0.4 0.15 25);
+  --yoy-border: oklch(0.85 0.08 25);
+  --yoy-glow: oklch(0.6 0.2 25 / 0.4);
+}
+
+/* Dark mode growth variants */
+:root.dark .yoy-growth-badge--strong-growth,
+:root.dark .yoy-growth-badge--turnaround,
+[data-theme="dark"] .yoy-growth-badge--strong-growth,
+[data-theme="dark"] .yoy-growth-badge--turnaround {
+  --yoy-bg: oklch(0.25 0.05 145);
+  --yoy-text: oklch(0.75 0.12 145);
+  --yoy-border: oklch(0.35 0.08 145);
+}
+
+:root.dark .yoy-growth-badge--growth,
+[data-theme="dark"] .yoy-growth-badge--growth {
+  --yoy-bg: oklch(0.24 0.04 145);
+  --yoy-text: oklch(0.7 0.1 145);
+  --yoy-border: oklch(0.32 0.06 145);
+}
+
+:root.dark .yoy-growth-badge--flat,
+[data-theme="dark"] .yoy-growth-badge--flat {
+  --yoy-bg: oklch(0.24 0.01 250);
+  --yoy-text: oklch(0.65 0.04 250);
+  --yoy-border: oklch(0.32 0.02 250);
+}
+
+:root.dark .yoy-growth-badge--decline,
+[data-theme="dark"] .yoy-growth-badge--decline {
+  --yoy-bg: oklch(0.24 0.04 25);
+  --yoy-text: oklch(0.7 0.1 25);
+  --yoy-border: oklch(0.32 0.06 25);
+}
+
+:root.dark .yoy-growth-badge--strong-decline,
+[data-theme="dark"] .yoy-growth-badge--strong-decline {
+  --yoy-bg: oklch(0.25 0.05 25);
+  --yoy-text: oklch(0.75 0.12 25);
+  --yoy-border: oklch(0.35 0.08 25);
+}
+
+/* Estimate styling (pending) */
+.yoy-growth-badge--estimate {
+  border-style: dashed;
+}
+
+.yoy-growth-badge--estimate::after {
+  content: 'E';
+  font-size: 0.7em;
+  opacity: 0.6;
+  margin-left: 2px;
+  vertical-align: super;
+}
+
+/* Elements */
+.yoy-growth-badge__label {
+  color: var(--yoy-text);
+  opacity: 0.7;
+  font-size: 0.9em;
+  letter-spacing: 0.02em;
+}
+
+.yoy-growth-badge__arrow {
+  color: var(--yoy-text);
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.yoy-growth-badge__value {
+  color: var(--yoy-text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Glow effect for significant changes */
+.yoy-growth-badge__glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--yoy-glow);
+  filter: blur(8px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.yoy-growth-badge.is-significant .yoy-growth-badge__glow {
+  opacity: 1;
+  animation: yoy-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes yoy-glow-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Hover state */
+.yoy-growth-badge:hover,
+.yoy-growth-badge.is-hovered {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 12px oklch(0 0 0 / 0.1);
+}
+
+/* Intensity modifiers */
+.yoy-growth-badge--intensity-extreme .yoy-growth-badge__value {
+  font-weight: 700;
+}
+
+.yoy-growth-badge--intensity-high .yoy-growth-badge__value {
+  font-weight: 600;
+}
+
+/* Tooltip */
+.yoy-growth-badge__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: oklch(0.15 0 0);
+  color: oklch(0.9 0 0);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.3);
+  animation: yoy-tooltip-in 0.15s ease;
+}
+
+.yoy-growth-badge__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: oklch(0.15 0 0);
+}
+
+@keyframes yoy-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.yoy-growth-badge__tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.yoy-growth-badge__tooltip-row + .yoy-growth-badge__tooltip-row {
+  margin-top: 4px;
+}
+
+.yoy-growth-badge__tooltip-row--delta {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid oklch(1 0 0 / 0.1);
+  font-weight: 600;
+}
+
+.yoy-growth-badge__tooltip-row .positive {
+  color: oklch(0.7 0.15 145);
+}
+
+.yoy-growth-badge__tooltip-row .negative {
+  color: oklch(0.7 0.15 25);
+}
+
+/* YoY Growth Pill */
+.yoy-growth-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+
+.yoy-growth-pill:hover {
+  transform: scale(1.15);
+}
+
+.yoy-growth-pill--up {
+  background: oklch(0.9 0.08 145);
+  color: oklch(0.4 0.15 145);
+}
+
+.yoy-growth-pill--down {
+  background: oklch(0.9 0.08 25);
+  color: oklch(0.45 0.15 25);
+}
+
+.yoy-growth-pill--flat {
+  background: oklch(0.92 0 0);
+  color: oklch(0.5 0 0);
+}
+
+:root.dark .yoy-growth-pill--up,
+[data-theme="dark"] .yoy-growth-pill--up {
+  background: oklch(0.28 0.08 145);
+  color: oklch(0.75 0.12 145);
+}
+
+:root.dark .yoy-growth-pill--down,
+[data-theme="dark"] .yoy-growth-pill--down {
+  background: oklch(0.28 0.08 25);
+  color: oklch(0.75 0.12 25);
+}
+
+:root.dark .yoy-growth-pill--flat,
+[data-theme="dark"] .yoy-growth-pill--flat {
+  background: oklch(0.28 0 0);
+  color: oklch(0.65 0 0);
+}
+
+/* YoY Trend Line */
+.yoy-trend-line {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+}
+
+.yoy-trend-line.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.yoy-trend-line--sm svg {
+  width: 48px;
+  height: 16px;
+}
+
+.yoy-trend-line--md svg {
+  width: 64px;
+  height: 24px;
+}
+
+.yoy-trend-line__zero {
+  stroke: oklch(0.85 0 0);
+  stroke-width: 0.5;
+  stroke-dasharray: 2 2;
+}
+
+:root.dark .yoy-trend-line__zero,
+[data-theme="dark"] .yoy-trend-line__zero {
+  stroke: oklch(0.35 0 0);
+}
+
+.yoy-trend-line__fill {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.2s;
+}
+
+.yoy-trend-line.is-visible .yoy-trend-line__fill {
+  opacity: 1;
+}
+
+.yoy-trend-line__path {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 0.6s ease 0.1s;
+}
+
+.yoy-trend-line.is-visible .yoy-trend-line__path {
+  stroke-dashoffset: 0;
+}
+
+.yoy-trend-line--positive .yoy-trend-line__path {
+  stroke: oklch(0.55 0.18 145);
+}
+
+.yoy-trend-line--negative .yoy-trend-line__path {
+  stroke: oklch(0.55 0.18 25);
+}
+
+.yoy-trend-line--neutral .yoy-trend-line__path {
+  stroke: oklch(0.55 0.05 250);
+}
+
+.yoy-trend-line__dot {
+  fill: oklch(0.95 0 0);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.yoy-trend-line.is-visible .yoy-trend-line__dot {
+  opacity: 1;
+  transition-delay: calc(var(--i, 0) * 0.1s + 0.4s);
+}
+
+.yoy-trend-line--positive .yoy-trend-line__dot {
+  stroke: oklch(0.55 0.18 145);
+}
+
+.yoy-trend-line--negative .yoy-trend-line__dot {
+  stroke: oklch(0.55 0.18 25);
+}
+
+.yoy-trend-line--neutral .yoy-trend-line__dot {
+  stroke: oklch(0.55 0.05 250);
+}
+
+.yoy-trend-line__dot--current {
+  fill: currentColor;
+  stroke-width: 0;
+  r: 3;
+}
+
+.yoy-trend-line--positive .yoy-trend-line__dot--current {
+  fill: oklch(0.55 0.18 145);
+}
+
+.yoy-trend-line--negative .yoy-trend-line__dot--current {
+  fill: oklch(0.55 0.18 25);
+}
+
+.yoy-trend-line__label {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: oklch(0.55 0 0);
+}
+
+:root.dark .yoy-trend-line__label,
+[data-theme="dark"] .yoy-trend-line__label {
+  color: oklch(0.55 0 0);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .yoy-growth-badge,
+  .yoy-growth-badge__glow,
+  .yoy-trend-line,
+  .yoy-trend-line__path,
+  .yoy-trend-line__fill,
+  .yoy-trend-line__dot {
+    transition: none;
+    animation: none;
+  }
+
+  .yoy-growth-badge {
+    opacity: 1;
+    transform: none;
+  }
+
+  .yoy-growth-badge.is-significant .yoy-growth-badge__glow {
+    opacity: 0.5;
+  }
+
+  .yoy-trend-line {
+    opacity: 1;
+    transform: none;
+  }
+
+  .yoy-trend-line__path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+
+  .yoy-trend-line__fill,
+  .yoy-trend-line__dot {
+    opacity: 1;
+  }
+}
