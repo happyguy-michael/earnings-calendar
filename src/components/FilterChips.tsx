@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react
 import { AnimatedFilterCount } from './AnimatedFilterCount';
 import { useAudioFeedback } from './AudioFeedback';
 import { LiquidPill } from './LiquidBlob';
+import { KeyboardHintWrapper } from './KeyboardHint';
 
 type FilterType = 'all' | 'beat' | 'miss' | 'pending';
 
@@ -16,13 +17,15 @@ interface FilterChipsProps {
     miss: number;
     pending: number;
   };
+  /** Show keyboard shortcut hints on hover */
+  showShortcuts?: boolean;
 }
 
-const filters: { key: FilterType; label: string; icon: string; description: string }[] = [
-  { key: 'all', label: 'All', icon: '', description: 'Show all earnings reports' },
-  { key: 'beat', label: 'Beat', icon: '📈', description: 'Show earnings that beat estimates' },
-  { key: 'miss', label: 'Miss', icon: '📉', description: 'Show earnings that missed estimates' },
-  { key: 'pending', label: 'Pending', icon: '⏳', description: 'Show pending earnings reports' },
+const filters: { key: FilterType; label: string; icon: string; description: string; shortcut: string }[] = [
+  { key: 'all', label: 'All', icon: '', description: 'Show all earnings reports', shortcut: 'A' },
+  { key: 'beat', label: 'Beat', icon: '📈', description: 'Show earnings that beat estimates', shortcut: 'B' },
+  { key: 'miss', label: 'Miss', icon: '📉', description: 'Show earnings that missed estimates', shortcut: 'M' },
+  { key: 'pending', label: 'Pending', icon: '⏳', description: 'Show pending earnings reports', shortcut: 'P' },
 ];
 
 /**
@@ -39,7 +42,7 @@ const filters: { key: FilterType; label: string; icon: string; description: stri
  * - Respects prefers-reduced-motion
  * - Focus visible indicators for keyboard users
  */
-export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
+export function FilterChips({ value, onChange, counts, showShortcuts = true }: FilterChipsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Map<FilterType, HTMLButtonElement>>(new Map());
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0 });
@@ -214,7 +217,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
           const isActive = value === filter.key;
           const count = counts[filter.key];
           
-          return (
+          const buttonContent = (
             <button
               key={filter.key}
               ref={(el) => {
@@ -229,7 +232,7 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
               role="tab"
               aria-selected={isActive}
               aria-controls="earnings-content"
-              aria-label={`${filter.label}: ${count} ${count === 1 ? 'report' : 'reports'}. ${filter.description}`}
+              aria-label={`${filter.label}: ${count} ${count === 1 ? 'report' : 'reports'}. ${filter.description}. Press ${filter.shortcut} to activate.`}
               tabIndex={isActive ? 0 : -1}
               id={`filter-tab-${filter.key}`}
             >
@@ -242,6 +245,20 @@ export function FilterChips({ value, onChange, counts }: FilterChipsProps) {
               />
             </button>
           );
+          
+          return showShortcuts ? (
+            <KeyboardHintWrapper
+              key={filter.key}
+              shortcut={filter.shortcut}
+              position="bottom"
+              variant="glass"
+              size="xs"
+              showDelay={400}
+              wrapperClassName="filter-chip-wrapper"
+            >
+              {buttonContent}
+            </KeyboardHintWrapper>
+          ) : buttonContent;
         })}
       </div>
       

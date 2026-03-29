@@ -30,6 +30,7 @@ import { MagneticButton } from '@/components/MagneticButton';
 import { TodayButton } from '@/components/TodayButton';
 import { MarketSessionIcon } from '@/components/MarketSessionIcon';
 import { KeyboardShortcutsOverlay, KeyboardShortcutsHint } from '@/components/KeyboardShortcuts';
+import { KeyboardHintWrapper, KeyboardHintGroup } from '@/components/KeyboardHint';
 import { AnimatedEmptyState } from '@/components/AnimatedEmptyState';
 import { BadgeSparkle } from '@/components/BadgeSparkle';
 import { BadgeShimmer } from '@/components/BadgeShimmer';
@@ -1472,19 +1473,28 @@ export default function Home() {
                   onMouseEnter={() => weekNavPreview.showPreview('prev')}
                   onMouseLeave={weekNavPreview.hidePreview}
                 >
-                  <MagneticButton
-                    onClick={() => navigateWeek(-1)}
-                    aria-label="Previous week"
-                    className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-l-xl"
-                    intensity={0.5}
-                    radius={1.6}
-                    inkEffect
-                    inkVariant="accent"
+                  <KeyboardHintWrapper
+                    shortcut="←"
+                    position="bottom"
+                    variant="glass"
+                    size="xs"
+                    showDelay={500}
+                    wrapperClassName="nav-hint-wrapper"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M15 18l-6-6 6-6" />
-                    </svg>
-                  </MagneticButton>
+                    <MagneticButton
+                      onClick={() => navigateWeek(-1)}
+                      aria-label="Previous week (← arrow key)"
+                      className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-l-xl"
+                      intensity={0.5}
+                      radius={1.6}
+                      inkEffect
+                      inkVariant="accent"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M15 18l-6-6 6-6" />
+                      </svg>
+                    </MagneticButton>
+                  </KeyboardHintWrapper>
                   {weekNavPreview.previewWeek && weekNavPreview.previewDirection === 'prev' && (
                     <WeekNavPreview
                       targetWeek={weekNavPreview.previewWeek}
@@ -1500,19 +1510,28 @@ export default function Home() {
                   onMouseEnter={() => weekNavPreview.showPreview('next')}
                   onMouseLeave={weekNavPreview.hidePreview}
                 >
-                  <MagneticButton
-                    onClick={() => navigateWeek(1)}
-                    aria-label="Next week"
-                    className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-r-xl"
-                    intensity={0.5}
-                    radius={1.6}
-                    inkEffect
-                    inkVariant="accent"
+                  <KeyboardHintWrapper
+                    shortcut="→"
+                    position="bottom"
+                    variant="glass"
+                    size="xs"
+                    showDelay={500}
+                    wrapperClassName="nav-hint-wrapper"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
-                  </MagneticButton>
+                    <MagneticButton
+                      onClick={() => navigateWeek(1)}
+                      aria-label="Next week (→ arrow key)"
+                      className="magnetic-nav-btn w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 transition-colors rounded-r-xl"
+                      intensity={0.5}
+                      radius={1.6}
+                      inkEffect
+                      inkVariant="accent"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </MagneticButton>
+                  </KeyboardHintWrapper>
                   {weekNavPreview.previewWeek && weekNavPreview.previewDirection === 'next' && (
                     <WeekNavPreview
                       targetWeek={weekNavPreview.previewWeek}

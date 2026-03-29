@@ -2,11 +2,14 @@
 
 import { PushableButton } from './PushableButton';
 import { BalloonTooltip } from './BalloonTooltip';
+import { KeyboardHint } from './KeyboardHint';
 
 interface TodayButtonProps {
   onClick: () => void;
   pendingToday: number;
   className?: string;
+  /** Show keyboard shortcut hint on hover */
+  showShortcut?: boolean;
 }
 
 /**
@@ -17,11 +20,12 @@ interface TodayButtonProps {
  * - Pulsing notification dot when there are pending earnings today
  * - Shows count badge
  * - Balloon tooltip with morphing dot animation
+ * - Keyboard shortcut hint on hover (T key)
  * - Subtle glow animation for urgency
  * - Respects prefers-reduced-motion
  * - Theme-aware styling
  */
-export function TodayButton({ onClick, pendingToday, className = '' }: TodayButtonProps) {
+export function TodayButton({ onClick, pendingToday, className = '', showShortcut = true }: TodayButtonProps) {
   const hasLiveEarnings = pendingToday > 0;
   
   const tooltipContent = hasLiveEarnings ? (
@@ -30,11 +34,13 @@ export function TodayButton({ onClick, pendingToday, className = '' }: TodayButt
       <span className="today-balloon-text">
         {pendingToday} pending report{pendingToday > 1 ? 's' : ''} today
       </span>
+      {showShortcut && <KeyboardHint shortcut="T" variant="glass" size="xs" alwaysVisible />}
     </div>
   ) : (
     <div className="today-balloon-content">
       <span className="today-balloon-icon">📅</span>
       <span className="today-balloon-text">Jump to current week</span>
+      {showShortcut && <KeyboardHint shortcut="T" variant="glass" size="xs" alwaysVisible />}
     </div>
   );
   
