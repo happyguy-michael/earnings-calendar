@@ -1,3 +1,58 @@
+## 2026-03-29 — ConsensusRangeBand: Visual Analyst Estimate Range
+
+**Inspiration:**
+- Bloomberg Terminal estimate range visualizations
+- Koyfin and FactSet analyst consensus displays
+- Dribbble financial dashboard trends 2026: "Data storytelling" — context, not just numbers
+- Trading platform estimate band indicators
+- The gap between "beat" and "blew away all expectations" deserves visual clarity
+
+**What I built:**
+- New `ConsensusRangeBand` component — horizontal band showing analyst estimate range with actual result positioning:
+
+  **Core Concept:**
+  - A beat by $0.01 vs blowing past the highest analyst estimate are very different
+  - This component shows the FULL context of where the result landed
+  - Gradient spectrum from red (low) → yellow (consensus) → green (high)
+  - Dashed consensus line shows where analysts expected
+  - Dot marker shows where the actual result landed
+
+  **Features:**
+  - Animated entrance with spring physics (scaleX reveal)
+  - Color-coded result dot (green=beat, red=miss, yellow=inline)
+  - Glow effect on result marker for visual emphasis
+  - "Above all estimates!" tooltip when result exceeds analyst range
+  - "Below all estimates" warning when result falls below range
+  - Bounce animation on exceed indicators (↑↓ arrows)
+  - `useEstimateRange` hook generates realistic spread based on ticker hash
+  - Compact variant (`ConsensusRangeBandCompact`) for inline card use
+  - Full light/dark mode support
+  - Respects prefers-reduced-motion
+
+  **Technical Details:**
+  - Default estimate range: ±10% of consensus (customizable via props)
+  - Spread varies by ticker (hash-based) for realism: 5-20%
+  - Actual position clamped to -5% to 105% to prevent overflow
+  - Intersection observer for scroll-triggered entrance animation
+  - Accessible with aria-label describing the full range context
+
+  **Integration:**
+  - Added to earnings cards after EPSComparisonBadge
+  - Only shows when estimate data is available
+  - Animation delay cascades with other card elements
+
+**Why this matters:**
+"Beat by 5%" means nothing without context. Did they barely scrape past consensus? Or blow past even the most bullish analyst? This component tells that story visually in a split second.
+
+**Light/Dark Mode:** Full support with adjusted gradients and colors.
+
+**Accessibility:**
+- Screen reader label includes full range and values
+- Respects prefers-reduced-motion
+- High contrast result markers
+
+---
+
 ## 2026-03-29 — BeatRatioTint: Sentiment-Aware Ambient Background
 
 **Inspiration:**
