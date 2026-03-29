@@ -64,6 +64,7 @@ import { ChromaticAberration, useChromatic } from '@/components/ChromaticAberrat
 import { SearchEmptyState } from '@/components/SearchEmptyState';
 import { LiquidWaveProgressCompact } from '@/components/LiquidWaveProgress';
 import { EPSComparisonBadge } from '@/components/EPSComparisonBadge';
+import { ConsensusRangeBandCompact, useEstimateRange } from '@/components/ConsensusRangeBand';
 import { FilterGlow } from '@/components/FilterGlow';
 import { CardLightSweep } from '@/components/CardLightSweep';
 import { CursorGlowCard } from '@/components/CursorGlowBorder';
@@ -296,6 +297,9 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
   if (hasResult && earning.estimate) {
     surprise = ((earning.eps! - earning.estimate) / Math.abs(earning.estimate)) * 100;
   }
+
+  // Generate estimate range for consensus band visualization
+  const estimateRange = useEstimateRange(earning.estimate, earning.ticker);
 
   const oddsColor = earning.beatOdds 
     ? earning.beatOdds >= 70 ? '#22c55e' 
@@ -590,6 +594,16 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
                 delay={animationIndex * 50 + 50}
                 size="sm"
                 showBar={true}
+              />
+            )}
+            {/* Consensus range band - shows where actual landed in analyst estimate range */}
+            {earning.estimate && estimateRange.low && estimateRange.high && (
+              <ConsensusRangeBandCompact
+                estimate={earning.estimate}
+                actual={earning.eps!}
+                lowEstimate={estimateRange.low}
+                highEstimate={estimateRange.high}
+                delay={animationIndex * 50 + 75}
               />
             )}
             {/* Surprise magnitude bar - visual indicator of beat/miss size */}
