@@ -185,6 +185,7 @@ import { RecentResultsStrip } from '@/components/RecentResultsStrip';
 import { PerimeterGlowCard } from '@/components/PerimeterGlow';
 import { QuarterlyResultStrip } from '@/components/QuarterlyResultStrip';
 import { SectorBadge } from '@/components/SectorBadge';
+import { MarketCapTierInline } from '@/components/MarketCapTier';
 import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/SurpriseDistribution';
 import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
 import { BeatRatioTint } from '@/components/BeatRatioTint';
@@ -501,6 +502,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
                 duration={350}
               />
             </span>
+            <MarketCapTierInline ticker={earning.ticker} />
             <BeatStreakBadge streak={beatStreak} />
             <SectorBadge 
               ticker={earning.ticker} 

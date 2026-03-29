@@ -1,3 +1,65 @@
+## 2026-03-30 — MarketCapTier: Visual Market Capitalization Context
+
+**Inspiration:**
+- Bloomberg Terminal's asset classification badges
+- Morningstar's style box indicators
+- Trading platform stock screeners
+- 2026 "Contextual Classification" trend — instant visual categorization
+
+**What I built:**
+- New `MarketCapTier` component family — compact badges showing market cap tier:
+
+  **Core Concept:**
+  - Market cap tier is critical context for understanding risk/volatility
+  - Mega caps ($200B+) behave differently than small caps ($300M-$2B)
+  - A visual indicator next to the ticker instantly communicates this
+  - Size-scaled icons: larger icon = bigger company
+
+  **Components:**
+  - `MarketCapTier`: Full badge with label and optional value
+  - `MarketCapTierInline`: Ultra-compact dot indicator for inline use
+  - `MarketCapTierBadge`: Glowing badge variant for featured use
+  - `MarketCapScale`: Visual scale showing position across all tiers
+  - `useMarketCap`: Hook for retrieving market cap from ticker
+
+  **Tier System (Industry Standard):**
+  - **Mega Cap** ($200B+): Violet ◆ — AAPL, MSFT, NVDA
+  - **Large Cap** ($10B-$200B): Blue ● — JPM, V, WMT
+  - **Mid Cap** ($2B-$10B): Green ● — Growth companies
+  - **Small Cap** ($300M-$2B): Amber ● — Higher risk/reward
+  - **Micro Cap** ($50M-$300M): Red ● — Very small
+  - **Nano Cap** (<$50M): Gray · — Smallest
+
+  **Visual Features:**
+  - Color-coded by tier for instant recognition
+  - Size-scaled icons (mega = largest dot, nano = smallest)
+  - Animated entrance with spring physics
+  - Hover tooltip with market cap value and description
+  - Mock data for 80+ common tickers
+  - Hash-based fallback for unknown tickers (consistent values)
+
+  **Integration:**
+  - Added `MarketCapTierInline` to EarningsCard next to ticker name
+  - Subtle dot indicator provides context without clutter
+  - Hover reveals full market cap info
+
+**Why this matters:**
+When scanning earnings, knowing whether you're looking at AAPL (mega cap, $2.9T) or
+GME (small cap, $1.2B) is crucial context. These companies have very different
+volatility profiles, analyst coverage, and trading characteristics. The visual
+indicator makes this immediately apparent without taking up space.
+
+**Technical Details:**
+- Mock data for major tickers, hash-based fallback for others
+- Memoized components for performance
+- Full prefers-reduced-motion support
+- Light/dark mode support
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-29 — Late March Earnings Data Update
 
 **What I did:**
