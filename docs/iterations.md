@@ -1,4 +1,54 @@
 
+## 2026-03-29 — RankMovement Component (Chart Position Change Indicators)
+
+**Inspiration:** Dribbble earnings dashboard designs showing "temporal context" — how data changed over time, not just current state. Spotify/Apple Music charts prominently display rank movements (↑3, ↓5, NEW, =), and this pattern translates perfectly to financial data where understanding momentum matters.
+
+**What was added:**
+- New `RankMovement` component system:
+  - `RankMovement` - Full featured indicator with ↑/↓/–/★/↻ arrows
+  - `RankMovementCompact` - Minimal arrow-only version
+  - `RankMovementInline` - For inline text usage without container
+  - `ChartPosition` - Combined "#3 ↑2" style display
+  - `Mover` - Emoji-enhanced fun indicators (🚀🔥💀📈)
+
+**Features:**
+- Directional arrows with micro-bounce animation (optional)
+- Delta numbers for significant movements (+12, −8)
+- "NEW" badge for fresh chart entries with purple styling
+- "RE" badge for re-entries after absence (amber)
+- Color-coded: green (up), red (down), neutral (same)
+- Entrance animation with scale + fade
+- `bounceArrow` prop for continuous attention-grabbing animation
+- `minDelta` threshold to hide insignificant changes
+- Full `prefers-reduced-motion` support
+- Multiple size presets (xs, sm, md, lg)
+
+**Use cases:**
+- Beat probability rank changes week-over-week
+- Analyst consensus movement on watchlist
+- Sector leaderboard position shifts
+- "Most anticipated earnings" ranking changes
+- Gamified engagement metrics
+
+**Technical notes:**
+- Pure CSS animations via `<style jsx global>` injection
+- IntersectionObserver for viewport-triggered entrance
+- Memoized movement calculations for performance
+- Accessible with proper aria-labels
+
+**Why it matters:**
+- "Temporal Context" is a 2026 trend — users want momentum, not just state
+- Leaderboard movement indicators increase engagement
+- Helps users quickly spot stocks gaining/losing attention
+- Fun Mover emoji variant adds personality to data displays
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** c93b9e8
+**Verified:** https://earnings-calendar-omega.vercel.app
+
+---
+
 ## 2026-03-25 — NeonText Component (Neon Sign Glow Effect)
 
 **Inspiration:** 2026 "Neo-Retro" design trend combining modern polish with nostalgic aesthetics — neon signs, synthwave visuals, and the resurgence of 80s/90s cyber-aesthetics in premium UI. Real neon signs have a distinctive multi-layer glow that creates depth and atmosphere.
