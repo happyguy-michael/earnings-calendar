@@ -190,6 +190,8 @@ import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison'
 import { BeatRatioTint } from '@/components/BeatRatioTint';
 import { AnalystDispersion, AnalystDispersionInline } from '@/components/AnalystDispersion';
 import { EstimateMomentum } from '@/components/EstimateMomentum';
+import { VolatilityIndicator } from '@/components/VolatilityIndicator';
+import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 
 function getWeekStart(date: Date): Date {
@@ -787,6 +789,13 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               size="xs"
               showChange={true}
               delay={animationIndex * 50 + 75}
+            />
+            {/* Volatility indicator - typical earnings price move */}
+            <VolatilityIndicator
+              ticker={earning.ticker}
+              size="xs"
+              showRange={true}
+              delay={animationIndex * 50 + 100}
             />
             {earning.beatOdds ? (
               <IntensityGlow

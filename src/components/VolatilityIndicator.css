@@ -1,0 +1,320 @@
+/* VolatilityIndicator - Earnings volatility visualization */
+
+.volatility-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--vol-padding);
+  background: var(--vol-bg);
+  border: 1px solid var(--vol-border);
+  border-radius: 6px;
+  font-size: var(--vol-font-size);
+  font-weight: 500;
+  color: var(--vol-color);
+  cursor: default;
+  position: relative;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.volatility-indicator.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.volatility-indicator.is-hovered {
+  background: var(--vol-bg);
+  border-color: var(--vol-color);
+  box-shadow: 0 0 12px var(--vol-glow);
+}
+
+/* Bar visualization */
+.volatility-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--bar-gap, 1.5px);
+  height: 14px;
+}
+
+.volatility-indicator--xs .volatility-bars {
+  height: 10px;
+  --bar-gap: 1px;
+}
+
+.volatility-indicator--md .volatility-bars {
+  height: 18px;
+  --bar-gap: 2px;
+}
+
+.volatility-bar {
+  background: var(--vol-color);
+  border-radius: 1px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: bottom;
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+.volatility-indicator.is-visible .volatility-bar {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.volatility-bar.inactive {
+  background: var(--border-subtle, rgba(113, 113, 122, 0.2));
+}
+
+/* Pulsing animation for active bars */
+.volatility-indicator.is-visible .volatility-bar.active {
+  animation: volatility-pulse 2s ease-in-out infinite;
+}
+
+.volatility-indicator--extreme .volatility-bar.active {
+  animation-duration: 1s;
+}
+
+.volatility-indicator--high .volatility-bar.active {
+  animation-duration: 1.5s;
+}
+
+@keyframes volatility-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Staggered bar animation */
+.volatility-bar:nth-child(1) { animation-delay: 0s; }
+.volatility-bar:nth-child(2) { animation-delay: 0.15s; }
+.volatility-bar:nth-child(3) { animation-delay: 0.3s; }
+.volatility-bar:nth-child(4) { animation-delay: 0.45s; }
+
+/* Label */
+.volatility-label {
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Range badge */
+.volatility-range {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+/* Tooltip */
+.volatility-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: rgba(24, 24, 27, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 160px;
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  animation: volatility-tooltip-enter 0.2s ease-out;
+}
+
+@keyframes volatility-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+.volatility-tooltip__header {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vol-color);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.volatility-tooltip__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.volatility-tooltip__row span:last-child {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.volatility-tooltip__desc {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+/* Light mode */
+html.light .volatility-indicator {
+  background: color-mix(in srgb, var(--vol-color) 8%, transparent);
+  border-color: color-mix(in srgb, var(--vol-color) 20%, transparent);
+}
+
+html.light .volatility-indicator.is-hovered {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--vol-color) 25%, transparent);
+}
+
+html.light .volatility-bar.inactive {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+html.light .volatility-tooltip {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+html.light .volatility-tooltip__header {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+html.light .volatility-tooltip__row {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+html.light .volatility-tooltip__row span:last-child {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+html.light .volatility-tooltip__desc {
+  border-top-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Volatility Dot - compact variant */
+.volatility-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vol-color);
+  cursor: default;
+  position: relative;
+}
+
+.volatility-dot--high,
+.volatility-dot--extreme {
+  animation: volatility-dot-pulse 1.5s ease-in-out infinite;
+}
+
+.volatility-dot--extreme {
+  animation-duration: 0.8s;
+}
+
+@keyframes volatility-dot-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--vol-color);
+  }
+  50% {
+    box-shadow: 0 0 0 3px transparent;
+  }
+}
+
+/* Volatility Waves - animated wave visualization */
+.volatility-waves {
+  display: inline-flex;
+  align-items: center;
+  width: 24px;
+  height: 12px;
+  cursor: default;
+}
+
+.volatility-waves--xs {
+  width: 18px;
+  height: 9px;
+}
+
+.volatility-waves--md {
+  width: 32px;
+  height: 16px;
+}
+
+.volatility-wave-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.volatility-wave-path {
+  stroke: var(--vol-color);
+  stroke-linecap: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.volatility-waves.is-animating .volatility-wave-path {
+  animation: volatility-wave-draw 1.5s ease-in-out infinite;
+}
+
+.volatility-wave-path--delayed {
+  animation-delay: 0.2s !important;
+}
+
+@keyframes volatility-wave-draw {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dashoffset: 30;
+  }
+  100% {
+    stroke-dashoffset: 60;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .volatility-indicator {
+    transition: opacity 0.15s ease;
+    transform: none !important;
+  }
+  
+  .volatility-indicator.is-visible {
+    transform: none !important;
+  }
+  
+  .volatility-bar {
+    animation: none !important;
+    transform: scaleY(1) !important;
+  }
+  
+  .volatility-indicator.is-visible .volatility-bar {
+    transform: scaleY(1) !important;
+  }
+  
+  .volatility-dot {
+    animation: none !important;
+  }
+  
+  .volatility-waves .volatility-wave-path {
+    animation: none !important;
+  }
+  
+  .volatility-tooltip {
+    animation: none;
+  }
+}
