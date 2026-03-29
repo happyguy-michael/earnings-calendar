@@ -98,6 +98,7 @@ import { GlassReflection } from '@/components/GlassReflection';
 import { NumberJolt } from '@/components/NumberJolt';
 import { AnimatedStatDelta } from '@/components/AnimatedStatDelta';
 import { GlitchPending } from '@/components/GlitchText';
+import { LocalTimeIndicator } from '@/components/LocalTimeIndicator';
 import { MarketMoodRing } from '@/components/MarketMoodRing';
 import { DepthHover, DepthHoverContainer } from '@/components/DepthHover';
 import { OrbitDot } from '@/components/OrbitDot';
@@ -543,6 +544,17 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
               glow={true}
               delay={animationIndex * 40 + 80}
             />
+            {/* Local time indicator for international users - shows if not in ET */}
+            {isPending && earning.time && (
+              <LocalTimeIndicator
+                session={earning.time}
+                date={earning.date}
+                size="xs"
+                showTimezone={true}
+                showDayContext={true}
+                delay={animationIndex * 40 + 100}
+              />
+            )}
             {/* Show time since for recently reported earnings */}
             {hasResult && isToday && (
               <TimeSinceInline reportedAt={new Date(earning.date)} time={earning.time} />
