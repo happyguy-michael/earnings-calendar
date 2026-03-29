@@ -7998,3 +7998,69 @@ Some earnings are more "interesting" than others — NVDA earnings move the enti
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** a58622c
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-29 — KeyboardHint: Inline Keyboard Shortcut Badges
+
+**Inspiration:**
+- Linear's toolbar shortcut hints
+- Notion's keyboard shortcut tooltips
+- Figma's inline shortcut indicators
+- 2026 UX trend: "Progressive disclosure of power features"
+
+**What I built:**
+New `KeyboardHint` component system for showing keyboard shortcuts directly on
+interactive elements — improves discoverability without cluttering the UI.
+
+**Core Components:**
+- `KeyboardHint` - Standalone shortcut badge with multiple variants
+- `KeyboardHintWrapper` - Wraps elements to show hints on hover
+- `KeyboardHintGroup` - Multiple shortcuts with separators (or/then/plus)
+
+**Visual Variants:**
+- `default` - Subtle key cap style with shadow
+- `minimal` - Text-only, no background
+- `glass` - Frosted glass with blur
+- `solid` - Solid accent color fill
+
+**Size Variants:**
+- `xs` - 9px, compact inline use
+- `sm` - 10px, standard (default)
+- `md` - 11px, emphasis
+
+**Position Options:**
+- `inline-right` / `inline-left` - Next to content
+- `top` / `bottom` / `left` / `right` - Positioned around parent
+
+**Features:**
+- Platform-aware modifier symbols (⌘ on Mac, Ctrl on Windows)
+- Smooth entrance animation with spring easing
+- Configurable show delay (default 300ms)
+- Optional global shortcut listener
+- Full `prefers-reduced-motion` support
+- Theme-aware (light/dark mode)
+
+**Integrations:**
+- **TodayButton:** Shows `T` shortcut in balloon tooltip
+- **FilterChips:** Shows `A`/`B`/`M`/`P` hints on hover for each filter
+- **Week Navigation:** Shows `←`/`→` arrow hints on hover
+
+**Technical Details:**
+- Pure CSS animations, no external libraries
+- Glass variant uses backdrop-filter blur
+- Spring timing function for premium feel
+- ARIA hidden (shortcuts are also in aria-labels)
+
+**Why this matters:**
+Power users love keyboard shortcuts, but they're invisible by default. Showing
+shortcuts on hover teaches users the faster way to interact while they're
+already engaged with the button. This is the same pattern used by Linear,
+Notion, and other premium productivity tools — it creates an "aha moment"
+that converts casual users into power users.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** ee74c55
+**Deployed:** https://earnings-calendar-omega.vercel.app
