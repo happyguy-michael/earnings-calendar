@@ -1,3 +1,50 @@
+## 2026-03-29 — Late March Earnings Data Update
+
+**What I did:**
+Extended the mock earnings data to cover late March 2026, ensuring the calendar shows
+realistic content for the current date range (March 29, 2026).
+
+**Data Added:**
+
+**Week of March 23 (Reported Results):**
+- GME (GameStop) - Beat (+166.7% surprise, +12.4% price move)
+- CHWY (Chewy) - Beat (+50% surprise, +8.7% price move)
+- KBH (KB Home) - Beat (+3.4% surprise)
+- PAYX (Paychex) - Beat (+2.2% surprise)
+- CTAS (Cintas) - Beat (+3.5% surprise, +4.5% price move)
+- WBA (Walgreens) - Miss (-8.8% surprise, -6.8% price move)
+- MKC (McCormick) - Beat (+2.9% surprise)
+- DLTR (Dollar Tree) - Miss (-3.1% surprise, -4.3% price move)
+- PVH (PVH Corp) - Beat (+5.2% surprise, +5.8% price move)
+- JEF (Jefferies) - Beat (+8% surprise)
+
+**Week of March 30 (Pending):**
+- CCL (Carnival) - 72% beat odds
+- CALM (Cal-Maine Foods) - 68% beat odds
+- RH (Restoration Hardware) - 55% beat odds
+- PEP (PepsiCo) - 78% beat odds
+- APLD (Applied Digital) - 45% beat odds
+- CAG (Conagra Brands) - 65% beat odds
+- LEVI (Levi Strauss) - 58% beat odds
+- LW (Lamb Weston) - 62% beat odds
+- STZ (Constellation Brands) - 75% beat odds
+
+**Why this matters:**
+The calendar was showing "No reports" for all visible days because the mock data
+only extended to mid-March. This update ensures realistic demo content for users
+viewing the calendar around March 29, 2026.
+
+**Technical Details:**
+- Mix of pre-market and post-market reports
+- Realistic beat/miss distribution (~80% beats, matching S&P 500 historical average)
+- Beat odds for pending earnings based on historical beat rates for each company
+- Price moves calibrated to surprise magnitude
+
+**Build:** ✓ Passed
+**Commit:** Data update for late March 2026
+
+---
+
 ## 2026-03-29 — ConsensusRangeBand: Visual Analyst Estimate Range
 
 **Inspiration:**
