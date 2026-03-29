@@ -8119,3 +8119,79 @@ that converts casual users into power users.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** ee74c55
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-29 — VolatilityIndicator: Earnings Price Move Visualization
+
+**Inspiration:**
+- Bloomberg Terminal's implied volatility gauges
+- Options trading "Expected Move" displays
+- Market Chameleon earnings volatility metrics
+- TradingView volatility percentile indicators
+- 2026 trend: "Risk visualization" — making uncertainty visible
+
+**What I built:**
+New `VolatilityIndicator` component showing typical price movement around earnings.
+Not all earnings are created equal — NVDA might move 12% post-earnings while PG
+moves 2%. This component surfaces that critical risk context.
+
+**Core Concept:**
+Earnings volatility is the historical average price move (up or down) following
+an earnings report. High volatility = bigger potential swings = higher risk/reward.
+Traders need this context to:
+- Size positions appropriately
+- Set realistic profit/loss expectations  
+- Choose between stock vs options strategies
+
+**Features:**
+- Animated bar visualization (1-4 bars based on volatility level)
+- Color-coded severity: cyan (low) → blue (moderate) → orange (high) → red (extreme)
+- Hover tooltip with detailed metrics (avg move, max move, IV rank)
+- Pulsing animation intensity scales with volatility level
+- Staggered bar entrance animation with spring physics
+- Full light/dark mode support
+- Respects prefers-reduced-motion
+
+**Component Exports:**
+- `VolatilityIndicator` - Main badge with bars + optional labels
+- `VolatilityDot` - Ultra-compact dot for dense list views
+- `VolatilityWaves` - Animated wave viz for high-vol stocks only
+- `useVolatility` - Hook for programmatic access
+
+**Volatility Classification:**
+- Low: <3.5% avg move (stable blue chips like PG, JNJ, KO)
+- Moderate: 3.5-5.5% avg move (typical large-caps)
+- High: 5.5-12% avg move (tech, growth names like NVDA, AMD)
+- Extreme: >12% avg move (meme stocks, speculative names like GME, MSTR)
+
+**Technical Details:**
+- Hash-based ticker simulation for consistent volatility per stock
+- Known volatility tiers for recognizable tickers (NVDA=high, PG=low)
+- CSS custom properties for easy theming
+- Intersection Observer for scroll-triggered animations
+- Accessible with descriptive aria-labels
+
+**Integration:**
+- Added to pending earnings cards after EstimateMomentum
+- Shows typical ±X.X% move range
+- Compact `xs` size to fit card density
+- Staggered delay cascades with other badges
+
+**Why this matters:**
+Seeing "beat by 5%" is meaningless without volatility context. A 5% beat on
+a stock that typically moves 3% is a big deal. A 5% beat on a stock that
+typically moves 15% is a yawn. The VolatilityIndicator provides that crucial
+framing so traders can calibrate their expectations.
+
+**Accessibility:**
+- Screen reader announces full volatility context
+- Respects prefers-reduced-motion (no pulse animations)
+- High contrast bar/color differentiation
+- Keyboard focusable with visible focus ring
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 457b5fa
+**Deployed:** https://earnings-calendar-omega.vercel.app
