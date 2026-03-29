@@ -1,3 +1,60 @@
+## 2026-03-30 — ResultStreakIndicator: Real-Time Momentum Signals
+
+**Inspiration:**
+- Sports apps showing "on a 5-game winning streak"
+- Trading platforms showing consecutive green/red candles
+- Fantasy sports apps showing "hot streak" indicators
+- Twitch's "X wins in a row" gaming overlays
+- 2026 "Live Momentum Signals" trend — showing patterns as they emerge
+
+**What I built:**
+- New `ResultStreakIndicator` component — shows consecutive beats/misses in real-time:
+
+  **Core Concept:**
+  - When scanning earnings, users want to know "what's happening right now?"
+  - A streak of consecutive beats or misses signals momentum and market sentiment
+  - Visual indicator appears when 2+ consecutive same-result earnings occur
+  - Provides instant insight without requiring mental calculation
+
+  **Components:**
+  - `ResultStreakIndicator`: Compact badge showing streak count + momentum
+  - `useResultStreak`: Hook for programmatic streak analysis
+
+  **Visual Features:**
+  - **Beat streaks**: Fire icon with warm gradient (green → orange → red as streak grows)
+  - **Miss streaks**: Ice/snowflake icon with cool gradient (blue → purple → cyan)
+  - **Size levels**: Regular (3+), Hot (5+), On Fire (7+)
+  - **Animations**:
+    - Scale + blur entrance animation
+    - Particle effects for hot streaks
+    - Pulse effect when count increases
+    - Glowing border animation for max streaks
+  - **Ongoing indicator**: Pulsing dot when pending earnings could extend streak
+
+  **Integration:**
+  - Added to pre-market and post-market session headers
+  - Ultra-compact "xs" size fits inline without clutter
+  - Staggered animation delays for visual flow
+  - Tooltip shows streak tickers for context
+
+**Why this matters:**
+During heavy earnings days, knowing that "3 tech companies just beat in a row" provides
+instant sentiment context. It's the kind of insight that traders glean from watching 
+results come in, now surfaced automatically at a glance. The momentum signal helps users
+quickly assess whether the session is trending bullish or bearish.
+
+**Technical Details:**
+- Analyzes earnings array to find consecutive result sequences
+- Sorts by date to find most recent streak
+- Memoized for performance
+- Full prefers-reduced-motion support
+- Light/dark mode aware with styled-jsx
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-30 — MarketCapTier: Visual Market Capitalization Context
 
 **Inspiration:**
