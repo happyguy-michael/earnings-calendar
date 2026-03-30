@@ -8799,3 +8799,73 @@ about it without scrolling.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 277ce2e
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-31 — SyncIndicator: Floating Data Sync Status Feedback
+
+**Inspiration:**
+- 2026 UX Trend: "Transparent System Status"
+- Gmail's sync indicator (subtle top-center pill)
+- Linear's elegant loading states
+- Notion's syncing badge
+- iOS 18+ system status indicators
+
+**What I built:**
+New `SyncIndicator` component - a floating pill indicator that shows when data is
+being synced/refreshed. Users expect real-time feedback about background operations;
+this builds trust in data freshness without intrusive full-page loading states.
+
+**Core Concept:**
+A minimalist floating pill appears at the top of the screen during data operations:
+- **Syncing**: Animated spinner with "Syncing..." text
+- **Success**: Checkmark with draw animation, auto-dismisses after 2s
+- **Error**: X icon with subtle shake animation
+- **Offline**: Cloud-off icon, persists until back online
+
+**Features:**
+- Floating pill with glassmorphism backdrop blur
+- Animated spinner with smooth rotation
+- Checkmark icon with stroke-draw animation
+- Progress bar shimmer during sync
+- Subtle glow effect matching state color
+- Auto online/offline detection
+- Success/error states with auto-dismiss
+- Context provider pattern (useSync hook)
+- useSyncOperation hook for wrapping async operations
+- SyncStatusInline variant for headers/toolbars
+- Full light/dark mode support
+- Respects prefers-reduced-motion
+- Configurable position (top/bottom) and offset
+
+**Technical Details:**
+- React Context for global state management
+- CSS animations for all transitions
+- SVG icons with stroke animations
+- Online/offline event listeners
+- Graceful fallback when used outside provider
+- SSR-safe (mounted state checks)
+
+**Integration:**
+- SyncIndicatorProvider wraps app at root level
+- RefreshSyncBridge component bridges existing isRefreshing state
+- Works alongside existing LiquidWaveProgress indicator
+- Position offset (72px) clears the header
+
+**Component Exports:**
+- `SyncIndicatorProvider` - Context provider with render container
+- `useSync` - Hook for manual sync state control
+- `useSyncOperation` - Hook to wrap async operations with sync feedback
+- `SyncStatusInline` - Compact inline version for toolbars
+
+**Why this matters:**
+Modern apps need to communicate system status without interrupting flow.
+A subtle floating indicator tells users "yes, we're getting fresh data" or
+"oops, you're offline" without modal dialogs or full-screen spinners.
+It's the difference between an app that feels responsive vs one that feels laggy.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** df7c3ec
+**Deployed:** https://earnings-calendar-omega.vercel.app
