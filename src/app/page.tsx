@@ -196,6 +196,7 @@ import { VolatilityIndicator } from '@/components/VolatilityIndicator';
 import { ResultStreakIndicator } from '@/components/ResultStreakIndicator';
 import { EarningsVelocity, EarningsVelocityBadge } from '@/components/EarningsVelocity';
 import { SessionCountdown, SessionCountdownBadge } from '@/components/SessionCountdown';
+import { LiveSessionScore, LiveSessionScoreBadge } from '@/components/LiveSessionScore';
 import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 
@@ -1389,6 +1390,7 @@ export default function Home() {
                 <MarketPulseIndicator size="md" />
                 <LiveMarketClock compact showTimezone />
                 <SessionCountdownBadge delay={200} />
+                <LiveSessionScoreBadge earnings={earnings} delay={250} />
                 <div className="hidden lg:flex items-center gap-2">
                   <SeasonProgress earnings={earnings} delay={200} />
                   <DataFreshnessIndicator
