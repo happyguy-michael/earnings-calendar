@@ -128,6 +128,7 @@ import { CommandPaletteProvider, CommandTrigger } from '@/components/CommandPale
 import { BlurReveal, BlurRevealGroup } from '@/components/BlurReveal';
 import { CascadeReveal, CascadeItem } from '@/components/CascadeReveal';
 import { CrystalCard, CrystalBadge } from '@/components/CrystalCard';
+import { SyncIndicatorProvider, useSync, useSyncOperation } from '@/components/SyncIndicator';
 import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import { SpinDigit, SpinInteger } from '@/components/SpinDigit';
 import { SpotlightContainer, SpotlightCard } from '@/components/SpotlightHover';
@@ -204,6 +205,25 @@ import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 import { StructuredData } from '@/components/StructuredData';
 import { AnnouncementBar, EarningsSeasonBar } from '@/components/AnnouncementBar';
+
+// Bridge component to sync refresh state with SyncIndicator
+function RefreshSyncBridge({ isRefreshing }: { isRefreshing: boolean }) {
+  const { showSync, showSuccess, hideSync } = useSync();
+  const wasRefreshing = useRef(false);
+  
+  useEffect(() => {
+    if (isRefreshing && !wasRefreshing.current) {
+      // Started refreshing
+      showSync('Fetching latest data...');
+    } else if (!isRefreshing && wasRefreshing.current) {
+      // Finished refreshing
+      showSuccess('Data refreshed');
+    }
+    wasRefreshing.current = isRefreshing;
+  }, [isRefreshing, showSync, showSuccess]);
+  
+  return null;
+}
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -1188,6 +1208,7 @@ export default function Home() {
   }, [showToast]);
 
   return (
+    <SyncIndicatorProvider position="top" offset={72} successDismissMs={2000}>
     <SkeletonTransition
       loading={isLoading}
       skeleton={<SkeletonCalendar />}
@@ -1208,6 +1229,8 @@ export default function Home() {
     <MomentumTiltProvider maxTilt={3} minScale={0.985} threshold={0.4} sensitivity={1.2}>
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <SelectionProvider maxSelections={5}>
+    {/* Bridge refresh state to SyncIndicator */}
+    <RefreshSyncBridge isRefreshing={isRefreshing} />
     <div className="min-h-screen relative">
       {/* Skip link for keyboard accessibility - first focusable element */}
       <SkipLink targetId="main-content" offsetTop={140} />
@@ -2832,5 +2855,6 @@ export default function Home() {
     </CoachMarkProvider>
     </CommandPaletteProvider>
     </SkeletonTransition>
+    </SyncIndicatorProvider>
   );
 }
