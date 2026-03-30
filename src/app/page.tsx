@@ -203,6 +203,7 @@ import { LiveSessionScore, LiveSessionScoreBadge } from '@/components/LiveSessio
 import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 import { StructuredData } from '@/components/StructuredData';
+import { AnnouncementBar, EarningsSeasonBar } from '@/components/AnnouncementBar';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -1210,6 +1211,20 @@ export default function Home() {
     <div className="min-h-screen relative">
       {/* Skip link for keyboard accessibility - first focusable element */}
       <SkipLink targetId="main-content" offsetTop={140} />
+      
+      {/* Announcement bar for important updates (earnings season, holidays, features) */}
+      <EarningsSeasonBar
+        quarter="Q1"
+        year={2026}
+        startDate="2026-04-14"
+        onJumpToWeek={() => {
+          // Jump to Q1 earnings season kickoff week
+          const targetDate = new Date('2026-04-14');
+          setCurrentWeekStart(getWeekStart(targetDate));
+          haptic('select');
+          showToast('Jumped to Q1 2026 earnings season', { type: 'info', icon: '📅', duration: 2000 });
+        }}
+      />
       
       {/* Beat ratio tint - subtle ambient background based on beat/miss sentiment */}
       <BeatRatioTint beats={beatsCount} total={reportedCount} intensity={0.035} />
