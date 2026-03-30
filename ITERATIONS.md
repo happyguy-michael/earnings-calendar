@@ -8917,3 +8917,70 @@ It's the difference between an app that feels responsive vs one that feels laggy
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** df7c3ec
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-31 — SessionPhaseAura: Ambient Market Session Indicator
+
+**Inspiration:**
+- Bloomberg Terminal's subtle session awareness
+- Philips Hue ambient lighting concepts
+- iOS Dynamic Island's contextual glow
+- 2026 "Ambient Computing" trend
+
+**What I built:**
+New `SessionPhaseAura` component that adds subtle edge gradient auras to the viewport,
+providing passive awareness of the current US market session without demanding attention.
+The colors shift based on which trading phase we're in.
+
+**Market Phases & Colors:**
+- **Pre-market** (4 AM - 9:30 AM ET): Soft blue-cyan — early morning calm
+- **Regular hours** (9:30 AM - 4 PM ET): Soft emerald-green — active trading energy
+- **After-hours** (4 PM - 8 PM ET): Soft purple-violet — evening session
+- **Closed** (8 PM - 4 AM ET, weekends): Neutral/minimal — rest period
+
+**Visual Design:**
+- Edge-only gradients (top, left, right by default)
+- Very subtle opacity (6-12% for dark mode, slightly less for light)
+- Corner blobs add organic depth without covering content
+- Smooth 25-second breathing animation
+- Gradients positioned to not interfere with readability
+
+**Technical Features:**
+- SSR-safe with mounted state check
+- Auto-updates at exact phase transition times
+- Light/dark mode aware (different color intensities)
+- Respects prefers-reduced-motion (disables animations)
+- Configurable edges, intensity, animation duration
+- Memoized to prevent unnecessary re-renders
+- Includes `useMarketPhase` hook for other components
+
+**Component Exports:**
+- `SessionPhaseAura` - Main ambient overlay component
+- `useMarketPhase` - Hook returning current market phase
+- `MarketPhaseLabel` - Human-readable phase label
+
+**Integration:**
+- Added to main page after GrainOverlay
+- Uses top/left/right edges (bottom left clear for FAB)
+- Intensity set to 0.8 for subtle presence
+- Z-index: -1 (behind content but above background)
+
+**Why this matters:**
+Traders benefit from constant awareness of market session without checking clocks.
+This component embodies the "ambient computing" trend — information that's always
+present but never intrusive. The color shift is subtle enough that you might not
+consciously notice it, yet your brain registers the context.
+
+It's the difference between:
+- Checking a clock to see if markets are open
+- vs. Glancing at the page and "feeling" the market phase
+
+This small addition transforms the calendar from a static reference into a
+living, breathing trading companion that reflects market rhythm.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 6a3d032
+**Deployed:** https://earnings-calendar-omega.vercel.app
