@@ -178,6 +178,7 @@ import { PopularityBadge } from '@/components/PopularityBadge';
 import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
 import { AddToCalendar } from '@/components/AddToCalendar';
 import { QuickLinksMenu } from '@/components/QuickLinksMenu';
+import { SessionPhaseAura } from '@/components/SessionPhaseAura';
 import { SelectionProvider, SelectionHighlight, SelectionHint } from '@/components/SelectionMode';
 import { FiscalQuarterBadge } from '@/components/FiscalQuarterBadge';
 import { SkipLink } from '@/components/SkipLink';
@@ -1401,6 +1402,15 @@ export default function Home() {
       
       {/* Premium grain texture overlay */}
       <GrainOverlay opacity={0.025} animate={true} blendMode="overlay" />
+      
+      {/* Ambient market session aura - subtle edge glow indicating market phase */}
+      <SessionPhaseAura 
+        intensity={0.8}
+        animate={true}
+        animationDuration={25000}
+        edges={['top', 'left', 'right']}
+        zIndex={-1}
+      />
       
       {/* Premium keyboard focus styles for accessibility */}
       <FocusSpotlightGlobal />
