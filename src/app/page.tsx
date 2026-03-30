@@ -171,7 +171,8 @@ import { ScrollDepthLayers } from '@/components/ScrollDepthLayers';
 import { NeonText, NeonBadge, NeonLive } from '@/components/NeonText';
 import { BeatRateGrade, BeatRateGradeBadge } from '@/components/BeatRateGrade';
 import { SurpriseGrade } from '@/components/SurpriseGrade';
-import { WatchlistIndicator } from '@/components/Watchlist';
+import { WatchlistIndicator, useWatchlist } from '@/components/Watchlist';
+import { WatchlistResultsAlert } from '@/components/WatchlistResultsAlert';
 import { PopularityBadge } from '@/components/PopularityBadge';
 import { CoachMarkProvider, CoachMarkTarget, CoachMarkResetButton } from '@/components/CoachMark';
 import { AddToCalendar } from '@/components/AddToCalendar';
@@ -886,6 +887,7 @@ export default function Home() {
   const { showKeyEcho } = useKeyPressEcho();
   const { enabled: cursorTrailEnabled, toggle: toggleCursorTrail } = useCursorTrail(false);
   const weekNavPreview = useWeekNavPreview(currentWeekStart);
+  const { watchlist } = useWatchlist();
   
   // Simulate data refresh (would be replaced with real API call)
   const handleDataRefresh = useCallback(() => {
@@ -1275,6 +1277,16 @@ export default function Home() {
         maxAlerts={3}
         onAlertClick={(ticker) => {
           // Navigate to report page when alert is clicked
+          window.location.href = `/report/${ticker}`;
+        }}
+      />
+      
+      {/* Floating notification for new watchlist earnings results */}
+      <WatchlistResultsAlert
+        earnings={earnings}
+        watchlist={watchlist.map(w => w.ticker)}
+        position="bottom-left"
+        onAlertClick={(ticker) => {
           window.location.href = `/report/${ticker}`;
         }}
       />
