@@ -195,6 +195,7 @@ import { EstimateMomentum } from '@/components/EstimateMomentum';
 import { VolatilityIndicator } from '@/components/VolatilityIndicator';
 import { ResultStreakIndicator } from '@/components/ResultStreakIndicator';
 import { EarningsVelocity, EarningsVelocityBadge } from '@/components/EarningsVelocity';
+import { SessionCountdown, SessionCountdownBadge } from '@/components/SessionCountdown';
 import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 
@@ -1387,6 +1388,7 @@ export default function Home() {
                 <MarketStatus />
                 <MarketPulseIndicator size="md" />
                 <LiveMarketClock compact showTimezone />
+                <SessionCountdownBadge delay={200} />
                 <div className="hidden lg:flex items-center gap-2">
                   <SeasonProgress earnings={earnings} delay={200} />
                   <DataFreshnessIndicator
@@ -1924,9 +1926,21 @@ export default function Home() {
           </div>
         )}
 
+        {/* Session Countdown - Live countdown to next market session */}
+        <div className="mb-6 px-1">
+          <BlurReveal triggerOnMount delay={280} duration={600} blurAmount={8}>
+            <SessionCountdown 
+              size="md"
+              showProgress={true}
+              showNextSession={true}
+              delay={300}
+            />
+          </BlurReveal>
+        </div>
+
         {/* Earnings Season Meter - Progress through earnings season */}
         <div className="mb-6 px-1">
-          <BlurReveal triggerOnMount delay={300} duration={600} blurAmount={8}>
+          <BlurReveal triggerOnMount delay={350} duration={600} blurAmount={8}>
             <EarningsSeasonMeter
               earnings={filteredEarnings}
               variant="horizontal"
@@ -1936,7 +1950,7 @@ export default function Home() {
               showCount={true}
               liquidEffect={true}
               glowOnSuccess={true}
-              delay={400}
+              delay={450}
             />
           </BlurReveal>
         </div>
