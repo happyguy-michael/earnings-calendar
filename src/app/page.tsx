@@ -54,6 +54,7 @@ import { BorderGlowSpot } from '@/components/BorderGlowSpot';
 import { SurpriseMagnitudeCompact } from '@/components/SurpriseMagnitude';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ImminentGlow } from '@/components/ImminentGlow';
+import { ImminentAlertBanner } from '@/components/ImminentAlertBanner';
 import { AnimatedGridBackground } from '@/components/AnimatedGridBackground';
 import { BlueprintOverlay } from '@/components/BlueprintOverlay';
 import { SurpriseCountUp, SurpriseScramble } from '@/components/AnimatedSurpriseBadge';
@@ -1263,6 +1264,17 @@ export default function Home() {
         buttonPosition="bottom-right"
         buttonLabel="Jump to Live"
         oncePerSession={false}
+      />
+      
+      {/* Floating alert banner for imminent earnings (within 10 min) */}
+      <ImminentAlertBanner
+        earnings={earnings}
+        thresholdMinutes={10}
+        maxAlerts={3}
+        onAlertClick={(ticker) => {
+          // Navigate to report page when alert is clicked
+          window.location.href = `/report/${ticker}`;
+        }}
       />
       
       {/* Print styles - clean layout for printing (⌘⇧P) */}
