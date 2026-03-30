@@ -1,3 +1,51 @@
+## 2026-03-31 — NavigationAudio: Directional Sound Feedback for Week Navigation
+
+**Inspiration:**
+- macOS Sonoma's subtle UI sounds
+- iOS swipe navigation whooshes
+- Bloomberg Terminal audio feedback
+- 2026 "Multi-Sensory UX" trend — engaging multiple senses for premium feel
+
+**What I built:**
+- Enhanced `AudioFeedback` component with three new sound types:
+
+  **New Sound Types:**
+  - `swipeLeft`: Descending pitch whoosh + white noise burst (moving backward)
+  - `swipeRight`: Ascending pitch whoosh + white noise burst (moving forward)
+  - `navigate`: Subtle tick for keyboard navigation (like a mechanical keyboard)
+
+  **Technical Details:**
+  - Directional sounds use bandpass-filtered white noise for "air" movement feel
+  - Tonal sine wave element provides pitch direction cue (ascending = forward, descending = back)
+  - Navigate tick is softer than click - feels like stepping through items
+  - All sounds procedurally generated via Web Audio API (no audio files)
+
+  **Integration:**
+  - Week navigation now triggers `swipeLeft`/`swipeRight` for swipe gestures
+  - Keyboard arrow navigation triggers subtle `navigate` tick
+  - "Jump to Today" button plays `success` chime
+  - Respects `prefers-reduced-motion` and user audio preference toggle
+
+**Why this matters:**
+The app already had excellent haptic feedback for navigation, but audio was missing.
+Adding directional sound creates a complete multi-sensory experience:
+- Visual: slide animation + depth transition
+- Haptic: vibration feedback (on supported devices)
+- Audio: directional whoosh (when audio enabled)
+
+This creates that premium "spatial" feel where users intuitively sense which
+direction they're navigating — backward (left) sounds different from forward (right).
+
+**UX Principle:**
+Sound design isn't just about feedback — it's about **spatial awareness**. Different
+pitches for different directions helps users build a mental model of where they
+are in the timeline without looking at dates.
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-30 — WatchlistResultsAlert: Proactive Watchlist Notifications
 
 **Inspiration:**

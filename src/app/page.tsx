@@ -905,6 +905,7 @@ export default function Home() {
   const { showToast } = useToast();
   const { showUndoToast } = useUndoToast();
   const { trigger: haptic } = useHaptic();
+  const { play: playSound } = useAudioFeedback();
   const { showKeyEcho } = useKeyPressEcho();
   const { enabled: cursorTrailEnabled, toggle: toggleCursorTrail } = useCursorTrail(false);
   const weekNavPreview = useWeekNavPreview(currentWeekStart);
@@ -1017,6 +1018,15 @@ export default function Home() {
     // Haptic feedback for swipe/navigation
     haptic(fromSwipe ? 'swipe' : 'light');
     
+    // Audio feedback - directional whoosh for swipes, subtle tick for keyboard
+    if (fromSwipe) {
+      // Swipe: play directional whoosh based on navigation direction
+      playSound(delta > 0 ? 'swipeRight' : 'swipeLeft');
+    } else {
+      // Keyboard: play subtle navigation tick
+      playSound('navigate');
+    }
+    
     // Set slide direction for animation
     setSlideDirection(delta > 0 ? 'left' : 'right');
     slideKey.current += 1;
@@ -1038,14 +1048,16 @@ export default function Home() {
     
     // Clear slide direction after animation
     setTimeout(() => setSlideDirection(null), 350);
-  }, [showSwipeHint, haptic]);
+  }, [showSwipeHint, haptic, playSound]);
 
   const goToToday = useCallback(() => {
     // Haptic feedback for success action
     haptic('success');
+    // Audio feedback - success chime for "jump to today"
+    playSound('success');
     setCurrentWeekStart(getWeekStart(new Date()));
     showToast('Jumped to current week', { type: 'success', icon: '📅', duration: 2000 });
-  }, [showToast, haptic]);
+  }, [showToast, haptic, playSound]);
 
   // Simulate data loading - will be replaced with real API call
   useEffect(() => {

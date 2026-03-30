@@ -18,6 +18,9 @@ import { SquishPress } from './SquishPress';
  * - hover: Barely audible whisper (for focus/hover states)
  * - countdown: Urgent tick (for imminent events)
  * - celebration: Ascending chime cascade (for monster beats)
+ * - swipeLeft: Directional whoosh for leftward navigation
+ * - swipeRight: Directional whoosh for rightward navigation
+ * - navigate: Subtle tick for keyboard navigation
  * 
  * Inspired by: macOS Sonoma UI sounds, Bloomberg Terminal, Robinhood
  */
@@ -30,7 +33,10 @@ type SoundType =
   | 'toggle' 
   | 'hover' 
   | 'countdown'
-  | 'celebration';
+  | 'celebration'
+  | 'swipeLeft'
+  | 'swipeRight'
+  | 'navigate';
 
 interface AudioContextState {
   isSupported: boolean;
@@ -234,6 +240,124 @@ const sounds: Record<SoundType, (ctx: AudioContext, volume: number) => void> = {
       osc.start(now + i * 0.07);
       osc.stop(now + i * 0.07 + 0.3);
     });
+  },
+
+  swipeLeft: (ctx, volume) => {
+    // Directional whoosh - descending pitch (moving "back" / left)
+    // Creates sense of spatial motion - like pages flipping backward
+    const now = ctx.currentTime;
+    
+    // White noise burst with bandpass filter for "air" sound
+    const bufferSize = ctx.sampleRate * 0.12;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      noiseData[i] = (Math.random() * 2 - 1) * 0.3;
+    }
+    
+    const noise = ctx.createBufferSource();
+    noise.buffer = noiseBuffer;
+    
+    const bandpass = ctx.createBiquadFilter();
+    bandpass.type = 'bandpass';
+    bandpass.frequency.setValueAtTime(2000, now);
+    bandpass.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+    bandpass.Q.value = 1.5;
+    
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.06 * volume, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    
+    // Tonal element - descending sine for directionality
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, now);
+    osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+    oscGain.gain.setValueAtTime(0.03 * volume, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    
+    noise.connect(bandpass);
+    bandpass.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.connect(oscGain);
+    oscGain.connect(ctx.destination);
+    
+    noise.start(now);
+    noise.stop(now + 0.15);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  },
+
+  swipeRight: (ctx, volume) => {
+    // Directional whoosh - ascending pitch (moving "forward" / right)
+    // Creates sense of spatial motion - like pages flipping forward
+    const now = ctx.currentTime;
+    
+    // White noise burst with bandpass filter for "air" sound
+    const bufferSize = ctx.sampleRate * 0.12;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      noiseData[i] = (Math.random() * 2 - 1) * 0.3;
+    }
+    
+    const noise = ctx.createBufferSource();
+    noise.buffer = noiseBuffer;
+    
+    const bandpass = ctx.createBiquadFilter();
+    bandpass.type = 'bandpass';
+    bandpass.frequency.setValueAtTime(800, now);
+    bandpass.frequency.exponentialRampToValueAtTime(2000, now + 0.1);
+    bandpass.Q.value = 1.5;
+    
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.06 * volume, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    
+    // Tonal element - ascending sine for directionality
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(300, now);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.08);
+    oscGain.gain.setValueAtTime(0.03 * volume, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    
+    noise.connect(bandpass);
+    bandpass.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.connect(oscGain);
+    oscGain.connect(ctx.destination);
+    
+    noise.start(now);
+    noise.stop(now + 0.15);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  },
+
+  navigate: (ctx, volume) => {
+    // Subtle tick for keyboard navigation - like a mechanical keyboard
+    // Softer than click, feels like stepping through items
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(900, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(700, ctx.currentTime + 0.025);
+    
+    gain.gain.setValueAtTime(0.04 * volume, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.04);
   },
 };
 
