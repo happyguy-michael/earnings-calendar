@@ -1,3 +1,54 @@
+## 2026-03-30 — StructuredData: JSON-LD SEO Enhancement
+
+**Inspiration:**
+- Google's rich results documentation
+- Schema.org financial event markup
+- Bloomberg/Reuters machine-readable data feeds
+- 2026 "Semantic Search" trend — AI search engines rely on structured data
+
+**What I built:**
+- New `StructuredData` component with comprehensive JSON-LD schemas:
+
+  **Schemas implemented:**
+  - **WebSite**: Basic site info with search action
+  - **WebApplication**: App metadata, feature list, pricing (free)
+  - **ItemList (Upcoming)**: Earnings as scheduled Event objects with beat probability
+  - **ItemList (Results)**: Reported earnings with beat/miss results
+  - **FAQPage**: Common earnings questions for featured snippets
+  - **Event**: Individual earnings report schema
+  - **BreadcrumbList**: Navigation path for report pages
+
+  **Benefits:**
+  - Better search engine understanding
+  - Potential for rich snippets in Google results
+  - Enhanced discoverability for financial data seekers
+  - Machine-readable format for AI search (SearchGPT, Perplexity, etc.)
+  - Financial data aggregator integration potential
+
+  **Integration:**
+  - `StructuredData` added to home page with earnings data + date range
+  - `EarningsReportStructuredData` added to individual report pages
+  - Dynamic data: ticker, company, EPS, estimates, results, odds
+
+**Why this matters:**
+Search engines (and increasingly AI assistants) rely on structured data to understand
+and present content. For a financial data app, having proper schema markup means:
+- Better visibility in search results
+- Potential for rich cards showing upcoming earnings
+- Featured snippets for FAQ content
+- Integration with financial data services that consume schema.org markup
+
+**Technical Details:**
+- Uses Next.js `Script` component for proper injection
+- Memoized schema generation for performance
+- Type-safe interfaces matching earnings data structure
+- Handles 'beat', 'miss', and 'met' result types
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-30 — LiveSessionScore: Real-Time Beat/Miss Tally
 
 **Inspiration:**
