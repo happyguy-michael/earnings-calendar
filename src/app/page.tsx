@@ -194,6 +194,7 @@ import { AnalystDispersion, AnalystDispersionInline } from '@/components/Analyst
 import { EstimateMomentum } from '@/components/EstimateMomentum';
 import { VolatilityIndicator } from '@/components/VolatilityIndicator';
 import { ResultStreakIndicator } from '@/components/ResultStreakIndicator';
+import { EarningsVelocity, EarningsVelocityBadge } from '@/components/EarningsVelocity';
 import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 
@@ -1639,7 +1640,19 @@ export default function Home() {
 
       {/* Session Progress Bar - visual timeline of trading day */}
       <div className="max-w-4xl mx-auto px-6 mt-4">
-        <SessionProgressBar showLabels={true} compact={false} />
+        <div className="flex items-center gap-6 flex-wrap">
+          <div className="flex-1 min-w-[280px]">
+            <SessionProgressBar showLabels={true} compact={false} />
+          </div>
+          {/* Earnings Velocity - pace indicator showing report activity */}
+          <EarningsVelocity 
+            earnings={filteredEarnings} 
+            windowHours={2} 
+            showSparkline={true}
+            compact={true}
+            delay={300}
+          />
+        </div>
       </div>
 
       <ScrollPerspective 
