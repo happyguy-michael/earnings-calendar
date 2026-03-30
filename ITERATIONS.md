@@ -1,3 +1,61 @@
+## 2026-03-30 — EarningsVelocity: Real-Time Pace Indicator
+
+**Inspiration:**
+- Bloomberg Terminal's "stories per hour" news velocity indicator
+- GitHub's contribution heatmap applied to time dimension
+- Trading platform "volume spike" indicators
+- Dribbble 2026 "Real-Time Awareness" trend — showing data flow, not just data
+
+**What I built:**
+- New `EarningsVelocity` component — shows the pace of earnings announcements:
+
+  **Core Concept:**
+  - Traders want to know "is this a busy moment?" during earnings season
+  - Raw counts don't convey urgency — velocity does
+  - Shows how many reports came in recently with visual activity sparkline
+  - Creates awareness of the earnings flow in real-time
+
+  **Components:**
+  - `EarningsVelocity`: Full widget with count, sparkline, and recent window
+  - `EarningsVelocityBadge`: Ultra-compact inline badge version
+
+  **Visual Features:**
+  - **Total count badge**: "12 reported" with pulsing dot
+  - **Recent window**: "+3 last 2h" shows immediate activity
+  - **Mini sparkline**: Hourly breakdown across trading day (4AM-8PM)
+  - **Peak indicator**: Shows busiest hour at a glance
+  - **High activity mode**: Visual emphasis when pace exceeds threshold
+
+  **Animations:**
+  - Entrance fade + translate animation
+  - Pulsing dot during active sessions
+  - Sparkline bars animate in sequentially
+  - Smooth transitions on count changes
+
+  **Integration:**
+  - Added next to SessionProgressBar in header area
+  - Compact mode for horizontal inline layout
+  - 2-hour default window (configurable)
+  - Full light/dark mode support
+
+**Why this matters:**
+"12 reports today" is static data. "12 reported (+3 in last 2h), peak at 4PM" tells a
+story of flow and pace. During earnings season, knowing that reports are coming in
+fast (or slow) helps traders calibrate their attention and expectations. This is the
+difference between seeing a snapshot and understanding the momentum.
+
+**Technical Details:**
+- Hourly buckets from 4AM-8PM ET (trading day span)
+- Hash-based time generation for mock data realism
+- Window-based "recent" calculation
+- Memoized sparkline rendering
+- Full prefers-reduced-motion support
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-30 — ResultStreakIndicator: Real-Time Momentum Signals
 
 **Inspiration:**
