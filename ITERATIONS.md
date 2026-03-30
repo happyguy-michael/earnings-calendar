@@ -8492,3 +8492,68 @@ genuinely useful for international users without cluttering the UI for US users.
 **Commit:** 9da2f7d
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
+
+---
+
+## 2026-03-30 — SessionCountdown: Real-Time Market Session Timer
+
+**Inspiration:**
+- Dribbble 2026 "Real-Time Awareness" trend — temporal context for data flows
+- Apple's live activities with smooth progress animations
+- Trading platform pre-market countdowns
+- Liquid glass aesthetics from iOS 26 / visionOS
+
+**What I built:**
+New `SessionCountdown` component showing live countdown to the next market session.
+Traders need to know: "When's the next batch of earnings dropping?" This provides that
+temporal context with beautiful liquid progress animations.
+
+**Sessions tracked:**
+- Pre-Market (4:00 AM - 9:30 AM ET) — Morning earnings releases
+- Market Open (9:30 AM - 4:00 PM ET) — Regular trading hours
+- After Hours (4:00 PM - 8:00 PM ET) — Evening earnings releases
+- Market Closed (8:00 PM - 4:00 AM ET, weekends)
+
+**Features:**
+- Liquid glass progress bar with animated bubbles and shine effect
+- Flip digit animation for countdown timer (hours/minutes/seconds)
+- Session badge variant for compact header display
+- Handles weekends and market closures gracefully (countdown to Monday pre-market)
+- Full light/dark mode support
+- Respects prefers-reduced-motion
+- SSR-safe (mounted state check for hydration)
+
+**Component Exports:**
+- `SessionCountdown` - Full component with progress bar and countdown
+- `SessionCountdownBadge` - Ultra-compact inline badge version
+
+**Technical Details:**
+- Pure client-side (uses Intl.DateTimeFormat for ET timezone)
+- Updates every second for smooth countdown
+- CSS animations for liquid bubbles and shine
+- Spring-based transitions for flip digits
+
+**Integration:**
+- Added `SessionCountdownBadge` to header next to LiveMarketClock
+- Added full `SessionCountdown` component in stats section above EarningsSeasonMeter
+
+**Why this matters:**
+An earnings calendar without temporal context is just a list. Traders need to know:
+- "Is the market open?"
+- "When's the next session?"
+- "How long until after-hours earnings drop?"
+
+This small addition transforms the app from a reference tool into a real-time
+trading companion. The liquid progress bar adds visual delight while conveying
+information at a glance.
+
+**Accessibility:**
+- Title/tooltip provides full context on hover
+- Flip digit animations respect reduced motion
+- High contrast colors for session states
+- Tabular numbers for consistent width
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** dff6393
+**Deployed:** https://earnings-calendar-omega.vercel.app
