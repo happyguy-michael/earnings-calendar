@@ -1,3 +1,60 @@
+## 2026-03-30 — WatchlistResultsAlert: Proactive Watchlist Notifications
+
+**Inspiration:**
+- iOS notification badges (red dot with count)
+- Slack's unread message indicators
+- GitHub's notification bell with badge
+- Trading app "new results" alerts
+- 2026 "Attention-Aware UI" trend — proactive notifications for what matters
+
+**What I built:**
+- New `WatchlistResultsAlert` component — floating notification badge for watchlist earnings:
+
+  **Core Concept:**
+  - Users add stocks to their watchlist but might miss when those stocks report
+  - This floating badge proactively alerts them when watchlist stocks have results
+  - Creates urgency and ensures time-sensitive info doesn't get lost
+
+  **Features:**
+  - **Floating badge**: Amber star badge with count of unseen results
+  - **Pulsing glow animation**: Draws attention when new results arrive
+  - **Expandable panel**: Click to see which stocks reported
+  - **Beat/miss indicators**: Color-coded with surprise percentage
+  - **Persistent state**: Remembers seen results in localStorage
+  - **Dismiss controls**: Clear individual or all alerts
+
+  **Visual Design:**
+  - Glassmorphic expanded panel with blur backdrop
+  - Animated entrance with scale + bounce
+  - Light/dark mode fully adaptive
+  - Mobile responsive (bottom sheet on small screens)
+  - Positioned bottom-left to not conflict with other floating elements
+
+  **UX Flow:**
+  1. User adds stocks to watchlist
+  2. When any watchlist stock reports earnings → badge appears
+  3. Badge pulses to draw attention, shows count
+  4. Click to expand and see which stocks reported
+  5. Click individual result to navigate and mark as seen
+  6. Or "Clear all" to dismiss everything
+
+**Why this matters:**
+The watchlist feature is great for tracking stocks, but useless if users don't know
+when their stocks report. This bridges the gap between "I care about this stock"
+and "this stock just reported" — proactive UI instead of passive.
+
+**Technical Details:**
+- Uses createPortal for global positioning
+- Separate localStorage key for seen results (doesn't pollute watchlist)
+- Calculates surprise % for result context
+- Respects prefers-reduced-motion
+- Auto-animates when new results appear
+
+**Build:** ✓ Passed
+**Deploy:** https://earnings-calendar-omega.vercel.app ✓
+
+---
+
 ## 2026-03-30 — StructuredData: JSON-LD SEO Enhancement
 
 **Inspiration:**
