@@ -201,6 +201,7 @@ import { SessionCountdown, SessionCountdownBadge } from '@/components/SessionCou
 import { LiveSessionScore, LiveSessionScoreBadge } from '@/components/LiveSessionScore';
 import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
+import { StructuredData } from '@/components/StructuredData';
 
 function getWeekStart(date: Date): Date {
   const d = new Date(date);
@@ -1280,6 +1281,15 @@ export default function Home() {
       
       {/* Print styles - clean layout for printing (⌘⇧P) */}
       <PrintStyles />
+      
+      {/* SEO structured data - JSON-LD schemas for search engines */}
+      <StructuredData 
+        earnings={filteredEarnings}
+        dateRange={weeks.length > 0 ? {
+          start: formatDate(weeks[0]),
+          end: formatDate(new Date(weeks[weeks.length - 1].getTime() + 4 * 24 * 60 * 60 * 1000)),
+        } : undefined}
+      />
       
       {/* Animated dot grid background with cursor glow */}
       <AnimatedGridBackground 

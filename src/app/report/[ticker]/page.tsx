@@ -31,6 +31,7 @@ import { SurpriseGrade } from '@/components/SurpriseGrade';
 import { SurpriseRank } from '@/components/SurpriseRank';
 import { WatchlistButton } from '@/components/Watchlist';
 import { AnalystDispersion } from '@/components/AnalystDispersion';
+import { EarningsReportStructuredData } from '@/components/StructuredData';
 
 // Progress Ring Component
 function ProgressRing({ percent, size = 120, strokeWidth = 8, color = '#10b981' }: { 
@@ -171,6 +172,21 @@ export default function ReportPage() {
       {/* Celebration effects for beat results */}
       <Confetti trigger={showCelebration} particleCount={60} duration={2500} />
       <Sparkles trigger={showCelebration} count={8} />
+      
+      {/* SEO structured data for individual report page */}
+      <EarningsReportStructuredData
+        ticker={ticker}
+        company={earning.company}
+        date={earning.date}
+        time={earning.time}
+        eps={earning.eps}
+        estimate={earning.estimate}
+        revenue={earning.revenue}
+        revenueEstimate={earning.revenueEstimate}
+        result={earning.result}
+        beatOdds={earning.beatOdds}
+        priceMove={earning.priceMove}
+      />
       
       {/* Header */}
       <header className="sticky top-0 z-20 backdrop-blur-xl bg-black/50 border-b border-white/5">
