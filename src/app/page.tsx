@@ -192,6 +192,7 @@ import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/
 import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
 import { BeatRatioTint } from '@/components/BeatRatioTint';
 import { AnalystDispersion, AnalystDispersionInline } from '@/components/AnalystDispersion';
+import { WeekDepthTransition, WeekTransitionIndicator } from '@/components/WeekDepthTransition';
 import { EstimateMomentum } from '@/components/EstimateMomentum';
 import { VolatilityIndicator } from '@/components/VolatilityIndicator';
 import { ResultStreakIndicator } from '@/components/ResultStreakIndicator';
@@ -2106,6 +2107,15 @@ export default function Home() {
           onSwipeRight={() => navigateWeek(-1, true)}
           className="swipe-container"
         >
+        {/* Depth transition for cinematic week navigation */}
+        <WeekDepthTransition
+          weekKey={currentWeekStart.toISOString()}
+          direction={slideDirection === 'left' ? 'next' : slideDirection === 'right' ? 'prev' : null}
+          duration={350}
+          maxBlur={6}
+          depthScale={0.97}
+          offsetX={30}
+        >
         <div 
           key={slideKey.current}
           id="earnings-content"
@@ -2554,6 +2564,12 @@ export default function Home() {
             </OrbitDot>
           ))}
         </div>
+        </WeekDepthTransition>
+        {/* Direction indicator during transition */}
+        <WeekTransitionIndicator 
+          direction={slideDirection === 'left' ? 'next' : slideDirection === 'right' ? 'prev' : null}
+          size="md"
+        />
         </SwipeNavigator>
         </FilterGlow>
         </DayColumnProvider>
