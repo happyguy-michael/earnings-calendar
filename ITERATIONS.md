@@ -8614,3 +8614,80 @@ information at a glance.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** dff6393
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-30 — ImminentAlertBanner: Floating Notification for Imminent Earnings
+
+**Inspiration:**
+- Bloomberg Terminal's breaking news ticker
+- Robinhood's live earnings alerts
+- iOS notification banners with slide-in animation
+- Dribbble 2026 "Alive Interfaces" trend — proactive, attention-grabbing UI
+
+**What I built:**
+New `ImminentAlertBanner` component that displays a floating notification banner
+when any earnings report is about to drop. This transforms the calendar from a
+passive reference into an active trading companion.
+
+**Core Concept:**
+Traders need to know: "What's about to happen?" When NVDA reports in 8 minutes,
+a sleek banner slides in from the top with a real-time countdown. This creates
+urgency and excitement — no more missing earnings drops.
+
+**Features:**
+- Monitors all pending earnings for imminent reports (within 10 min)
+- Animated slide-in banner with glassmorphic design
+- Real-time countdown with flip-style digits
+- Gradient glow that shifts from blue→amber→green based on urgency
+- Animated progress bar showing time remaining
+- Queue up to 3 imminent alerts
+- Click banner to navigate to report page
+- Dismiss button (X) with hover reveal
+- Auto-dismiss when earnings are reported
+- Company logo, ticker, session indicator
+
+**Urgency States:**
+- Normal (10-2 min): Blue gradient glow, standard animation
+- Urgent (<2 min): Amber/red gradient, faster pulse
+- NOW (reporting): Green glow, "REPORTING" text with pulse
+
+**Visual Details:**
+- Glassmorphism: backdrop-filter blur(24px) saturate(180%)
+- Animated gradient border with hue rotation
+- Pulsing glow layer behind card
+- Portal-based rendering for proper z-index stacking
+- Spring-physics entrance animation
+- Smooth exit animation on dismiss
+
+**Technical Details:**
+- SSR-safe with mounted state check
+- Portal rendering to document.body
+- useEffect-based real-time countdown (updates every second)
+- useMemo for imminent earnings calculation
+- Intersection with existing ImminentGlow (card-level) — this is page-level
+- Full TypeScript with proper interfaces
+
+**Integration:**
+- Added to main page after AutoScrollToLive
+- Passes earnings array to monitor all pending
+- onAlertClick navigates to /report/[ticker]
+- Works alongside existing countdown components
+
+**Why this matters:**
+The app had countdown badges on individual cards, but no page-level awareness
+of "something is about to happen." This creates a sense of liveness and urgency
+that modern trading apps need. When TSLA reports in 3 minutes, you should KNOW
+about it without scrolling.
+
+**Accessibility:**
+- role="alert" and aria-live="assertive" for screen readers
+- Respects prefers-reduced-motion
+- Keyboard-accessible dismiss button
+- High contrast text and colors
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 277ce2e
+**Deployed:** https://earnings-calendar-omega.vercel.app
