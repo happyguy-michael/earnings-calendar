@@ -1,3 +1,60 @@
+## 2026-03-30 — LiveSessionScore: Real-Time Beat/Miss Tally
+
+**Inspiration:**
+- Sports apps showing live scores (ESPN, Apple Sports)
+- Trading platform win/loss counters
+- Fantasy sports "points so far today" widgets
+- 2026 "Live Scoreboard" trend — gamified real-time metrics
+
+**What I built:**
+- New `LiveSessionScore` component — shows live beat vs miss tally for the current session:
+
+  **Core Concept:**
+  - During earnings season, traders mentally track "how is this session going?"
+  - Make that mental calculation visible and instant
+  - Shows current session's beat/miss count with momentum indicator
+  - Only appears during active earnings sessions (pre-market or after-hours)
+
+  **Components:**
+  - `LiveSessionScore`: Full component with score, streak, and momentum
+  - `LiveSessionScoreBadge`: Ultra-compact badge for header integration
+
+  **Visual Features:**
+  - **Session indicator**: "Pre" or "AH" label
+  - **Score display**: "3–1" style beat vs miss tally
+  - **Streak tracking**: "3🔥" for consecutive beats, "2❄️" for misses
+  - **Pending count**: Shows remaining reports with pulse indicator
+  - **Momentum icon**: 🔥 (hot), 📈 (warming), ➡️ (neutral), 📉 (cooling), ❄️ (cold)
+
+  **Smart Behavior:**
+  - Only renders during active pre-market (4-9:30 AM ET) or after-hours (4-8 PM ET)
+  - Updates beat rate and momentum in real-time
+  - Detects streaks from most recent results
+  - Hidden when no earnings for the session
+
+  **Integration:**
+  - Added to header next to SessionCountdown
+  - Complements SessionCountdown (when → score) flow
+  - Provides instant "how is the session going?" context
+
+**Why this matters:**
+SessionCountdown tells you "when is the next session?" — LiveSessionScore tells you
+"how is the current session going?" Together they create complete session awareness.
+Traders watching earnings want to know if it's a "good day" or "bad day" for the 
+market at a glance. This makes that instant.
+
+**Technical Details:**
+- ET timezone-aware session detection
+- Streak calculation from recent results
+- Momentum derived from beat rate thresholds
+- Memoized calculations for performance
+- Full reduced motion support
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-30 — EarningsVelocity: Real-Time Pace Indicator
 
 **Inspiration:**
