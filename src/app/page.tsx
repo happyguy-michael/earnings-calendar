@@ -212,6 +212,7 @@ import '@/components/TodayMarkerLine.css';
 import { StructuredData } from '@/components/StructuredData';
 import { AnnouncementBar, EarningsSeasonBar } from '@/components/AnnouncementBar';
 import { BigMoversBanner, useBigMovers } from '@/components/BigMoversBanner';
+import { MonthBoundaryBadge, usePreviousWeekday } from '@/components/MonthBoundaryBadge';
 
 // Bridge component to sync refresh state with SyncIndicator
 function RefreshSyncBridge({ isRefreshing }: { isRefreshing: boolean }) {
@@ -2417,6 +2418,22 @@ export default function Home() {
                               isToday={isToday} 
                               delay={weekIndex * 100 + 300}
                             />
+                            {/* Month boundary badge - shows when a new month starts */}
+                            {(() => {
+                              const prevDate = dayIndex > 0 
+                                ? (() => { const d = new Date(weekStart); d.setDate(d.getDate() + dayIndex - 1); return d; })()
+                                : undefined;
+                              return (
+                                <MonthBoundaryBadge
+                                  date={date}
+                                  previousDate={prevDate}
+                                  delay={weekIndex * 80 + dayIndex * 40 + 200}
+                                  size="sm"
+                                  abbreviated={true}
+                                  className="mt-1"
+                                />
+                              );
+                            })()}
                           </div>
                         </DayHeaderHighlight>
                       </DayStatsPopover>

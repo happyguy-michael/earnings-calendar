@@ -1,3 +1,57 @@
+## 2026-04-01 — MonthBoundaryBadge: Month Change Indicator
+
+**Inspiration:**
+- Apple Calendar's month transition indicators
+- Linear's subtle date context badges
+- Google Calendar's "first of month" emphasis
+- 2026 trend: Micro-contextual UI elements
+
+**What I built:**
+- `MonthBoundaryBadge` — Subtle indicator for the first day of a new month in a week:
+
+  **Core Concept:**
+  - When a calendar week spans two months (e.g., March 31 → April 1)
+  - Users need quick visual orientation on month changes
+  - A subtle badge helps without cluttering the UI
+
+  **Component Features:**
+  - Shows on the first day of any month visible in the calendar
+  - Detects month boundaries between consecutive days
+  - Animated entrance with spring physics
+  - Subtle purple glow pulse effect
+  - Mini calendar icon with abbreviated month name
+
+- `MonthTransitionDivider` — Alternative vertical divider for month boundaries:
+  - Thin gradient line between month transitions
+  - Optional alternative to badge approach
+
+**Visual Design:**
+- Purple gradient background matching brand accent colors
+- Rounded pill shape with calendar icon
+- Glow effect pulses subtly to draw attention
+- Full light/dark mode support
+- Respects prefers-reduced-motion
+
+**Technical Details:**
+- Intersection Observer for scroll-triggered animation
+- Spring-based transition timing
+- Previous day comparison for boundary detection
+- Size variants (sm/md)
+
+**Integration:**
+- Added to day-header in page.tsx after TodayMarkerLine
+- Staggered animation delay per day for cascade effect
+
+**Why this matters:**
+When scanning a week that spans two months, it's disorienting to figure out
+which days belong to which month. The badge provides instant context —
+"ah, April starts here" — without breaking visual flow.
+
+**Build:** ✓ Passed
+**Commit:** (pending)
+
+---
+
 ## 2026-03-31 — WeekOverWeekTrend: Beat Rate Trend Sparkline
 
 **Inspiration:**

@@ -1,0 +1,202 @@
+/* MonthBoundaryBadge - First of month indicator */
+
+.month-boundary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-purple);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.12) 0%,
+    rgba(168, 85, 247, 0.08) 100%
+  );
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  position: relative;
+  overflow: hidden;
+  
+  /* Initial state - hidden */
+  opacity: 0;
+  transform: translateY(4px) scale(0.92);
+  
+  /* Smooth transition with spring physics */
+  transition: 
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s var(--spring-bouncy, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.month-boundary-badge.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Size variants */
+.month-boundary-badge.sm {
+  padding: 2px 5px;
+  font-size: 8px;
+  gap: 3px;
+  border-radius: 5px;
+}
+
+.month-boundary-badge.md {
+  padding: 3px 8px;
+  font-size: 10px;
+  gap: 5px;
+  border-radius: 7px;
+}
+
+/* Icon styling */
+.month-boundary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.month-boundary-badge.sm .month-boundary-icon svg {
+  width: 8px;
+  height: 8px;
+}
+
+/* Text styling */
+.month-boundary-text {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Glow effect - subtle accent pulse */
+.month-boundary-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    rgba(139, 92, 246, 0.25) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  animation: month-boundary-pulse 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.month-boundary-badge.visible .month-boundary-glow {
+  opacity: 1;
+}
+
+@keyframes month-boundary-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+/* Light mode adjustments */
+:root:not(.dark) .month-boundary-badge,
+html.light .month-boundary-badge {
+  color: rgb(109, 40, 217);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(168, 85, 247, 0.06) 100%
+  );
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
+:root:not(.dark) .month-boundary-glow,
+html.light .month-boundary-glow {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    rgba(139, 92, 246, 0.15) 0%,
+    transparent 70%
+  );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .month-boundary-badge {
+    transition: opacity 0.2s ease;
+    transform: none !important;
+  }
+  
+  .month-boundary-glow {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+/* Month Transition Divider */
+.month-transition-divider {
+  position: absolute;
+  left: -1px;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.4) 20%,
+    rgba(139, 92, 246, 0.6) 50%,
+    rgba(139, 92, 246, 0.4) 80%,
+    transparent 100%
+  );
+  border-radius: 1px;
+  
+  /* Initial state */
+  opacity: 0;
+  transform: scaleY(0);
+  
+  /* Animation */
+  transition: 
+    opacity 0.3s ease,
+    transform 0.5s var(--spring-bouncy, cubic-bezier(0.22, 1, 0.36, 1));
+  transform-origin: center;
+}
+
+.month-transition-divider.visible {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Glow effect on divider */
+.month-transition-divider::after {
+  content: '';
+  position: absolute;
+  inset: 10% -4px;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgba(139, 92, 246, 0.3) 0%,
+    transparent 70%
+  );
+  filter: blur(4px);
+  opacity: 0.8;
+}
+
+/* Light mode divider */
+:root:not(.dark) .month-transition-divider,
+html.light .month-transition-divider {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(109, 40, 217, 0.25) 20%,
+    rgba(109, 40, 217, 0.4) 50%,
+    rgba(109, 40, 217, 0.25) 80%,
+    transparent 100%
+  );
+}
+
+/* Reduced motion for divider */
+@media (prefers-reduced-motion: reduce) {
+  .month-transition-divider {
+    transition: opacity 0.2s ease;
+    transform: scaleY(1) !important;
+  }
+}
