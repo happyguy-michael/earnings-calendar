@@ -1,3 +1,53 @@
+## 2026-03-31 — JumpToEarnings: Smart Navigation for Quiet Periods
+
+**Inspiration:**
+- Google Maps "No results in this area" with jump-to suggestions
+- Spotify "Nothing playing" with smart recommendations
+- Linear's contextual navigation hints
+- Financial calendars with "Jump to earnings season" CTAs
+- 2026 "Intelligent Navigation" + "Proactive UX" trends
+
+**What I built:**
+- `JumpToEarnings` component — floating navigation hint for quiet periods:
+
+  **Core Concept:**
+  - When users browse weeks with no earnings data, they need guidance
+  - Common in mock data scenarios or during earnings off-season
+  - Rather than leaving users stranded, proactively offer navigation
+
+  **Features:**
+  - Auto-detects when ALL visible weeks have no earnings
+  - Finds nearest week with data (searches both past and future)
+  - Shows helpful preview: week range, report count, top tickers
+  - Spring-animated entrance after 800ms delay (not immediate)
+  - Bi-directional indicator (← for past, → for future)
+  - Dismissible (respects user intent, resets on navigation)
+  - Mobile responsive (accounts for bottom nav)
+  - Light/dark mode adaptive
+  - Respects prefers-reduced-motion
+
+  **Visual Design:**
+  - Glassmorphic floating pill at bottom center
+  - Blue/purple gradient background matching app theme
+  - Magnetic field pulse animation on hover
+  - Direction icon with bouncing arrow animation
+  - Green accent for report count
+  - Monospace tickers for technical feel
+
+**Why this matters:**
+Without this, users viewing quiet periods (like navigating far into future)
+have no guidance on where to find data. The QuietWeekBanner handles individual
+empty weeks, but this handles the case where ALL visible weeks are empty.
+
+**Technical Note:**
+Component correctly doesn't show when any visible week has earnings.
+This is working as designed — it's a safety net for edge cases.
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-31 — NavigationAudio: Directional Sound Feedback for Week Navigation
 
 **Inspiration:**
