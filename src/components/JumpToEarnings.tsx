@@ -74,13 +74,17 @@ function formatWeekRange(weekStart: Date): string {
 }
 
 function getEarningsForWeek(weekStart: Date, earnings: Earning[]): Earning[] {
-  const weekEnd = new Date(weekStart);
+  const start = new Date(weekStart);
+  start.setHours(0, 0, 0, 0);
+  
+  const weekEnd = new Date(start);
   weekEnd.setDate(weekEnd.getDate() + 4);
   weekEnd.setHours(23, 59, 59, 999);
   
   return earnings.filter(e => {
     const earningDate = new Date(e.date);
-    return earningDate >= weekStart && earningDate <= weekEnd;
+    earningDate.setHours(0, 0, 0, 0);
+    return earningDate >= start && earningDate <= weekEnd;
   });
 }
 
