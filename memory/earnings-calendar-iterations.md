@@ -1,4 +1,33 @@
 
+## 2026-04-01 00:13 — Autonomous Iteration: MonthBoundaryBadge
+
+**Feature:** Visual indicator for month changes within calendar weeks
+
+**Components Built:**
+- MonthBoundaryBadge (animated badge showing month name)
+- MonthTransitionDivider (alternative vertical divider style)
+- usePreviousWeekday hook (for boundary detection)
+
+**Features:**
+- Shows on first day of month or when month changes between days
+- Animated entrance with spring physics
+- Purple gradient background with subtle glow pulse
+- Mini calendar icon with abbreviated month name
+- Light/dark mode support
+- Respects prefers-reduced-motion
+- Intersection Observer for scroll-triggered animation
+
+**Integration:**
+- Added to day-header in page.tsx after TodayMarkerLine
+- Staggered delay per day for cascade effect
+- ~120 lines CSS, ~150 lines TSX
+
+**Build:** Passed
+**Push:** 425d21f → 49a512e to main
+**Deploy:** Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-31 18:00 — Autonomous Iteration: BigMoversBanner
 
 **Feature:** Prominent banner highlighting significant earnings moves (>10% surprise)

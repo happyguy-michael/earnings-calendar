@@ -23077,3 +23077,115 @@ html.light .big-movers-fade-right {
     display: none;
   }
 }
+
+/* ============================================
+ * ScrollPositionMemory - Restored Position Indicator
+ * ============================================ */
+
+.scroll-position-indicator {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(30, 30, 45, 0.95) 0%, rgba(20, 20, 30, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 0 20px rgba(59, 130, 246, 0.1);
+  z-index: 50;
+  opacity: 0;
+  animation: scrollPositionFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+             scrollPositionFadeOut 0.3s ease-in forwards 1.7s;
+  pointer-events: none;
+}
+
+@keyframes scrollPositionFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes scrollPositionFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px) scale(0.95);
+  }
+}
+
+.scroll-position-icon {
+  color: #3b82f6;
+  flex-shrink: 0;
+  animation: scrollPositionIconBounce 0.5s ease-out;
+}
+
+@keyframes scrollPositionIconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.scroll-position-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+}
+
+/* Light mode */
+html.light .scroll-position-indicator {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.99) 100%);
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.03) inset,
+    0 0 20px rgba(59, 130, 246, 0.08);
+}
+
+html.light .scroll-position-text {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-position-indicator {
+    animation: scrollPositionFadeSimple 0.2s ease forwards,
+               scrollPositionFadeSimple 0.2s ease reverse forwards 1.8s;
+  }
+  
+  @keyframes scrollPositionFadeSimple {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .scroll-position-icon {
+    animation: none;
+  }
+}
+
+/* Mobile positioning */
+@media (max-width: 640px) {
+  .scroll-position-indicator {
+    bottom: 80px;
+    padding: 8px 14px;
+  }
+  
+  .scroll-position-text {
+    font-size: 12px;
+  }
+}

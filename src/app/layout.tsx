@@ -12,6 +12,7 @@ import { ScrollDrivenAnimations } from "@/components/ScrollDrivenAnimations";
 import { StickyStateStyle } from "@/components/StickyStateStyle";
 import { BalloonTooltipStyles } from "@/components/BalloonTooltip";
 import { NetworkStatus } from "@/components/NetworkStatus";
+import { ScrollPositionMemory } from "@/components/ScrollPositionMemory";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -64,6 +65,11 @@ export default function RootLayout({
           </main>
           {/* Network status indicator - shows when offline/reconnecting */}
           <NetworkStatus position="bottom" />
+          {/* Scroll position memory - restores position when returning to pages */}
+          <ScrollPositionMemory 
+            showRestoreIndicator={true}
+            staleAfter={300000}
+          />
         </ClientProviders>
       </body>
     </html>
