@@ -196,6 +196,7 @@ import { SectorBadge } from '@/components/SectorBadge';
 import { MarketCapTierInline } from '@/components/MarketCapTier';
 import { SurpriseDistribution, SurpriseDistributionCompact } from '@/components/SurpriseDistribution';
 import { TrendComparison, useTrendBaseline } from '@/components/TrendComparison';
+import { WeekOverWeekTrend, WeekOverWeekBadge } from '@/components/WeekOverWeekTrend';
 import { BeatRatioTint } from '@/components/BeatRatioTint';
 import { AnalystDispersion, AnalystDispersionInline } from '@/components/AnalystDispersion';
 import { WeekDepthTransition, WeekTransitionIndicator } from '@/components/WeekDepthTransition';
@@ -1905,6 +1906,11 @@ export default function Home() {
                             sparkle={beatRate > baselineBeatRate + 5}
                           />
                         )}
+                        {/* Week over week trend sparkline */}
+                        <WeekOverWeekBadge 
+                          earnings={earnings}
+                          currentWeekStart={formatDate(currentWeekStart)}
+                        />
                       </div>
                       <WeightShiftText variant="subtle" trigger="hover" className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Beat Rate</WeightShiftText>
                     </div>
