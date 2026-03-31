@@ -98,6 +98,7 @@ import { NextUpQueue } from '@/components/NextUpQueue';
 import { GlassReflection } from '@/components/GlassReflection';
 import { NumberJolt } from '@/components/NumberJolt';
 import { AnimatedStatDelta } from '@/components/AnimatedStatDelta';
+import { DayAnchorNav, useDayAnchorData } from '@/components/DayAnchorNav';
 import { GlitchPending } from '@/components/GlitchText';
 import { LocalTimeIndicator } from '@/components/LocalTimeIndicator';
 import { MarketMoodRing } from '@/components/MarketMoodRing';
@@ -2448,6 +2449,7 @@ export default function Home() {
                     return (
                       <DayColumnCard key={dayIndex} dayIndex={dayIndex}>
                         <div 
+                          id={`day-column-${dayIndex}`}
                           className={`day-content ${isToday ? 'today' : ''} ${slideDirection ? 'day-wave-reveal' : ''}`} 
                           data-mobile-date={mobileDate}
                           style={{ '--wave-delay': `${waveDelay}ms` } as React.CSSProperties}
@@ -2727,6 +2729,39 @@ export default function Home() {
         </BlurRevealGroup>
       </main>
       </ScrollPerspective>
+
+      {/* Day anchor navigation - quick jump between days */}
+      {(() => {
+        // Calculate day anchor data for the current week
+        const days: string[] = [];
+        const earningsPerDay: Record<string, number> = {};
+        const weekStartDate = currentWeekStart;
+        
+        for (let i = 0; i < 5; i++) {
+          const date = new Date(weekStartDate);
+          date.setDate(date.getDate() + i);
+          const dateStr = formatDate(date);
+          days.push(dateStr);
+          earningsPerDay[dateStr] = filteredEarnings.filter(e => e.date === dateStr).length;
+        }
+        
+        const todayStr = formatDate(new Date());
+        const todayDate = days.includes(todayStr) ? todayStr : undefined;
+        
+        return (
+          <DayAnchorNav
+            days={days}
+            earningsPerDay={earningsPerDay}
+            todayDate={todayDate}
+            position="right"
+            edgeOffset={20}
+            verticalPosition="center"
+            showCounts={true}
+            collapsible={true}
+            hideOnFastScroll={true}
+          />
+        );
+      })()}
 
       {/* Floating back to top button */}
       <BackToTop />
