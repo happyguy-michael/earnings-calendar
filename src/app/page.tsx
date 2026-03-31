@@ -157,6 +157,7 @@ import { ClipWipeReveal, ClipWipeNumber } from '@/components/ClipWipeReveal';
 import { WeightShiftText } from '@/components/WeightShiftText';
 import { SeasonProgress, SeasonProgressBadge } from '@/components/SeasonProgress';
 import { CheckmarkDraw, AnimatedX } from '@/components/CheckmarkDraw';
+import { NewSinceLastVisitProvider, NewResultBadge, NewResultGlow, NewResultsCounter, useNewSinceLastVisit } from '@/components/NewSinceLastVisit';
 import { TopPerformerBadge, useTopPerformers } from '@/components/TopPerformerBadge';
 import { MagneticFieldProvider, MagneticCard } from '@/components/MagneticField';
 import { MarketPulseIndicator, useMarketPulse } from '@/components/MarketPulseOverlay';
@@ -554,6 +555,7 @@ function EarningsCard({ earning, isToday, animationIndex = 0, topPerformer }: { 
             <LiveDot isToday={!!isToday} isPending={isPending} time={earning.time} />
             <PopularityBadge ticker={earning.ticker} size="xs" delay={animationIndex * 50 + 150} />
             <WatchlistIndicator ticker={earning.ticker} size="xs" />
+            {hasResult && <NewResultBadge ticker={earning.ticker} autoFadeSeconds={15} />}
             {topPerformer && (
               <TopPerformerBadge
                 type={topPerformer.type}
@@ -1244,6 +1246,7 @@ export default function Home() {
     <MomentumTiltProvider maxTilt={3} minScale={0.985} threshold={0.4} sensitivity={1.2}>
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <SelectionProvider maxSelections={5}>
+    <NewSinceLastVisitProvider earnings={earnings} newThresholdHours={72}>
     {/* Bridge refresh state to SyncIndicator */}
     <RefreshSyncBridge isRefreshing={isRefreshing} />
     <div className="min-h-screen relative">
@@ -1490,6 +1493,7 @@ export default function Home() {
                 <LiveSessionScoreBadge earnings={earnings} delay={250} />
                 <div className="hidden lg:flex items-center gap-2">
                   <SeasonProgress earnings={earnings} delay={200} />
+                  <NewResultsCounter />
                   <DataFreshnessIndicator
                     lastUpdated={lastDataUpdate}
                     onRefresh={handleDataRefresh}
@@ -2917,6 +2921,7 @@ export default function Home() {
         showAfterIdle={1000}
       />
     </div>
+    </NewSinceLastVisitProvider>
     </SelectionProvider>
     </PullToRefresh>
     </MomentumTiltProvider>
