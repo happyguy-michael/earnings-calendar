@@ -6,20 +6,23 @@ import { createContext, useContext, useCallback, useEffect, useState, useRef, Re
  * CardFocusNavigation - Vim-style keyboard navigation for earnings cards
  * 
  * Enables power users to navigate through earnings cards without a mouse:
- * - J: Move to next card
- * - K: Move to previous card
+ * - J: Move to next card (down)
+ * - K: Move to previous card (up)
+ * - H: Move to previous day column (left)
+ * - L: Move to next day column (right)
  * - Enter: Activate the focused card (copy ticker)
  * - Escape: Clear focus
  * 
  * Inspiration:
  * - Gmail's J/K navigation
- * - Vim's j/k motions
+ * - Vim's h/j/k/l motions
  * - Notion's arrow key navigation
  * - Linear.app's keyboard-first design
  * 
  * Features:
  * - Visual focus ring with glow effect
  * - Smooth scroll to keep focused card visible
+ * - Day-level navigation (H/L) jumps to first card in adjacent day
  * - Wraps around at boundaries (optional)
  * - Announces navigation to screen readers
  * - Respects prefers-reduced-motion
@@ -35,14 +38,17 @@ interface CardRef {
   id: string;
   element: HTMLElement;
   ticker: string;
+  dayIndex?: number; // 0-4 for Mon-Fri, used for H/L day navigation
 }
 
 interface CardFocusContextType {
   focusedId: string | null;
-  registerCard: (id: string, element: HTMLElement, ticker: string) => void;
+  focusedDayIndex: number | null;
+  registerCard: (id: string, element: HTMLElement, ticker: string, dayIndex?: number) => void;
   unregisterCard: (id: string) => void;
   focusCard: (id: string) => void;
   clearFocus: () => void;
+  navigateDay: (direction: 'prev' | 'next') => void;
   isEnabled: boolean;
   setEnabled: (enabled: boolean) => void;
 }
@@ -69,6 +75,8 @@ interface CardFocusProviderProps {
   defaultEnabled?: boolean;
 }
 
+const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
 export function CardFocusProvider({
   children,
   wrapAround = true,
@@ -82,9 +90,14 @@ export function CardFocusProvider({
   const orderedIdsRef = useRef<string[]>([]);
   const announcerRef = useRef<HTMLDivElement>(null);
 
+  // Get current focused card's day index
+  const focusedDayIndex = focusedId 
+    ? cardsRef.current.get(focusedId)?.dayIndex ?? null 
+    : null;
+
   // Register a card for navigation
-  const registerCard = useCallback((id: string, element: HTMLElement, ticker: string) => {
-    cardsRef.current.set(id, { id, element, ticker });
+  const registerCard = useCallback((id: string, element: HTMLElement, ticker: string, dayIndex?: number) => {
+    cardsRef.current.set(id, { id, element, ticker, dayIndex });
     // Rebuild ordered list based on DOM position
     rebuildOrder();
   }, []);
@@ -172,6 +185,82 @@ export function CardFocusProvider({
     focusCard(ids[nextIndex]);
   }, [focusedId, wrapAround, focusCard]);
 
+  // Navigate to next/previous day column (H/L keys)
+  const navigateDay = useCallback((direction: 'prev' | 'next') => {
+    const cards = Array.from(cardsRef.current.values());
+    const cardsWithDays = cards.filter(c => c.dayIndex !== undefined);
+    
+    if (cardsWithDays.length === 0) return;
+
+    // Get unique day indices that have cards, sorted
+    const daysWithCards = [...new Set(cardsWithDays.map(c => c.dayIndex!))]
+      .sort((a, b) => a - b);
+    
+    if (daysWithCards.length === 0) return;
+
+    let targetDayIndex: number;
+
+    if (focusedId === null) {
+      // No focus - start from first/last day
+      targetDayIndex = direction === 'next' 
+        ? daysWithCards[0] 
+        : daysWithCards[daysWithCards.length - 1];
+    } else {
+      const currentCard = cardsRef.current.get(focusedId);
+      const currentDayIndex = currentCard?.dayIndex;
+
+      if (currentDayIndex === undefined) {
+        // Current card has no day index - go to first/last day
+        targetDayIndex = direction === 'next' 
+          ? daysWithCards[0] 
+          : daysWithCards[daysWithCards.length - 1];
+      } else {
+        // Find current position in daysWithCards
+        const dayPosition = daysWithCards.indexOf(currentDayIndex);
+        
+        if (dayPosition === -1) {
+          targetDayIndex = daysWithCards[0];
+        } else {
+          const nextPosition = direction === 'next' 
+            ? dayPosition + 1 
+            : dayPosition - 1;
+
+          // Handle boundaries with wrap-around
+          if (wrapAround) {
+            if (nextPosition < 0) {
+              targetDayIndex = daysWithCards[daysWithCards.length - 1];
+            } else if (nextPosition >= daysWithCards.length) {
+              targetDayIndex = daysWithCards[0];
+            } else {
+              targetDayIndex = daysWithCards[nextPosition];
+            }
+          } else {
+            if (nextPosition < 0 || nextPosition >= daysWithCards.length) return;
+            targetDayIndex = daysWithCards[nextPosition];
+          }
+        }
+      }
+    }
+
+    // Find first card in target day (by DOM order)
+    const ids = orderedIdsRef.current;
+    const firstCardInDay = ids.find(id => {
+      const card = cardsRef.current.get(id);
+      return card?.dayIndex === targetDayIndex;
+    });
+
+    if (firstCardInDay) {
+      focusCard(firstCardInDay);
+      
+      // Announce day change
+      if (announcerRef.current) {
+        const dayName = DAY_NAMES[targetDayIndex] || `Day ${targetDayIndex + 1}`;
+        const cardsInDay = cardsWithDays.filter(c => c.dayIndex === targetDayIndex).length;
+        announcerRef.current.textContent = `${dayName} column. ${cardsInDay} earnings card${cardsInDay !== 1 ? 's' : ''}.`;
+      }
+    }
+  }, [focusedId, wrapAround, focusCard]);
+
   // Activate focused card (copy ticker)
   const activateFocused = useCallback(async () => {
     if (!focusedId) return;
@@ -219,6 +308,14 @@ export function CardFocusProvider({
           e.preventDefault();
           navigate('prev');
           break;
+        case 'h':
+          e.preventDefault();
+          navigateDay('prev');
+          break;
+        case 'l':
+          e.preventDefault();
+          navigateDay('next');
+          break;
         case 'enter':
           if (focusedId) {
             e.preventDefault();
@@ -236,16 +333,18 @@ export function CardFocusProvider({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isEnabled, navigate, focusedId, activateFocused, clearFocus]);
+  }, [isEnabled, navigate, navigateDay, focusedId, activateFocused, clearFocus]);
 
   return (
     <CardFocusContext.Provider
       value={{
         focusedId,
+        focusedDayIndex,
         registerCard,
         unregisterCard,
         focusCard,
         clearFocus,
+        navigateDay,
         isEnabled,
         setEnabled,
       }}
@@ -281,20 +380,22 @@ interface FocusableCardProps {
   children: ReactNode;
   id: string;
   ticker: string;
+  /** Day index (0-4 for Mon-Fri) for H/L day navigation */
+  dayIndex?: number;
   className?: string;
 }
 
-export function FocusableCard({ children, id, ticker, className = '' }: FocusableCardProps) {
+export function FocusableCard({ children, id, ticker, dayIndex, className = '' }: FocusableCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { focusedId, registerCard, unregisterCard, focusCard } = useCardFocus();
   const isFocused = focusedId === id;
 
   useEffect(() => {
     if (ref.current) {
-      registerCard(id, ref.current, ticker);
+      registerCard(id, ref.current, ticker, dayIndex);
     }
     return () => unregisterCard(id);
-  }, [id, ticker, registerCard, unregisterCard]);
+  }, [id, ticker, dayIndex, registerCard, unregisterCard]);
 
   return (
     <div
@@ -330,7 +431,7 @@ export function FocusableCard({ children, id, ticker, className = '' }: Focusabl
         }
 
         .focusable-card.is-keyboard-focused::after {
-          content: 'J/K to navigate • Enter to copy';
+          content: 'J/K cards • H/L days • Enter to copy';
           position: absolute;
           top: -32px;
           left: 50%;
@@ -499,7 +600,7 @@ export function CardFocusToggle({ className = '' }: { className?: string }) {
 }
 
 /**
- * CardFocusHint - Shows J/K hint in empty state or onboarding
+ * CardFocusHint - Shows J/K/H/L hint in empty state or onboarding
  */
 export function CardFocusHint({ className = '' }: { className?: string }) {
   return (
@@ -508,8 +609,12 @@ export function CardFocusHint({ className = '' }: { className?: string }) {
         <kbd>J</kbd>
         <span>/</span>
         <kbd>K</kbd>
+        <span className="card-focus-hint-secondary">cards</span>
+        <kbd>H</kbd>
+        <span>/</span>
+        <kbd>L</kbd>
+        <span className="card-focus-hint-secondary">days</span>
       </div>
-      <span className="card-focus-hint-text">to navigate cards</span>
 
       <style jsx>{`
         .card-focus-hint {
@@ -545,6 +650,13 @@ export function CardFocusHint({ className = '' }: { className?: string }) {
 
         .card-focus-hint-keys span {
           color: var(--text-faint, #52525b);
+        }
+
+        .card-focus-hint-secondary {
+          font-size: 10px;
+          color: var(--text-faint, #52525b);
+          margin-left: 2px;
+          margin-right: 8px;
         }
 
         .card-focus-hint-text {

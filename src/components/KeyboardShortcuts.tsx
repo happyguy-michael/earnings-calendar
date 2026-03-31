@@ -12,6 +12,7 @@ const shortcuts: Shortcut[] = [
   { keys: ['←', '→'], description: 'Navigate between weeks', category: 'navigation' },
   { keys: ['↑', '↓'], description: 'Navigate between weeks', category: 'navigation' },
   { keys: ['J', 'K'], description: 'Navigate between cards', category: 'navigation' },
+  { keys: ['H', 'L'], description: 'Navigate between days', category: 'navigation' },
   { keys: ['T'], description: 'Jump to today', category: 'navigation' },
   { keys: ['/'], description: 'Focus search bar', category: 'search' },
   { keys: ['Esc'], description: 'Clear search / Close dialogs', category: 'search' },
