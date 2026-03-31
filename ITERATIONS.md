@@ -1,3 +1,59 @@
+## 2026-03-31 — BigMoversBanner: Highlight Significant Earnings Moves
+
+**Inspiration:**
+- Bloomberg's "Market Movers" section
+- Yahoo Finance's "Top Gainers/Losers" carousel
+- Trading platforms that surface exceptional moves immediately
+- "Attention economy" UX — show what matters most, first
+
+**What I built:**
+- `BigMoversBanner` — Prominent carousel highlighting significant earnings moves (>10% surprise):
+
+  **Core Concept:**
+  - Big earnings surprises deserve big visibility
+  - Traders scanning the calendar should immediately see the standouts
+  - Auto-scrolling draws attention without requiring interaction
+
+  **Component Features:**
+  - Auto-scrolling carousel with 4-second interval
+  - Pauses on hover for closer inspection
+  - Dot navigation indicators for manual control
+  - Filters beats/misses by threshold (default 10%)
+  - Shows up to 6 big movers, sorted by absolute surprise
+
+- `useBigMovers` hook — Extracts significant movers from earnings data:
+  - Filters for beats and misses only (no "met" results)
+  - Calculates surprise percentage from actual vs estimate
+  - Handles null/undefined EPS values gracefully
+
+**Visual Design:**
+- Glassmorphic container with gradient background
+- Color-coded items: green borders for beats, red for misses
+- Company logos with ticker and surprise percentage
+- "BEAT" / "MISS" badges with matching colors
+- Particle effects for exceptional moves (>20%)
+- Gradient glow on active/hover items
+- Fade edges for seamless scroll appearance
+
+**Technical:**
+- Intersection Observer for viewport-based animations
+- requestAnimationFrame-based auto-scroll
+- Spring physics timing functions (--spring-snappy)
+- Full light/dark mode support
+- Reduced motion support
+- Mobile responsive (compact on small screens)
+
+**Files changed:**
+- `src/components/BigMoversBanner.tsx` (new)
+- `src/app/globals.css` (CSS additions)
+- `src/app/page.tsx` (integration)
+
+**Commit:** c4dbda9
+
+**Why:** Big earnings moves are the most actionable information for traders. Making them immediately visible at the top of the page reduces cognitive load and surfaces alpha opportunities. The auto-scrolling carousel creates visual interest while the pause-on-hover ensures users can interact with items they're interested in.
+
+---
+
 ## 2026-03-31 — NewSinceLastVisit: Highlight Fresh Results for Returning Users
 
 **Inspiration:**
