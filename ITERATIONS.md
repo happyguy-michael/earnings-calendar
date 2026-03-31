@@ -9279,3 +9279,59 @@ maintain orientation in complex information architectures.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 99f0a8b
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-31 — MetricGradientBg: Contextual Gradient Backgrounds for Stat Cards
+
+**Inspiration:**
+- Outcrowd's "Dashboard Widgets for Business Performance Tracking" (57.3k views on Dribbble)
+- Key pattern: Stat cards with soft gradient backgrounds that adapt to metric type/value
+- Design principle: You should "feel" the data without reading the number
+
+**What I built:**
+New `MetricGradientBg` component that adds subtle animated gradient backgrounds to
+stat cards based on value thresholds. The gradient adapts in real-time to reinforce
+the numeric data with ambient visual cues.
+
+**Gradient Variants:**
+- **High values (>75%):** Green gradient with upward flow animation
+- **Exceptional (>90%):** Multi-color gradient (green→blue→violet) with shimmer overlay
+- **Medium (50-75%):** Neutral gray gradient, minimal presence
+- **Low (<50%):** Amber/warning gradient with subtle tension feel
+
+**Features:**
+- Breathing pulse animation (configurable duration)
+- Dynamic intensity based on distance from thresholds
+- Inner glow effect for exceptional values (>85%)
+- Shimmer sweep animation for exceptional values
+- Configurable presets: `beat-rate`, `completion`, `neutral`
+- Custom threshold support `[low, high]`
+- Border radius matching for seamless integration
+- Respects `prefers-reduced-motion`
+- SSR-safe
+
+**Technical Details:**
+- Uses CSS gradients with dynamic color interpolation
+- Intensity scales based on how far value is from thresholds
+- Gradient angle varies by variant (145° success, 180° warning, 135° exceptional)
+- Animation uses keyframe breathing effect with subtle scale transform
+- Z-index layering preserves child interactivity
+
+**Integration:**
+Applied to the Beat Rate stat card on the main page. The 90% beat rate now has
+a subtle green gradient background that reinforces the "success" feeling before
+you even read the number.
+
+**Design Philosophy:**
+Ambient data visualization - information that's always present but never intrusive.
+Like how weather apps use blue tones for rain forecasts, this component lets users
+perceive metric health through peripheral vision. The gradient becomes a "feeling"
+rather than a number to parse.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** ee0e1fa
+**Deployed:** https://earnings-calendar-omega.vercel.app
+
