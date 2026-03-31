@@ -1,3 +1,68 @@
+## 2026-03-31 — NewSinceLastVisit: Highlight Fresh Results for Returning Users
+
+**Inspiration:**
+- Reddit/Hacker News "X new comments since last visit"
+- Slack's "unread messages" divider
+- GitHub's "Compare" since last visit
+- Email clients that highlight unread messages
+- 2026 "Proactive UX" trend — surface what changed without manual discovery
+
+**What I built:**
+- `NewSinceLastVisitProvider` — Context provider that tracks user visit history:
+
+  **Core Concept:**
+  - Traders check the calendar multiple times a day
+  - When they return, they need to quickly identify what's new
+  - Rather than forcing manual scanning, proactively highlight fresh results
+
+  **Provider Features:**
+  - Stores last visit timestamp in localStorage
+  - Identifies earnings with results that came in since last visit
+  - Tracks "seen" results separately to allow manual dismissal
+  - 72-hour threshold for "new" results (configurable)
+  - Exposes `isNew(ticker)` function for any component to use
+
+- `NewResultBadge` — Animated "NEW" badge for individual cards:
+  - Pulsing green badge with ring animation
+  - Glowing backdrop effect for visibility
+  - Auto-fades after 15 seconds (configurable)
+  - Click to dismiss immediately
+  - Spring-animated entrance and exit
+
+- `NewResultGlow` — Subtle ambient glow wrapper for new result cards:
+  - Soft green radial gradient behind card
+  - Animated border with pulse effect
+  - Non-intrusive visual cue
+
+- `NewResultsCounter` — Header indicator showing new results count:
+  - Pill button with star icon and count
+  - Expandable dropdown showing "X results since [time ago]"
+  - "Mark all as seen" quick action
+  - Pulsing animation when new results available
+
+**Visual Design:**
+- Green color scheme matching "beat" success theme
+- Glassmorphic dropdown with blur backdrop
+- Spring-animated interactions (bouncy, snappy physics)
+- Full light/dark mode support with appropriate intensities
+- Respects prefers-reduced-motion (static fallback)
+
+**Why this matters:**
+The calendar can be overwhelming during earnings season with 20+ reports per week.
+Returning users shouldn't have to manually scan every card to find what's new.
+This proactive UX pattern (common in Reddit, Slack, email apps) gives users
+immediate "what changed" context the moment they open the page.
+
+**Integration:**
+- Provider wraps entire calendar in page.tsx
+- NewResultBadge added to each earnings card (next to WatchlistIndicator)
+- NewResultsCounter in header (desktop only, lg+ screens)
+
+**Build:** ✓ Passed
+**Deploy:** Pushed to GitHub, Vercel auto-deploy triggered
+
+---
+
 ## 2026-03-31 — JumpToEarnings: Smart Navigation for Quiet Periods
 
 **Inspiration:**
