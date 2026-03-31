@@ -148,6 +148,7 @@ import { GradientWipe } from '@/components/GradientWipe';
 import { OrganicWaveDivider } from '@/components/OrganicWaveDivider';
 import { HolographicBorder } from '@/components/HolographicBorder';
 import { EchoShadowHover } from '@/components/EchoShadowHover';
+import { JumpToEarnings } from '@/components/JumpToEarnings';
 import { MomentumTiltProvider, MomentumTiltCard } from '@/components/MomentumTilt';
 import { FocusSpotlight, FocusSpotlightGlobal } from '@/components/FocusSpotlight';
 import { EdgeNavigationGlow } from '@/components/EdgeNavigationGlow';
@@ -2765,6 +2766,18 @@ export default function Home() {
 
       {/* Floating back to top button */}
       <BackToTop />
+      
+      {/* Jump to earnings - appears when viewing quiet periods */}
+      <JumpToEarnings
+        visibleWeeks={weeks}
+        allEarnings={earnings}
+        onJumpToWeek={(targetWeek) => {
+          setCurrentWeekStart(targetWeek);
+          haptic('select');
+          playSound('success');
+          showToast('Jumped to earnings week', { type: 'success', icon: '📅', duration: 2000 });
+        }}
+      />
       
       {/* Mobile Floating Action Menu - quick access to filters and actions */}
       <FloatingActionMenu
