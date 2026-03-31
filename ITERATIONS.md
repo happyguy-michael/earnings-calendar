@@ -1,3 +1,66 @@
+## 2026-03-31 — WeekOverWeekTrend: Beat Rate Trend Sparkline
+
+**Inspiration:**
+- Bloomberg Terminal's historical comparison indicators
+- Sports apps showing "trending up" vs "trending down" metrics
+- GitHub's contribution trend sparklines
+- 2026 "Contextual Data" trend — raw numbers need historical context
+
+**What I built:**
+- `WeekOverWeekTrend` — Full component showing beat rate trend across weeks:
+
+  **Core Concept:**
+  - A 90% beat rate means nothing without context
+  - Is it better or worse than recent weeks?
+  - Visual sparkline shows the trend at a glance
+  - Hover reveals detailed comparison
+
+  **Component Features:**
+  - Mini sparkline of recent weeks' beat rates
+  - Current week highlighted with color-coded bar
+  - Trend indicator (↑ improving, ↓ declining, → stable)
+  - Hover tooltip with detailed breakdown
+  - Compares current week to rolling average
+
+- `WeekOverWeekBadge` — Ultra-compact inline version:
+  - Shows just trend direction and delta percentage
+  - Perfect for tight spaces (stats header)
+  - Color-coded: green (up), red (down), gray (stable)
+
+- `useWeekTrend` — Hook for programmatic access:
+  - Returns current week, previous weeks, trend direction
+  - Calculates average beat rate across comparison period
+
+**Visual Design:**
+- Glassmorphic container matching existing stats style
+- Animated sparkline bars with staggered entrance
+- Current week bar has glow effect
+- Spring-animated hover tooltip
+- Full light/dark mode support
+- Respects prefers-reduced-motion
+
+**Technical Details:**
+- Groups earnings by ISO week
+- Requires 3+ reported earnings per week (filters noise)
+- Compares up to 4 weeks of history
+- ±2% threshold for flat trend (avoids noise)
+- Intersection Observer for entrance animation
+
+**Integration:**
+- `WeekOverWeekBadge` added to stats header after TrendComparison
+- Shows inline next to beat rate for instant context
+
+**Why this matters:**
+Traders want to know "is this a good week?" but raw percentages lack context.
+Seeing "↑5%" instantly communicates that this week is outperforming recent
+history. The sparkline makes the trend visually obvious without requiring
+the user to remember previous weeks' stats.
+
+**Build:** ✓ Passed
+**Commit:** 3ee6839
+
+---
+
 ## 2026-03-31 — BigMoversBanner: Highlight Significant Earnings Moves
 
 **Inspiration:**
