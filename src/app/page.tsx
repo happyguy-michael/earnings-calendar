@@ -209,6 +209,7 @@ import '@/components/VolatilityIndicator.css';
 import '@/components/TodayMarkerLine.css';
 import { StructuredData } from '@/components/StructuredData';
 import { AnnouncementBar, EarningsSeasonBar } from '@/components/AnnouncementBar';
+import { BigMoversBanner, useBigMovers } from '@/components/BigMoversBanner';
 
 // Bridge component to sync refresh state with SyncIndicator
 function RefreshSyncBridge({ isRefreshing }: { isRefreshing: boolean }) {
@@ -1018,6 +1019,9 @@ export default function Home() {
 
   // Calculate top performers from filtered earnings (top 3 beats and misses)
   const topPerformers = useTopPerformers(filteredEarnings, 3);
+  
+  // Calculate big movers (significant beats/misses) for banner
+  const bigMovers = useBigMovers(filteredEarnings, 10);
 
   const navigateWeek = useCallback((delta: number, fromSwipe = false) => {
     // Haptic feedback for swipe/navigation
@@ -1759,6 +1763,18 @@ export default function Home() {
           />
         </div>
       </div>
+
+      {/* Big Movers Banner - highlights significant earnings moves */}
+      {bigMovers.length > 0 && (
+        <div className="max-w-7xl mx-auto px-6 mt-6">
+          <BigMoversBanner 
+            movers={bigMovers} 
+            threshold={10}
+            maxItems={6}
+            autoScrollInterval={4000}
+          />
+        </div>
+      )}
 
       <ScrollPerspective 
         maxAngle={1.8} 

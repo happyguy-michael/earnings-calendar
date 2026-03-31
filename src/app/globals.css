@@ -22676,3 +22676,404 @@ html.light .keyboard-hint-glass .keyboard-hint-key {
 .new-results-counter.reduced-motion .new-results-counter-dropdown {
   animation: none;
 }
+
+/* ========================================
+   BigMoversBanner - Highlight significant earnings moves
+   ======================================== */
+
+.big-movers-banner {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  background: linear-gradient(
+    135deg,
+    rgba(251, 146, 60, 0.08) 0%,
+    rgba(239, 68, 68, 0.06) 50%,
+    rgba(34, 197, 94, 0.06) 100%
+  );
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.big-movers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 10px;
+}
+
+.big-movers-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.big-movers-icon {
+  font-size: 16px;
+  animation: bigMoverFlicker 2s ease-in-out infinite;
+}
+
+@keyframes bigMoverFlicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.big-movers-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.big-movers-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.3), rgba(239, 68, 68, 0.2));
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fb923c;
+}
+
+.big-movers-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.big-movers-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s var(--spring-snappy);
+}
+
+.big-movers-dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.2);
+}
+
+.big-movers-dot.active {
+  background: linear-gradient(135deg, #fb923c, #f97316);
+  box-shadow: 0 0 8px rgba(251, 146, 60, 0.5);
+}
+
+.big-movers-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 16px;
+}
+
+.big-movers-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.big-movers-track {
+  display: flex;
+  gap: 12px;
+}
+
+.big-mover-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s var(--spring-snappy);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.big-mover-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.big-mover-item.active {
+  border-color: rgba(251, 146, 60, 0.4);
+  box-shadow: 0 4px 20px rgba(251, 146, 60, 0.15);
+}
+
+.big-mover-item.beat {
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.big-mover-item.beat:hover,
+.big-mover-item.beat.active {
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.15);
+}
+
+.big-mover-item.miss {
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.big-mover-item.miss:hover,
+.big-mover-item.miss.active {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+}
+
+.big-mover-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.big-mover-item.beat .big-mover-glow {
+  background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+}
+
+.big-mover-item.miss .big-mover-glow {
+  background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
+}
+
+.big-mover-item.active .big-mover-glow,
+.big-mover-item:hover .big-mover-glow {
+  opacity: 1;
+}
+
+.big-mover-logo {
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.big-mover-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.big-mover-ticker {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
+}
+
+.big-mover-surprise {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.big-mover-surprise.beat {
+  color: #22c55e;
+  text-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+}
+
+.big-mover-surprise.miss {
+  color: #ef4444;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+.big-mover-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.big-mover-badge.beat {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.big-mover-badge.miss {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Particle effects for exceptional moves */
+.big-mover-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.big-mover-particles .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: bigMoverParticle 2s ease-out infinite;
+  animation-delay: var(--particle-delay);
+}
+
+.big-mover-particles .particle.beat {
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.big-mover-particles .particle.miss {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+
+.big-mover-particles .particle:nth-child(1) { left: 20%; top: 80%; }
+.big-mover-particles .particle:nth-child(2) { left: 50%; top: 85%; }
+.big-mover-particles .particle:nth-child(3) { left: 80%; top: 75%; }
+.big-mover-particles .particle:nth-child(4) { left: 35%; top: 90%; }
+
+@keyframes bigMoverParticle {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.5);
+  }
+}
+
+/* Fade edges */
+.big-movers-fade-left,
+.big-movers-fade-right {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.big-movers-fade-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(10, 10, 15, 0.9), transparent);
+}
+
+.big-movers-fade-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(10, 10, 15, 0.9), transparent);
+}
+
+/* Light mode */
+html.light .big-movers-banner {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 146, 60, 0.06) 0%,
+    rgba(239, 68, 68, 0.04) 50%,
+    rgba(34, 197, 94, 0.04) 100%
+  );
+  border-color: rgba(251, 146, 60, 0.15);
+}
+
+html.light .big-movers-header {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+html.light .big-movers-label {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+html.light .big-movers-count {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(239, 68, 68, 0.1));
+  color: #ea580c;
+}
+
+html.light .big-movers-dot {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+html.light .big-movers-dot:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+html.light .big-mover-item {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html.light .big-mover-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+html.light .big-mover-ticker {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+html.light .big-movers-fade-left {
+  background: linear-gradient(to right, rgba(248, 250, 252, 0.9), transparent);
+}
+
+html.light .big-movers-fade-right {
+  background: linear-gradient(to left, rgba(248, 250, 252, 0.9), transparent);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .big-movers-banner {
+    margin: 0 -16px 16px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .big-mover-item {
+    padding: 8px 12px;
+  }
+
+  .big-mover-logo {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .big-mover-ticker {
+    font-size: 13px;
+  }
+
+  .big-mover-surprise {
+    font-size: 12px;
+  }
+
+  .big-mover-badge {
+    display: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .big-movers-icon {
+    animation: none;
+  }
+
+  .big-mover-item {
+    transition: none;
+  }
+
+  .big-mover-particles .particle {
+    animation: none;
+    display: none;
+  }
+}
