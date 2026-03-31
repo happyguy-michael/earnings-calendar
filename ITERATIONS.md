@@ -48,7 +48,7 @@ which days belong to which month. The badge provides instant context —
 "ah, April starts here" — without breaking visual flow.
 
 **Build:** ✓ Passed
-**Commit:** (pending)
+**Commit:** 425d21f
 
 ---
 
