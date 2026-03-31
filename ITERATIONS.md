@@ -8984,3 +8984,64 @@ living, breathing trading companion that reflects market rhythm.
 **Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
 **Commit:** 6a3d032
 **Deployed:** https://earnings-calendar-omega.vercel.app
+
+
+---
+
+## 2026-03-31 — DayAnchorNav: Floating Day Quick-Jump Navigation
+
+**Inspiration:**
+- Notion's table of contents indicator
+- Medium's reading progress + anchor navigation
+- Linear's issue list section indicators
+- Bloomberg Terminal's keyboard navigation hints
+- Apple Calendar's day quick-jump
+- 2026 "Spatial Anchoring" trend - helping users understand where they are
+
+**What I built:**
+New `DayAnchorNav` component that provides floating mini-navigation to quickly
+jump between day columns within the earnings week view. Shows active day with
+a smooth animated indicator based on scroll position.
+
+**Features:**
+- Floating pill positioned on right edge of viewport
+- Active day indicator with spring-animated transition
+- Intersection Observer-based active state detection (30% threshold)
+- Earnings count badges showing how many reports per day
+- "Today" highlight with accent color and pulsing dot animation
+- Collapsible mode: shows short labels (M/T/W/T/F) by default, expands to full
+  labels (Mon/Tue/Wed/Thu/Fri) on hover
+- Auto-hides during fast scroll (velocity detection, 2px/ms threshold)
+- Click/tap to smooth-scroll to target day column (accounts for sticky header)
+- Full keyboard accessibility (Tab to navigate, Enter to activate)
+- Light/dark mode support with appropriate color schemes
+- Respects prefers-reduced-motion (disables animations, instant scroll)
+- Hidden on mobile/tablet (< 1024px) to avoid clutter
+- Glassmorphism styling with backdrop-filter blur
+
+**Technical Details:**
+- Uses Intersection Observer API for efficient scroll tracking
+- Velocity-based scroll detection for auto-hide behavior
+- Spring easing (cubic-bezier) for indicator transitions
+- CSS-in-JS with JSX style tags for self-contained component
+- Day column IDs (`day-column-0` through `day-column-4`) for targeting
+- Memoized component to prevent unnecessary re-renders
+- SSR-safe with mounted state check
+- Configurable position, edge offset, vertical placement
+
+**Why this matters:**
+In content-dense layouts like an earnings calendar with multiple weeks and
+dozens of companies, users can lose track of which day they're looking at.
+This component provides persistent spatial context without interrupting
+the reading flow. It's the difference between:
+- Scrolling up to check what day you're on
+- vs. Glancing at the side and knowing instantly
+
+The component embodies the "Spatial Anchoring" trend of 2026: subtle,
+always-present navigation cues that reduce cognitive load and help users
+maintain orientation in complex information architectures.
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** 99f0a8b
+**Deployed:** https://earnings-calendar-omega.vercel.app
