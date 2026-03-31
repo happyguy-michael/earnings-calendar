@@ -118,6 +118,7 @@ import { ExportMenu } from '@/components/ExportMenu';
 import { DistributionBar } from '@/components/DistributionBar';
 import { EarningsSeasonMeter } from '@/components/EarningsSeasonMeter';
 import { ScrollAnchoredWeekBadge } from '@/components/ScrollAnchoredWeekBadge';
+import { MetricGradientBg } from '@/components/MetricGradientBg';
 import { ScrollVelocityParticlesLight } from '@/components/ScrollVelocityParticles';
 import { ScrollMinimap, useActiveWeekIndex } from '@/components/ScrollMinimap';
 import { EarningsTimelineBar } from '@/components/EarningsTimelineBar';
@@ -1840,6 +1841,13 @@ export default function Home() {
             </ParallaxFloat>
           </BreathingCard>
           </PerimeterGlowCard>
+          <MetricGradientBg 
+            value={beatRate} 
+            preset="beat-rate" 
+            intensity={0.2} 
+            pulse={beatRate >= 60}
+            borderRadius={20}
+          >
           <PerimeterGlowCard variant="success" delay={500} duration={9000} dual={false}>
           <BreathingCard duration={5500} phase={0.25} amplitude={0.007} breatheShadow={true} breatheGlow={true} glowColor="rgba(34, 197, 94, 0.25)">
             <ParallaxFloat intensity={0.05} delay={50}>
@@ -1920,6 +1928,7 @@ export default function Home() {
             </ParallaxFloat>
           </BreathingCard>
           </PerimeterGlowCard>
+          </MetricGradientBg>
           <PerimeterGlowCard variant="premium" delay={1000} duration={11000} dual={false}>
           <BreathingCard duration={4800} phase={0.5} amplitude={0.006} breatheShadow={true}>
             <ParallaxFloat intensity={0.035} delay={100}>
