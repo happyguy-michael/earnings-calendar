@@ -1,3 +1,79 @@
+## 2026-04-01 — DensityMode: Adaptive Card Density Control
+
+**Inspiration:**
+- Gmail's density settings (Default, Comfortable, Compact)
+- Notion's page view toggle
+- 2026 "Calm UX" trend: Interfaces designed to reduce anxiety
+- 2026 "Progressive Disclosure" principle
+
+**What I built:**
+- `DensityModeProvider` — Context provider for global density state
+- `DensityModeToggle` — Compact button to cycle through density levels
+- `DensityModeSelector` — Full selector showing all options
+- `DensityConditional` — Conditionally render children based on density
+- `useDensityMode` — Hook for density-aware components
+- `useDensityValue` — Get different values per density level
+
+**Density Levels:**
+
+1. **Spacious** (default):
+   - Full cards with all badges and decorative effects
+   - All micro-interactions enabled
+   - Best for exploring and discovering details
+
+2. **Comfortable**:
+   - Balanced view with essential badges only
+   - Decorative effects (particles, glows, shimmer) hidden
+   - Animations scaled to 60%
+   - Good for regular use
+
+3. **Compact**:
+   - Minimal cards: ticker + result badge + one key stat
+   - Most decorative elements hidden
+   - Extra badges (sector, popularity, etc.) hidden
+   - Smaller logos and badges
+   - Animations scaled to 20%
+   - Best for quick data scanning
+
+**Feature Matrix:**
+```
+Feature           | Spacious | Comfortable | Compact
+------------------|----------|-------------|--------
+Extra Badges      | ✓        | ✗           | ✗
+Decorative FX     | ✓        | ✗           | ✗
+Charts            | ✓        | ✗           | ✗
+Trend Indicators  | ✓        | ✓           | ✗
+Timestamps        | ✓        | ✓           | ✗
+Secondary Stats   | ✓        | ✓           | ✗
+Animations        | ✓        | ✗           | ✗
+Tooltips          | ✓        | ✓           | ✓ (basic)
+Context Actions   | ✓        | ✓           | ✗
+```
+
+**Visual Design:**
+- Toggle shows current density level icon (▣, ▤, ▥)
+- Color-coded: Purple (spacious), Blue (comfortable), Green (compact)
+- Hover tooltip explains each level
+- Smooth transitions between density levels
+
+**Technical Details:**
+- CSS custom properties for animation/spacing scales
+- Global CSS classes applied to `<html>` element
+- LocalStorage persistence
+- Graceful degradation with prefers-reduced-motion
+- Full light/dark mode support
+
+**Why this matters:**
+Power users often want denser views to scan data quickly. The 2026 "Calm UX"
+trend emphasizes reducing visual noise and anxiety. This toggle gives users
+control over how much information density they want to see — from the full
+feature-rich experience to a minimal, data-focused view.
+
+**Build:** ✓ Passed
+**Commit:** c76a590
+
+---
+
 ## 2026-04-01 — MonthBoundaryBadge: Month Change Indicator
 
 **Inspiration:**
