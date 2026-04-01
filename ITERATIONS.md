@@ -1,3 +1,94 @@
+## 2026-04-01 — StartingStyleReveal: Pure CSS Entry Animations
+
+**Inspiration:**
+- Chrome I/O 2024: "The @starting-style rule to animate entry effects"
+- modern-css.com @starting-style patterns
+- CSS Transitions Level 2 specification
+- The trend of removing JavaScript for animations that CSS can handle natively
+
+**What I built:**
+- `StartingStyleReveal` — Component using CSS `@starting-style` (Baseline 2024) for entry animations
+- `StartingStyleGroup` — Container for coordinating multiple reveals
+- `useStartingStyleDelay` — Hook for programmatic stagger calculation
+
+**Animation Presets:**
+
+| Preset | Description |
+|--------|-------------|
+| `fade` | Simple opacity fade in |
+| `fade-up` | Fade + slide from below |
+| `fade-down` | Fade + slide from above |
+| `fade-left` | Fade + slide from right |
+| `fade-right` | Fade + slide from left |
+| `scale` | Scale from 0.9 to 1 |
+| `scale-fade` | Scale + opacity combo |
+| `blur` | Blur to sharp focus |
+| `blur-scale` | Blur + scale + fade combo |
+| `slide-up` | Pure vertical slide (no fade) |
+| `slide-down` | Pure vertical slide down |
+| `rotate` | Rotate + scale + fade |
+| `flip` | 3D perspective flip |
+
+**Technical Details:**
+
+The `@starting-style` CSS rule defines the initial state of an element when it's
+first rendered, allowing the browser to automatically transition to the final state.
+
+```css
+.ss-reveal-fade-up {
+  opacity: 1;
+  transform: translateY(0);
+  
+  @starting-style {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+```
+
+**Benefits over JavaScript-based animations:**
+- ✅ No "flash of unstyled content" timing issues
+- ✅ Compositor-thread optimized (better performance)
+- ✅ Works with `display: none` → `display: block` transitions
+- ✅ Cleaner code, no useEffect/setTimeout hacks
+- ✅ Respects `prefers-reduced-motion` natively
+
+**Usage:**
+```tsx
+<StartingStyleReveal preset="fade-up" delay={100}>
+  <Card>Content appears smoothly</Card>
+</StartingStyleReveal>
+
+// With stagger
+{items.map((item, i) => (
+  <StartingStyleReveal 
+    key={item.id} 
+    preset="scale-fade"
+    delay={i * 50}
+  >
+    <ListItem>{item.name}</ListItem>
+  </StartingStyleReveal>
+))}
+```
+
+**Browser Support:**
+- Chrome 117+ (September 2023)
+- Edge 117+
+- Safari 17.5+ (May 2024)
+- Firefox 129+ (August 2024)
+- "Baseline 2024" — works across all modern browsers
+
+**Why this matters:**
+Modern CSS continues to absorb capabilities that previously required JavaScript.
+`@starting-style` is a perfect example — entry animations that used to need
+useEffect timing hacks or animation libraries now work with pure CSS. This
+component brings that capability to the app with a simple, declarative API.
+
+**Build:** ✓ Passed
+**Commit:** 27250d5
+
+---
+
 ## 2026-04-01 — DensityMode: Adaptive Card Density Control
 
 **Inspiration:**
