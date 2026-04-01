@@ -23189,3 +23189,211 @@ html.light .scroll-position-text {
     font-size: 12px;
   }
 }
+
+/* ================================================================
+   DensityMode - Global Density Styles
+   ================================================================
+   Controls card and UI element density across the app.
+   Density levels: spacious (default), comfortable, compact
+   ================================================================ */
+
+/* CSS Custom Properties for density */
+:root {
+  --density-animation-scale: 1;
+  --density-spacing-scale: 1;
+}
+
+/* Spacious Mode (default) - Full feature set */
+html.density-spacious {
+  --density-animation-scale: 1;
+  --density-spacing-scale: 1;
+}
+
+/* Comfortable Mode - Balanced, reduced effects */
+html.density-comfortable {
+  --density-animation-scale: 0.6;
+  --density-spacing-scale: 0.85;
+}
+
+html.density-comfortable .earnings-row {
+  padding: calc(0.625rem * var(--density-spacing-scale)) calc(0.875rem * var(--density-spacing-scale));
+  gap: calc(0.625rem * var(--density-spacing-scale));
+}
+
+html.density-comfortable .earnings-card-wrapper {
+  margin-bottom: calc(0.375rem * var(--density-spacing-scale));
+}
+
+/* Hide decorative effects in comfortable mode */
+html.density-comfortable .floating-particles,
+html.density-comfortable .grain-overlay,
+html.density-comfortable .badge-sparkle,
+html.density-comfortable [class*="shimmer"]:not(.badge-shimmer),
+html.density-comfortable .breathing-card,
+html.density-comfortable .result-pulse,
+html.density-comfortable .orbit-dot,
+html.density-comfortable [class*="glow-ping"],
+html.density-comfortable .seismic-wave {
+  display: none !important;
+}
+
+/* Reduce glow intensity in comfortable mode */
+html.density-comfortable [class*="glow"] {
+  opacity: 0.6;
+}
+
+/* Compact Mode - Minimal, data-focused */
+html.density-compact {
+  --density-animation-scale: 0.2;
+  --density-spacing-scale: 0.7;
+}
+
+html.density-compact .earnings-row {
+  padding: calc(0.5rem * var(--density-spacing-scale)) calc(0.75rem * var(--density-spacing-scale));
+  gap: calc(0.5rem * var(--density-spacing-scale));
+  min-height: auto;
+}
+
+html.density-compact .earnings-card-wrapper {
+  margin-bottom: calc(0.25rem * var(--density-spacing-scale));
+}
+
+/* Hide most decorative elements in compact mode */
+html.density-compact .floating-particles,
+html.density-compact .grain-overlay,
+html.density-compact .badge-sparkle,
+html.density-compact [class*="shimmer"],
+html.density-compact .breathing-card,
+html.density-compact .result-pulse,
+html.density-compact .orbit-dot,
+html.density-compact [class*="glow-ping"],
+html.density-compact .seismic-wave,
+html.density-compact [class*="confetti"],
+html.density-compact .chromatic-aberration,
+html.density-compact .ambient-time-glow,
+html.density-compact .holographic-border,
+html.density-compact .data-pulse-ring,
+html.density-compact .intensity-glow,
+html.density-compact .scroll-velocity-particles {
+  display: none !important;
+}
+
+/* Hide extra badges in compact mode */
+html.density-compact .sector-badge,
+html.density-compact .market-cap-tier,
+html.density-compact .popularity-badge,
+html.density-compact .eps-trend-dots,
+html.density-compact .quarterly-result-strip,
+html.density-compact .fiscal-quarter-badge,
+html.density-compact .beat-streak-badge:not([data-streak="5"]):not([data-streak="6"]):not([data-streak="7"]):not([data-streak="8"]):not([data-streak="9"]):not([data-streak="10"]),
+html.density-compact .local-time-indicator,
+html.density-compact .analyst-dispersion,
+html.density-compact .estimate-momentum,
+html.density-compact .volatility-indicator,
+html.density-compact .prediction-confidence-band,
+html.density-compact .add-to-calendar,
+html.density-compact .reaction-analysis-badge {
+  display: none !important;
+}
+
+/* Reduce glows to near zero in compact mode */
+html.density-compact [class*="glow"] {
+  opacity: 0.2;
+  filter: blur(0);
+}
+
+/* Smaller logo in compact mode */
+html.density-compact .logo-container {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+html.density-compact .logo-container img {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Smaller badges in compact mode */
+html.density-compact .badge {
+  padding: 0.125rem 0.375rem;
+  font-size: 0.65rem;
+}
+
+/* Simpler card borders in compact mode */
+html.density-compact .earnings-row {
+  border-radius: 0.5rem;
+}
+
+html.density-compact .holographic-border,
+html.density-compact .monster-beat-border,
+html.density-compact .disaster-miss-border,
+html.density-compact .animated-gradient-border {
+  display: none !important;
+}
+
+/* Animation duration scaling */
+html.density-comfortable *,
+html.density-compact * {
+  animation-duration: calc(var(--density-animation-scale, 1) * var(--original-duration, 1s)) !important;
+  transition-duration: calc(var(--density-animation-scale, 1) * var(--original-transition, 0.3s)) !important;
+}
+
+/* Preserve essential transitions */
+html.density-comfortable .earnings-row,
+html.density-compact .earnings-row {
+  transition-duration: 0.2s !important;
+}
+
+/* Stats section density adjustments */
+html.density-comfortable .stats-section {
+  gap: calc(1rem * var(--density-spacing-scale));
+}
+
+html.density-compact .stats-section {
+  gap: calc(0.75rem * var(--density-spacing-scale));
+}
+
+/* Week header density adjustments */
+html.density-comfortable .week-header,
+html.density-compact .week-header {
+  padding: calc(0.75rem * var(--density-spacing-scale));
+}
+
+/* Day column density adjustments */
+html.density-comfortable .day-column,
+html.density-compact .day-column {
+  gap: calc(0.375rem * var(--density-spacing-scale));
+}
+
+/* Ensure tooltips still work in compact mode */
+html.density-compact .earnings-tooltip {
+  display: block;
+}
+
+/* Density transition for smooth switching */
+html:not(.prefers-reduced-motion) .earnings-row,
+html:not(.prefers-reduced-motion) .badge,
+html:not(.prefers-reduced-motion) .logo-container {
+  transition: 
+    padding 0.3s ease,
+    gap 0.3s ease,
+    width 0.3s ease,
+    height 0.3s ease,
+    margin 0.3s ease,
+    font-size 0.3s ease;
+}
+
+/* Reduced motion - instant density changes */
+@media (prefers-reduced-motion: reduce) {
+  html .earnings-row,
+  html .badge,
+  html .logo-container {
+    transition: none !important;
+  }
+  
+  html.density-comfortable *,
+  html.density-compact * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}

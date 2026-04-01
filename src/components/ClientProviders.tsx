@@ -18,11 +18,13 @@ import { SeismicWaveProvider } from './SeismicWave';
 import { MarketPulseProvider, MarketPulseOverlay } from './MarketPulseOverlay';
 import { ColorBlindProvider } from './ColorBlindMode';
 import { WatchlistProvider } from './Watchlist';
+import { DensityModeProvider } from './DensityMode';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
   return (
     <WatchlistProvider>
-      <MotionPreferencesProvider>
+      <DensityModeProvider>
+        <MotionPreferencesProvider>
         <ColorBlindProvider>
           <AudioFeedbackProvider>
             <KeyPressEchoProvider position="bottom-center" maxEchoes={2}>
@@ -53,6 +55,7 @@ export function ClientProviders({ children }: { children: ReactNode }) {
           </AudioFeedbackProvider>
         </ColorBlindProvider>
       </MotionPreferencesProvider>
+      </DensityModeProvider>
     </WatchlistProvider>
   );
 }

@@ -9389,3 +9389,61 @@ rather than a number to parse.
 **Commit:** ee0e1fa
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
+
+---
+
+## 2026-04-01 — SwipeFeedback: Real-Time Visual Feedback During Swipe Gestures
+
+**Inspiration:**
+- iOS Mail swipe actions (progress reveals content)
+- Tinder card swipe feedback (color intensity)
+- Linear.app drag interactions (smooth, responsive)
+- 2026 Trend: "Kinetic Micro-interactions" - users expect immediate, continuous
+  feedback as they interact, not just end-state confirmations
+
+**What I built:**
+New `SwipeFeedback` component system that provides real-time visual feedback
+during horizontal swipe gestures on mobile devices.
+
+**Features:**
+- Edge glow that intensifies based on swipe progress (0-100%)
+- Directional arrow that emerges and animates toward swipe direction
+- Progress indicator showing distance to trigger threshold
+- Haptic-style visual pulse when threshold is crossed
+- Color-coded feedback (purple for left/next, indigo for right/previous)
+- Seamless integration with existing SwipeNavigator component
+- GPU-accelerated animations (transform, opacity)
+- Respects prefers-reduced-motion preference
+- Full light/dark mode support
+- Mobile-first design, hidden on desktop (keyboard nav preferred)
+
+**Components:**
+- `SwipeFeedbackProvider`: Context provider for swipe state
+- `SwipeFeedbackOverlay`: Visual overlay with glow/arrows/progress
+- `useSwipeFeedback`: Hook for consuming/updating swipe state
+
+**Technical Details:**
+- Uses React Context for state management across component boundaries
+- Progress is eased (quadratic) for smoother visual response
+- Threshold detection triggers "triggered" state with visual pulse
+- Exit animations provide smooth rubber-band feel on release
+- Zero layout shift during gesture (fixed positioned overlay)
+
+**Integration:**
+Updated `SwipeNavigator` to automatically connect to `SwipeFeedbackProvider`
+when available. The existing swipe navigation now has visual feedback without
+any additional configuration.
+
+**Why this matters:**
+Mobile users swiping to navigate weeks had no visual indication that their
+gesture was being registered or how far they needed to swipe. This component
+bridges the gap between touch input and action confirmation, making the
+experience feel more responsive and tactile. It's the difference between:
+- Swiping and hoping it works
+- vs. Seeing immediate progress and knowing exactly when the action will trigger
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** c586394
+**Deployed:** https://earnings-calendar-omega.vercel.app
+

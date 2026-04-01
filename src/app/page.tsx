@@ -214,6 +214,7 @@ import { StructuredData } from '@/components/StructuredData';
 import { AnnouncementBar, EarningsSeasonBar } from '@/components/AnnouncementBar';
 import { BigMoversBanner, useBigMovers } from '@/components/BigMoversBanner';
 import { MonthBoundaryBadge, usePreviousWeekday } from '@/components/MonthBoundaryBadge';
+import { DensityModeToggle, useDensityMode, DensityConditional } from '@/components/DensityMode';
 
 // Bridge component to sync refresh state with SyncIndicator
 function RefreshSyncBridge({ isRefreshing }: { isRefreshing: boolean }) {
@@ -1595,6 +1596,7 @@ export default function Home() {
               <KeyboardShortcutsHint />
               <CommandTrigger className="hidden lg:flex" />
               <MotionToggle size="sm" />
+              <DensityModeToggle size="sm" />
               <HapticToggle size="sm" />
               <AudioToggle size="sm" />
               <ColorBlindToggle compact />
