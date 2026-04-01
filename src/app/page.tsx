@@ -14,6 +14,7 @@ import { FilterPulse } from '@/components/FilterPulse';
 import { EarningsTooltipContent } from '@/components/Tooltip';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SwipeNavigator, SwipeHint } from '@/components/SwipeNavigator';
+import { SwipeFeedbackProvider, SwipeFeedbackOverlay, useSwipeFeedback } from '@/components/SwipeFeedback';
 import { LiveBadge, LiveDot } from '@/components/LiveBadge';
 import { CountdownBadge } from '@/components/Countdown';
 import { FlipCountdownBadge } from '@/components/FlipDigit';
@@ -1254,6 +1255,7 @@ export default function Home() {
     <PullToRefresh onRefresh={handlePullRefresh} threshold={80} color="#3b82f6">
     <SelectionProvider maxSelections={5}>
     <NewSinceLastVisitProvider earnings={earnings} newThresholdHours={72}>
+    <SwipeFeedbackProvider threshold={80} enabled={true}>
     {/* Bridge refresh state to SyncIndicator */}
     <RefreshSyncBridge isRefreshing={isRefreshing} />
     <div className="min-h-screen relative">
@@ -1285,6 +1287,15 @@ export default function Home() {
       
       {/* Scroll progress indicator */}
       <ScrollProgress height={3} hideAtTop={true} showGlow={true} />
+      
+      {/* Swipe feedback overlay - visual feedback during touch swipe gestures */}
+      <SwipeFeedbackOverlay
+        leftColor="rgba(99, 102, 241, 0.6)"
+        rightColor="rgba(168, 85, 247, 0.6)"
+        edgeWidth={100}
+        showArrow={true}
+        showProgress={true}
+      />
       
       {/* Liquid wave loading indicator - shows during data refresh */}
       {isRefreshing && (
@@ -2969,6 +2980,7 @@ export default function Home() {
         showAfterIdle={1000}
       />
     </div>
+    </SwipeFeedbackProvider>
     </NewSinceLastVisitProvider>
     </SelectionProvider>
     </PullToRefresh>
