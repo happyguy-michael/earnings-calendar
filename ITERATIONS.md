@@ -9614,3 +9614,59 @@ experience feel more responsive and tactile. It's the difference between:
 **Commit:** c586394
 **Deployed:** https://earnings-calendar-omega.vercel.app
 
+
+---
+
+## 2026-04-01 — HoverMagnify: Progressive Detail Reveal on Hover
+
+**Inspiration:**
+- macOS Dock magnification effect
+- Bloomberg Terminal hover expansions
+- Accessibility-first design principles
+- 2026 UI trend: "Progressive Disclosure" meets "Accessibility-First Design"
+- Dense UIs benefit from contextual expansion
+
+**What I built:**
+New `HoverMagnify` component system that subtly magnifies small UI elements
+(badges, indicators, compact info) when hovered, making dense information
+easier to read without cluttering the default view.
+
+**Components:**
+- `HoverMagnify`: Core component with configurable scale, lift, and spring physics
+- `MagnifyGroup`: Multiple items with macOS Dock-like lens effect (neighbors scale too)
+- `MagnifyOnScroll`: Elements scale based on proximity to viewport center
+
+**Features:**
+- Smooth scale + slight lift on hover (default 1.15x, 2px lift)
+- Optional background reveal with backdrop blur for contrast
+- Configurable spring physics presets (snappy, smooth, bouncy, gentle)
+- Touch-friendly with long-press activation
+- Focus-visible support for keyboard accessibility
+- Z-index management to stay above siblings
+- Full prefers-reduced-motion support
+- GPU-accelerated transforms
+
+**Use cases:**
+- Small stat badges that are hard to read
+- Compact date/time indicators
+- Abbreviated labels
+- Icon buttons with tooltips
+- Dense data table cells
+
+**Why this matters:**
+Dense information-rich UIs like earnings calendars pack a lot of data into
+small spaces. HoverMagnify provides progressive disclosure - users see
+compact data by default, but can easily inspect details by hovering.
+This improves accessibility without sacrificing information density.
+
+The component follows the 2026 trend of "motion as communication" - the
+subtle scale and lift creates a feeling of the element "coming forward"
+to meet the user's attention.
+
+**Also fixed:**
+- StatePulse.tsx useRef type error (missing initial value)
+
+**Build:** ✓ Passed
+**Deploy:** ✓ Pushed to GitHub, Vercel auto-deploy triggered
+**Commit:** b6431fb
+**Deployed:** https://earnings-calendar-omega.vercel.app
